@@ -1,0 +1,30 @@
+<idea-plugin>
+    <id>com.liao.hello_book.plugin.id</id>
+    <name>Hello Book</name>
+    <version>1.0</version>
+    <vendor email="liao991224@gmail.com"/>
+
+    <description><![CDATA[
+        你甚至可以用IntelliJ IDEA 写代码 .<br>
+        <em>Hello Book 帮助文档</em>
+        ]]></description>
+
+    <change-notes><![CDATA[
+        Yang Fan set sail.<br>
+        <em>most HTML tags massy be used</em>
+        ]]>
+  </change-notes>
+
+    <idea-version since-build="173.0"/>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="IDEA Ebook" icon="/img/book.svg" factoryClass="com.liao.book.factory.BookMainWindowFactory"
+                    anchor="right"/>
+    </extensions>
+
+    <actions>
+    </actions>
+
+</idea-plugin>

@@ -1,20 +1,23 @@
 <idea-plugin>
     <id>com.liao.hello_book.plugin.id</id>
-    <name>Hello Book</name>
+    <name>IDEA EBook</name>
     <version>1.0</version>
-    <vendor email="liao991224@gmail.com"/>
+    <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One"></vendor>
 
     <description><![CDATA[
-        你甚至可以用IntelliJ IDEA 写代码 .<br>
-        <em>Hello Book 帮助文档</em>
+        IDEA EBool可以用来读书，可以使您的IntelliJ IDEA更有趣，您会发现Intellij IDEA甚至可以编写代码
+        IDEA EBool can be used to read books, can make your IntelliJ IDEA more interesting, you will find that IntelliJ IDEA can even write code
+        <br>
+        English:
+        <br>
+            E-book reading plug-in developed based on IntelliJ IDEA
+        <br>
+            Support search, latest chapter query, designated chapter jump, author information, update time query
+        中文：
+            基于IntelliJ IDEA开发的电子书阅读插件
+        <br>
+            支持搜索，最新章节查询，指定章节跳转，作者信息，更新时间查询
         ]]></description>
-
-    <change-notes><![CDATA[
-        Yang Fan set sail.<br>
-        <em>most HTML tags massy be used</em>
-        ]]>
-  </change-notes>
-
     <idea-version since-build="173.0"/>
 
     <depends>com.intellij.modules.platform</depends>

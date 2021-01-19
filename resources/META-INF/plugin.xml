@@ -1,23 +1,45 @@
-<idea-plugin>
+<idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.0</version>
-    <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One"></vendor>
+    <version>1.0.1</version>
+    <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
     <description><![CDATA[
-        IDEA EBool可以用来读书，可以使您的IntelliJ IDEA更有趣，您会发现Intellij IDEA甚至可以编写代码
-        IDEA EBool can be used to read books, can make your IntelliJ IDEA more interesting, you will find that IntelliJ IDEA can even write code
+        IDEA EBool can be used to read books, can make your IntelliJ IDEA more interesting.
         <br>
-        English:
+        <b>Plugin description:</b>
         <br>
-            E-book reading plug-in developed based on IntelliJ IDEA
+        <p>E-book reading plug-in developed based on IntelliJ IDEA</p>
         <br>
-            Support search, latest chapter query, designated chapter jump, author information, update time query
-        中文：
-            基于IntelliJ IDEA开发的电子书阅读插件
+        <p>Support search, latest chapter query, designated chapter jump, author information, update time query</p>
         <br>
-            支持搜索，最新章节查询，指定章节跳转，作者信息，更新时间查询
+        <p>you will find that IntelliJ IDEA can even write code</p>
+        <br>
+        <b>How to use:</b>
+        <br>
+        <p>After installing the plug-in, click the IDEA EBook button on the right side of the screen.</p>
+        <br>
+        <p>Enter the title of the book in the top search box, then click the search button on the right</p>
+        <br>
+        <p>Source of search results http://www.xbiquge.la</p>
+        <br>
+        <p>Click the row of the search result to highlight it. Click the upper right corner to start reading from the
+            first chapter</p>
+        <br>
+        <p>At the bottom of the chapter jump input box, enter the specified chapter number, and then click the right
+            jump to jump</p>
         ]]></description>
+
+    <change-notes>
+        <![CDATA[
+        <i>2020.1.19</i>
+        <ul>
+            <li>start sailing.</li>
+            <li>Release the first version.</li>
+        </ul>
+                 ]]>
+    </change-notes>
+
     <idea-version since-build="173.0"/>
 
     <depends>com.intellij.modules.platform</depends>
@@ -29,5 +51,4 @@
 
     <actions>
     </actions>
-
 </idea-plugin>

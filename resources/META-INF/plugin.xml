@@ -42,7 +42,10 @@
 
     <idea-version since-build="173.0"/>
 
+    <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="IDEA Ebook" icon="/img/book.svg" factoryClass="com.liao.book.factory.BookMainWindowFactory"
@@ -51,4 +54,6 @@
 
     <actions>
     </actions>
+
+
 </idea-plugin>

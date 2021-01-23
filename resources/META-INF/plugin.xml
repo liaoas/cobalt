@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
     <description><![CDATA[
@@ -40,6 +40,10 @@
         <i>2020.1.19</i>
         <ul>
             <li>Add built-in dependencies</li>
+        </ul>
+        <i>2020.1.23</i>
+        <ul>
+            <li>Update jsoup.jar</li>
         </ul>
                  ]]>
     </change-notes>

@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,9 +23,12 @@ public class BookSearchService {
 
     public List<BookData> searchBookNameDate(String searchBookName) {
         List<BookData> bookDataList = new ArrayList<>();
-        String url = "http://www.xbiquge.la/modules/article/waps.php?searchkey=" + searchBookName;
+        String url = "http://www.paoshuzw.com/modules/article/waps.php";
 
-        String result1= HttpUtil.get(url);
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("searchkey", searchBookName);
+
+        String result1 = HttpUtil.post(url,paramMap);
         try {
             Document parse = Jsoup.parse(result1);
             Elements grid = parse.getElementsByTag("tr");

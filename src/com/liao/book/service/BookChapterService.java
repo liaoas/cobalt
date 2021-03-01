@@ -19,7 +19,7 @@ import org.jsoup.select.Elements;
 public class BookChapterService {
 
     public static void searchBookChapterDate(String link) {
-        String url = "http://www.xbiquge.la/25/25430/";
+        // String url = "http://www.xbiquge.la/25/25430/";
         DataCenter.chapters.clear();
         String result1= HttpUtil.get(link);
         try {
@@ -33,7 +33,7 @@ public class BookChapterService {
                 String name = element.getElementsByTag("a").eq(0).text();
 
                 chapter.setName(name);
-                chapter.setLink("http://www.xbiquge.la/"+attr);
+                chapter.setLink("http://www.paoshuzw.com/"+attr);
 
                 DataCenter.chapters.add(chapter);
             }

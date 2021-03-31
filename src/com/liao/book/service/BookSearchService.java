@@ -23,7 +23,7 @@ public class BookSearchService {
 
     public List<BookData> searchBookNameDate(String searchBookName) {
         List<BookData> bookDataList = new ArrayList<>();
-        String url = "http://www.paoshuzw.com/modules/article/waps.php";
+        String url = "http://www.xbiquge.la/modules/article/waps.php";
 
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("searchkey", searchBookName);

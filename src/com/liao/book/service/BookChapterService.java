@@ -33,7 +33,7 @@ public class BookChapterService {
                 String name = element.getElementsByTag("a").eq(0).text();
 
                 chapter.setName(name);
-                chapter.setLink("http://www.paoshuzw.com/"+attr);
+                chapter.setLink("http://www.xbiquge.la/"+attr);
 
                 DataCenter.chapters.add(chapter);
             }

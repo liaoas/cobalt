@@ -49,6 +49,12 @@
         <ul>
             <li>Change data source</li>
         </ul>
+        <i>2021.3.31</i>
+        <ul>
+            <li>Dynamic font size adjustment</li>
+            <li>Text redirect top</li>
+            <li>Scroll step</li>
+        </ul>
                  ]]>
     </change-notes>
 

@@ -11,6 +11,8 @@ import com.liao.book.service.BookTextService;
 import com.liao.book.utile.DataConvert;
 
 import javax.swing.*;
+import javax.swing.plaf.IconUIResource;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -44,8 +46,17 @@ public class BookMainWindow {
     private JLabel CurrentChapterName;
     // 章节内容
     private JTextArea textContent;
+    // 章节内容外部框
+    private JScrollPane PaneTextContent;
+    // 字体放大
+    private JButton fontSizeDown;
+    // 字体调小
+    private JButton fontSizeUp;
     // 章节内容
     // private JLabel textContent;
+
+    // 字体默认大小
+    private Integer fontSize = 12;
 
 
     // 初始化数据
@@ -59,6 +70,11 @@ public class BookMainWindow {
         // 执行初始化表格
         init();
         BookSearchService searchService = new BookSearchService();
+        JScrollBar jScrollBar = new JScrollBar();
+
+        // 滚动步长为2
+        jScrollBar.setMaximum(2);
+        PaneTextContent.setVerticalScrollBar(jScrollBar);
         // 搜索单击按钮
         btnSearch.addActionListener(e -> {
             List<BookData> bookData = null;
@@ -67,6 +83,7 @@ public class BookMainWindow {
             // 执行搜索
             String bookSearchName = textSearchBar.getText();
             bookData = searchService.searchBookNameDate(bookSearchName);
+
             for (BookData bookDatum : bookData) {
                 DataCenter.tableModel.addRow(DataConvert.comvert(bookDatum));
             }
@@ -113,6 +130,22 @@ public class BookMainWindow {
             }
 
         });
+
+
+        // 字号调小按钮单击事件
+        fontSizeDown.addActionListener(e -> {
+            // 调小字体
+            fontSize--;
+            textContent.setFont(new Font("", 1, fontSize));
+        });
+
+        // 字体增大按钮
+        fontSizeUp.addActionListener(e -> {
+            // 调大字体
+            fontSize++;
+            textContent.setFont(new Font("", 1, fontSize));
+        });
+
     }
 
     // 初始化阅读信息
@@ -128,6 +161,9 @@ public class BookMainWindow {
         BookTextService.searchBookChapterDate(chapter.getLink());
         // 章节内容赋值
         textContent.setText(DataCenter.textContent);
+        // 回到顶部
+        textContent.setCaretPosition(1);
+
     }
 
 

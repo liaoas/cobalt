@@ -2,7 +2,9 @@ package com.liao.book.entity;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -22,7 +24,6 @@ public class DataCenter {
 
     // 数据模型
     public static DefaultTableModel tableModel = new DefaultTableModel(null, head);
-
 
     // 书本连接
     public static String link;

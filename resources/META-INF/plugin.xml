@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.1.7</version>
+    <version>1.1.8</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
     <description><![CDATA[
@@ -59,6 +59,10 @@
         <ul>
             <li>Error message prompt</li>
             <li>Chapter Jump</li>
+        </ul>
+        <i>2021.5.17</i>
+        <ul>
+            <li>Adjust element ratio</li>
         </ul>
                  ]]>
     </change-notes>

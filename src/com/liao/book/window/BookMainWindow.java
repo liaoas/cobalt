@@ -1,9 +1,6 @@
 package com.liao.book.window;
 
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationDisplayType;
-import com.intellij.notification.NotificationGroup;
-import com.intellij.notification.Notifications;
+import com.intellij.notification.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.wm.ToolWindow;
@@ -17,6 +14,8 @@ import com.liao.book.utile.DataConvert;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
@@ -48,7 +47,7 @@ public class BookMainWindow {
     // 章节内容
     private JTextArea textContent;
     // 章节内容外部框
-    private JScrollPane PaneTextContent;
+    private JScrollPane paneTextContent;
     // 字体放大
     private JButton fontSizeDown;
     // 字体调小
@@ -56,11 +55,21 @@ public class BookMainWindow {
 
     // 章节目录下拉列表
     private JComboBox<String> chapterList;
-    // 章节内容
-    // private JLabel textContent;
+
+    // 表格外围
+    private JScrollPane tablePane;
+
+    // 小说内容盒子
+    private JPanel textJPanel;
 
     // 字体默认大小
     private Integer fontSize = 12;
+
+    // 全屏阅读控制
+    private Boolean isShow = true;
+
+    // 表格大小
+    private double tableHeight = 0;
 
 
     // 初始化数据
@@ -78,7 +87,10 @@ public class BookMainWindow {
 
         // 滚动步长为2
         jScrollBar.setMaximum(2);
-        PaneTextContent.setVerticalScrollBar(jScrollBar);
+        paneTextContent.setVerticalScrollBar(jScrollBar);
+
+        // 设置表格内容大小
+        tablePane.setPreferredSize(new Dimension(-1, 30));
 
         chapterList.setPreferredSize(new Dimension(1200, 20));
         // 搜索单击按钮
@@ -185,8 +197,8 @@ public class BookMainWindow {
             fontSize++;
             textContent.setFont(new Font("", 1, fontSize));
         });
-
     }
+
 
     // 初始化阅读信息
     public void initReadText() {
@@ -228,6 +240,10 @@ public class BookMainWindow {
         NotificationGroup fisrtplugin_id = new NotificationGroup("fisrtplugin_id", NotificationDisplayType.BALLOON, true);
         Notification notification = fisrtplugin_id.createNotification(str, MessageType.INFO);
         Notifications.Bus.notify(notification);
+
+        /*NotificationGroup NOTIFICATION_GROUP = new NotificationGroup("Custom Notification Group", NotificationDisplayType.BALLOON, true);
+
+        NOTIFICATION_GROUP.createNotification(str, NotificationType.ERROR).notify();*/
     }
 
 }

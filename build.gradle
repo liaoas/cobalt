@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.7.3'
+}
+
+group 'com.liao'
+version '1.0-SNAPSHOT'
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenLocal()
+    maven { url "https://maven.aliyun.com/repository/public" }
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    /*糊涂工具包*/
+    implementation group: 'cn.hutool', name: 'hutool-all', version: '5.5.7'
+    /*HTML 解析*/
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
+
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version '2020.2.3'
+    pluginName 'IDEA-EBook'
+    updateSinceUntilBuild false
+    sameSinceUntilBuild false
+}
+patchPluginXml {
+    changeNotes """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}

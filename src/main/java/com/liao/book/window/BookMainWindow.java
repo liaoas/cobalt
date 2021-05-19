@@ -7,10 +7,13 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
+import com.liao.book.factory.BookMainWindowFactory;
+import com.liao.book.factory.FullScreenReadingFaction;
 import com.liao.book.service.BookChapterService;
 import com.liao.book.service.BookSearchService;
 import com.liao.book.service.BookTextService;
 import com.liao.book.utile.DataConvert;
+import com.liao.book.utile.ToastUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,6 +65,9 @@ public class BookMainWindow {
     // 小说内容盒子
     private JPanel textJPanel;
 
+    // 同步阅读
+    private JButton synchronous;
+
     // 字体默认大小
     private Integer fontSize = 12;
 
@@ -78,13 +84,15 @@ public class BookMainWindow {
         searchBookTable.setEnabled(true);
     }
 
+
     // 页面打开方法
     public BookMainWindow(Project project, ToolWindow toolWindow) {
+
         // 执行初始化表格
         init();
         BookSearchService searchService = new BookSearchService();
-        JScrollBar jScrollBar = new JScrollBar();
 
+        JScrollBar jScrollBar = new JScrollBar();
         // 滚动步长为2
         jScrollBar.setMaximum(2);
         paneTextContent.setVerticalScrollBar(jScrollBar);
@@ -102,14 +110,14 @@ public class BookMainWindow {
             String bookSearchName = textSearchBar.getText();
 
             if (bookSearchName == null || bookSearchName.equals("")) {
-                toastPopUp("请输入书籍名称");
+                ToastUtil.toastPopUp("请输入书籍名称");
                 return;
             }
 
             bookData = searchService.searchBookNameDate(bookSearchName);
 
             if (bookData == null || bookData.size() == 0) {
-                toastPopUp("没有找到啊");
+                ToastUtil.toastPopUp("没有找到啊");
                 return;
             }
 
@@ -124,7 +132,7 @@ public class BookMainWindow {
             int selectedRow = searchBookTable.getSelectedRow();
 
             if (selectedRow < 0) {
-                toastPopUp("还没有选择要读哪本书");
+                ToastUtil.toastPopUp("还没有选择要读哪本书");
                 return;
             }
 
@@ -132,6 +140,7 @@ public class BookMainWindow {
 
             // 获取链接
             BookChapterService.searchBookChapterDate(valueAt.toString());
+
             // 清空章节信息
             DataCenter.nowChapterINdex = 0;
 
@@ -144,14 +153,13 @@ public class BookMainWindow {
             }
             // 解析当前章节内容
             initReadText();
-
         });
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
 
             if (DataCenter.nowChapterINdex == 0) {
-                toastPopUp("已经是第一章了");
+                ToastUtil.toastPopUp("已经是第一章了");
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
@@ -162,7 +170,7 @@ public class BookMainWindow {
         underOn.addActionListener(e -> {
 
             if (DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                toastPopUp("已经是最后一章了");
+                ToastUtil.toastPopUp("已经是最后一章了");
                 return;
             }
 
@@ -182,7 +190,7 @@ public class BookMainWindow {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                toastPopUp("已经是最小的了");
+                ToastUtil.toastPopUp("已经是最小的了");
                 return;
             }
 
@@ -197,6 +205,14 @@ public class BookMainWindow {
             fontSize++;
             textContent.setFont(new Font("", 1, fontSize));
         });
+
+
+        // 同步阅读按钮
+        synchronous.addActionListener(e -> {
+            initReadText();
+        });
+
+
     }
 
 
@@ -231,20 +247,6 @@ public class BookMainWindow {
     private void createUIComponents() {
     }
 
-    /**
-     * 左下角窗口弹出事件
-     *
-     * @param str 文本
-     */
-    private void toastPopUp(String str) {
-        NotificationGroup fisrtplugin_id = new NotificationGroup("fisrtplugin_id", NotificationDisplayType.BALLOON, true);
-        Notification notification = fisrtplugin_id.createNotification(str, MessageType.INFO);
-        Notifications.Bus.notify(notification);
-
-        /*NotificationGroup NOTIFICATION_GROUP = new NotificationGroup("Custom Notification Group", NotificationDisplayType.BALLOON, true);
-
-        NOTIFICATION_GROUP.createNotification(str, NotificationType.ERROR).notify();*/
-    }
 
 }
 

@@ -122,7 +122,8 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="上一章"/>
+              <icon value="img/previous.png"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="5a1d9" class="javax.swing.JButton" binding="underOn">
@@ -130,7 +131,8 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="下一章"/>
+              <icon value="img/next.png"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="3c5c5" class="javax.swing.JButton" binding="JumpButton">
@@ -138,7 +140,8 @@
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="跳转到指定章节"/>
+              <icon value="img/go_with.png"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="bf990" class="javax.swing.JComboBox" binding="chapterList">
@@ -160,16 +163,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="1c2cb" class="javax.swing.JButton" binding="fontSizeUp">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <icon value="img/font_size_up.png"/>
-              <text value=""/>
-            </properties>
-          </component>
-          <grid id="2aae7" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="2aae7" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -183,6 +177,24 @@
                 </constraints>
                 <properties>
                   <icon value="img/font_size_down.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="1c2cb" class="javax.swing.JButton" binding="fontSizeUp">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <icon value="img/font_size_up.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="26cc1" class="javax.swing.JButton" binding="synchronous">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <icon value="img/synchronize.png"/>
                   <text value=""/>
                 </properties>
               </component>

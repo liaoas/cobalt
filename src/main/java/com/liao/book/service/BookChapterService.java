@@ -8,6 +8,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.Iterator;
+
 /**
  * <p>
  * 爬取章节
@@ -19,13 +21,18 @@ import org.jsoup.select.Elements;
 public class BookChapterService {
 
     public static void searchBookChapterDate(String link) {
+
         // String url = "http://www.xbiquge.la/25/25430/";
         DataCenter.chapters.clear();
-        String result1= HttpUtil.get(link);
+        String result1 = HttpUtil.get(link);
         try {
             Document parse = Jsoup.parse(result1);
             Elements grid = parse.getElementsByTag("dd");
-            for (Element element : grid) {
+
+            Iterator it = grid.iterator();
+            while (it.hasNext()) {
+                Element element = (Element) it.next();
+
                 Chapter chapter = new Chapter();
                 // 链接
                 String attr = element.getElementsByTag("a").eq(0).attr("href");
@@ -33,11 +40,10 @@ public class BookChapterService {
                 String name = element.getElementsByTag("a").eq(0).text();
 
                 chapter.setName(name);
-                chapter.setLink("http://www.xbiquge.la/"+attr);
+                chapter.setLink("https://www.xbiquge.la/" + attr);
 
                 DataCenter.chapters.add(chapter);
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
         }

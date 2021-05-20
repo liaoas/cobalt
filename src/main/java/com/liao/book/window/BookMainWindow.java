@@ -19,6 +19,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -120,8 +121,9 @@ public class BookMainWindow {
                 ToastUtil.toastPopUp("没有找到啊");
                 return;
             }
-
-            for (BookData bookDatum : bookData) {
+            
+            for (int i = 0; i < bookData.size(); i++) {
+                BookData bookDatum = bookData.get(i);
                 DataCenter.tableModel.addRow(DataConvert.comvert(bookDatum));
             }
         });
@@ -148,9 +150,12 @@ public class BookMainWindow {
             chapterList.removeAllItems();
 
             // 加载下拉列表
-            for (Chapter chapter1 : DataCenter.chapters) {
-                chapterList.addItem(chapter1.getName());
+
+            for (int i = 0; i < DataCenter.chapters.size(); i++) {
+                Chapter chapter = DataCenter.chapters.get(i);
+                chapterList.addItem(chapter.getName());
             }
+
             // 解析当前章节内容
             initReadText();
         });

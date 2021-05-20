@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
     <description><![CDATA[
@@ -71,6 +71,11 @@
             <li>Add immersive reading mode</li>
             <li>Add a sync button to solve the data update problem when switching between different reading modes</li>
             <li>Replace project build tool</li>
+        </ul>
+        <i>2021.5.20</i>
+        <ul>
+            <li>Change data source</li>
+            <li>Optimize response speed</li>
         </ul>
                  ]]>
     </change-notes>

@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,16 +24,22 @@ public class BookSearchService {
 
     public List<BookData> searchBookNameDate(String searchBookName) {
         List<BookData> bookDataList = new ArrayList<>();
-        String url = "http://www.xbiquge.la/modules/article/waps.php";
+        String url = "https://www.xbiquge.la/modules/article/waps.php";
 
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("searchkey", searchBookName);
 
         String result1 = HttpUtil.post(url,paramMap);
+
         try {
             Document parse = Jsoup.parse(result1);
             Elements grid = parse.getElementsByTag("tr");
-            for (Element element : grid) {
+
+            Iterator it = grid.iterator();
+
+            while(it.hasNext()) {
+                Element element = (Element)it.next();
+
                 BookData bookData = new BookData();
                 // 文章名称
                 String bookName = element.getElementsByTag("a").eq(0).text();
@@ -53,7 +60,6 @@ public class BookSearchService {
                 if (!"".equals(bookName)) {
                     bookDataList.add(bookData);
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();

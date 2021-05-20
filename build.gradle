@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.liao'
-version '1.0-SNAPSHOT'
+version '1.2.1'
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"

@@ -29,7 +29,7 @@ public class BookSearchService {
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("searchkey", searchBookName);
 
-        String result1 = HttpUtil.post(url,paramMap);
+        String result1 = HttpUtil.post(url, paramMap);
 
         try {
             Document parse = Jsoup.parse(result1);
@@ -37,8 +37,8 @@ public class BookSearchService {
 
             Iterator it = grid.iterator();
 
-            while(it.hasNext()) {
-                Element element = (Element)it.next();
+            while (it.hasNext()) {
+                Element element = (Element) it.next();
 
                 BookData bookData = new BookData();
                 // 文章名称

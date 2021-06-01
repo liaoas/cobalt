@@ -6,7 +6,7 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.liao.book.window.BookMainWindow;
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.NotNull;
 
 /**
  * <p>

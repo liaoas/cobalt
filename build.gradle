@@ -1,10 +1,11 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.7.3'
+    /*id "org.jetbrains.grammarkit" version "2020.3.1"*/
 }
 
 group 'com.liao'
-version '1.2.2'
+version '1.2.4'
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
@@ -30,9 +31,11 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version '2020.2.3'
+//    version '2020.3.1'
     pluginName 'IDEA-EBook'
     updateSinceUntilBuild false
     sameSinceUntilBuild false
+    plugins 'java'
 }
 patchPluginXml {
     changeNotes """

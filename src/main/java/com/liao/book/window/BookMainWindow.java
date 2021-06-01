@@ -1,14 +1,10 @@
 package com.liao.book.window;
 
-import com.intellij.notification.*;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.wm.ToolWindow;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
-import com.liao.book.factory.BookMainWindowFactory;
-import com.liao.book.factory.FullScreenReadingFaction;
 import com.liao.book.service.BookChapterService;
 import com.liao.book.service.BookSearchService;
 import com.liao.book.service.BookTextService;
@@ -17,9 +13,6 @@ import com.liao.book.utile.ToastUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,26 +27,37 @@ import java.util.List;
 public class BookMainWindow {
     // 搜索按钮
     private JButton btnSearch;
+
     // 搜索文本框
     private JTextField textSearchBar;
+
     // 窗口
     private JPanel bookMainJPanel;
+
     // 开始阅读按钮
     private JButton opneBook;
+
     // 搜索书本新信息
     private JTable searchBookTable;
+
     // 上一章按钮
     private JButton btnOn;
+
     // 下一章按钮
     private JButton underOn;
+
     // 章节跳转按钮
     private JButton JumpButton;
+
     // 章节内容
     private JTextArea textContent;
+
     // 章节内容外部框
     private JScrollPane paneTextContent;
+
     // 字体放大
     private JButton fontSizeDown;
+
     // 字体调小
     private JButton fontSizeUp;
 
@@ -111,14 +115,14 @@ public class BookMainWindow {
             String bookSearchName = textSearchBar.getText();
 
             if (bookSearchName == null || bookSearchName.equals("")) {
-                ToastUtil.toastPopUp("请输入书籍名称");
+                ToastUtil.toastPopUp(project,"请输入书籍名称");
                 return;
             }
 
             bookData = searchService.searchBookNameDate(bookSearchName);
 
             if (bookData == null || bookData.size() == 0) {
-                ToastUtil.toastPopUp("没有找到啊");
+                ToastUtil.toastPopUp(project,"没有找到啊");
                 return;
             }
             
@@ -134,7 +138,7 @@ public class BookMainWindow {
             int selectedRow = searchBookTable.getSelectedRow();
 
             if (selectedRow < 0) {
-                ToastUtil.toastPopUp("还没有选择要读哪本书");
+                ToastUtil.toastPopUp(project,"还没有选择要读哪本书");
                 return;
             }
 
@@ -164,7 +168,7 @@ public class BookMainWindow {
         btnOn.addActionListener(e -> {
 
             if (DataCenter.nowChapterINdex == 0) {
-                ToastUtil.toastPopUp("已经是第一章了");
+                ToastUtil.toastPopUp(project,"已经是第一章了");
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
@@ -175,7 +179,7 @@ public class BookMainWindow {
         underOn.addActionListener(e -> {
 
             if (DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.toastPopUp("已经是最后一章了");
+                ToastUtil.toastPopUp(project,"已经是最后一章了");
                 return;
             }
 
@@ -195,7 +199,7 @@ public class BookMainWindow {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.toastPopUp("已经是最小的了");
+                ToastUtil.toastPopUp(project,"已经是最小的了");
                 return;
             }
 

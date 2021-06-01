@@ -57,11 +57,12 @@ public class FullScreenReading {
         jScrollBar.setMaximum(2);
         paneTextContent.setVerticalScrollBar(jScrollBar);
 
+
         // 上一章节跳转
         btnOn.addActionListener(e -> {
 
             if (DataCenter.nowChapterINdex == 0) {
-                ToastUtil.toastPopUp("已经是第一章了");
+                ToastUtil.toastPopUp(project,"已经是第一章了");
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
@@ -72,7 +73,7 @@ public class FullScreenReading {
         underOn.addActionListener(e -> {
 
             if (DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.toastPopUp("已经是最后一章了");
+                ToastUtil.toastPopUp(project,"已经是最后一章了");
                 return;
             }
 
@@ -92,7 +93,7 @@ public class FullScreenReading {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.toastPopUp("已经是最小的了");
+                ToastUtil.toastPopUp(project,"已经是最小的了");
                 return;
             }
 

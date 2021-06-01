@@ -30,6 +30,7 @@ public class BookChapterService {
             Elements grid = parse.getElementsByTag("dd");
 
             Iterator it = grid.iterator();
+
             while (it.hasNext()) {
                 Element element = (Element) it.next();
 

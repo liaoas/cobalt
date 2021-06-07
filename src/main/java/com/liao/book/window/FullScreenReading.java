@@ -60,7 +60,6 @@ public class FullScreenReading {
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
-
             if (DataCenter.nowChapterINdex == 0) {
                 ToastUtil.toastPopUp(project,"已经是第一章了");
                 return;
@@ -71,7 +70,6 @@ public class FullScreenReading {
 
         // 下一章跳转
         underOn.addActionListener(e -> {
-
             if (DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
                 ToastUtil.toastPopUp(project,"已经是最后一章了");
                 return;

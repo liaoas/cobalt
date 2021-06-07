@@ -119,7 +119,10 @@ public class BookMainWindow {
                 return;
             }
 
+            // 笔趣阁搜索
             bookData = searchService.searchBookNameData(bookSearchName);
+
+            // 妙笔阁搜索
             bookData.addAll(searchService.searchBookNameData_miao(bookSearchName));
 
             if (bookData == null || bookData.size() == 0) {
@@ -143,13 +146,14 @@ public class BookMainWindow {
                 return;
             }
 
+            // 获取书籍链接
             Object valueAt = searchBookTable.getValueAt(selectedRow, 4);
 
-            // 获取链接
-
+            // 解析连接 执行章节爬取
             if (valueAt.toString().contains("xbiquge")) {
                 BookChapterService.searchBookChapterData(valueAt.toString());
             }
+
             if (valueAt.toString().contains("imiaobige")) {
                 BookChapterService.searchBookChapterData_miao(valueAt.toString());
             }

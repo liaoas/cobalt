@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
     <description><![CDATA[
@@ -85,6 +85,11 @@
         <i>2021.6.1</i>
         <ul>
             <li>Text wrap</li>
+        </ul>
+        <i>2021.6.7</i>
+        <ul>
+            <li>Add a new data source Miaobi Ge</li>
+            <li>Thanks for the support of https://github.com/Suchbear</li>
         </ul>
                  ]]>
     </change-notes>

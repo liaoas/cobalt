@@ -20,6 +20,11 @@ import java.util.Iterator;
  */
 public class BookChapterService {
 
+    /**
+     * 笔趣阁书籍爬取
+     *
+     * @param link 链接
+     */
     public static void searchBookChapterData(String link) {
 
         // String url = "http://www.xbiquge.la/25/25430/";
@@ -51,9 +56,15 @@ public class BookChapterService {
 
     }
 
+    /**
+     * 妙笔阁书籍爬取
+     *
+     * @param link 链接
+     */
     public static void searchBookChapterData_miao(String link) {
 
         DataCenter.chapters.clear();
+
         String result1 = HttpUtil.get(link);
         try {
             Document parse = Jsoup.parse(result1);

@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class BookSearchService {
 
-    public List<BookData> searchBookNameDate(String searchBookName) {
+    public List<BookData> searchBookNameData(String searchBookName) {
         List<BookData> bookDataList = new ArrayList<>();
         String url = "https://www.xbiquge.la/modules/article/waps.php";
 
@@ -55,6 +55,54 @@ public class BookSearchService {
                 bookData.setAuthor(author);
                 // 更新时间
                 String updateDate = element.getElementsByTag("td").eq(3).text();
+                bookData.setUpdateDate(updateDate);
+
+                if (!"".equals(bookName)) {
+                    bookDataList.add(bookData);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bookDataList;
+    }
+
+    public List<BookData> searchBookNameData_miao(String searchBookName) {
+        List<BookData> bookDataList = new ArrayList<>();
+        String url = "https://www.imiaobige.com/search.html";
+
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("searchkey", searchBookName);
+
+        String result1 = HttpUtil.post(url, paramMap);
+
+        try {
+            Document parse = Jsoup.parse(result1);
+            Elements grid = parse.getElementsByTag("dl");
+
+            Iterator it = grid.iterator();
+
+            while (it.hasNext()) {
+                Element element = (Element) it.next();
+
+                BookData bookData = new BookData();
+                // 文章名称
+                String bookName = element.getElementsByTag("a").eq(1).text();
+                bookData.setBookName(bookName);
+                // 链接
+                String bookLink = element.getElementsByTag("a").eq(1).attr("href");
+                bookLink = bookLink.replaceAll("novel", "read");
+                bookLink = bookLink.replaceAll(".html", "");
+                bookData.setBookLink(bookLink);
+                // 章节信息
+                String chapter = element.getElementsByTag("a").eq(4).text();
+                bookData.setChapter(chapter);
+                // 作者
+                String author = element.getElementsByTag("a").eq(3).text();
+                bookData.setAuthor(author);
+                // 更新时间
+                String updateDate = element.getElementsByTag("span").eq(3).text();
                 bookData.setUpdateDate(updateDate);
 
                 if (!"".equals(bookName)) {

@@ -134,7 +134,7 @@ public class FullScreenReading {
         // 清空书本表格
         Chapter chapter = DataCenter.chapters.get(DataCenter.nowChapterINdex);
         // 内容
-        BookTextService.searchBookChapterDate(chapter.getLink());
+        BookTextService.searchBookChapterData(chapter.getLink());
         // 章节内容赋值
         textContent.setText(DataCenter.textContent);
 

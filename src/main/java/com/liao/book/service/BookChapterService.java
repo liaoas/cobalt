@@ -20,7 +20,7 @@ import java.util.Iterator;
  */
 public class BookChapterService {
 
-    public static void searchBookChapterDate(String link) {
+    public static void searchBookChapterData(String link) {
 
         // String url = "http://www.xbiquge.la/25/25430/";
         DataCenter.chapters.clear();
@@ -44,6 +44,41 @@ public class BookChapterService {
                 chapter.setLink("https://www.xbiquge.la/" + attr);
 
                 DataCenter.chapters.add(chapter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void searchBookChapterData_miao(String link) {
+
+        DataCenter.chapters.clear();
+        String result1 = HttpUtil.get(link);
+        try {
+            Document parse = Jsoup.parse(result1);
+            Elements border_line = parse.getElementsByClass("border-line");
+            Iterator it = border_line.iterator();
+            it.next();
+            while (it.hasNext()) {
+                Element element = (Element) it.next();
+                Elements grid = element.parent().getElementsByTag("li");
+                Iterator it2 = grid.iterator();
+                while (it2.hasNext()) {
+                    Element element2 = (Element) it2.next();
+                    Chapter chapter = new Chapter();
+
+                    // 链接
+                    String attr = element2.getElementsByTag("a").eq(0).attr("href");
+                    // 名称
+                    String name = element2.getElementsByTag("a").eq(0).text();
+
+                    chapter.setName(name);
+                    chapter.setLink("https://www.imiaobige.com/" + attr);
+                    if (attr.contains("read")) {
+                        DataCenter.chapters.add(chapter);
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

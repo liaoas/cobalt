@@ -115,17 +115,18 @@ public class BookMainWindow {
             String bookSearchName = textSearchBar.getText();
 
             if (bookSearchName == null || bookSearchName.equals("")) {
-                ToastUtil.toastPopUp(project,"请输入书籍名称");
+                ToastUtil.toastPopUp(project, "请输入书籍名称");
                 return;
             }
 
-            bookData = searchService.searchBookNameDate(bookSearchName);
+            bookData = searchService.searchBookNameData(bookSearchName);
+            bookData.addAll(searchService.searchBookNameData_miao(bookSearchName));
 
             if (bookData == null || bookData.size() == 0) {
-                ToastUtil.toastPopUp(project,"没有找到啊");
+                ToastUtil.toastPopUp(project, "没有找到啊");
                 return;
             }
-            
+
             for (int i = 0; i < bookData.size(); i++) {
                 BookData bookDatum = bookData.get(i);
                 DataCenter.tableModel.addRow(DataConvert.comvert(bookDatum));
@@ -138,15 +139,20 @@ public class BookMainWindow {
             int selectedRow = searchBookTable.getSelectedRow();
 
             if (selectedRow < 0) {
-                ToastUtil.toastPopUp(project,"还没有选择要读哪本书");
+                ToastUtil.toastPopUp(project, "还没有选择要读哪本书");
                 return;
             }
 
             Object valueAt = searchBookTable.getValueAt(selectedRow, 4);
 
             // 获取链接
-            BookChapterService.searchBookChapterDate(valueAt.toString());
 
+            if (valueAt.toString().contains("xbiquge")) {
+                BookChapterService.searchBookChapterData(valueAt.toString());
+            }
+            if (valueAt.toString().contains("imiaobige")) {
+                BookChapterService.searchBookChapterData_miao(valueAt.toString());
+            }
             // 清空章节信息
             DataCenter.nowChapterINdex = 0;
 
@@ -168,7 +174,7 @@ public class BookMainWindow {
         btnOn.addActionListener(e -> {
 
             if (DataCenter.nowChapterINdex == 0) {
-                ToastUtil.toastPopUp(project,"已经是第一章了");
+                ToastUtil.toastPopUp(project, "已经是第一章了");
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
@@ -179,7 +185,7 @@ public class BookMainWindow {
         underOn.addActionListener(e -> {
 
             if (DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.toastPopUp(project,"已经是最后一章了");
+                ToastUtil.toastPopUp(project, "已经是最后一章了");
                 return;
             }
 
@@ -199,7 +205,7 @@ public class BookMainWindow {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.toastPopUp(project,"已经是最小的了");
+                ToastUtil.toastPopUp(project, "已经是最小的了");
                 return;
             }
 
@@ -236,7 +242,7 @@ public class BookMainWindow {
         // 章节下标
         // textJump.setText((DataCenter.nowChapterINdex + 1) + "");
         // 内容
-        BookTextService.searchBookChapterDate(chapter.getLink());
+        BookTextService.searchBookChapterData(chapter.getLink());
         // 章节内容赋值
         textContent.setText(DataCenter.textContent);
 

@@ -23,11 +23,12 @@ public class BookTextService {
         String result1 = HttpUtil.get(url);
         try {
             Document parse = Jsoup.parse(result1);
-            Element content = parse.getElementById("content");
             if (url.contains("xbiquge")) {
+                Element content = parse.getElementById("content");
                 DataCenter.textContent = textFormat(content);
             }
             if (url.contains("imiaobige")) {
+                Element content = parse.getElementById("content");
                 String textContent = textFormat_miao(content);
                 String ad1 = "您可以在百度里搜索";
                 String ad2 = "查找最新章节！";
@@ -35,6 +36,14 @@ public class BookTextService {
                 int adEnd = textContent.indexOf(ad2) + ad2.length();
                 if (adStart >= 0 && adEnd > 0)
                     textContent = textContent.replace(textContent.substring(adStart, adEnd), "");
+                DataCenter.textContent = textContent;
+            }
+            if (url.contains("taiuu")) {
+                Element content = parse.getElementById("htmlContent");
+                String textContent = textFormat(content);
+                textContent = textContent.replace("<太-悠悠>小说щww.taiuu.com", "");
+                textContent = textContent.replace("(全本小说网，www.TAIUU.COM)", "");
+                textContent = textContent.replace("(全本小说网，www.taiuu.com，；手机阅读，m.taiuu.com｛太}{悠悠}小说 щww{taiuu][com}", "");
                 DataCenter.textContent = textContent;
             }
         } catch (Exception e) {

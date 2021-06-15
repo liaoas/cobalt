@@ -13,6 +13,7 @@ import com.liao.book.utile.ToastUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -123,7 +124,18 @@ public class BookMainWindow {
             bookData = searchService.searchBookNameData(bookSearchName);
 
             // 妙笔阁搜索
-            bookData.addAll(searchService.searchBookNameData_miao(bookSearchName));
+            if (bookData != null) {
+                bookData.addAll(searchService.searchBookNameData_miao(bookSearchName));
+            } else {
+                bookData = searchService.searchBookNameData_miao(bookSearchName);
+            }
+
+            //全本小说网
+            if (bookData != null) {
+                bookData.addAll(searchService.searchBookNameData_tai(bookSearchName));
+            } else {
+                bookData = searchService.searchBookNameData_tai(bookSearchName);
+            }
 
             if (bookData == null || bookData.size() == 0) {
                 ToastUtil.toastPopUp(project, "没有找到啊");
@@ -156,6 +168,10 @@ public class BookMainWindow {
 
             if (valueAt.toString().contains("imiaobige")) {
                 BookChapterService.searchBookChapterData_miao(valueAt.toString());
+            }
+
+            if (valueAt.toString().contains("taiuu")) {
+                BookChapterService.searchBookChapterData_tai(valueAt.toString());
             }
             // 清空章节信息
             DataCenter.nowChapterINdex = 0;

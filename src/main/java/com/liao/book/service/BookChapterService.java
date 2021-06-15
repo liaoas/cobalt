@@ -97,4 +97,40 @@ public class BookChapterService {
 
     }
 
+
+    /**
+     * 全本小说网书籍爬取
+     *
+     * @param link 链接
+     */
+    public static void searchBookChapterData_tai(String link) {
+
+        DataCenter.chapters.clear();
+
+        String result1 = HttpUtil.get(link);
+        try {
+            Document parse = Jsoup.parse(result1);
+            Elements grid = parse.getElementsByTag("li");
+
+            Iterator it = grid.iterator();
+
+            while (it.hasNext()) {
+                Element element = (Element) it.next();
+
+                Chapter chapter = new Chapter();
+                // 链接
+                String attr = element.getElementsByTag("a").eq(0).attr("href");
+                // 名称
+                String name = element.getElementsByTag("a").eq(0).text();
+
+                chapter.setName(name);
+                chapter.setLink(link + attr);
+
+                DataCenter.chapters.add(chapter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * <p>
- *  通用信息
+ * 通用信息
  * </p>
  *
  * @author LiAo
@@ -20,7 +20,7 @@ public class DataCenter {
     public static List<BookData> bookData;
 
     // 表头内容
-    public static String[] head = {"文章名称", "最新章节", "作者", "更新","链接"};
+    public static String[] head = {"文章名称", "最新章节", "作者", "更新", "链接"};
 
     // 数据模型
     public static DefaultTableModel tableModel = new DefaultTableModel(null, head);
@@ -36,4 +36,16 @@ public class DataCenter {
 
     // 章节内容
     public static String textContent;
+
+    // 笔趣阁
+    public static final String BI_QU_GE = "笔趣阁";
+
+    // 妙笔阁
+    public static final String MI_BI_GE = "妙笔阁";
+
+    // 全本小说
+    public static final String QUAN_BEN = "全本小说";
+
+    // 数据源
+    public static final String[] dataSource = new String[]{"笔趣阁", "妙笔阁", "全本小说"};
 }

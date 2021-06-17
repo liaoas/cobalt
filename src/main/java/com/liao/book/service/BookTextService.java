@@ -19,7 +19,6 @@ import org.jsoup.nodes.TextNode;
 public class BookTextService {
 
     public static void searchBookChapterData(String url) {
-
         String result1 = HttpUtil.get(url);
         try {
             Document parse = Jsoup.parse(result1);
@@ -53,10 +52,10 @@ public class BookTextService {
 
 
     /**
-     * 格式化当前章节内容
+     * 笔趣阁
      *
      * @param element 当前章节信息
-     * @return
+     * @return 结果
      */
     private static String textFormat(Element element) {
 
@@ -86,6 +85,12 @@ public class BookTextService {
         return stringBuilder.toString();
     }
 
+    /**
+     * 妙笔阁
+     *
+     * @param element 章节内容
+     * @return 数据
+     */
     private static String textFormat_miao(Element element) {
 
         // 用于存储节点

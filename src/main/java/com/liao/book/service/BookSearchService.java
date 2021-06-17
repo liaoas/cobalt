@@ -1,22 +1,19 @@
 package com.liao.book.service;
 
 import cn.hutool.core.net.url.UrlBuilder;
-import cn.hutool.core.net.url.UrlPath;
 import cn.hutool.core.net.url.UrlQuery;
-import cn.hutool.http.HttpBase;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import com.liao.book.entity.BookData;
+import com.liao.book.entity.DataCenter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -29,7 +26,37 @@ import java.util.List;
  */
 public class BookSearchService {
 
-    public List<BookData> searchBookNameData(String searchBookName) {
+    /**
+     * 判断数据源
+     *
+     * @param searchType     类型
+     * @param searchBookName 书名
+     * @return 结果
+     */
+    public List<BookData> getBookNameData(String searchType, String searchBookName) {
+
+        switch (searchType) {
+            case DataCenter.BI_QU_GE:
+                // 笔趣阁
+                return searchBookNameData(searchBookName);
+            case DataCenter.MI_BI_GE:
+                // 妙笔阁
+                return searchBookNameData_miao(searchBookName);
+            case DataCenter.QUAN_BEN:
+                // 全本小说网
+                return searchBookNameData_tai(searchBookName);
+        }
+        return null;
+    }
+
+
+    /**
+     * 笔趣阁
+     *
+     * @param searchBookName 书籍名称
+     * @return 搜索列表
+     */
+    private List<BookData> searchBookNameData(String searchBookName) {
         List<BookData> bookDataList = new ArrayList<>();
         String url = "https://www.xbiquge.la/modules/article/waps.php";
 
@@ -42,11 +69,7 @@ public class BookSearchService {
             Document parse = Jsoup.parse(result1);
             Elements grid = parse.getElementsByTag("tr");
 
-            Iterator it = grid.iterator();
-
-            while (it.hasNext()) {
-                Element element = (Element) it.next();
-
+            for (Element element : grid) {
                 BookData bookData = new BookData();
                 // 文章名称
                 String bookName = element.getElementsByTag("a").eq(0).text();
@@ -75,8 +98,15 @@ public class BookSearchService {
         return bookDataList;
     }
 
-    public List<BookData> searchBookNameData_miao(String searchBookName) {
+    /**
+     * 妙笔阁
+     *
+     * @param searchBookName 书籍名称
+     * @return 搜索列表
+     */
+    private List<BookData> searchBookNameData_miao(String searchBookName) {
         List<BookData> bookDataList = new ArrayList<>();
+
         String url = "https://www.imiaobige.com/search.html";
 
         HashMap<String, Object> paramMap = new HashMap<>();
@@ -88,11 +118,7 @@ public class BookSearchService {
             Document parse = Jsoup.parse(result1);
             Elements grid = parse.getElementsByTag("dl");
 
-            Iterator it = grid.iterator();
-
-            while (it.hasNext()) {
-                Element element = (Element) it.next();
-
+            for (Element element : grid) {
                 BookData bookData = new BookData();
                 // 文章名称
                 String bookName = element.getElementsByTag("a").eq(1).text();
@@ -123,7 +149,13 @@ public class BookSearchService {
         return bookDataList;
     }
 
-    public List<BookData> searchBookNameData_tai(String searchBookName) {
+    /**
+     * 全本小说网
+     *
+     * @param searchBookName 书籍名称
+     * @return 搜索列表
+     */
+    private List<BookData> searchBookNameData_tai(String searchBookName) {
         List<BookData> bookDataList = new ArrayList<>();
         String url = "https://www.taiuu.com/modules/article/search.php";
 
@@ -135,21 +167,16 @@ public class BookSearchService {
 
         try {
             Document parse = Jsoup.parse(result1);
+
             Elements grid = parse.getElementsByTag("tr");
 
-            Iterator it = grid.iterator();
-
-            while (it.hasNext()) {
-                Element element = (Element) it.next();
-
+            for (Element element : grid) {
                 BookData bookData = new BookData();
                 // 文章名称
                 String bookName = element.getElementsByTag("a").eq(0).text();
                 bookData.setBookName(bookName);
                 // 链接
                 String bookLink = element.getElementsByTag("a").eq(0).attr("href");
-                //bookLink = bookLink.replaceAll("novel", "read");
-                //bookLink = bookLink.replaceAll(".html", "");
                 bookData.setBookLink(bookLink);
                 // 章节信息
                 String chapter = element.getElementsByTag("a").eq(1).text();
@@ -168,7 +195,6 @@ public class BookSearchService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return bookDataList;
     }
 }

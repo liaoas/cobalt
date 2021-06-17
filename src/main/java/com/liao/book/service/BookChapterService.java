@@ -34,11 +34,7 @@ public class BookChapterService {
             Document parse = Jsoup.parse(result1);
             Elements grid = parse.getElementsByTag("dd");
 
-            Iterator it = grid.iterator();
-
-            while (it.hasNext()) {
-                Element element = (Element) it.next();
-
+            for (Element element : grid) {
                 Chapter chapter = new Chapter();
                 // 链接
                 String attr = element.getElementsByTag("a").eq(0).attr("href");
@@ -74,9 +70,7 @@ public class BookChapterService {
             while (it.hasNext()) {
                 Element element = (Element) it.next();
                 Elements grid = element.parent().getElementsByTag("li");
-                Iterator it2 = grid.iterator();
-                while (it2.hasNext()) {
-                    Element element2 = (Element) it2.next();
+                for (Element element2 : grid) {
                     Chapter chapter = new Chapter();
 
                     // 链接
@@ -112,11 +106,7 @@ public class BookChapterService {
             Document parse = Jsoup.parse(result1);
             Elements grid = parse.getElementsByTag("li");
 
-            Iterator it = grid.iterator();
-
-            while (it.hasNext()) {
-                Element element = (Element) it.next();
-
+            for (Element element : grid) {
                 Chapter chapter = new Chapter();
                 // 链接
                 String attr = element.getElementsByTag("a").eq(0).attr("href");

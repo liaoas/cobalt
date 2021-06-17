@@ -83,6 +83,9 @@ public class BookMainWindow {
     // 表格大小
     private double tableHeight = 0;
 
+    // 搜索下拉列表数据源
+    private JComboBox sourceDropdown;
+
 
     // 初始化数据
     private void init() {
@@ -107,6 +110,13 @@ public class BookMainWindow {
         tablePane.setPreferredSize(new Dimension(-1, 30));
 
         chapterList.setPreferredSize(new Dimension(1200, 20));
+
+
+        // 加载数据源按钮
+        for (int i = 0; i < DataCenter.dataSource.length; i++) {
+            sourceDropdown.addItem(DataCenter.dataSource[i]);
+        }
+
         // 搜索单击按钮
         btnSearch.addActionListener(e -> {
             List<BookData> bookData;
@@ -120,22 +130,11 @@ public class BookMainWindow {
                 return;
             }
 
-            // 笔趣阁搜索
-            bookData = searchService.searchBookNameData(bookSearchName);
+            // 获取数据源类型
+            String searchType = sourceDropdown.getSelectedItem().toString();
 
-            // 妙笔阁搜索
-            if (bookData != null) {
-                bookData.addAll(searchService.searchBookNameData_miao(bookSearchName));
-            } else {
-                bookData = searchService.searchBookNameData_miao(bookSearchName);
-            }
-
-            //全本小说网
-            if (bookData != null) {
-                bookData.addAll(searchService.searchBookNameData_tai(bookSearchName));
-            } else {
-                bookData = searchService.searchBookNameData_tai(bookSearchName);
-            }
+            // 根据数据源类型 搜索
+            bookData = searchService.getBookNameData(searchType, bookSearchName);
 
             if (bookData == null || bookData.size() == 0) {
                 ToastUtil.toastPopUp(project, "没有找到啊");

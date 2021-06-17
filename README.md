@@ -4,7 +4,7 @@
 
 ## 🔎搜索 
 
-搜索数据来源于[笔趣阁](http://www.xbiquge.la/)、[妙笔阁](https://www.imiaobige.com/search.html)
+搜索数据来源于[笔趣阁](http://www.xbiquge.la/)、[妙笔阁](https://www.imiaobige.com/search.html)、[全本小说](https://www.taiuu.com)
 
 ## 📃开始阅读
 
@@ -20,7 +20,13 @@
 
 在顶部搜索框中输入书名，然后单击右侧的搜索按钮
 
-搜索结果来源http://www.xbiquge.la、https://www.imiaobige.com/search.html
+搜索结果来源：
+
+    http://www.xbiquge.la
+
+    https://www.imiaobige.com/search.html
+
+    https://www.taiuu.com
 
 单击搜索结果的行使其突出显示。 点击右上角以开始阅读第一章
 

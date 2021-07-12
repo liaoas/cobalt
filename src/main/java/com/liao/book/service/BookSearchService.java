@@ -45,6 +45,9 @@ public class BookSearchService {
             case DataCenter.QUAN_BEN:
                 // 全本小说网
                 return searchBookNameData_tai(searchBookName);
+            case DataCenter.BI_QU_GE_2:
+                //笔趣阁2
+                return searchBookNameData_bqg2(searchBookName);
         }
         return null;
     }
@@ -186,6 +189,54 @@ public class BookSearchService {
                 bookData.setAuthor(author);
                 // 更新时间
                 String updateDate = element.getElementsByTag("td").eq(4).text();
+                bookData.setUpdateDate(updateDate);
+
+                if (!"".equals(bookName)) {
+                    bookDataList.add(bookData);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bookDataList;
+    }
+
+    /**
+     * 笔趣阁www.biduoxs.com
+     *
+     * @param searchBookName 书籍名称
+     * @return 搜索列表
+     */
+    private List<BookData> searchBookNameData_bqg2(String searchBookName) {
+        List<BookData> bookDataList = new ArrayList<>();
+        String url = "https://www.biduoxs.com/search.php";
+
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("q", searchBookName);
+
+        String result1 = HttpUtil.get(url, paramMap);
+
+        try {
+            Document parse = Jsoup.parse(result1);
+
+            Elements grid = parse.getElementsByClass("result-game-item-detail");
+
+            for (Element element : grid) {
+                BookData bookData = new BookData();
+                // 文章名称
+                String bookName = element.getElementsByTag("span").eq(0).text();
+                bookData.setBookName(bookName);
+                // 链接
+                String bookLink = "https://www.biduoxs.com" + element.getElementsByTag("a").eq(0).attr("href");
+                bookData.setBookLink(bookLink);
+                // 章节信息
+                String chapter = element.getElementsByClass("result-game-item-info-tag-item").eq(0).text();
+                bookData.setChapter(chapter);
+                // 作者
+                String author = element.getElementsByTag("span").eq(2).text();
+                bookData.setAuthor(author);
+                // 更新时间
+                String updateDate = element.getElementsByTag("span").eq(6).text();
                 bookData.setUpdateDate(updateDate);
 
                 if (!"".equals(bookName)) {

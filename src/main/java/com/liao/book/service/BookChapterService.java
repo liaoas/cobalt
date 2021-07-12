@@ -123,4 +123,35 @@ public class BookChapterService {
         }
     }
 
+    /**
+     * 笔趣阁书籍爬取
+     *
+     * @param link 链接
+     */
+    public static void searchBookChapterData_bqg2(String link) {
+
+        DataCenter.chapters.clear();
+
+        String result1 = HttpUtil.get(link);
+        try {
+            Document parse = Jsoup.parse(result1);
+            Elements grid = parse.getElementsByTag("dd");
+
+            for (Element element : grid) {
+                Chapter chapter = new Chapter();
+                // 链接
+                String attr = element.getElementsByTag("a").eq(0).attr("href");
+                // 名称
+                String name = element.getElementsByTag("a").eq(0).text();
+
+                chapter.setName(name);
+                chapter.setLink("https://www.biduoxs.com" + attr);
+
+                DataCenter.chapters.add(chapter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

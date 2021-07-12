@@ -172,6 +172,9 @@ public class BookMainWindow {
             if (valueAt.toString().contains("taiuu")) {
                 BookChapterService.searchBookChapterData_tai(valueAt.toString());
             }
+            if (valueAt.toString().contains("biduoxs")) {
+                BookChapterService.searchBookChapterData_bqg2(valueAt.toString());
+            }
             // 清空章节信息
             DataCenter.nowChapterINdex = 0;
 

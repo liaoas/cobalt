@@ -23,10 +23,12 @@ dependencies {
 
     /*糊涂工具包*/
     implementation group: 'cn.hutool', name: 'hutool-all', version: '5.5.7'
+
     /*HTML 解析*/
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
 
 }
+
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {

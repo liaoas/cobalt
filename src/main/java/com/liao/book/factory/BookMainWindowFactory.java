@@ -1,12 +1,13 @@
 package com.liao.book.factory;
 
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.liao.book.window.BookMainWindow;
-import com.sun.istack.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import com.sun.istack.NotNull;
  * @author LiAo
  * @since 2021/1/13
  */
-public class BookMainWindowFactory implements ToolWindowFactory {
+public class BookMainWindowFactory implements ToolWindowFactory, DumbAware {
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
@@ -34,4 +35,6 @@ public class BookMainWindowFactory implements ToolWindowFactory {
         // 加载沉浸阅读页面
         new FullScreenReadingFaction().createToolWindowContent(project, toolWindow);
     }
+
+
 }

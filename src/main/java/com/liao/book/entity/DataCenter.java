@@ -46,6 +46,9 @@ public class DataCenter {
     // 全本小说
     public static final String QUAN_BEN = "全本小说";
 
+    // 笔趣阁
+    public static final String BI_QU_GE_2 = "笔趣阁2";
+
     // 数据源
-    public static final String[] dataSource = new String[]{"笔趣阁", "妙笔阁", "全本小说"};
+    public static final String[] dataSource = new String[]{"笔趣阁", "妙笔阁", "全本小说", "笔趣阁2"};
 }

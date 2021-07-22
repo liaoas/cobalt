@@ -6,15 +6,19 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.DataCenter;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,6 +29,12 @@ import java.util.List;
  * @since 2021/1/13
  */
 public class BookSearchService {
+
+    // 重试次数
+    public static int index = 2;
+
+    // 存储数据
+    public static List<BookData> bookDataList = new ArrayList<>();
 
     /**
      * 判断数据源
@@ -60,17 +70,16 @@ public class BookSearchService {
      * @return 搜索列表
      */
     private List<BookData> searchBookNameData(String searchBookName) {
-        List<BookData> bookDataList = new ArrayList<>();
-        String url = "https://www.xbiquge.la/modules/article/waps.php";
-
-        HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put("searchkey", searchBookName);
-
-        String result1 = HttpUtil.post(url, paramMap);
-
+        bookDataList.clear();
         try {
-            Document parse = Jsoup.parse(result1);
-            Elements grid = parse.getElementsByTag("tr");
+            Connection connect = Jsoup.connect("https://www.xbiquge.la/modules/article/waps.php");
+            // 设置请求头
+            connect.data("searchkey", searchBookName);
+
+            Document document = connect.post();
+
+            // Document parse = Jsoup.parse(result1);
+            Elements grid = document.getElementsByTag("tr");
 
             for (Element element : grid) {
                 BookData bookData = new BookData();
@@ -95,7 +104,12 @@ public class BookSearchService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (index == 0) {
+                return null;
+            }
+
+            index--;
+            searchBookNameData(searchBookName);
         }
 
         return bookDataList;
@@ -108,18 +122,15 @@ public class BookSearchService {
      * @return 搜索列表
      */
     private List<BookData> searchBookNameData_miao(String searchBookName) {
-        List<BookData> bookDataList = new ArrayList<>();
+        bookDataList.clear();
 
-        String url = "https://www.imiaobige.com/search.html";
-
-        HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put("searchkey", searchBookName);
-
-        String result1 = HttpUtil.post(url, paramMap);
+        Connection connect = Jsoup.connect("https://www.imiaobige.com/search.html");
+        // 设置请求头
+        connect.data("searchkey", searchBookName);
 
         try {
-            Document parse = Jsoup.parse(result1);
-            Elements grid = parse.getElementsByTag("dl");
+            Document document = connect.post();
+            Elements grid = document.getElementsByTag("dl");
 
             for (Element element : grid) {
                 BookData bookData = new BookData();
@@ -146,7 +157,12 @@ public class BookSearchService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (index == 0) {
+                return null;
+            }
+
+            index--;
+            searchBookNameData(searchBookName);
         }
 
         return bookDataList;
@@ -159,7 +175,7 @@ public class BookSearchService {
      * @return 搜索列表
      */
     private List<BookData> searchBookNameData_tai(String searchBookName) {
-        List<BookData> bookDataList = new ArrayList<>();
+        bookDataList.clear();
         String url = "https://www.taiuu.com/modules/article/search.php";
 
         UrlQuery urlQuery = new UrlQuery();
@@ -208,7 +224,7 @@ public class BookSearchService {
      * @return 搜索列表
      */
     private List<BookData> searchBookNameData_bqg2(String searchBookName) {
-        List<BookData> bookDataList = new ArrayList<>();
+        bookDataList.clear();
         String url = "https://www.biduoxs.com/search.php";
 
         HashMap<String, Object> paramMap = new HashMap<>();

@@ -20,6 +20,9 @@ import java.util.Iterator;
  */
 public class BookChapterService {
 
+    // 重试次数
+    public static int index = 2;
+
     /**
      * 笔趣阁书籍爬取
      *
@@ -42,12 +45,18 @@ public class BookChapterService {
                 String name = element.getElementsByTag("a").eq(0).text();
 
                 chapter.setName(name);
-                chapter.setLink("https://www.xbiquge.la/" + attr);
+                // chapter.setLink("https://www.xbiquge.la/" + attr);
+                chapter.setLink(attr);
 
                 DataCenter.chapters.add(chapter);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (index == 0) {
+                return;
+            }
+
+            index--;
+            searchBookChapterData(link);
         }
 
     }
@@ -62,6 +71,7 @@ public class BookChapterService {
         DataCenter.chapters.clear();
 
         String result1 = HttpUtil.get(link);
+
         try {
             Document parse = Jsoup.parse(result1);
             Elements border_line = parse.getElementsByClass("border-line");
@@ -86,7 +96,12 @@ public class BookChapterService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (index == 0) {
+                return;
+            }
+
+            index--;
+            searchBookChapterData_miao(link);
         }
 
     }
@@ -119,7 +134,11 @@ public class BookChapterService {
                 DataCenter.chapters.add(chapter);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (index == 0) {
+                return;
+            }
+            index--;
+            searchBookChapterData_tai(link);
         }
     }
 
@@ -150,7 +169,12 @@ public class BookChapterService {
                 DataCenter.chapters.add(chapter);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (index == 0) {
+                return;
+            }
+
+            index--;
+            searchBookChapterData_bqg2(link);
         }
     }
 

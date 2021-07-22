@@ -7,28 +7,29 @@ import com.sun.istack.Nullable;
 
 public class ToastUtil {
 
+    /**
+     * 2020.3 之前版本弹窗
+     *
+     * @param project 页面
+     * @param content 消息
+     * @param type    类型
+     */
+    public static void notification2020_3Ago(@Nullable Project project, String content, MessageType type) {
+        NotificationGroup custom_notification_group = new NotificationGroup("Custom Notification Group", NotificationDisplayType.BALLOON, true);
+        Notification notification = custom_notification_group.createNotification(content, type);
+        Notifications.Bus.notify(notification);
+    }
 
     /**
-     * 全局Toast左下角窗口弹出事件
+     * 2020.3 以后版本弹窗
      *
-     * @param content 文本
+     * @param project 页面
+     * @param content 消息
+     * @param type    类型
      */
-    public static void toastPopUp(@Nullable Project project, String content) {
-        /*try {
-            Class.forName("com.intellij.notification.NotificationGroupManager");
-
-            NotificationGroupManager.getInstance().getNotificationGroup("Custom Notification Group")
-                    .createNotification(content, NotificationType.WARNING).notify(project);
-
-        } catch (ClassNotFoundException e) {
-
-            NotificationGroup fisrtplugin_id = new NotificationGroup("fisrtplugin_id", NotificationDisplayType.BALLOON, true);
-            Notification notification = fisrtplugin_id.createNotification(content, MessageType.INFO);
-            Notifications.Bus.notify(notification);
-        }*/
-
-        NotificationGroup fisrtplugin_id = new NotificationGroup("fisrtplugin_id", NotificationDisplayType.BALLOON, true);
-        Notification notification = fisrtplugin_id.createNotification(content, MessageType.INFO);
-        Notifications.Bus.notify(notification);
+    public static void notification2020_3Rear(@Nullable Project project, String content, NotificationType type) {
+        NotificationGroupManager.getInstance().getNotificationGroup("Custom Notification Group")
+                .createNotification(content, type)
+                .notify(project);
     }
 }

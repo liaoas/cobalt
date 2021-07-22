@@ -1,12 +1,13 @@
 package com.liao.book.service;
 
-import cn.hutool.http.HttpUtil;
 import com.liao.book.entity.DataCenter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
+
+import java.net.URL;
 
 /**
  * <p>
@@ -18,15 +19,18 @@ import org.jsoup.nodes.TextNode;
  */
 public class BookTextService {
 
+    // 重试次数
+    public static int index = 2;
+
     public static void searchBookChapterData(String url) {
-        String result1 = HttpUtil.get(url);
+        // String result1 = HttpUtil.get(url);
         try {
-            Document parse = Jsoup.parse(result1);
-            if (url.contains("xbiquge")) {
+            // Document parse = Jsoup.parse(result1);
+            Document parse = Jsoup.parse(new URL(url), 60000);
+            if (url.contains("biquge5200")) {
                 Element content = parse.getElementById("content");
                 DataCenter.textContent = textFormat(content);
-            }
-            if (url.contains("imiaobige")) {
+            } else if (url.contains("imiaobige")) {
                 Element content = parse.getElementById("content");
                 String textContent = textFormat_miao(content);
                 String ad1 = "您可以在百度里搜索";
@@ -36,16 +40,14 @@ public class BookTextService {
                 if (adStart >= 0 && adEnd > 0)
                     textContent = textContent.replace(textContent.substring(adStart, adEnd), "");
                 DataCenter.textContent = textContent;
-            }
-            if (url.contains("taiuu")) {
+            } else if (url.contains("taiuu")) {
                 Element content = parse.getElementById("htmlContent");
                 String textContent = textFormat(content);
                 textContent = textContent.replace("<太-悠悠>小说щww.taiuu.com", "");
                 textContent = textContent.replace("(全本小说网，www.TAIUU.COM)", "");
                 textContent = textContent.replace("(全本小说网，www.taiuu.com，；手机阅读，m.taiuu.com｛太}{悠悠}小说 щww{taiuu][com}", "");
                 DataCenter.textContent = textContent;
-            }
-            if(url.contains("biduoxs")){
+            } else if (url.contains("biduoxs")) {
                 Element content = parse.getElementById("content");
                 String textContent = textFormat(content);
                 textContent = textContent.replace("笔趣阁手机端", "");
@@ -55,7 +57,11 @@ public class BookTextService {
                 DataCenter.textContent = textContent;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (index == 0) {
+                return;
+            }
+            index--;
+            searchBookChapterData(url);
         }
     }
 

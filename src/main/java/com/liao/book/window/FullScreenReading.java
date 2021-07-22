@@ -1,5 +1,6 @@
 package com.liao.book.window;
 
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.liao.book.entity.Chapter;
@@ -28,7 +29,7 @@ public class FullScreenReading {
     private JButton underOn;
 
     // 章节列表
-    private JComboBox chapterList;
+    private JComboBox<String> chapterList;
 
     // 跳转到指定章节
     private JButton jumpButton;
@@ -60,8 +61,8 @@ public class FullScreenReading {
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
-            if (DataCenter.nowChapterINdex == 0) {
-                ToastUtil.toastPopUp(project,"已经是第一章了");
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
+                ToastUtil.notification2020_3Rear(project, "已经是第一章了", NotificationType.ERROR);
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
@@ -70,8 +71,8 @@ public class FullScreenReading {
 
         // 下一章跳转
         underOn.addActionListener(e -> {
-            if (DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.toastPopUp(project,"已经是最后一章了");
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
+                ToastUtil.notification2020_3Rear(project, "已经是最后一章了", NotificationType.ERROR);
                 return;
             }
 
@@ -81,6 +82,12 @@ public class FullScreenReading {
 
         // 章节跳转事件
         jumpButton.addActionListener(e -> {
+
+            if (DataCenter.nowChapterINdex < 1){
+                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                return;
+            }
+
             // 根据下标跳转
             DataCenter.nowChapterINdex = chapterList.getSelectedIndex();
             initReadText();
@@ -91,7 +98,7 @@ public class FullScreenReading {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.toastPopUp(project,"已经是最小的了");
+                ToastUtil.notification2020_3Rear(project, "已经是最小的了", NotificationType.ERROR);
                 return;
             }
 
@@ -109,6 +116,12 @@ public class FullScreenReading {
 
         // 同步阅读按钮
         synchronous.addActionListener(e -> {
+
+            if (DataCenter.nowChapterINdex < 1){
+                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                return;
+            }
+
             startReading();
         });
     }
@@ -131,6 +144,10 @@ public class FullScreenReading {
     public void initReadText() {
         // 清空书本表格
         Chapter chapter = DataCenter.chapters.get(DataCenter.nowChapterINdex);
+
+        // 重置重试次数
+        BookTextService.index = 2;
+
         // 内容
         BookTextService.searchBookChapterData(chapter.getLink());
         // 章节内容赋值

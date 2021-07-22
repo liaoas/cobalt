@@ -4,6 +4,8 @@
     <version>1.3.1</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
+    <idea-version since-build="203" until-build="203.*"/>
+
     <description><![CDATA[
         IDEA EBool can be used to read books, can make your IntelliJ IDEA more interesting.
         <br>
@@ -101,7 +103,6 @@
     </change-notes>
 
     <!--<idea-version since-build="203.4449.2"/>-->
-    <idea-version since-build="173.0"/>
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.platform</depends>
@@ -110,7 +111,7 @@
         <toolWindow id="IDEA Ebook" icon="/img/book.svg" factoryClass="com.liao.book.factory.BookMainWindowFactory"
                     anchor="right"/>
 
-        <!--<notificationGroup id="Custom Notification Group" displayType="BALLOON" key="notification.group.name"/>-->
+        <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
     </extensions>
 
 

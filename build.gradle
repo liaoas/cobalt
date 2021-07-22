@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.7.3'
-    /*id "org.jetbrains.grammarkit" version "2020.3.1"*/
 }
 
 group 'com.liao'
@@ -12,10 +11,9 @@ tasks.withType(JavaCompile) {
 }
 
 repositories {
+    maven{ url 'https://maven.aliyun.com/repository/public' }
     mavenLocal()
-    maven { url "https://maven.aliyun.com/repository/public" }
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
@@ -29,11 +27,9 @@ dependencies {
 
 }
 
-
-// See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2020.2.3'
-//    version '2020.3.1'
+//     version '2020.2.1'
+    version '2020.3.1'
     pluginName 'IDEA-EBook'
     updateSinceUntilBuild false
     sameSinceUntilBuild false

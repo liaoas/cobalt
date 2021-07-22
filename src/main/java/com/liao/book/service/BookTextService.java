@@ -27,10 +27,11 @@ public class BookTextService {
         try {
             // Document parse = Jsoup.parse(result1);
             Document parse = Jsoup.parse(new URL(url), 60000);
-            if (url.contains("biquge5200")) {
+            if (url.contains("xbiquge")) {
                 Element content = parse.getElementById("content");
                 DataCenter.textContent = textFormat(content);
-            } else if (url.contains("imiaobige")) {
+            }
+            else if (url.contains("imiaobige")) {
                 Element content = parse.getElementById("content");
                 String textContent = textFormat_miao(content);
                 String ad1 = "您可以在百度里搜索";
@@ -40,20 +41,30 @@ public class BookTextService {
                 if (adStart >= 0 && adEnd > 0)
                     textContent = textContent.replace(textContent.substring(adStart, adEnd), "");
                 DataCenter.textContent = textContent;
-            } else if (url.contains("taiuu")) {
+            }
+            else if (url.contains("taiuu")) {
                 Element content = parse.getElementById("htmlContent");
                 String textContent = textFormat(content);
                 textContent = textContent.replace("<太-悠悠>小说щww.taiuu.com", "");
                 textContent = textContent.replace("(全本小说网，www.TAIUU.COM)", "");
                 textContent = textContent.replace("(全本小说网，www.taiuu.com，；手机阅读，m.taiuu.com｛太}{悠悠}小说 щww{taiuu][com}", "");
                 DataCenter.textContent = textContent;
-            } else if (url.contains("biduoxs")) {
+            }
+            else if (url.contains("biduoxs")) {
                 Element content = parse.getElementById("content");
                 String textContent = textFormat(content);
                 textContent = textContent.replace("笔趣阁手机端", "");
                 textContent = textContent.replace("http://m.biquwu.cc", "");
                 textContent = textContent.replace("看更多诱惑小说请关注微信 npxswz    各种乡村 都市 诱惑     ", "");
                 textContent = textContent.replace("xh:.126.81.50", "");
+                DataCenter.textContent = textContent;
+            }
+            else if (url.contains("69shuba")) {
+                Element content = parse.getElementById("htmlContent");
+                String textContent = textFormat(content);
+                textContent = textContent.replace("xh211", "");
+                textContent = textContent.replace(" 69书吧 www.69shuba.cc，最快更新", "");
+                textContent = textContent.replace("最新章节！", "");
                 DataCenter.textContent = textContent;
             }
         } catch (Exception e) {

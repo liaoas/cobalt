@@ -83,7 +83,7 @@ public class FullScreenReading {
         // 章节跳转事件
         jumpButton.addActionListener(e -> {
 
-            if (DataCenter.nowChapterINdex < 1){
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
                 ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
                 return;
             }
@@ -117,7 +117,7 @@ public class FullScreenReading {
         // 同步阅读按钮
         synchronous.addActionListener(e -> {
 
-            if (DataCenter.nowChapterINdex < 1){
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
                 ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
                 return;
             }

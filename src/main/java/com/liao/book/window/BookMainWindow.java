@@ -181,6 +181,9 @@ public class BookMainWindow {
             else if (valueAt.toString().contains("biduoxs")) {
                 BookChapterService.searchBookChapterData_bqg2(valueAt.toString());
             }
+            if (valueAt.toString().contains("69shuba")) {
+                BookChapterService.searchBookChapterData_69shu(valueAt.toString());
+            }
             // 清空章节信息
             DataCenter.nowChapterINdex = 0;
 
@@ -225,7 +228,7 @@ public class BookMainWindow {
             // 根据下标跳转
             DataCenter.nowChapterINdex = chapterList.getSelectedIndex();
 
-            if (DataCenter.nowChapterINdex < 1){
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
                 ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
                 return;
             }
@@ -257,7 +260,7 @@ public class BookMainWindow {
 
         // 同步阅读按钮
         synchronous.addActionListener(e -> {
-            if (DataCenter.nowChapterINdex < 1){
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
                 ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
                 return;
             }

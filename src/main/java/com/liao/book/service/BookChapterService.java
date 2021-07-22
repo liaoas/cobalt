@@ -154,4 +154,36 @@ public class BookChapterService {
         }
     }
 
+    /**
+     * 69书吧书籍爬取
+     *
+     * @param link 链接
+     */
+    public static void searchBookChapterData_69shu(String link) {
+
+        DataCenter.chapters.clear();
+
+        String result1 = HttpUtil.get(link);
+        try {
+            Document parse = Jsoup.parse(result1);
+            Elements grid = parse.getElementsByClass("chapterlist").get(1).getElementsByTag("li");
+
+            for (Element element : grid) {
+                Chapter chapter = new Chapter();
+                // 链接
+                String attr = element.getElementsByTag("a").eq(0).attr("href");
+                // 名称
+                String name = element.getElementsByTag("a").eq(0).text();
+
+                chapter.setName(name);
+                chapter.setLink(link + attr);
+
+                DataCenter.chapters.add(chapter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -48,6 +48,8 @@ public class BookSearchService {
             case DataCenter.BI_QU_GE_2:
                 //笔趣阁2
                 return searchBookNameData_bqg2(searchBookName);
+            case DataCenter.SHU_BA_69:
+                return searchBookNameData_69shu(searchBookName);
         }
         return null;
     }
@@ -248,4 +250,56 @@ public class BookSearchService {
         }
         return bookDataList;
     }
+
+    /**
+     * 69书吧www.69shuba.cc
+     *
+     * @param searchBookName 书籍名称
+     * @return 搜索列表
+     */
+    private List<BookData> searchBookNameData_69shu(String searchBookName) {
+        List<BookData> bookDataList = new ArrayList<>();
+        String url = "https://www.69shuba.cc/modules/article/search.php";
+
+        UrlQuery urlQuery = new UrlQuery();
+        urlQuery.add("searchkey", searchBookName);
+        urlQuery.add("submit", "搜索");
+
+        UrlBuilder urlBuilder = UrlBuilder.ofHttp(url, Charset.forName("GBK")).setQuery(urlQuery);
+        String result1 = new HttpRequest(urlBuilder).charset("GBK").execute().body();
+
+        try {
+            Document parse = Jsoup.parse(result1);
+
+            Elements grid = parse.getElementsByTag("tr");
+
+            for (Element element : grid) {
+                BookData bookData = new BookData();
+                // 文章名称
+                String bookName = element.getElementsByTag("a").eq(0).text();
+                bookData.setBookName(bookName);
+                // 链接
+                String bookLink = element.getElementsByTag("a").eq(0).attr("href");
+                bookData.setBookLink(bookLink);
+                // 章节信息
+                String chapter = element.getElementsByTag("a").eq(1).text();
+                bookData.setChapter(chapter);
+                // 作者
+                String author = element.getElementsByTag("td").eq(2).text();
+                bookData.setAuthor(author);
+                // 更新时间
+                String updateDate = element.getElementsByTag("td").eq(4).text();
+                bookData.setUpdateDate(updateDate);
+
+                if (!"".equals(bookName)) {
+                    bookDataList.add(bookData);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bookDataList;
+    }
+
+
 }

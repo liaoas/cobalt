@@ -45,13 +45,21 @@ public class BookTextService {
                 textContent = textContent.replace("(全本小说网，www.taiuu.com，；手机阅读，m.taiuu.com｛太}{悠悠}小说 щww{taiuu][com}", "");
                 DataCenter.textContent = textContent;
             }
-            if(url.contains("biduoxs")){
+            if (url.contains("biduoxs")) {
                 Element content = parse.getElementById("content");
                 String textContent = textFormat(content);
                 textContent = textContent.replace("笔趣阁手机端", "");
                 textContent = textContent.replace("http://m.biquwu.cc", "");
                 textContent = textContent.replace("看更多诱惑小说请关注微信 npxswz    各种乡村 都市 诱惑     ", "");
                 textContent = textContent.replace("xh:.126.81.50", "");
+                DataCenter.textContent = textContent;
+            }
+            if (url.contains("69shuba")) {
+                Element content = parse.getElementById("htmlContent");
+                String textContent = textFormat(content);
+                textContent = textContent.replace("xh211", "");
+                textContent = textContent.replace(" 69书吧 www.69shuba.cc，最快更新", "");
+                textContent = textContent.replace("最新章节！", "");
                 DataCenter.textContent = textContent;
             }
         } catch (Exception e) {

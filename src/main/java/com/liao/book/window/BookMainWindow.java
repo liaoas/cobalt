@@ -175,6 +175,9 @@ public class BookMainWindow {
             if (valueAt.toString().contains("biduoxs")) {
                 BookChapterService.searchBookChapterData_bqg2(valueAt.toString());
             }
+            if (valueAt.toString().contains("69shuba")) {
+                BookChapterService.searchBookChapterData_69shu(valueAt.toString());
+            }
             // 清空章节信息
             DataCenter.nowChapterINdex = 0;
 

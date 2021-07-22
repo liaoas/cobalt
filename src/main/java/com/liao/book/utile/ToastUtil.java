@@ -28,8 +28,8 @@ public class ToastUtil {
      * @param type    类型
      */
     public static void notification2020_3Rear(@Nullable Project project, String content, NotificationType type) {
-        NotificationGroupManager.getInstance().getNotificationGroup("Custom Notification Group")
+       /* NotificationGroupManager.getInstance().getNotificationGroup("Custom Notification Group")
                 .createNotification(content, type)
-                .notify(project);
+                .notify(project);*/
     }
 }

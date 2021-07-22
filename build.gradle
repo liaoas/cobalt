@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.liao'
-version '1.3.1'
+version '1.3.2-2017.3'
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
@@ -28,8 +28,8 @@ dependencies {
 }
 
 intellij {
-//     version '2020.2.1'
-    version '2020.3.1'
+     version '2020.2.1'
+//    version '2020.3.1'
     pluginName 'IDEA-EBook'
     updateSinceUntilBuild false
     sameSinceUntilBuild false

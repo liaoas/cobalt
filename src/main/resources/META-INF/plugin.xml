@@ -1,10 +1,10 @@
 <idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.3.1</version>
+    <version>1.3.2-2017.3</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
-    <idea-version since-build="203" until-build="203.*"/>
+    <idea-version since-build="173" until-build="173.*"/>
 
     <description><![CDATA[
         IDEA EBool can be used to read books, can make your IntelliJ IDEA more interesting.
@@ -99,6 +99,13 @@
             <li>Add a new data source https://www.taiuu.com</li>
             <li>Thanks for the support of https://github.com/Suchbear</li>
         </ul>
+        <i>2021.7.23</i>
+        <ul>
+            <li>Add several data sources</li>
+            <li>Added data verification, SSL retry</li>
+            <li>Adapt to the new Notification API</li>
+            <li>Thanks for the support of https://github.com/Suchbear</li>
+        </ul>
                  ]]>
     </change-notes>
 
@@ -111,7 +118,7 @@
         <toolWindow id="IDEA Ebook" icon="/img/book.svg" factoryClass="com.liao.book.factory.BookMainWindowFactory"
                     anchor="right"/>
 
-        <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
+        <!--<notificationGroup id="Custom Notification Group" displayType="BALLOON"/>-->
     </extensions>
 
 

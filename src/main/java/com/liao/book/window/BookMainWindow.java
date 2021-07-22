@@ -2,6 +2,7 @@ package com.liao.book.window;
 
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.wm.ToolWindow;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
@@ -128,7 +129,7 @@ public class BookMainWindow {
             String bookSearchName = textSearchBar.getText();
 
             if (bookSearchName == null || bookSearchName.equals("")) {
-                ToastUtil.notification2020_3Rear(project, "请输入书籍名称", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "请输入书籍名称", MessageType.ERROR);
                 return;
             }
 
@@ -142,7 +143,7 @@ public class BookMainWindow {
             bookData = searchService.getBookNameData(searchType, bookSearchName);
 
             if (bookData == null || bookData.size() == 0) {
-                ToastUtil.notification2020_3Rear(project, "没有找到啊", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "没有找到啊", MessageType.ERROR);
                 return;
             }
 
@@ -158,7 +159,7 @@ public class BookMainWindow {
             int selectedRow = searchBookTable.getSelectedRow();
 
             if (selectedRow < 0) {
-                ToastUtil.notification2020_3Rear(project, "还没有选择要读哪本书", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "还没有选择要读哪本书", MessageType.ERROR);
                 return;
             }
 
@@ -204,7 +205,7 @@ public class BookMainWindow {
         btnOn.addActionListener(e -> {
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
-                ToastUtil.notification2020_3Rear(project, "已经是第一章了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是第一章了", MessageType.ERROR);
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
@@ -215,7 +216,7 @@ public class BookMainWindow {
         underOn.addActionListener(e -> {
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.notification2020_3Rear(project, "已经是最后一章了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是最后一章了", MessageType.ERROR);
                 return;
             }
 
@@ -229,7 +230,7 @@ public class BookMainWindow {
             DataCenter.nowChapterINdex = chapterList.getSelectedIndex();
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
-                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
                 return;
             }
 
@@ -241,7 +242,7 @@ public class BookMainWindow {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.notification2020_3Rear(project, "已经是最小的了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是最小的了", MessageType.ERROR);
                 return;
             }
 
@@ -261,7 +262,7 @@ public class BookMainWindow {
         // 同步阅读按钮
         synchronous.addActionListener(e -> {
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
-                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
                 return;
             }
             initReadText();

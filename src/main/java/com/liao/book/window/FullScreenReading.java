@@ -2,6 +2,7 @@ package com.liao.book.window;
 
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.wm.ToolWindow;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
@@ -62,7 +63,7 @@ public class FullScreenReading {
         // 上一章节跳转
         btnOn.addActionListener(e -> {
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
-                ToastUtil.notification2020_3Rear(project, "已经是第一章了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是第一章了", MessageType.ERROR);
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
@@ -72,7 +73,7 @@ public class FullScreenReading {
         // 下一章跳转
         underOn.addActionListener(e -> {
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.notification2020_3Rear(project, "已经是最后一章了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是最后一章了", MessageType.ERROR);
                 return;
             }
 
@@ -84,7 +85,7 @@ public class FullScreenReading {
         jumpButton.addActionListener(e -> {
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
-                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
                 return;
             }
 
@@ -98,7 +99,7 @@ public class FullScreenReading {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.notification2020_3Rear(project, "已经是最小的了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是最小的了", MessageType.ERROR);
                 return;
             }
 
@@ -118,7 +119,7 @@ public class FullScreenReading {
         synchronous.addActionListener(e -> {
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
-                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
                 return;
             }
 

@@ -178,7 +178,7 @@ public class BookSearchService {
      */
     private List<BookData> searchBookNameData_tai(String searchBookName) {
         bookDataList.clear();
-        String url = "https://www.taiuu.com/modules/article/search.php";
+        String url = "https://xqb5200.com/modules/article/search.php";
 
         UrlQuery urlQuery = new UrlQuery();
         urlQuery.add("searchkey", searchBookName);
@@ -189,7 +189,7 @@ public class BookSearchService {
         try {
             Document parse = Jsoup.parse(result1);
 
-            Elements grid = parse.getElementsByTag("tr");
+            Elements grid = parse.getElementsByTag("li");
 
             for (Element element : grid) {
                 BookData bookData = new BookData();
@@ -203,13 +203,13 @@ public class BookSearchService {
                 String chapter = element.getElementsByTag("a").eq(1).text();
                 bookData.setChapter(chapter);
                 // 作者
-                String author = element.getElementsByTag("td").eq(2).text();
+                String author = element.getElementsByClass("s4").eq(0).text();
                 bookData.setAuthor(author);
                 // 更新时间
-                String updateDate = element.getElementsByTag("td").eq(4).text();
+                String updateDate = element.getElementsByClass("s5").eq(0).text();
                 bookData.setUpdateDate(updateDate);
 
-                if (!"".equals(bookName)) {
+                if (!"".equals(bookName) && (!author.equals("") || !updateDate.equals(""))) {
                     bookDataList.add(bookData);
                 }
             }

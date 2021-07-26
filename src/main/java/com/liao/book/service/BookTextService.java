@@ -42,12 +42,11 @@ public class BookTextService {
                     textContent = textContent.replace(textContent.substring(adStart, adEnd), "");
                 DataCenter.textContent = textContent;
             }
-            else if (url.contains("taiuu")) {
-                Element content = parse.getElementById("htmlContent");
+            else if (url.contains("xqb5200")) {
+                Element content = parse.getElementById("content");
                 String textContent = textFormat(content);
-                textContent = textContent.replace("<太-悠悠>小说щww.taiuu.com", "");
-                textContent = textContent.replace("(全本小说网，www.TAIUU.COM)", "");
-                textContent = textContent.replace("(全本小说网，www.taiuu.com，；手机阅读，m.taiuu.com｛太}{悠悠}小说 щww{taiuu][com}", "");
+                textContent = textContent.replace("全本小说网 www.xqb5200.com，最快更新", "");
+                textContent = textContent.replace(" ！", "");
                 DataCenter.textContent = textContent;
             }
             else if (url.contains("biduoxs")) {

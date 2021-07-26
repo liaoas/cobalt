@@ -119,9 +119,12 @@ public class BookChapterService {
         String result1 = HttpUtil.get(link);
         try {
             Document parse = Jsoup.parse(result1);
-            Elements grid = parse.getElementsByTag("li");
+            int begin = parse.getElementsByTag("dl").get(0).getElementsByTag("dt").get(1).siblingIndex() + 1;
+            Elements grid = parse.getElementsByTag("dl").get(0).children();
 
-            for (Element element : grid) {
+            for (int i = begin; i < grid.size(); i++) {
+                Element element = grid.get(i);
+
                 Chapter chapter = new Chapter();
                 // 链接
                 String attr = element.getElementsByTag("a").eq(0).attr("href");
@@ -130,8 +133,9 @@ public class BookChapterService {
 
                 chapter.setName(name);
                 chapter.setLink(link + attr);
-
-                DataCenter.chapters.add(chapter);
+                if (!name.isEmpty()) {
+                    DataCenter.chapters.add(chapter);
+                }
             }
         } catch (Exception e) {
             if (index == 0) {

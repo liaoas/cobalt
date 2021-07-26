@@ -176,7 +176,7 @@ public class BookMainWindow {
             else if (valueAt.toString().contains("imiaobige")) {
                 BookChapterService.searchBookChapterData_miao(valueAt.toString());
             }
-            else if (valueAt.toString().contains("taiuu")) {
+            else if (valueAt.toString().contains("xqb5200")) {
                 BookChapterService.searchBookChapterData_tai(valueAt.toString());
             }
             else if (valueAt.toString().contains("biduoxs")) {

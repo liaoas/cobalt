@@ -3,7 +3,7 @@ package com.liao.book.utile;
 import com.intellij.notification.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
-import com.sun.istack.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class ToastUtil {
 

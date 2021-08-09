@@ -49,9 +49,12 @@ public class DataCenter {
     // 笔趣阁
     public static final String BI_QU_GE_2 = "笔趣阁";
 
-    //
+    // 69书吧
     public static final String SHU_BA_69 = "69书吧";
 
+    // 58小说
+    public static final String SHU_BA_58 = "58小说";
+
     // 数据源
-    public static final String[] dataSource = new String[]{BI_QU_GE, MI_BI_GE, QUAN_BEN, BI_QU_GE_2, SHU_BA_69};
+    public static final String[] dataSource = new String[]{BI_QU_GE, MI_BI_GE, QUAN_BEN, BI_QU_GE_2, SHU_BA_69,SHU_BA_58};
 }

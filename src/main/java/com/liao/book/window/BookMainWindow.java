@@ -1,6 +1,7 @@
 package com.liao.book.window;
 
 import com.intellij.notification.NotificationType;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.wm.ToolWindow;
@@ -122,7 +123,6 @@ public class BookMainWindow {
 
         // 搜索单击按钮
         btnSearch.addActionListener(e -> {
-            List<BookData> bookData;
             // 清空表格数据
             DataCenter.tableModel.setRowCount(0);
             // 执行搜索
@@ -140,17 +140,21 @@ public class BookMainWindow {
             BookSearchService.index = 2;
 
             // 根据数据源类型 搜索
-            bookData = searchService.getBookNameData(searchType, bookSearchName);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    List<BookData> bookData;
+                    bookData = searchService.getBookNameData(searchType, bookSearchName);
+                    if (bookData == null || bookData.size() == 0) {
+                        ToastUtil.notification2020_3Ago(project, "没有找到啊", MessageType.ERROR);
+                        return;
+                    }
 
-            if (bookData == null || bookData.size() == 0) {
-                ToastUtil.notification2020_3Ago(project, "没有找到啊", MessageType.ERROR);
-                return;
-            }
-
-            for (BookData bookDatum : bookData) {
-                DataCenter.tableModel.addRow(DataConvert.comvert(bookDatum));
-            }
-
+                    for (BookData bookDatum : bookData) {
+                        DataCenter.tableModel.addRow(DataConvert.comvert(bookDatum));
+                    }
+                }
+            }).start();
         });
 
         // 开始阅读按钮
@@ -169,36 +173,44 @@ public class BookMainWindow {
             // 重置重试次数
             BookChapterService.index = 2;
 
-            // 解析连接 执行章节爬取
-            if (valueAt.toString().contains("xbiquge")) {
-                BookChapterService.searchBookChapterData(valueAt.toString());
-            }
-            else if (valueAt.toString().contains("imiaobige")) {
-                BookChapterService.searchBookChapterData_miao(valueAt.toString());
-            }
-            else if (valueAt.toString().contains("xqb5200")) {
-                BookChapterService.searchBookChapterData_tai(valueAt.toString());
-            }
-            else if (valueAt.toString().contains("biduoxs")) {
-                BookChapterService.searchBookChapterData_bqg2(valueAt.toString());
-            }
-            if (valueAt.toString().contains("69shuba")) {
-                BookChapterService.searchBookChapterData_69shu(valueAt.toString());
-            }
-            // 清空章节信息
-            DataCenter.nowChapterINdex = 0;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // 解析连接 执行章节爬取
+                    if (valueAt.toString().contains("xbiquge")) {
+                        BookChapterService.searchBookChapterData(valueAt.toString());
+                    } else if (valueAt.toString().contains("imiaobige")) {
+                        BookChapterService.searchBookChapterData_miao(valueAt.toString());
+                    } else if (valueAt.toString().contains("xqb5200")) {
+                        BookChapterService.searchBookChapterData_tai(valueAt.toString());
+                    } else if (valueAt.toString().contains("biduoxs")) {
+                        BookChapterService.searchBookChapterData_bqg2(valueAt.toString());
+                    } else if (valueAt.toString().contains("69shuba")) {
+                        BookChapterService.searchBookChapterData_69shu(valueAt.toString());
+                    } else if (valueAt.toString().contains("wbxsw")) {
+                        BookChapterService.searchBookChapterData_58(valueAt.toString());
+                    }
+                    ApplicationManager.getApplication().runReadAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 清空章节信息
+                            DataCenter.nowChapterINdex = 0;
 
-            // 清空下拉列表
-            chapterList.removeAllItems();
+                            // 清空下拉列表
+                            chapterList.removeAllItems();
 
-            // 加载下拉列表
-            for (Chapter chapter : DataCenter.chapters) {
-                chapterList.addItem(chapter.getName());
-            }
+                            // 加载下拉列表
+                            for (Chapter chapter : DataCenter.chapters) {
+                                chapterList.addItem(chapter.getName());
+                            }
 
 
-            // 解析当前章节内容
-            initReadText();
+                            // 解析当前章节内容
+                            initReadText();
+                        }
+                    });
+                }
+            }).start();
         });
 
         // 上一章节跳转
@@ -229,7 +241,7 @@ public class BookMainWindow {
             // 根据下标跳转
             DataCenter.nowChapterINdex = chapterList.getSelectedIndex();
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
                 ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
                 return;
             }
@@ -261,7 +273,7 @@ public class BookMainWindow {
 
         // 同步阅读按钮
         synchronous.addActionListener(e -> {
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
                 ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
                 return;
             }
@@ -287,15 +299,25 @@ public class BookMainWindow {
         // 重置重试次数
         BookTextService.index = 2;
 
-        // 内容
-        BookTextService.searchBookChapterData(chapter.getLink());
-        // 章节内容赋值
-        textContent.setText(DataCenter.textContent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 内容
+                BookTextService.searchBookChapterData(chapter.getLink());
+                ApplicationManager.getApplication().runReadAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 章节内容赋值
+                        textContent.setText(DataCenter.textContent);
 
-        // 设置下拉框的值
-        chapterList.setSelectedItem(chapter.getName());
-        // 回到顶部
-        textContent.setCaretPosition(1);
+                        // 设置下拉框的值
+                        chapterList.setSelectedItem(chapter.getName());
+                        // 回到顶部
+                        textContent.setCaretPosition(1);
+                    }
+                });
+            }
+        }).start();
 
     }
 

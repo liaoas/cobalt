@@ -30,8 +30,7 @@ public class BookTextService {
             if (url.contains("xbiquge")) {
                 Element content = parse.getElementById("content");
                 DataCenter.textContent = textFormat(content);
-            }
-            else if (url.contains("imiaobige")) {
+            } else if (url.contains("imiaobige")) {
                 Element content = parse.getElementById("content");
                 String textContent = textFormat_miao(content);
                 String ad1 = "您可以在百度里搜索";
@@ -41,15 +40,13 @@ public class BookTextService {
                 if (adStart >= 0 && adEnd > 0)
                     textContent = textContent.replace(textContent.substring(adStart, adEnd), "");
                 DataCenter.textContent = textContent;
-            }
-            else if (url.contains("xqb5200")) {
+            } else if (url.contains("xqb5200")) {
                 Element content = parse.getElementById("content");
                 String textContent = textFormat(content);
                 textContent = textContent.replace("全本小说网 www.xqb5200.com，最快更新", "");
                 textContent = textContent.replace(" ！", "");
                 DataCenter.textContent = textContent;
-            }
-            else if (url.contains("biduoxs")) {
+            } else if (url.contains("biduoxs")) {
                 Element content = parse.getElementById("content");
                 String textContent = textFormat(content);
                 textContent = textContent.replace("笔趣阁手机端", "");
@@ -57,13 +54,20 @@ public class BookTextService {
                 textContent = textContent.replace("看更多诱惑小说请关注微信 npxswz    各种乡村 都市 诱惑     ", "");
                 textContent = textContent.replace("xh:.126.81.50", "");
                 DataCenter.textContent = textContent;
-            }
-            else if (url.contains("69shuba")) {
+            } else if (url.contains("69shuba")) {
                 Element content = parse.getElementById("htmlContent");
                 String textContent = textFormat(content);
                 textContent = textContent.replace("xh211", "");
                 textContent = textContent.replace(" 69书吧 www.69shuba.cc，最快更新", "");
                 textContent = textContent.replace("最新章节！", "");
+                DataCenter.textContent = textContent;
+            } else if (url.contains("wbxsw")) {
+                Element content = parse.getElementById("content");
+                String textContent = textFormat(content);
+                textContent = textContent.replace("提供无弹窗全字在线阅读，更新速度更快章质量更好，如果您觉得不错就多多分享本站!谢谢各位读者的支持!", "");
+                textContent = textContent.replace("高速首发", "");
+                textContent = textContent.replace("最新章节", "");
+                textContent = textContent.replace("地址为如果你觉的本章节还不错的话请不要忘记向您QQ群和微博里的朋友推荐哦！", "");
                 DataCenter.textContent = textContent;
             }
         } catch (Exception e) {

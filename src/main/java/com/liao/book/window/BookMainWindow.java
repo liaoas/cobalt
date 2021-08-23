@@ -189,6 +189,8 @@ public class BookMainWindow {
                         BookChapterService.searchBookChapterData_69shu(valueAt.toString());
                     } else if (valueAt.toString().contains("wbxsw")) {
                         BookChapterService.searchBookChapterData_58(valueAt.toString());
+                    } else if (valueAt.toString().contains("maxreader")) {
+                        BookChapterService.searchBookChapterData_top(valueAt.toString());
                     }
                     ApplicationManager.getApplication().runReadAction(new Runnable() {
                         @Override

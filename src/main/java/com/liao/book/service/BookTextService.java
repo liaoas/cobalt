@@ -69,6 +69,13 @@ public class BookTextService {
                 textContent = textContent.replace("最新章节", "");
                 textContent = textContent.replace("地址为如果你觉的本章节还不错的话请不要忘记向您QQ群和微博里的朋友推荐哦！", "");
                 DataCenter.textContent = textContent;
+            } else if (url.contains("maxreader")) {
+                Element content = parse.getElementsByClass("pt-read-text").get(0);
+                String textContent = textFormat_miao(content);
+                textContent = textContent.replace("欢迎广大书友光临阅读，最新、最快、最火的连载作品尽在！手机用户请到m.阅读。  百度一下“", "\n");
+                textContent = textContent.replace("百度一下“", "\n");
+                textContent = textContent.replace("顶点小说www.maxreader.net”最新章节第一时间免费阅读。", "");
+                DataCenter.textContent = textContent;
             }
         } catch (Exception e) {
             if (index == 0) {

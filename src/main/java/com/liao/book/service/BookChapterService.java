@@ -254,5 +254,41 @@ public class BookChapterService {
         }
     }
 
+    /**
+     * 58小说书籍爬取
+     *
+     * @param link 链接
+     */
+    public static void searchBookChapterData_top(String link) {
 
+        DataCenter.chapters.clear();
+
+        String result1 = HttpUtil.get(link);
+        try {
+            Document parse = Jsoup.parse(result1);
+            Elements grid = parse.getElementById("readerlists").getElementsByTag("li");
+
+            for (Element element : grid) {
+                Chapter chapter = new Chapter();
+                // 链接
+                String attr = element.getElementsByTag("a").eq(0).attr("href");
+                // 名称
+                String name = element.getElementsByTag("a").eq(0).text();
+
+                chapter.setName(name);
+                chapter.setLink("https://www.maxreader.net" + attr);
+
+                if (!name.equals("")) {
+                    DataCenter.chapters.add(chapter);
+                }
+            }
+        } catch (Exception e) {
+            if (index == 0) {
+                return;
+            }
+
+            index--;
+            searchBookChapterData_top(link);
+        }
+    }
 }

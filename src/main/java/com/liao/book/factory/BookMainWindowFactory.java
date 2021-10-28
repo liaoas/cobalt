@@ -36,5 +36,4 @@ public class BookMainWindowFactory implements ToolWindowFactory, DumbAware {
         new FullScreenReadingFaction().createToolWindowContent(project, toolWindow);
     }
 
-
 }

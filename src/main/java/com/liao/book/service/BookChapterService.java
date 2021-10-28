@@ -30,7 +30,7 @@ public class BookChapterService {
      */
     public static void searchBookChapterData(String link) {
 
-        // String url = "http://www.xbiquge.la/25/25430/";
+        // String url = "https://www.xbiquge.la/"+link;
         DataCenter.chapters.clear();
         String result1 = HttpUtil.get(link);
         try {
@@ -255,7 +255,7 @@ public class BookChapterService {
     }
 
     /**
-     * 58小说书籍爬取
+     * 定点小说
      *
      * @param link 链接
      */

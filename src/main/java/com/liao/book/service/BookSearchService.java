@@ -39,13 +39,12 @@ public class BookSearchService {
     /**
      * 判断数据源
      *
-     * @param searchType     类型
      * @param searchBookName 书名
      * @return 结果
      */
-    public List<BookData> getBookNameData(String searchType, String searchBookName) {
+    public List<BookData> getBookNameData(String searchBookName) {
 
-        switch (searchType) {
+        switch (DataCenter.searchType) {
             case DataCenter.BI_QU_GE:
                 // 笔趣阁
                 return searchBookNameData(searchBookName);

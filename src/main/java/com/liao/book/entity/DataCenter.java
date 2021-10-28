@@ -37,6 +37,9 @@ public class DataCenter {
     // 章节内容
     public static String textContent;
 
+    // 全局搜索类型
+    public static String searchType;
+
     // 笔趣阁
     public static final String BI_QU_GE = "新笔趣阁";
 
@@ -59,5 +62,35 @@ public class DataCenter {
     public static final String SHU_TOP = "顶点小说";
 
     // 数据源
-    public static final String[] dataSource = new String[]{BI_QU_GE, MI_BI_GE, QUAN_BEN, BI_QU_GE_2, SHU_BA_69, SHU_BA_58, SHU_TOP};
+    public static final String[] dataSource = new String[]{BI_QU_GE, MI_BI_GE, QUAN_BEN, BI_QU_GE_2, SHU_BA_69
+            , SHU_BA_58, SHU_TOP};
+
+    /*****************组件悬浮提示*****************/
+    // 搜索按钮
+    public static final String searchBtn = "搜索";
+
+    // 开始阅读
+    public static final String startRead = "开始阅读";
+
+    // 上一章
+    public static final String btnOn = "上一章";
+
+    // 下一章
+    public static final String underOn = "下一章";
+
+    // 跳转章节
+    public static final String jumpButton = "章节跳转";
+
+    // 文字放大
+    public static final String fontSizeDown = "放大";
+
+    // 字体缩小
+    public static final String fontSizeUp = "缩小";
+
+    // 同步阅读
+    public static final String synchronous = "同步";
+
+    // 滚动间距
+    public static final String scrollSpacing = "阅读滚动间距";
+
 }

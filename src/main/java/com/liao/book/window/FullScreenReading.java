@@ -10,6 +10,8 @@ import com.liao.book.service.BookTextService;
 import com.liao.book.utile.ToastUtil;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class FullScreenReading {
@@ -44,6 +46,10 @@ public class FullScreenReading {
     // 同步阅读
     private JButton synchronous;
 
+
+    // 滚动间距
+    private JSlider scrollSpacing;
+
     // 字体默认大小
     private Integer fontSize = 12;
 
@@ -52,18 +58,47 @@ public class FullScreenReading {
         return fullScreenJpanel;
     }
 
-    public FullScreenReading(Project project, ToolWindow toolWindow) {
 
-        // 数据阅读 滚动步长为2
+    // 初始化数据
+    private void init() {
+
+        // 页面滚动步长
         JScrollBar jScrollBar = new JScrollBar();
+        // 滚动步长为2
         jScrollBar.setMaximum(2);
         paneTextContent.setVerticalScrollBar(jScrollBar);
+
+        chapterList.setPreferredSize(new Dimension(1200, 20));
+
+        // 设置设备滑块 最大最小值
+        scrollSpacing.setMinimum(0);
+        scrollSpacing.setMaximum(20);
+
+        scrollSpacing.setValue(2);
+        // 设置滑块刻度间距
+        scrollSpacing.setMajorTickSpacing(2);
+
+        // 显示标签
+        scrollSpacing.setPaintLabels(true);
+        scrollSpacing.setPaintTicks(true);
+        scrollSpacing.setPaintTrack(true);
+
+
+        // 加载提示信息
+        setComponentTooltip();
+    }
+
+    // 页面打开方法
+    public FullScreenReading(Project project, ToolWindow toolWindow) {
+
+        // 初始化信息
+        init();
 
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
-                ToastUtil.notification2020_3Ago(project, "已经是第一章了", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "已经是第一章了", NotificationType.ERROR);
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
@@ -73,7 +108,7 @@ public class FullScreenReading {
         // 下一章跳转
         underOn.addActionListener(e -> {
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.notification2020_3Ago(project, "已经是最后一章了", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "已经是最后一章了", NotificationType.ERROR);
                 return;
             }
 
@@ -84,8 +119,8 @@ public class FullScreenReading {
         // 章节跳转事件
         jumpButton.addActionListener(e -> {
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
-                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
+                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
                 return;
             }
 
@@ -99,7 +134,7 @@ public class FullScreenReading {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.notification2020_3Ago(project, "已经是最小的了", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "已经是最小的了", NotificationType.ERROR);
                 return;
             }
 
@@ -118,12 +153,29 @@ public class FullScreenReading {
         // 同步阅读按钮
         synchronous.addActionListener(e -> {
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0){
-                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
+            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
+                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
                 return;
             }
 
             startReading();
+        });
+
+        // 滑块滑动事件
+        scrollSpacing.addChangeListener(new ChangeListener() {
+            /**
+             * Invoked when the target of the listener has changed its state.
+             *
+             * @param e a ChangeEvent object
+             */
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider jSlider = (JSlider) e.getSource();
+                // 判断滑块是否停止
+                if (!jSlider.getValueIsAdjusting()) {
+                    paneTextContent.getVerticalScrollBar().setUnitIncrement(jSlider.getValue());
+                }
+            }
         });
     }
 
@@ -140,9 +192,29 @@ public class FullScreenReading {
         initReadText();
     }
 
+    /**
+     * 初始化页面组件提示信息
+     */
+    public void setComponentTooltip() {
+        // 上一章
+        btnOn.setToolTipText(DataCenter.btnOn);
+        // 下一章
+        underOn.setToolTipText(DataCenter.underOn);
+        // 放大
+        fontSizeDown.setToolTipText(DataCenter.fontSizeDown);
+        // 缩小
+        fontSizeUp.setToolTipText(DataCenter.fontSizeUp);
+        // 同步阅读
+        synchronous.setToolTipText(DataCenter.synchronous);
+        // 滚动间距
+        scrollSpacing.setToolTipText(DataCenter.scrollSpacing);
+
+    }
+
 
     // 初始化阅读信息
     public void initReadText() {
+
         // 清空书本表格
         Chapter chapter = DataCenter.chapters.get(DataCenter.nowChapterINdex);
 

@@ -1,25 +1,29 @@
 package com.liao.book.window;
 
-import com.intellij.notification.NotificationType;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.ui.AnimatedIcon;
+import com.intellij.openapi.wm.ex.ToolWindowManagerListener;
+import com.intellij.ui.content.Content;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
+import com.liao.book.factory.BeanFactory;
 import com.liao.book.service.BookChapterService;
 import com.liao.book.service.BookSearchService;
 import com.liao.book.service.BookTextService;
+import com.liao.book.service.impl.BookChapterServiceImpl;
+import com.liao.book.service.impl.BookSearchServiceImpl;
+import com.liao.book.service.impl.BookTextServiceImpl;
 import com.liao.book.utile.DataConvert;
 import com.liao.book.utile.ToastUtil;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -73,26 +77,38 @@ public class BookMainWindow {
     // 表格外围
     private JScrollPane tablePane;
 
-    // 小说内容盒子
-    private JPanel textJPanel;
-
     // 同步阅读
     private JButton synchronous;
 
     // 字体默认大小
     private Integer fontSize = 12;
 
-    // 全屏阅读控制
-    private Boolean isShow = true;
-
-    // 表格大小
-    private double tableHeight = 0;
-
     // 搜索下拉列表数据源
-    private JComboBox sourceDropdown;
+    private JComboBox<String> sourceDropdown;
 
     // 滚动间距
     private JSlider scrollSpacing;
+
+    // 全局模块对象
+    private final Project project;
+
+    // 搜索书籍名称
+    private String bookSearchName;
+
+    // 书籍链接
+    private String valueAt;
+
+    // 内容爬虫
+    static BookSearchService searchService = (BookSearchServiceImpl) BeanFactory
+            .getBean("BookSearchServiceImpl");
+
+
+    static BookTextService textService = (BookTextServiceImpl) BeanFactory
+            .getBean("BookTextServiceImpl");
+
+    // 章节爬虫
+    static BookChapterService chapterService = (BookChapterServiceImpl) BeanFactory
+            .getBean("BookChapterServiceImpl");
 
 
     // 初始化数据
@@ -138,182 +154,128 @@ public class BookMainWindow {
         setComponentTooltip();
     }
 
-
-    // 页面打开方法
+    // 页面初始化加载
     public BookMainWindow(Project project, ToolWindow toolWindow) {
 
+        if (toolWindow.isVisible()) {
+            System.out.println("BookMainWindow");
+        }else {
+            System.out.println(">>BookMainWindow");
+        }
+
+        this.project = project;
         // 执行初始化表格
         init();
-
-        // 书籍处理
-        BookSearchService searchService = new BookSearchService();
 
         // 搜索单击按钮
         btnSearch.addActionListener(e -> {
 
-            JLabel label = new JLabel("Loading...", new AnimatedIcon.Default(), SwingConstants.RIGHT);
+            // 等待鼠标样式
+            setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             // 清空表格数据
             DataCenter.tableModel.setRowCount(0);
-            // 执行搜索
-            String bookSearchName = textSearchBar.getText();
+            // 获取搜索输入文本
+            bookSearchName = textSearchBar.getText();
 
             if (bookSearchName == null || bookSearchName.equals("")) {
-                ToastUtil.notification2020_3Rear(project, "请输入书籍名称", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "请输入书籍名称", MessageType.ERROR);
+                // 等待鼠标样式
+                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
 
             // 获取数据源类型
-            DataCenter.searchType = sourceDropdown.getSelectedItem().toString();
+            DataCenter.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
 
             // 重置 重试次数
-            BookSearchService.index = 2;
+            BookSearchServiceImpl.index = 2;
 
             // 根据数据源类型 搜索
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    List<BookData> bookData;
-                    bookData = searchService.getBookNameData(bookSearchName);
-                    if (bookData == null || bookData.size() == 0) {
-                        ToastUtil.notification2020_3Rear(project, "没有找到啊", NotificationType.ERROR);
-                        return;
-                    }
-
-                    for (BookData bookDatum : bookData) {
-                        DataCenter.tableModel.addRow(DataConvert.comvert(bookDatum));
-                    }
-                }
-            }).start();
+            new SearchBooks().execute();
         });
 
         // 开始阅读按钮
         opneBook.addActionListener(e -> {
+
+            // 等待鼠标样式
+            setTheMouseStyle(Cursor.WAIT_CURSOR);
+
             // 获取选中行数据
             int selectedRow = searchBookTable.getSelectedRow();
 
             if (selectedRow < 0) {
-                ToastUtil.notification2020_3Rear(project, "还没有选择要读哪本书", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "还没有选择要读哪本书", MessageType.ERROR);
+                // 恢复默认鼠标样式
+                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
 
             // 获取书籍链接
-            String valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
+            valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
 
             // 重置重试次数
-            BookChapterService.index = 2;
+            BookChapterServiceImpl.index = 2;
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
+            // 执行开始阅读
+            new StartReading().execute();
 
-                    switch (DataCenter.searchType) {
-                        case DataCenter.BI_QU_GE:
-                            // 笔趣阁
-                            BookChapterService.searchBookChapterData(valueAt);
-                            break;
-                        case DataCenter.MI_BI_GE:
-                            // 妙笔阁
-                            BookChapterService.searchBookChapterData_miao(valueAt);
-                            break;
-                        case DataCenter.QUAN_BEN:
-                            // 全本小说网
-                            BookChapterService.searchBookChapterData_tai(valueAt);
-                            break;
-                        case DataCenter.BI_QU_GE_2:
-                            // 笔趣阁2
-                            BookChapterService.searchBookChapterData_bqg2(valueAt);
-                            break;
-                        case DataCenter.SHU_BA_69:
-                            // 69书吧
-                            BookChapterService.searchBookChapterData_69shu(valueAt);
-                            break;
-                        case DataCenter.SHU_BA_58:
-                            // 58小说
-                            BookChapterService.searchBookChapterData_58(valueAt);
-                            break;
-                        case DataCenter.SHU_TOP:
-                            // 顶点小说
-                            BookChapterService.searchBookChapterData_top(valueAt);
-                            break;
-                    }
-
-
-                    // 解析连接 执行章节爬取
-                    /*if (valueAt.contains("xbiquge")) {
-                        BookChapterService.searchBookChapterData(valueAt);
-                    } else if (valueAt.contains("imiaobige")) {
-                        BookChapterService.searchBookChapterData_miao(valueAt);
-                    } else if (valueAt.contains("xqb5200")) {
-                        BookChapterService.searchBookChapterData_tai(valueAt);
-                    } else if (valueAt.contains("biduoxs")) {
-                        BookChapterService.searchBookChapterData_bqg2(valueAt);
-                    } else if (valueAt.contains("69shuba")) {
-                        BookChapterService.searchBookChapterData_69shu(valueAt);
-                    } else if (valueAt.contains("wbxsw")) {
-                        BookChapterService.searchBookChapterData_58(valueAt);
-                    } else if (valueAt.contains("maxreader")) {
-                        BookChapterService.searchBookChapterData_top(valueAt);
-                    }*/
-
-
-                    ApplicationManager.getApplication().runReadAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 清空章节信息
-                            DataCenter.nowChapterINdex = 0;
-
-                            // 清空下拉列表
-                            chapterList.removeAllItems();
-
-                            // 加载下拉列表
-                            for (Chapter chapter : DataCenter.chapters) {
-                                chapterList.addItem(chapter.getName());
-                            }
-
-                            // 解析当前章节内容
-                            initReadText(project);
-                        }
-                    });
-                }
-            }).start();
         });
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
+            // 等待鼠标样式
+            setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
-                ToastUtil.notification2020_3Rear(project, "已经是第一章了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是第一章了", MessageType.ERROR);
+                // 恢复默认鼠标样式
+                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
-            initReadText(project);
+            // 加载阅读信息
+            new LoadChapterInformation().execute();
         });
 
         // 下一章跳转
         underOn.addActionListener(e -> {
 
+            // 等待鼠标样式
+            setTheMouseStyle(Cursor.WAIT_CURSOR);
+
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.notification2020_3Rear(project, "已经是最后一章了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是最后一章了", MessageType.ERROR);
+                // 恢复默认鼠标样式
+                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
 
             // 章节下标加一
             DataCenter.nowChapterINdex = DataCenter.nowChapterINdex + 1;
-            initReadText(project);
+
+            // 加载阅读信息
+            new LoadChapterInformation().execute();
         });
 
         // 章节跳转事件
         JumpButton.addActionListener(e -> {
+
+            // 等待鼠标样式
+            setTheMouseStyle(Cursor.WAIT_CURSOR);
+
             // 根据下标跳转
             DataCenter.nowChapterINdex = chapterList.getSelectedIndex();
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
-                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
+                // 恢复默认鼠标样式
+                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
 
-            initReadText(project);
+            // 加载阅读信息
+            new LoadChapterInformation().execute();
         });
 
 
@@ -321,93 +283,164 @@ public class BookMainWindow {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.notification2020_3Rear(project, "已经是最小的了", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "已经是最小的了", MessageType.ERROR);
                 return;
             }
 
             // 调小字体
             fontSize--;
-            textContent.setFont(new Font("", 1, fontSize));
+            textContent.setFont(new Font("", Font.BOLD, fontSize));
         });
 
         // 字体增大按钮
         fontSizeUp.addActionListener(e -> {
             // 调大字体
             fontSize++;
-            textContent.setFont(new Font("", 1, fontSize));
+            textContent.setFont(new Font("", Font.BOLD, fontSize));
         });
-
 
         // 同步阅读按钮
         synchronous.addActionListener(e -> {
+
+            // 等待鼠标样式
+            setTheMouseStyle(Cursor.WAIT_CURSOR);
+
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
-                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
+                // 恢复默认鼠标样式
+                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
-            initReadText(project);
+            // 加载阅读信息
+            new LoadChapterInformation().execute();
         });
 
-
         // 滑块滑动事件
-        scrollSpacing.addChangeListener(new ChangeListener() {
-            /**
-             * Invoked when the target of the listener has changed its state.
-             *
-             * @param e a ChangeEvent object
-             */
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSlider jSlider = (JSlider) e.getSource();
-                // 判断滑块是否停止
-                if (!jSlider.getValueIsAdjusting()) {
-                    paneTextContent.getVerticalScrollBar().setUnitIncrement(jSlider.getValue());
-                }
+        scrollSpacing.addChangeListener(e -> {
+            JSlider jSlider = (JSlider) e.getSource();
+            // 判断滑块是否停止
+            if (!jSlider.getValueIsAdjusting()) {
+                paneTextContent.getVerticalScrollBar().setUnitIncrement(jSlider.getValue());
             }
         });
     }
 
+    /**
+     * 异步GUI 线程加载 书籍搜索
+     */
+    final class SearchBooks extends SwingWorker<Void, List<BookData>> {
+        @Override
+        protected Void doInBackground() {
+            List<BookData> bookData = searchService.getBookNameData(bookSearchName);
 
-    // 初始化阅读信息
-    public void initReadText(Project project) {
+            if (bookData == null || bookData.size() == 0) {
+                ToastUtil.notification2020_3Ago(project, "没有找到啊", MessageType.ERROR);
+                return null;
+            }
 
-        // 清空书本表格
-        // DataCenter.tableModel.setRowCount(0);
-        Chapter chapter = DataCenter.chapters.get(DataCenter.nowChapterINdex);
-
-        // 当前章节名称
-        // CurrentChapterName.setText(chapter.getName());
-        // 章节下标
-        // textJump.setText((DataCenter.nowChapterINdex + 1) + "");
-
-        // 重置重试次数
-        BookTextService.index = 2;
-
-        // 内容
-        BookTextService.searchBookChapterData(chapter.getLink());
-
-        if (DataCenter.textContent == null) {
-            ToastUtil.notification2020_3Rear(project, "章节内容为空", NotificationType.ERROR);
+            //将当前进度信息加入chunks中
+            publish(bookData);
+            return null;
         }
 
-        // 章节内容赋值
-        textContent.setText(DataCenter.textContent);
-        // 设置下拉框的值
-        chapterList.setSelectedItem(chapter.getName());
-        // 回到顶部
-        textContent.setCaretPosition(1);
-
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                ApplicationManager.getApplication().runReadAction(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
+        @Override
+        protected void process(List<List<BookData>> chunks) {
+            List<BookData> bookData = chunks.get(0);
+            for (BookData bookDatum : bookData) {
+                DataCenter.tableModel.addRow(DataConvert.comvert(bookDatum));
             }
-        }).start();*/
+        }
+
+        @Override
+        protected void done() {
+            // 恢复默认鼠标样式
+            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+        }
+    }
+
+    /**
+     * 异步GUI 线程加载 开始阅读
+     */
+    final class StartReading extends SwingWorker<Void, Void> {
+
+        @Override
+        protected Void doInBackground() {
+            chapterService.getBookChapterByType(valueAt);
+            return null;
+        }
+
+        @Override
+        protected void done() {
+            // 清空章节信息
+            DataCenter.nowChapterINdex = 0;
+
+            // 清空下拉列表
+            chapterList.removeAllItems();
+
+            // 加载下拉列表
+            for (Chapter chapter : DataCenter.chapters) {
+                chapterList.addItem(chapter.getName());
+            }
+
+            // 解析当前章节内容
+            new LoadChapterInformation().execute();
+
+            // 恢复默认鼠标样式
+            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+        }
+    }
+
+    /**
+     * 异步GUI 线程加载 加载章节信息
+     */
+    final class LoadChapterInformation extends SwingWorker<Void, Chapter> {
+        @Override
+        protected Void doInBackground() {
+            // 清空书本表格
+            Chapter chapter = DataCenter.chapters.get(DataCenter.nowChapterINdex);
+
+            // 重置重试次数
+            BookTextServiceImpl.index = 2;
+
+            // 内容
+            textService.searchBookChapterData(chapter.getLink());
+
+            if (DataCenter.textContent == null) {
+                ToastUtil.notification2020_3Ago(project, "章节内容为空", MessageType.ERROR);
+                return null;
+            }
+
+            //将当前进度信息加入chunks中
+            publish(chapter);
+            return null;
+        }
+
+        @Override
+        protected void process(List<Chapter> chapters) {
+            Chapter chapter = chapters.get(0);
+            // 章节内容赋值
+            textContent.setText(DataCenter.textContent);
+            // 设置下拉框的值
+            chapterList.setSelectedItem(chapter.getName());
+            // 回到顶部
+            textContent.setCaretPosition(1);
+        }
+
+        @Override
+        protected void done() {
+            // 恢复默认鼠标样式
+            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+        }
+    }
+
+    /**
+     * 加载页面鼠标样式
+     *
+     * @param type 鼠标样式 {@link Cursor}
+     */
+    public void setTheMouseStyle(int type) {
+        Cursor cursor = new Cursor(type);
+        bookMainJPanel.setCursor(cursor);
     }
 
     /**
@@ -443,7 +476,5 @@ public class BookMainWindow {
 
     private void createUIComponents() {
     }
-
-
 }
 

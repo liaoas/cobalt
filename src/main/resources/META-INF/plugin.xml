@@ -1,10 +1,10 @@
 <idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.4.0-2021.2</version>
+    <version>1.4.0-2018.2</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
-    <idea-version since-build="212" until-build="212.*"/>
+    <idea-version since-build="202" until-build="202.*"/>
 
     <description><![CDATA[
         IDEA EBool can be used to read books, can make your IntelliJ IDEA more interesting.
@@ -117,7 +117,7 @@
                  ]]>
     </change-notes>
 
-    <!--<idea-version since-build="203.4449.2"/>-->
+    <!--<idea-version since-build="193" until-build="193.*"/>-->
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.platform</depends>
@@ -126,12 +126,11 @@
         <toolWindow id="IDEA Ebook" icon="/img/book.svg" factoryClass="com.liao.book.factory.BookMainWindowFactory"
                     anchor="right"/>
 
-        <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
+        <!--<notificationGroup id="Custom Notification Group" displayType="BALLOON"/>-->
     </extensions>
 
 
     <actions>
     </actions>
-
 
 </idea-plugin>

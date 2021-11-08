@@ -24,7 +24,7 @@ public class FullScreenReadingFaction implements ToolWindowFactory {
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(noteListWindow.getBookMainJPanel(), "沉浸", false);
+        Content content = contentFactory.createContent(noteListWindow.getBookMainJPanel(), "\uD83D\uDD32", false);
 
         // 给toolWindows设置内容
         toolWindow.getContentManager().addContent(content);

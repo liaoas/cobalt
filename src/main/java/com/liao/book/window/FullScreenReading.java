@@ -59,7 +59,7 @@ public class FullScreenReading {
     private Integer fontSize = 12;
 
     // 全局模块对象
-    private Project project;
+    private final Project project;
 
     // 内容爬虫
     static BookTextService textService = (BookTextServiceImpl) BeanFactory
@@ -158,7 +158,6 @@ public class FullScreenReading {
             new LoadChapterInformation().execute();
         });
 
-
         // 字号调小按钮单击事件
         fontSizeDown.addActionListener(e -> {
 
@@ -169,14 +168,14 @@ public class FullScreenReading {
 
             // 调小字体
             fontSize--;
-            textContent.setFont(new Font("", 1, fontSize));
+            textContent.setFont(new Font("", Font.BOLD, fontSize));
         });
 
         // 字体增大按钮
         fontSizeUp.addActionListener(e -> {
             // 调大字体
             fontSize++;
-            textContent.setFont(new Font("", 1, fontSize));
+            textContent.setFont(new Font("", Font.BOLD, fontSize));
         });
 
         // 同步阅读按钮
@@ -194,11 +193,6 @@ public class FullScreenReading {
 
         // 滑块滑动事件
         scrollSpacing.addChangeListener(new ChangeListener() {
-            /**
-             * Invoked when the target of the listener has changed its state.
-             *
-             * @param e a ChangeEvent object
-             */
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSlider jSlider = (JSlider) e.getSource();
@@ -222,7 +216,6 @@ public class FullScreenReading {
         // 加载阅读信息
         new LoadChapterInformation().execute();
     }
-
 
     /**
      * 异步GUI 线程加载 加载章节信息
@@ -295,7 +288,6 @@ public class FullScreenReading {
         scrollSpacing.setToolTipText(DataCenter.scrollSpacing);
 
     }
-
 
     // 初始化阅读信息
     public void initReadText() {

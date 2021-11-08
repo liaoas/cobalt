@@ -1,13 +1,6 @@
 package com.liao.book.factory;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-import org.jaxen.dom4j.Dom4jXPath;
-
-import java.io.File;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -44,7 +37,6 @@ public class BeanFactory {
 
 
         try {
-
             for (String baneName : beanMap.keySet()) {
                 String beanValue = beanMap.get(baneName);
                 Object value = Class.forName(beanValue).newInstance();
@@ -53,27 +45,5 @@ public class BeanFactory {
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        /*SAXReader reader = new SAXReader();
-        try {
-            // 使用阅读器读取xml文档
-            *//*Document document = reader.read
-                    (Dom4jXPath.class.getClassLoader().getResourceAsStream("bean.xml"));*//*
-
-            Document document = reader.read(new File("bean.xml"));
-            // 获取root节点
-            Element element = document.getRootElement();
-            // 获取root节点的子节点
-            Iterator<Element> iterator = element.elementIterator();
-            // 遍历迭代器
-            while (iterator.hasNext()) {
-                Element e = iterator.next();
-                String key = e.attributeValue("id");
-                Object value = Class.forName(e.attributeValue("class")).newInstance();
-                map.put(key, value);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 }

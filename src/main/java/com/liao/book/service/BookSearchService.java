@@ -1,24 +1,8 @@
 package com.liao.book.service;
 
-import cn.hutool.core.net.url.UrlBuilder;
-import cn.hutool.core.net.url.UrlQuery;
-import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpUtil;
 import com.liao.book.entity.BookData;
-import com.liao.book.entity.DataCenter;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

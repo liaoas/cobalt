@@ -1,15 +1,5 @@
 package com.liao.book.service;
 
-import cn.hutool.http.HttpUtil;
-import com.liao.book.entity.Chapter;
-import com.liao.book.entity.DataCenter;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.Iterator;
-
 /**
  * <p>
  * 爬取章节

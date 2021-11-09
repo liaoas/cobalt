@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.4.0-2018.2</version>
+    <version>1.4.5-2020.2</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
     <idea-version since-build="202" until-build="202.*"/>
@@ -114,10 +114,14 @@
             <li>Add multiple data sources</li>
             <li>Thanks for the support of https://github.com/Suchbear</li>
         </ul>
+        <i>2021.11.08</i>
+        <ul>
+            <li>Do everything possible to solve the problem of unresponsive page</li>
+            <li>Increase the mouse status of task execution</li>
+            <li>It's cold, everyone, keep warm</li>
+        </ul>
                  ]]>
     </change-notes>
-
-    <!--<idea-version since-build="193" until-build="193.*"/>-->
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.platform</depends>

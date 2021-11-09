@@ -1,7 +1,7 @@
 package com.liao.book.window;
 
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;

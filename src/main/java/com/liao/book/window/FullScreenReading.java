@@ -1,23 +1,19 @@
 package com.liao.book.window;
 
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
-import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
 import com.liao.book.factory.BeanFactory;
 import com.liao.book.service.BookTextService;
 import com.liao.book.service.impl.BookTextServiceImpl;
-import com.liao.book.utile.DataConvert;
 import com.liao.book.utile.ToastUtil;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.List;
 
 public class FullScreenReading {

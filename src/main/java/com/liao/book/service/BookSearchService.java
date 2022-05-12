@@ -79,4 +79,12 @@ public interface BookSearchService {
      */
     public List<BookData> searchBookNameData_top(String searchBookName);
 
+    /**
+     * 千千小说网 www.qqxsw.co
+     *
+     * @param searchBookName 书籍名称
+     * @return 搜索列表
+     */
+    public List<BookData> searchBookNameData_qian(String searchBookName);
+
 }

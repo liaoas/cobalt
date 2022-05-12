@@ -34,6 +34,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 searchBookChapterData_miao(link);
                 break;
             case DataCenter.QUAN_BEN:
+            case DataCenter.QIAN_QIAN:
                 // 全本小说网
                 searchBookChapterData_tai(link);
                 break;

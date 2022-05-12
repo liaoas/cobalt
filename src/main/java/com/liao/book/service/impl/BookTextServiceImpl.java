@@ -63,6 +63,15 @@ public class BookTextServiceImpl implements BookTextService {
                     textContent = textContent.replace(" ！", "");
                     DataCenter.textContent = textContent;
                     break;
+                case DataCenter.QIAN_QIAN:
+                    parse = Jsoup.parse(new URL(url), 60000);
+                    // 千千小说网
+                    content = parse.getElementById("content");
+                    textContent = textFormat(content);
+                    textContent = textContent.replace("千千小说网 www.qqxsw.co，最快更新", "");
+                    textContent = textContent.replace(" ！", "");
+                    DataCenter.textContent = textContent;
+                    break;
                 case DataCenter.BI_QU_GE_2:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 笔趣阁2

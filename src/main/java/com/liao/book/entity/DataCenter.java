@@ -59,9 +59,12 @@ public class DataCenter {
     // 顶点小说
     public static final String SHU_TOP = "顶点小说";
 
+    //千千小说
+    public static final String QIAN_QIAN = "千千小说";
+
     // 数据源
     public static final String[] dataSource = new String[]{BI_QU_GE, MI_BI_GE, QUAN_BEN, BI_QU_GE_2, SHU_BA_69
-            , SHU_BA_58, SHU_TOP};
+            , SHU_BA_58, SHU_TOP, QIAN_QIAN};
 
     /*****************组件悬浮提示*****************/
     // 搜索按钮

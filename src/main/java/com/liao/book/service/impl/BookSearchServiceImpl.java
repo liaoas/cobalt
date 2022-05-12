@@ -65,6 +65,9 @@ public class BookSearchServiceImpl implements BookSearchService {
             case DataCenter.SHU_TOP:
                 // 顶点小说
                 return searchBookNameData_top(searchBookName);
+            case DataCenter.QIAN_QIAN:
+                //千千小说
+                return searchBookNameData_qian(searchBookName);
         }
         return null;
     }
@@ -421,6 +424,56 @@ public class BookSearchServiceImpl implements BookSearchService {
                 bookData.setUpdateDate(updateDate);
 
                 if (!"".equals(bookName)) {
+                    bookDataList.add(bookData);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bookDataList;
+    }
+
+    /**
+     * 千千小说网 www.qqxsw.co
+     *
+     * @param searchBookName 书籍名称
+     * @return 搜索列表
+     */
+    @Override
+    public List<BookData> searchBookNameData_qian(String searchBookName) {
+        bookDataList.clear();
+        String url = "https://www.qqxsw.co/modules/article/search.php";
+
+        UrlQuery urlQuery = new UrlQuery();
+        urlQuery.add("searchkey", searchBookName);
+
+        UrlBuilder urlBuilder = UrlBuilder.ofHttp(url, Charset.forName("GBK")).setQuery(urlQuery);
+        String result1 = new HttpRequest(urlBuilder).charset("GBK").execute().body();
+
+        try {
+            Document parse = Jsoup.parse(result1);
+
+            Elements grid = parse.getElementsByTag("li");
+
+            for (Element element : grid) {
+                BookData bookData = new BookData();
+                // 文章名称
+                String bookName = element.getElementsByTag("a").eq(0).text();
+                bookData.setBookName(bookName);
+                // 链接
+                String bookLink = element.getElementsByTag("a").eq(0).attr("href");
+                bookData.setBookLink(bookLink);
+                // 章节信息
+                String chapter = element.getElementsByTag("a").eq(1).text();
+                bookData.setChapter(chapter);
+                // 作者
+                String author = element.getElementsByClass("s4").eq(0).text();
+                bookData.setAuthor(author);
+                // 更新时间
+                String updateDate = element.getElementsByClass("s5").eq(0).text();
+                bookData.setUpdateDate(updateDate);
+
+                if (!"".equals(bookName) && (!author.equals("") || !updateDate.equals(""))) {
                     bookDataList.add(bookData);
                 }
             }

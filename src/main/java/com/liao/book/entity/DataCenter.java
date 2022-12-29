@@ -64,7 +64,7 @@ public class DataCenter {
 
     // 数据源
     public static final String[] dataSource = new String[]{BI_QU_GE, MI_BI_GE, QUAN_BEN, BI_QU_GE_2, SHU_BA_69
-            , SHU_BA_58, SHU_TOP, QIAN_QIAN};
+            , SHU_BA_58, SHU_TOP};
 
     /*****************组件悬浮提示*****************/
     // 搜索按钮

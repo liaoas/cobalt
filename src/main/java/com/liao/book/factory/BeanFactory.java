@@ -34,7 +34,7 @@ public class BeanFactory {
         beanMap.put("BookChapterServiceImpl", "com.liao.book.service.impl.BookChapterServiceImpl");
         beanMap.put("BookSearchServiceImpl", "com.liao.book.service.impl.BookSearchServiceImpl");
         beanMap.put("BookTextServiceImpl", "com.liao.book.service.impl.BookTextServiceImpl");
-
+        beanMap.put("ProjectConfig", "com.liao.book.config.ProjectConfig");
 
         try {
             for (String baneName : beanMap.keySet()) {

@@ -1,13 +1,13 @@
 <idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.4.5-2020.2</version>
+    <version>1.4.5-2022.1</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
 
-    <idea-version since-build="202" until-build="202.*"/>
+    <idea-version since-build="192" until-build="192.*"/>
 
     <description><![CDATA[
-        IDEA EBool can be used to read books, can make your IntelliJ IDEA more interesting.
+        IDEA EBook can be used to read books, can make your IntelliJ IDEA more interesting.
         <br>
         <b>Plugin description:</b>
         <br>
@@ -119,6 +119,10 @@
             <li>Do everything possible to solve the problem of unresponsive page</li>
             <li>Increase the mouse status of task execution</li>
             <li>It's cold, everyone, keep warm</li>
+        </ul>
+        <i>2022.05.29</i>
+        <ul>
+            <li>Added 2022.1 version support</li>
         </ul>
                  ]]>
     </change-notes>

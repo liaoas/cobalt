@@ -1,6 +1,6 @@
 package com.liao.book.window;
 
-import com.intellij.openapi.ui.MessageType;
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.liao.book.entity.Chapter;
@@ -16,6 +16,15 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * <p>
+ * 全屏
+ * </p>
+ *
+ * @author LiAo
+ * @since 2021/1/14
+ */
+@SuppressWarnings("all")
 public class FullScreenReading {
 
     // 主体窗口
@@ -110,7 +119,7 @@ public class FullScreenReading {
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
-                ToastUtil.notification2020_3Ago(project, "已经是第一章了", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "已经是第一章了", NotificationType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
@@ -127,7 +136,7 @@ public class FullScreenReading {
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.notification2020_3Ago(project, "已经是最后一章了", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "已经是最后一章了", NotificationType.ERROR);
                 return;
             }
 
@@ -143,7 +152,7 @@ public class FullScreenReading {
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
-                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
                 return;
             }
 
@@ -158,7 +167,7 @@ public class FullScreenReading {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.notification2020_3Ago(project, "已经是最小的了", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "已经是最小的了", NotificationType.ERROR);
                 return;
             }
 
@@ -180,7 +189,7 @@ public class FullScreenReading {
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
-                ToastUtil.notification2020_3Ago(project, "未知章节", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
                 return;
             }
 
@@ -229,7 +238,7 @@ public class FullScreenReading {
             textService.searchBookChapterData(chapter.getLink());
 
             if (DataCenter.textContent == null) {
-                ToastUtil.notification2020_3Ago(project, "章节内容为空", MessageType.ERROR);
+                ToastUtil.notification2020_3Rear(project, "章节内容为空", NotificationType.ERROR);
                 return null;
             }
 

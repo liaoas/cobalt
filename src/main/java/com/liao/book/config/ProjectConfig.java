@@ -2,19 +2,16 @@
 package com.liao.book.config;
 
 import com.intellij.AbstractBundle;
-import com.liao.book.utile.StringUtil;
+import com.intellij.DynamicBundle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
-
-import java.io.*;
-import java.net.URL;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
 
 /**
  * <p>
  * Config 配置信息获取
+ * AbstractBundle 类 2022.2 API 删除 改为 DynamicBundle
+ * https://plugins.jetbrains.com/docs/intellij/api-changes-list-2022.html#intellij-platform-20222
+ *
  * </p>
  *
  * @author LiAo

@@ -1,10 +1,10 @@
-<idea-plugin url="https://github.com/LiAo-One/IDEA-EBook">
+<idea-plugin url="https://github.com/liaoas/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.4.5-2022.1</version>
-    <vendor email="liao991224@gmail.com" url="https://github.com/LiAo-One">LiAo</vendor>
+    <version>1.4.6-2021.2</version>
+    <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/IDEA-EBook">LiAo</vendor>
 
-    <idea-version since-build="192" until-build="192.*"/>
+    <idea-version since-build="212" until-build="212.*"/>
 
     <description><![CDATA[
         IDEA EBook can be used to read books, can make your IntelliJ IDEA more interesting.
@@ -120,10 +120,12 @@
             <li>Increase the mouse status of task execution</li>
             <li>It's cold, everyone, keep warm</li>
         </ul>
-        <i>2022.05.29</i>
+        <i>2022.12.29</i>
         <ul>
-            <li>Added 2022.1 version support</li>
+            <li>Added 2022 version support</li>
+            <li>Delete redundant search nodes</li>
         </ul>
+
                  ]]>
     </change-notes>
 
@@ -134,7 +136,7 @@
         <toolWindow id="IDEA Ebook" icon="/img/book.svg" factoryClass="com.liao.book.factory.BookMainWindowFactory"
                     anchor="right"/>
 
-        <!--<notificationGroup id="Custom Notification Group" displayType="BALLOON"/>-->
+        <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
     </extensions>
 
 

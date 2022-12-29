@@ -1,6 +1,7 @@
 package com.liao.book.utile;
 
-import com.intellij.notification.*;
+import com.intellij.notification.NotificationGroupManager;
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.liao.book.config.ProjectConfig;
@@ -69,10 +70,10 @@ public class ToastUtil {
      * @param type    类型
      */
     public static void notification2020_3Ago(@Nullable Project project, String content, MessageType type) {
-        NotificationGroup custom_notification_group = new NotificationGroup(
+        /*NotificationGroup custom_notification_group = new NotificationGroup(
                 "Custom Notification Group", NotificationDisplayType.BALLOON, true);
         Notification notification = custom_notification_group.createNotification(content, type);
-        Notifications.Bus.notify(notification);
+        Notifications.Bus.notify(notification);*/
     }
 
     /**
@@ -83,8 +84,8 @@ public class ToastUtil {
      * @param type    类型
      */
     public static void notification2020_3Rear(@Nullable Project project, String content, NotificationType type) {
-        /*NotificationGroupManager.getInstance().getNotificationGroup("Custom Notification Group")
+        NotificationGroupManager.getInstance().getNotificationGroup("Custom Notification Group")
                 .createNotification(content, type)
-                .notify(project);*/
+                .notify(project);
     }
 }

@@ -1,12 +1,12 @@
 package com.liao.book.window;
 
-import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.liao.book.config.ProjectConfig;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
+import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
 import com.liao.book.service.BookChapterService;
 import com.liao.book.service.BookSearchService;
@@ -14,7 +14,8 @@ import com.liao.book.service.BookTextService;
 import com.liao.book.service.impl.BookChapterServiceImpl;
 import com.liao.book.service.impl.BookSearchServiceImpl;
 import com.liao.book.service.impl.BookTextServiceImpl;
-import com.liao.book.utile.*;
+import com.liao.book.utile.DataConvert;
+import com.liao.book.utile.ToastUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ import java.util.Objects;
 
 /**
  * <p>
- * 首页
+ * 首页窗口
  * </p>
  *
  * @author LiAo
@@ -168,9 +169,8 @@ public class BookMainWindow {
 
         // 搜索单击按钮
         btnSearch.addActionListener(e -> {
-            // System.out.println(projectConfig.getConfigValue("is_notification_2020_3"));
             // 等待鼠标样式
-            setTheMouseStyle (Cursor.WAIT_CURSOR);
+            setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             // 清空表格数据
             DataCenter.tableModel.setRowCount(0);
@@ -178,7 +178,7 @@ public class BookMainWindow {
             bookSearchName = textSearchBar.getText();
 
             if (bookSearchName == null || bookSearchName.equals("")) {
-                ToastUtil.notification2020_3Rear(project, "请输入书籍名称", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "请输入书籍名称", ToastType.ERROR);
                 // 等待鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
@@ -204,7 +204,7 @@ public class BookMainWindow {
             int selectedRow = searchBookTable.getSelectedRow();
 
             if (selectedRow < 0) {
-                ToastUtil.notification2020_3Rear(project, "还没有选择要读哪本书", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "还没有选择要读哪本书", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
@@ -227,7 +227,7 @@ public class BookMainWindow {
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
-                ToastUtil.notification2020_3Rear(project, "已经是第一章了", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
@@ -244,7 +244,7 @@ public class BookMainWindow {
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
-                ToastUtil.notification2020_3Rear(project, "已经是最后一章了", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
@@ -267,7 +267,7 @@ public class BookMainWindow {
             DataCenter.nowChapterINdex = chapterList.getSelectedIndex();
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
-                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
@@ -281,7 +281,7 @@ public class BookMainWindow {
         fontSizeDown.addActionListener(e -> {
 
             if (fontSize == 1) {
-                ToastUtil.notification2020_3Rear(project, "已经是最小的了", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "已经是最小的了", ToastType.ERROR);
                 return;
             }
 
@@ -304,7 +304,7 @@ public class BookMainWindow {
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
-                ToastUtil.notification2020_3Rear(project, "未知章节", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
@@ -332,7 +332,7 @@ public class BookMainWindow {
             List<BookData> bookData = searchService.getBookNameData(bookSearchName);
 
             if (bookData == null || bookData.size() == 0) {
-                ToastUtil.notification2020_3Rear(project, "没有找到啊", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "没有找到啊", ToastType.ERROR);
                 return null;
             }
 
@@ -404,7 +404,7 @@ public class BookMainWindow {
             textService.searchBookChapterData(chapter.getLink());
 
             if (DataCenter.textContent == null) {
-                ToastUtil.notification2020_3Rear(project, "章节内容为空", NotificationType.ERROR);
+                ToastUtil.showToastMassage(project, "章节内容为空", ToastType.ERROR);
                 return null;
             }
 

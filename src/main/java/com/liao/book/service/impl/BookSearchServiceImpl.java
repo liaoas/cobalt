@@ -83,7 +83,7 @@ public class BookSearchServiceImpl implements BookSearchService {
     public List<BookData> searchBookNameData(String searchBookName) {
         bookDataList.clear();
         try {
-            Connection connect = Jsoup.connect("https://www.xbiquge.la/modules/article/waps.php");
+            Connection connect = Jsoup.connect("https://www.ibiquge.la/modules/article/waps.php");
             // 设置请求头
             connect.data("searchkey", searchBookName);
 
@@ -91,7 +91,6 @@ public class BookSearchServiceImpl implements BookSearchService {
 
             // Document parse = Jsoup.parse(result1);
             Elements grid = document.getElementsByTag("tr");
-
             for (Element element : grid) {
                 BookData bookData = new BookData();
                 // 文章名称
@@ -199,7 +198,6 @@ public class BookSearchServiceImpl implements BookSearchService {
 
         try {
             Document parse = Jsoup.parse(result1);
-
             Elements grid = parse.getElementsByTag("li");
 
             for (Element element : grid) {
@@ -343,16 +341,15 @@ public class BookSearchServiceImpl implements BookSearchService {
     @Override
     public List<BookData> searchBookNameData_58(String searchBookName) {
         bookDataList.clear();
-        String url = "http://www.wbxsw.com/search.php";
+        String url = "http://www.wbxsw.com/search.php?keyword=" + searchBookName;
 
-        HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put("q", searchBookName);
+       /* HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("q", searchBookName);*/
 
-        String result1 = HttpUtil.get(url, paramMap);
+        String result1 = HttpUtil.get(url);
 
         try {
             Document parse = Jsoup.parse(result1);
-
             Elements grid = parse.getElementsByClass("result-game-item-detail");
 
             for (Element element : grid) {

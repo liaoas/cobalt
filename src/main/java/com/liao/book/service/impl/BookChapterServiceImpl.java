@@ -104,38 +104,28 @@ public class BookChapterServiceImpl implements BookChapterService {
     public void searchBookChapterData_miao(String link) {
 
         DataCenter.chapters.clear();
-
         String result1 = HttpUtil.get(link);
-
         try {
             Document parse = Jsoup.parse(result1);
-            Elements border_line = parse.getElementsByClass("border-line");
-            for (Element element : border_line) {
-                Elements grid = element.parent().getElementsByTag("li");
-                for (Element element2 : grid) {
-                    Chapter chapter = new Chapter();
-
-                    // 链接
-                    String attr = element2.getElementsByTag("a").eq(0).attr("href");
-                    // 名称
-                    String name = element2.getElementsByTag("a").eq(0).text();
-
-                    chapter.setName(name);
-                    chapter.setLink("https://www.imiaobige.com/" + attr);
-                    if (attr.contains("read")) {
-                        DataCenter.chapters.add(chapter);
-                    }
-                }
+            Element list = parse.getElementById("list");
+            Elements item = list.getElementsByTag("a");
+            for (Element element : item) {
+                Chapter chapter = new Chapter();
+                // 链接
+                String href = element.attr("href");
+                // 名称
+                String name = element.text();
+                chapter.setName(name);
+                chapter.setLink("https://www.ibiquge.la/" + href);
+                DataCenter.chapters.add(chapter);
             }
         } catch (Exception e) {
             if (index == 0) {
                 return;
             }
-
             index--;
             searchBookChapterData_miao(link);
         }
-
     }
 
 

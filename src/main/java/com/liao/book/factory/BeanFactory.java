@@ -1,5 +1,6 @@
 package com.liao.book.factory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,15 +35,18 @@ public class BeanFactory {
         beanMap.put("BookChapterServiceImpl", "com.liao.book.service.impl.BookChapterServiceImpl");
         beanMap.put("BookSearchServiceImpl", "com.liao.book.service.impl.BookSearchServiceImpl");
         beanMap.put("BookTextServiceImpl", "com.liao.book.service.impl.BookTextServiceImpl");
-        beanMap.put("ProjectConfig", "com.liao.book.config.ProjectConfig");
 
         try {
             for (String baneName : beanMap.keySet()) {
                 String beanValue = beanMap.get(baneName);
-                Object value = Class.forName(beanValue).newInstance();
+                Object value = Class.forName(beanValue).getDeclaredConstructor().newInstance();
                 map.put(baneName, value);
             }
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        } catch (InstantiationException |
+                IllegalAccessException |
+                ClassNotFoundException |
+                NoSuchMethodException |
+                InvocationTargetException e) {
             e.printStackTrace();
         }
     }

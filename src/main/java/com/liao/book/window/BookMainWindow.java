@@ -156,13 +156,6 @@ public class BookMainWindow {
 
     // 页面初始化加载
     public BookMainWindow(Project project, ToolWindow toolWindow) {
-
-        /*if (toolWindow.isActive()) {
-            System.out.println("BookMainWindow");
-        } else {
-            System.out.println(">>BookMainWindow");
-        }*/
-
         this.project = project;
         // 执行初始化表格
         init();
@@ -171,7 +164,6 @@ public class BookMainWindow {
         btnSearch.addActionListener(e -> {
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
-
             // 清空表格数据
             DataCenter.tableModel.setRowCount(0);
             // 获取搜索输入文本

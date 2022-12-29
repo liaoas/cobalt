@@ -20,7 +20,7 @@ dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 
     /*糊涂工具包*/
-    implementation group: 'cn.hutool', name: 'hutool-all', version: '5.5.7'
+    implementation group: 'cn.hutool', name: 'hutool-http', version: '5.8.11'
 
     /*HTML 解析*/
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.8.3'

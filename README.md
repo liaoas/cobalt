@@ -2,43 +2,34 @@
 
 可以在IDEA中看电子书的摸鱼插件、你甚至可以用IDEA 写代码。
 
+![](src/main/resources/img/20230215085505.png)
+
+![](src/main/resources/img/20230215085523.png)
+
 ## 🔎搜索 
 
-搜索数据来源于[笔趣阁](http://www.xbiquge.la/)、[妙笔阁](https://www.imiaobige.com/search.html)、[全本小说](https://www.taiuu.com)
-
-## 📃开始阅读
-
-单击开始阅读 默认爬取用户选中的表格行的书籍章节，并展示第一章节文本
-
-## ⚡章节跳转
-
-页面下方输入框输入整数，单击右侧跳转，即可进行指定页面跳转。上一章 下一章 按钮切换单个章节
+搜索数据来源于[新笔趣阁](https://www.ibiquge.la)、[妙笔阁](https://www.imiaobige.com)，如有侵权请联系作者删除
 
 ## 🎫使用说明
 
-安装该插件后，单击屏幕右侧的IDEA EBook按钮
+- 安装该插件后，单击屏幕右侧的IDEA EBook ![](src/main/resources/img/book.svg)按钮
 
-在顶部搜索框中输入书名，然后单击右侧的搜索按钮
+- 在顶部搜索框中输入书名，然后单击右侧的搜索 ![](src/main/resources/img/search.png)按钮
 
-搜索结果来源：
+- 左上角下拉列表可以调整数据爬取站点，默认为 新笔趣阁
 
-    http://www.xbiquge.la
-    
-    https://www.imiaobige.com/search.html
-    
-    https://www.taiuu.com
+- 单击搜索结果的行使其突出显示。 点击右上角以开始阅读按钮![](src/main/resources/img/start.png)开始阅读第一章
 
-单击搜索结果的行使其突出显示。 点击右上角以开始阅读第一章
+- 底部章节下拉列表，选择指定章节，然后单击右侧跳转按钮 ![](src/main/resources/img/go_with.png)执行章节跳转
 
-在章节跳转输入框的底部，选择指定章节，然后单击右侧跳转按钮执行章节跳转
+- ![](src/main/resources/img/previous.png) ![](src/main/resources/img/next.png) 用来切换上下章节
 
-## 😀巴拉巴拉
+- ![](src/main/resources/img/font_size_down.png) ![](src/main/resources/img/font_size_up.png) 用于调整字体大小
+-  <img src="src/main/resources/img/20230215084723.png" style="zoom:50%;" /> 标尺用于调节阅读时鼠标滚动间距
 
-该插件接口使用笔趣阁、妙笔阁页面爬取并解析、如有侵权请联系作者删除 liao991224@gmail.com
+- 顶部“全屏” 与 “首页” 用于切换为全屏阅读和搜索视图
 
-写的比较仓促，有很多地方没有测试、如果发现BUG请联系我 liao991224@gmail.com
-
-搜索数据源暂时来源于笔趣阁、妙笔阁，后续加入更多......
+- ![](src/main/resources/img/synchronize.png) 用于 “全屏” 与 “首页” 两种视图切换时 同步阅读进度
 
 
 ## :moneybag:捐赠支持

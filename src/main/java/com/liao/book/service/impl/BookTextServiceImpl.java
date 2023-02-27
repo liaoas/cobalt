@@ -1,5 +1,6 @@
 package com.liao.book.service.impl;
 
+import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.DataCenter;
 import com.liao.book.service.BookTextService;
 import org.jsoup.Jsoup;
@@ -23,6 +24,9 @@ public class BookTextServiceImpl implements BookTextService {
     // 重试次数
     public static int index = 2;
 
+    // 阅读进度持久化
+    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+
     @Override
     public void searchBookChapterData(String url) {
 
@@ -39,7 +43,7 @@ public class BookTextServiceImpl implements BookTextService {
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 笔趣阁
                     content = parse.getElementById("content");
-                    DataCenter.textContent = textFormat(content);
+                    instance.textContent = textFormat(content);
                     break;
                 case DataCenter.MI_BI_GE:
                     parse = Jsoup.parse(new URL(url), 60000);
@@ -52,7 +56,7 @@ public class BookTextServiceImpl implements BookTextService {
                     int adEnd = textContent.indexOf(ad2) + ad2.length();
                     if (adStart >= 0 && adEnd > 0)
                         textContent = textContent.replace(textContent.substring(adStart, adEnd), "");
-                    DataCenter.textContent = textContent;
+                    instance.textContent = textContent;
                     break;
                 case DataCenter.QUAN_BEN:
                     parse = Jsoup.parse(new URL(url), 60000);
@@ -61,7 +65,7 @@ public class BookTextServiceImpl implements BookTextService {
                     textContent = textFormat(content);
                     textContent = textContent.replace("全本小说网 www.xqb5200.com，最快更新", "");
                     textContent = textContent.replace(" ！", "");
-                    DataCenter.textContent = textContent;
+                    instance.textContent = textContent;
                     break;
                 case DataCenter.QIAN_QIAN:
                     parse = Jsoup.parse(new URL(url), 60000);
@@ -70,7 +74,7 @@ public class BookTextServiceImpl implements BookTextService {
                     textContent = textFormat(content);
                     textContent = textContent.replace("千千小说网 www.qqxsw.co，最快更新", "");
                     textContent = textContent.replace(" ！", "");
-                    DataCenter.textContent = textContent;
+                    instance.textContent = textContent;
                     break;
                 case DataCenter.BI_QU_GE_2:
                     parse = Jsoup.parse(new URL(url), 60000);
@@ -82,7 +86,7 @@ public class BookTextServiceImpl implements BookTextService {
                     textContent = textContent.replace("看更多诱惑小说请关注微信 npxswz    各种乡村" +
                             " 都市 诱惑     ", "");
                     textContent = textContent.replace("xh:.126.81.50", "");
-                    DataCenter.textContent = textContent;
+                    instance.textContent = textContent;
                     break;
                 case DataCenter.SHU_BA_69:
                     parse = Jsoup.parse(new URL(url), 60000);
@@ -92,7 +96,7 @@ public class BookTextServiceImpl implements BookTextService {
                     textContent = textContent.replace("xh211", "");
                     textContent = textContent.replace(" 69书吧 www.69shuba.cc，最快更新", "");
                     textContent = textContent.replace("最新章节！", "");
-                    DataCenter.textContent = textContent;
+                    instance.textContent = textContent;
                     break;
                 case DataCenter.SHU_BA_58:
                     parse = Jsoup.parse(new URL(url), 60000);
@@ -105,7 +109,7 @@ public class BookTextServiceImpl implements BookTextService {
                     textContent = textContent.replace("最新章节", "");
                     textContent = textContent.replace("地址为如果你觉的本章节还不错的话请不要忘记向您QQ群和微博里的" +
                             "朋友推荐哦！", "");
-                    DataCenter.textContent = textContent;
+                    instance.textContent = textContent;
                     break;
                 case DataCenter.SHU_TOP:
                     parse = Jsoup.parse(new URL(url), 60000);
@@ -117,7 +121,7 @@ public class BookTextServiceImpl implements BookTextService {
                     textContent = textContent.replace("百度一下“", "\n");
                     textContent = textContent.replace("顶点小说www.maxreader.net”最新章节第一时间免费阅读。"
                             , "");
-                    DataCenter.textContent = textContent;
+                    instance.textContent = textContent;
                     break;
             }
         } catch (Exception e) {

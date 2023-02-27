@@ -1,6 +1,7 @@
 package com.liao.book.service.impl;
 
 import cn.hutool.http.HttpUtil;
+import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
 import com.liao.book.service.BookChapterService;
@@ -21,6 +22,9 @@ public class BookChapterServiceImpl implements BookChapterService {
 
     // 重试次数
     public static int index = 2;
+
+    // 阅读进度持久化
+    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
     @Override
     public void getBookChapterByType(String link) {
@@ -66,7 +70,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     public void searchBookChapterData(String link) {
 
         // String url = "https://www.xbiquge.la/"+link;
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
         String result1 = HttpUtil.get(link);
         try {
             Document parse = Jsoup.parse(result1);
@@ -83,7 +87,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 // chapter.setLink("https://www.xbiquge.la/" + attr);
                 chapter.setLink(attr);
 
-                DataCenter.chapters.add(chapter);
+                instance.chapters.add(chapter);
             }
         } catch (Exception e) {
             // 判断次数
@@ -103,7 +107,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     @Override
     public void searchBookChapterData_miao(String link) {
 
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
         String result1 = HttpUtil.get(link);
         try {
             Document parse = Jsoup.parse(result1);
@@ -117,7 +121,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 String name = element.text();
                 chapter.setName(name);
                 chapter.setLink("https://www.ibiquge.la/" + href);
-                DataCenter.chapters.add(chapter);
+                instance.chapters.add(chapter);
             }
         } catch (Exception e) {
             if (index == 0) {
@@ -137,7 +141,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     @Override
     public void searchBookChapterData_tai(String link) {
 
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
 
         String result1 = HttpUtil.get(link);
         try {
@@ -157,7 +161,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 chapter.setName(name);
                 chapter.setLink(link + attr);
                 if (!name.isEmpty()) {
-                    DataCenter.chapters.add(chapter);
+                    instance.chapters.add(chapter);
                 }
             }
         } catch (Exception e) {
@@ -177,7 +181,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     @Override
     public void searchBookChapterData_bqg2(String link) {
 
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
 
         String result1 = HttpUtil.get(link);
         try {
@@ -194,7 +198,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 chapter.setName(name);
                 chapter.setLink("https://www.biduoxs.com" + attr);
 
-                DataCenter.chapters.add(chapter);
+                instance.chapters.add(chapter);
             }
         } catch (Exception e) {
             if (index == 0) {
@@ -214,7 +218,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     @Override
     public void searchBookChapterData_69shu(String link) {
 
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
 
         String result1 = HttpUtil.get(link);
         try {
@@ -231,7 +235,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 chapter.setName(name);
                 chapter.setLink(link + attr);
 
-                DataCenter.chapters.add(chapter);
+                instance.chapters.add(chapter);
             }
         } catch (Exception e) {
             if (index == 0) {
@@ -251,7 +255,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     @Override
     public void searchBookChapterData_58(String link) {
 
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
 
         String result1 = HttpUtil.get(link);
         try {
@@ -268,7 +272,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 chapter.setName(name);
                 chapter.setLink("http://www.wbxsw.com" + attr);
 
-                DataCenter.chapters.add(chapter);
+                instance.chapters.add(chapter);
             }
         } catch (Exception e) {
             if (index == 0) {
@@ -288,7 +292,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     @Override
     public void searchBookChapterData_top(String link) {
 
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
 
         String result1 = HttpUtil.get(link);
         try {
@@ -306,7 +310,7 @@ public class BookChapterServiceImpl implements BookChapterService {
                 chapter.setLink("https://www.maxreader.net" + attr);
 
                 if (!name.equals("")) {
-                    DataCenter.chapters.add(chapter);
+                    instance.chapters.add(chapter);
                 }
             }
         } catch (Exception e) {

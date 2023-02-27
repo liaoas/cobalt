@@ -1,6 +1,7 @@
 package com.liao.book.service.impl;
 
 import cn.hutool.http.HttpUtil;
+import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
@@ -33,6 +34,9 @@ public class BiQuGeBookReptile implements BooksReptile {
 
     // 存储数据
     public static List<BookData> bookDataList = new ArrayList<>();
+
+    // 阅读进度持久化
+    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
     /**
      * 根据名称爬取书籍列表
@@ -93,7 +97,7 @@ public class BiQuGeBookReptile implements BooksReptile {
      */
     @Override
     public void getBookChapterList(String link) {
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
         String result1 = HttpUtil.get(link);
         try {
             Document parse = Jsoup.parse(result1);
@@ -110,7 +114,7 @@ public class BiQuGeBookReptile implements BooksReptile {
                 // chapter.setLink("https://www.xbiquge.la/" + attr);
                 chapter.setLink(attr);
 
-                DataCenter.chapters.add(chapter);
+                instance.chapters.add(chapter);
             }
         } catch (Exception e) {
             // 判断次数
@@ -143,7 +147,7 @@ public class BiQuGeBookReptile implements BooksReptile {
         // 笔趣阁
         assert parse != null;
         content = parse.getElementById("content");
-        DataCenter.textContent = textFormat(content);
+        instance.textContent = textFormat(content);
     }
 
     /**

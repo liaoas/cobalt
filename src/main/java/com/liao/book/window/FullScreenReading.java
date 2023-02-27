@@ -2,6 +2,7 @@ package com.liao.book.window;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
 import com.liao.book.enums.ToastType;
@@ -70,6 +71,9 @@ public class FullScreenReading {
     static BookTextService textService = (BookTextServiceImpl) BeanFactory
             .getBean("BookTextServiceImpl");
 
+    // 阅读进度持久化
+    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+
     // 窗口信息
     public JPanel getBookMainJPanel() {
         return fullScreenJpanel;
@@ -118,13 +122,13 @@ public class FullScreenReading {
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex == 0) {
                 ToastUtil.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
-            DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
+            instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
             new LoadChapterInformation().execute();
         });
@@ -135,12 +139,12 @@ public class FullScreenReading {
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size()) {
                 ToastUtil.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 return;
             }
 
-            DataCenter.nowChapterINdex = DataCenter.nowChapterINdex + 1;
+            instance.nowChapterIndex = instance.nowChapterIndex + 1;
 
             // 加载阅读信息
             new LoadChapterInformation().execute();
@@ -151,13 +155,13 @@ public class FullScreenReading {
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
                 ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
                 return;
             }
 
             // 根据下标跳转
-            DataCenter.nowChapterINdex = chapterList.getSelectedIndex();
+            instance.nowChapterIndex = chapterList.getSelectedIndex();
 
             // 加载阅读信息
             new LoadChapterInformation().execute();
@@ -188,7 +192,7 @@ public class FullScreenReading {
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
                 ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
                 return;
             }
@@ -215,7 +219,7 @@ public class FullScreenReading {
         chapterList.removeAllItems();
 
         // 加载下拉列表
-        for (Chapter chapter1 : DataCenter.chapters) {
+        for (Chapter chapter1 : instance.chapters) {
             chapterList.addItem(chapter1.getName());
         }
         // 加载阅读信息
@@ -229,7 +233,7 @@ public class FullScreenReading {
         @Override
         protected Void doInBackground() {
             // 清空书本表格
-            Chapter chapter = DataCenter.chapters.get(DataCenter.nowChapterINdex);
+            Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
 
             // 重置重试次数
             BookTextServiceImpl.index = 2;
@@ -237,7 +241,7 @@ public class FullScreenReading {
             // 内容
             textService.searchBookChapterData(chapter.getLink());
 
-            if (DataCenter.textContent == null) {
+            if (instance.textContent == null) {
                 ToastUtil.showToastMassage(project, "章节内容为空", ToastType.ERROR);
                 return null;
             }
@@ -251,7 +255,7 @@ public class FullScreenReading {
         protected void process(List<Chapter> chapters) {
             Chapter chapter = chapters.get(0);
             // 章节内容赋值
-            textContent.setText(DataCenter.textContent);
+            textContent.setText(instance.textContent);
             // 设置下拉框的值
             chapterList.setSelectedItem(chapter.getName());
             // 回到顶部
@@ -298,7 +302,7 @@ public class FullScreenReading {
     public void initReadText() {
 
         // 清空书本表格
-        Chapter chapter = DataCenter.chapters.get(DataCenter.nowChapterINdex);
+        Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
 
         // 重置重试次数
         BookTextServiceImpl.index = 2;
@@ -306,7 +310,7 @@ public class FullScreenReading {
         // 内容
         textService.searchBookChapterData(chapter.getLink());
         // 章节内容赋值
-        textContent.setText(DataCenter.textContent);
+        textContent.setText(instance.textContent);
 
         // 设置下拉框的值
         chapterList.setSelectedItem(chapter.getName());

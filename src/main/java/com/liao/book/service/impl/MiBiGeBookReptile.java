@@ -1,6 +1,7 @@
 package com.liao.book.service.impl;
 
 import cn.hutool.http.HttpUtil;
+import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
@@ -33,6 +34,9 @@ public class MiBiGeBookReptile implements BooksReptile {
 
     // 存储数据
     public static List<BookData> bookDataList = new ArrayList<>();
+
+    // 阅读进度持久化
+    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
     /**
      * 根据名称爬取书籍列表
@@ -95,7 +99,7 @@ public class MiBiGeBookReptile implements BooksReptile {
      */
     @Override
     public void getBookChapterList(String link) {
-        DataCenter.chapters.clear();
+        instance.chapters.clear();
         String result = HttpUtil.get(link);
         try {
             Document html = Jsoup.parse(result);
@@ -109,7 +113,7 @@ public class MiBiGeBookReptile implements BooksReptile {
                 String name = element.text();
                 chapter.setName(name);
                 chapter.setLink("https://www.ibiquge.la/" + href);
-                DataCenter.chapters.add(chapter);
+                instance.chapters.add(chapter);
             }
         } catch (Exception e) {
             if (index == 0) {
@@ -148,7 +152,7 @@ public class MiBiGeBookReptile implements BooksReptile {
         int adEnd = textContent.indexOf(ad2) + ad2.length();
         if (adStart >= 0 && adEnd > 0)
             textContent = textContent.replace(textContent.substring(adStart, adEnd), "");
-        DataCenter.textContent = textContent;
+        instance.textContent = textContent;
     }
 
     /**

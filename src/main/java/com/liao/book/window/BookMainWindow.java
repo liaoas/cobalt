@@ -2,7 +2,7 @@ package com.liao.book.window;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
-import com.liao.book.config.ProjectConfig;
+import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
@@ -95,21 +95,20 @@ public class BookMainWindow {
     // 书籍链接
     private String valueAt;
 
-    // 内容爬虫
+    // 书籍爬虫
     static BookSearchService searchService = (BookSearchServiceImpl) BeanFactory
             .getBean("BookSearchServiceImpl");
-
-
-    static BookTextService textService = (BookTextServiceImpl) BeanFactory
-            .getBean("BookTextServiceImpl");
 
     // 章节爬虫
     static BookChapterService chapterService = (BookChapterServiceImpl) BeanFactory
             .getBean("BookChapterServiceImpl");
 
+    // 内容爬虫
+    static BookTextService textService = (BookTextServiceImpl) BeanFactory
+            .getBean("BookTextServiceImpl");
 
-    static ProjectConfig projectConfig = (ProjectConfig) BeanFactory.getBean("ProjectConfig");
-
+    // 阅读进度持久化
+    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
     // 初始化数据
     private void init() {
@@ -215,27 +214,27 @@ public class BookMainWindow {
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
+            String text = textSearchBar.getText();
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == 0) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex == 0) {
                 ToastUtil.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
-            DataCenter.nowChapterINdex = DataCenter.nowChapterINdex - 1;
+            instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
             new LoadChapterInformation().execute();
         });
 
         // 下一章跳转
         underOn.addActionListener(e -> {
-
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex == DataCenter.chapters.size()) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size()) {
                 ToastUtil.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
@@ -243,7 +242,7 @@ public class BookMainWindow {
             }
 
             // 章节下标加一
-            DataCenter.nowChapterINdex = DataCenter.nowChapterINdex + 1;
+            instance.nowChapterIndex = instance.nowChapterIndex + 1;
 
             // 加载阅读信息
             new LoadChapterInformation().execute();
@@ -256,9 +255,9 @@ public class BookMainWindow {
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
             // 根据下标跳转
-            DataCenter.nowChapterINdex = chapterList.getSelectedIndex();
+            instance.nowChapterIndex = chapterList.getSelectedIndex();
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
                 ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
@@ -295,7 +294,7 @@ public class BookMainWindow {
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
 
-            if (DataCenter.chapters.size() == 0 || DataCenter.nowChapterINdex < 0) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
                 ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 setTheMouseStyle(Cursor.DEFAULT_CURSOR);
@@ -362,13 +361,13 @@ public class BookMainWindow {
         @Override
         protected void done() {
             // 清空章节信息
-            DataCenter.nowChapterINdex = 0;
+            instance.nowChapterIndex = 0;
 
             // 清空下拉列表
             chapterList.removeAllItems();
 
             // 加载下拉列表
-            for (Chapter chapter : DataCenter.chapters) {
+            for (Chapter chapter : instance.chapters) {
                 chapterList.addItem(chapter.getName());
             }
 
@@ -387,7 +386,7 @@ public class BookMainWindow {
         @Override
         protected Void doInBackground() {
             // 清空书本表格
-            Chapter chapter = DataCenter.chapters.get(DataCenter.nowChapterINdex);
+            Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
 
             // 重置重试次数
             BookTextServiceImpl.index = 2;
@@ -395,7 +394,7 @@ public class BookMainWindow {
             // 内容
             textService.searchBookChapterData(chapter.getLink());
 
-            if (DataCenter.textContent == null) {
+            if (instance.textContent == null) {
                 ToastUtil.showToastMassage(project, "章节内容为空", ToastType.ERROR);
                 return null;
             }
@@ -409,7 +408,7 @@ public class BookMainWindow {
         protected void process(List<Chapter> chapters) {
             Chapter chapter = chapters.get(0);
             // 章节内容赋值
-            textContent.setText(DataCenter.textContent);
+            textContent.setText(instance.textContent);
             // 设置下拉框的值
             chapterList.setSelectedItem(chapter.getName());
             // 回到顶部
@@ -456,6 +455,23 @@ public class BookMainWindow {
         // 滚动间距
         scrollSpacing.setToolTipText(DataCenter.scrollSpacing);
 
+    }
+
+    /**
+     * 加载阅读进度
+     */
+    public void loadReadingProgress(){
+        // 等待鼠标样式
+        setTheMouseStyle(Cursor.WAIT_CURSOR);
+
+        if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
+            ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
+            // 恢复默认鼠标样式
+            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+            return;
+        }
+        // 加载阅读信息
+        new LoadChapterInformation().execute();
     }
 
 

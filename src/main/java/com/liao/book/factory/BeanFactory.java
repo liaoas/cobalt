@@ -15,7 +15,7 @@ import java.util.Map;
 public class BeanFactory {
 
     // 存储Bean 实例
-    private static final Map<String, Object> map = new HashMap<String, Object>();
+    private static final Map<String, Object> map = new HashMap<>();
 
     // 存储实例路径
     private static final Map<String, String> beanMap = new HashMap<>();
@@ -35,6 +35,7 @@ public class BeanFactory {
         beanMap.put("BookChapterServiceImpl", "com.liao.book.service.impl.BookChapterServiceImpl");
         beanMap.put("BookSearchServiceImpl", "com.liao.book.service.impl.BookSearchServiceImpl");
         beanMap.put("BookTextServiceImpl", "com.liao.book.service.impl.BookTextServiceImpl");
+        beanMap.put("ReadingProgressDao", "com.liao.book.dao.ReadingProgressDao");
 
         try {
             for (String baneName : beanMap.keySet()) {

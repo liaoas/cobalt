@@ -137,7 +137,18 @@
                     anchor="right"/>
 
         <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
+
+        <applicationService id="ReadingProgressDao" serviceInterface="com.liao.book.dao.ReadingProgressDao"
+                            serviceImplementation="com.liao.book.dao.ReadingProgressDao"
+                            testServiceImplementation="com.liao.book.dao.ReadingProgressDao"
+                            headlessImplementation="com.liao.book.dao.ReadingProgressDao"/>
     </extensions>
+
+    <project-components>
+        <component>
+            <implementation-class>com.liao.book.dao.ReadingProgressDao</implementation-class>
+        </component>
+    </project-components>
 
 
     <actions>

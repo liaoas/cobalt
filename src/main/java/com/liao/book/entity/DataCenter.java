@@ -42,8 +42,7 @@ public class DataCenter {
     // public static String textContent;
 
     // 全局搜索类型
-    @Transient
-    public static String searchType;
+    // public static String searchType;
 
     // 笔趣阁
     @Transient

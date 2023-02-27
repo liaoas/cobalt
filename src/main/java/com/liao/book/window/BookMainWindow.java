@@ -148,9 +148,11 @@ public class BookMainWindow {
         scrollSpacing.setPaintTicks(true);
         scrollSpacing.setPaintTrack(true);
 
-
         // 加载提示信息
         setComponentTooltip();
+
+        // 加载阅读进度
+        loadReadingProgress();
     }
 
     // 页面初始化加载
@@ -176,7 +178,7 @@ public class BookMainWindow {
             }
 
             // 获取数据源类型
-            DataCenter.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
+            instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
 
             // 重置 重试次数
             BookSearchServiceImpl.index = 2;
@@ -210,6 +212,8 @@ public class BookMainWindow {
             // 执行开始阅读
             new StartReading().execute();
 
+            // 阅读进度持久化
+            instance.loadState(instance);
         });
 
         // 上一章节跳转
@@ -227,6 +231,9 @@ public class BookMainWindow {
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
             new LoadChapterInformation().execute();
+
+            // 阅读进度持久化
+            instance.loadState(instance);
         });
 
         // 下一章跳转
@@ -246,6 +253,9 @@ public class BookMainWindow {
 
             // 加载阅读信息
             new LoadChapterInformation().execute();
+
+            // 阅读进度持久化
+            instance.loadState(instance);
         });
 
         // 章节跳转事件
@@ -266,6 +276,9 @@ public class BookMainWindow {
 
             // 加载阅读信息
             new LoadChapterInformation().execute();
+
+            // 阅读进度持久化
+            instance.loadState(instance);
         });
 
         // 字号调小按钮单击事件
@@ -460,7 +473,7 @@ public class BookMainWindow {
     /**
      * 加载阅读进度
      */
-    public void loadReadingProgress(){
+    public void loadReadingProgress() {
         // 等待鼠标样式
         setTheMouseStyle(Cursor.WAIT_CURSOR);
 
@@ -470,8 +483,24 @@ public class BookMainWindow {
             setTheMouseStyle(Cursor.DEFAULT_CURSOR);
             return;
         }
-        // 加载阅读信息
-        new LoadChapterInformation().execute();
+        // 清空下拉列表
+        chapterList.removeAllItems();
+
+        // 加载下拉列表
+        for (Chapter chapter : instance.chapters) {
+            chapterList.addItem(chapter.getName());
+        }
+
+        Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+        // 章节内容赋值
+        textContent.setText(instance.textContent);
+        // 设置下拉框的值
+        chapterList.setSelectedItem(chapter.getName());
+        // 回到顶部
+        textContent.setCaretPosition(1);
+
+        // 恢复默认鼠标样式
+        setTheMouseStyle(Cursor.DEFAULT_CURSOR);
     }
 
 

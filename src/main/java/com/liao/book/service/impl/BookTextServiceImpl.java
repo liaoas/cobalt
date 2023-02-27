@@ -37,7 +37,7 @@ public class BookTextServiceImpl implements BookTextService {
         String textContent;
 
         try {
-            switch (DataCenter.searchType) {
+            switch (instance.searchType) {
                 case DataCenter.BI_QU_GE:
                     url = "https://www.xbiquge.la/" + url;
                     parse = Jsoup.parse(new URL(url), 60000);

@@ -28,7 +28,7 @@ public class BookChapterServiceImpl implements BookChapterService {
 
     @Override
     public void getBookChapterByType(String link) {
-        switch (DataCenter.searchType) {
+        switch (instance.searchType) {
             case DataCenter.BI_QU_GE:
                 // 笔趣阁
                 searchBookChapterData(link);

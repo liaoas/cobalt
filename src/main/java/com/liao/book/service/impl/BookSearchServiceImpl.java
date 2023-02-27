@@ -4,6 +4,7 @@ import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.core.net.url.UrlQuery;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
+import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.DataCenter;
 import com.liao.book.service.BookSearchService;
@@ -34,6 +35,7 @@ public class BookSearchServiceImpl implements BookSearchService {
     // 存储数据
     public static List<BookData> bookDataList = new ArrayList<>();
 
+    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
     /**
      * 判断数据源
      *
@@ -43,7 +45,7 @@ public class BookSearchServiceImpl implements BookSearchService {
     @Override
     public List<BookData> getBookNameData(String searchBookName) {
 
-        switch (DataCenter.searchType) {
+        switch (instance.searchType) {
             case DataCenter.BI_QU_GE:
                 // 笔趣阁
                 return searchBookNameData(searchBookName);

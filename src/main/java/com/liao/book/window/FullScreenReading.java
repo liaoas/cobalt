@@ -1,7 +1,12 @@
 package com.liao.book.window;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentManager;
+import com.intellij.ui.content.ContentManagerEvent;
+import com.intellij.ui.content.ContentManagerListener;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
@@ -10,10 +15,9 @@ import com.liao.book.factory.BeanFactory;
 import com.liao.book.service.BookTextService;
 import com.liao.book.service.impl.BookTextServiceImpl;
 import com.liao.book.utile.ToastUtil;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.List;
 
@@ -25,7 +29,7 @@ import java.util.List;
  * @author LiAo
  * @since 2021/1/14
  */
-@SuppressWarnings("all")
+
 public class FullScreenReading {
 
     // 主体窗口
@@ -55,9 +59,6 @@ public class FullScreenReading {
     // 字体减
     private JButton fontSizeUp;
 
-    // 同步阅读
-    private JButton synchronous;
-
     // 滚动间距
     private JSlider scrollSpacing;
 
@@ -66,6 +67,9 @@ public class FullScreenReading {
 
     // 全局模块对象
     private final Project project;
+
+    // 用于判断是否是当前选项卡切换
+    private Content lastSelectedContent = null;
 
     // 内容爬虫
     static BookTextService textService = (BookTextServiceImpl) BeanFactory
@@ -104,9 +108,11 @@ public class FullScreenReading {
         scrollSpacing.setPaintTicks(true);
         scrollSpacing.setPaintTrack(true);
 
-
         // 加载提示信息
         setComponentTooltip();
+
+        // 加载阅读进度
+        loadReadingProgress();
     }
 
     // 页面打开方法
@@ -187,29 +193,58 @@ public class FullScreenReading {
             textContent.setFont(new Font("", Font.BOLD, fontSize));
         });
 
-        // 同步阅读按钮
-        synchronous.addActionListener(e -> {
-            // 等待鼠标样式
-            setTheMouseStyle(Cursor.WAIT_CURSOR);
+        // 窗口加载结束
+        ApplicationManager.getApplication().invokeLater(() -> {
 
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
-                ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
+            if (project.isDisposed()) {
+                return;
+            }
+            if (toolWindow == null) {
+                // 窗口未初始化
                 return;
             }
 
-            startReading();
-        });
+            final ContentManager contentManager = toolWindow.getContentManager();
 
-        // 滑块滑动事件
-        scrollSpacing.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSlider jSlider = (JSlider) e.getSource();
-                // 判断滑块是否停止
-                if (!jSlider.getValueIsAdjusting()) {
-                    paneTextContent.getVerticalScrollBar().setUnitIncrement(jSlider.getValue());
+            // 监听当前选中的面板 进行阅读进度同步
+            contentManager.addContentManagerListener(new ContentManagerListener() {
+                @Override
+                public void selectionChanged(@NotNull ContentManagerEvent event) {
+                    Content selectedContent = event.getContent();
+
+                    if (selectedContent != lastSelectedContent) {
+
+                        // 只有选择的内容面板发生变化时才进行相关操作
+                        lastSelectedContent = selectedContent;
+                        if (selectedContent.getDisplayName().equals(DataCenter.TAB_CONTROL_TITLE_UNFOLD)) {
+                            // 等待鼠标样式
+                            setTheMouseStyle(Cursor.WAIT_CURSOR);
+
+                            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
+                                ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
+                                return;
+                            }
+
+                            // 切换了书本
+                            if (BookMainWindow.isReadClick){
+                                startReading();
+                            }else {
+                                // 获取新的章节位置
+                                Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+
+                                // 章节内容赋值
+                                textContent.setText(instance.textContent);
+                                // 设置下拉框的值
+                                chapterList.setSelectedItem(chapter.getName());
+                                // 回到顶部
+                                textContent.setCaretPosition(1);
+                            }
+                            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+                        }
+                    }
                 }
-            }
+            });
+            toolWindow.installWatcher(contentManager);
         });
     }
 
@@ -284,22 +319,20 @@ public class FullScreenReading {
      */
     public void setComponentTooltip() {
         // 上一章
-        btnOn.setToolTipText(DataCenter.btnOn);
+        btnOn.setToolTipText(DataCenter.BTN_ON);
         // 下一章
-        underOn.setToolTipText(DataCenter.underOn);
+        underOn.setToolTipText(DataCenter.UNDER_ON);
         // 放大
-        fontSizeDown.setToolTipText(DataCenter.fontSizeDown);
+        fontSizeDown.setToolTipText(DataCenter.FONT_SIZE_DOWN);
         // 缩小
-        fontSizeUp.setToolTipText(DataCenter.fontSizeUp);
-        // 同步阅读
-        synchronous.setToolTipText(DataCenter.synchronous);
+        fontSizeUp.setToolTipText(DataCenter.FONT_SIZE_UP);
         // 滚动间距
-        scrollSpacing.setToolTipText(DataCenter.scrollSpacing);
+        scrollSpacing.setToolTipText(DataCenter.SCROLL_SPACING);
 
     }
 
     // 初始化阅读信息
-    public void initReadText() {
+    /*public void initReadText() {
 
         // 清空书本表格
         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
@@ -316,6 +349,39 @@ public class FullScreenReading {
         chapterList.setSelectedItem(chapter.getName());
         // 回到顶部
         textContent.setCaretPosition(1);
+
+    }*/
+
+    /**
+     * 加载阅读进度
+     */
+    public void loadReadingProgress() {
+        // 等待鼠标样式
+        setTheMouseStyle(Cursor.WAIT_CURSOR);
+
+        if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
+            ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
+            // 恢复默认鼠标样式
+            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+            return;
+        }
+        // 清空下拉列表
+        chapterList.removeAllItems();
+
+        // 加载下拉列表
+        for (Chapter chapter : instance.chapters) {
+            chapterList.addItem(chapter.getName());
+        }
+
+        Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+        // 章节内容赋值
+        textContent.setText(instance.textContent);
+        // 设置下拉框的值
+        chapterList.setSelectedItem(chapter.getName());
+        // 回到顶部
+        textContent.setCaretPosition(1);
+        // 恢复默认鼠标样式
+        setTheMouseStyle(Cursor.DEFAULT_CURSOR);
 
     }
 }

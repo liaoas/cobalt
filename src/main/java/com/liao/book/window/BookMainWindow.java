@@ -1,7 +1,13 @@
 package com.liao.book.window;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentManager;
+import com.intellij.ui.content.ContentManagerEvent;
+import com.intellij.ui.content.ContentManagerListener;
+import com.liao.book.dao.ReadSubscriptDao;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
@@ -95,6 +101,12 @@ public class BookMainWindow {
     // 书籍链接
     private String valueAt;
 
+    // 用于判断是否是当前选项卡切换
+    private Content lastSelectedContent = null;
+
+    // 是否切换了书本（是否点击了开始阅读按钮）
+    public static boolean isReadClick = false;
+
     // 书籍爬虫
     static BookSearchService searchService = (BookSearchServiceImpl) BeanFactory
             .getBean("BookSearchServiceImpl");
@@ -109,6 +121,7 @@ public class BookMainWindow {
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadSubscriptDao readSubscriptDao = ReadSubscriptDao.getInstance();
 
     // 初始化数据
     private void init() {
@@ -124,6 +137,7 @@ public class BookMainWindow {
         jScrollBar.setMaximum(2);
         paneTextContent.setVerticalScrollBar(jScrollBar);
 
+
         // 设置表格内容大小
         tablePane.setPreferredSize(new Dimension(-1, 30));
 
@@ -131,7 +145,7 @@ public class BookMainWindow {
 
 
         // 加载数据源下拉框
-        for (String dataSourceName : DataCenter.dataSource) {
+        for (String dataSourceName : DataCenter.DATA_SOURCE) {
             sourceDropdown.addItem(dataSourceName);
         }
 
@@ -153,6 +167,7 @@ public class BookMainWindow {
 
         // 加载阅读进度
         loadReadingProgress();
+
     }
 
     // 页面初始化加载
@@ -163,6 +178,7 @@ public class BookMainWindow {
 
         // 搜索单击按钮
         btnSearch.addActionListener(e -> {
+
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
             // 清空表格数据
@@ -302,7 +318,7 @@ public class BookMainWindow {
         });
 
         // 同步阅读按钮
-        synchronous.addActionListener(e -> {
+        /*synchronous.addActionListener(e -> {
 
             // 等待鼠标样式
             setTheMouseStyle(Cursor.WAIT_CURSOR);
@@ -315,7 +331,7 @@ public class BookMainWindow {
             }
             // 加载阅读信息
             new LoadChapterInformation().execute();
-        });
+        });*/
 
         // 滑块滑动事件
         scrollSpacing.addChangeListener(e -> {
@@ -325,6 +341,56 @@ public class BookMainWindow {
                 paneTextContent.getVerticalScrollBar().setUnitIncrement(jSlider.getValue());
             }
         });
+
+        // 阅读滚动事件
+        paneTextContent.getVerticalScrollBar().addAdjustmentListener(e -> {
+            int textWinIndex = paneTextContent.getVerticalScrollBar().getValue();
+            if (!(textWinIndex <= 0)) {
+                readSubscriptDao.homeTextWinIndex = textWinIndex;
+                // 阅读进度持久化
+                readSubscriptDao.loadState(readSubscriptDao);
+            }
+        });
+
+        // 窗口加载结束
+        ApplicationManager.getApplication().invokeLater(() -> {
+
+            paneTextContent.getVerticalScrollBar().setValue(readSubscriptDao.homeTextWinIndex);
+
+            if (project.isDisposed() || toolWindow == null) {
+                // 窗口未初始化
+                return;
+            }
+
+            final ContentManager contentManager = toolWindow.getContentManager();
+
+            // 监听当前选中的面板 进行阅读进度同步
+            contentManager.addContentManagerListener(new ContentManagerListener() {
+                @Override
+                public void selectionChanged(ContentManagerEvent event) {
+                    Content selectedContent = event.getContent();
+                    if (selectedContent != lastSelectedContent) {
+                        setTheMouseStyle(Cursor.WAIT_CURSOR);
+                        // 只有选择的内容面板发生变化时才进行相关操作
+                        lastSelectedContent = selectedContent;
+                        if (selectedContent.getDisplayName().equals(DataCenter.TAB_CONTROL_TITLE_HOME)) {
+                            // 获取新的章节位置
+                            Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+
+                            // 章节内容赋值
+                            textContent.setText(instance.textContent);
+                            // 设置下拉框的值
+                            chapterList.setSelectedItem(chapter.getName());
+                            // 回到顶部
+                            textContent.setCaretPosition(1);
+                        }
+                        setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+                    }
+                }
+            });
+            toolWindow.installWatcher(contentManager);
+        });
+
     }
 
     /**
@@ -387,6 +453,8 @@ public class BookMainWindow {
             // 解析当前章节内容
             new LoadChapterInformation().execute();
 
+            // 书本已切换
+            isReadClick = true;
             // 恢复默认鼠标样式
             setTheMouseStyle(Cursor.DEFAULT_CURSOR);
         }
@@ -450,23 +518,21 @@ public class BookMainWindow {
      */
     public void setComponentTooltip() {
         // 搜索按钮
-        btnSearch.setToolTipText(DataCenter.searchBtn);
+        btnSearch.setToolTipText(DataCenter.SEARCH_BTN);
         // 阅读按钮
-        opneBook.setToolTipText(DataCenter.startRead);
+        opneBook.setToolTipText(DataCenter.START_READ);
         // 上一章
-        btnOn.setToolTipText(DataCenter.btnOn);
+        btnOn.setToolTipText(DataCenter.BTN_ON);
         // 下一章
-        underOn.setToolTipText(DataCenter.underOn);
+        underOn.setToolTipText(DataCenter.UNDER_ON);
         // 跳转
-        JumpButton.setToolTipText(DataCenter.jumpButton);
+        JumpButton.setToolTipText(DataCenter.JUMP_BUTTON);
         // 放大
-        fontSizeDown.setToolTipText(DataCenter.fontSizeDown);
+        fontSizeDown.setToolTipText(DataCenter.FONT_SIZE_DOWN);
         // 缩小
-        fontSizeUp.setToolTipText(DataCenter.fontSizeUp);
-        // 同步阅读
-        synchronous.setToolTipText(DataCenter.synchronous);
+        fontSizeUp.setToolTipText(DataCenter.FONT_SIZE_UP);
         // 滚动间距
-        scrollSpacing.setToolTipText(DataCenter.scrollSpacing);
+        scrollSpacing.setToolTipText(DataCenter.SCROLL_SPACING);
 
     }
 
@@ -501,6 +567,7 @@ public class BookMainWindow {
 
         // 恢复默认鼠标样式
         setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+
     }
 
 

@@ -142,11 +142,20 @@
                             serviceImplementation="com.liao.book.dao.ReadingProgressDao"
                             testServiceImplementation="com.liao.book.dao.ReadingProgressDao"
                             headlessImplementation="com.liao.book.dao.ReadingProgressDao"/>
+
+        <applicationService id="ReadSubscriptDao" serviceInterface="com.liao.book.dao.ReadSubscriptDao"
+                            serviceImplementation="com.liao.book.dao.ReadSubscriptDao"
+                            testServiceImplementation="com.liao.book.dao.ReadSubscriptDao"
+                            headlessImplementation="com.liao.book.dao.ReadSubscriptDao"/>
     </extensions>
 
     <project-components>
         <component>
             <implementation-class>com.liao.book.dao.ReadingProgressDao</implementation-class>
+        </component>
+
+        <component>
+            <implementation-class>com.liao.book.dao.ReadSubscriptDao</implementation-class>
         </component>
     </project-components>
 

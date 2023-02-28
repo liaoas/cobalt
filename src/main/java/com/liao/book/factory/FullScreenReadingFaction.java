@@ -5,6 +5,7 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import com.liao.book.entity.DataCenter;
 import com.liao.book.window.FullScreenReading;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +25,8 @@ public class FullScreenReadingFaction implements ToolWindowFactory {
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(noteListWindow.getBookMainJPanel(), "全屏", false);
+        Content content = contentFactory.createContent(noteListWindow.getBookMainJPanel(),
+                DataCenter.TAB_CONTROL_TITLE_UNFOLD, true);
 
         // 给toolWindows设置内容
         toolWindow.getContentManager().addContent(content);

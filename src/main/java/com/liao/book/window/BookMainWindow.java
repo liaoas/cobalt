@@ -9,6 +9,7 @@ import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
 import com.liao.book.dao.ReadSubscriptDao;
 import com.liao.book.dao.ReadingProgressDao;
+import com.liao.book.dao.WindowsSettingDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.DataCenter;
@@ -123,49 +124,34 @@ public class BookMainWindow {
     // 阅读窗口滚动位置持久化
     static ReadSubscriptDao readSubscriptDao = ReadSubscriptDao.getInstance();
 
+    // 页面设置持久化
+    static WindowsSettingDao settingDao = WindowsSettingDao.getInstance();
+
     // 初始化数据
     private void init() {
-
         // 初始化表格
         searchBookTable.setModel(DataCenter.tableModel);
         searchBookTable.setEnabled(true);
-
-        // 页面滚动步长
-        JScrollBar jScrollBar = new JScrollBar();
-        // 滚动步长为8
-        jScrollBar.setMaximum(8);
-        paneTextContent.setVerticalScrollBar(jScrollBar);
-        // 默认滚动步长
-        paneTextContent.getVerticalScrollBar().setUnitIncrement(8);
-        // 设置表格内容大小
-        tablePane.setPreferredSize(new Dimension(-1, 30));
-
-        chapterList.setPreferredSize(new Dimension(1200, 20));
 
         // 加载数据源下拉框
         for (String dataSourceName : DataCenter.DATA_SOURCE) {
             sourceDropdown.addItem(dataSourceName);
         }
 
-        // 设置设备滑块 最大最小值
-        scrollSpacing.setMinimum(8);
-        scrollSpacing.setMaximum(26);
-        // 滑块默认值
-        scrollSpacing.setValue(8);
-        // 设置滑块刻度间距
-        scrollSpacing.setMajorTickSpacing(2);
+        // 设置表格内容大小
+        tablePane.setPreferredSize(new Dimension(-1, 30));
 
-        // 显示标签
-        scrollSpacing.setPaintLabels(true);
-        scrollSpacing.setPaintTicks(true);
-        scrollSpacing.setPaintTrack(true);
+        // 加载组件配置信息
+        loadModuleConfig();
 
         // 加载提示信息
-        setComponentTooltip();
+        loadComponentTooltip();
 
         // 加载阅读进度
         loadReadingProgress();
 
+        // 加载持久化的设置
+        loadSetting();
     }
 
     // 页面初始化加载
@@ -178,7 +164,7 @@ public class BookMainWindow {
         btnSearch.addActionListener(e -> {
 
             // 等待鼠标样式
-            setTheMouseStyle(Cursor.WAIT_CURSOR);
+            loadTheMouseStyle(Cursor.WAIT_CURSOR);
             // 清空表格数据
             DataCenter.tableModel.setRowCount(0);
             // 获取搜索输入文本
@@ -187,7 +173,7 @@ public class BookMainWindow {
             if (bookSearchName == null || bookSearchName.equals("")) {
                 ToastUtil.showToastMassage(project, "请输入书籍名称", ToastType.ERROR);
                 // 等待鼠标样式
-                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+                loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
 
@@ -205,7 +191,7 @@ public class BookMainWindow {
         opneBook.addActionListener(e -> {
 
             // 等待鼠标样式
-            setTheMouseStyle(Cursor.WAIT_CURSOR);
+            loadTheMouseStyle(Cursor.WAIT_CURSOR);
 
             // 获取选中行数据
             int selectedRow = searchBookTable.getSelectedRow();
@@ -213,7 +199,7 @@ public class BookMainWindow {
             if (selectedRow < 0) {
                 ToastUtil.showToastMassage(project, "还没有选择要读哪本书", ToastType.ERROR);
                 // 恢复默认鼠标样式
-                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+                loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
 
@@ -232,12 +218,12 @@ public class BookMainWindow {
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
-            setTheMouseStyle(Cursor.WAIT_CURSOR);
+            loadTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (instance.chapters.size() == 0 || instance.nowChapterIndex == 0) {
                 ToastUtil.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
-                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+                loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
@@ -251,12 +237,12 @@ public class BookMainWindow {
         // 下一章跳转
         underOn.addActionListener(e -> {
             // 等待鼠标样式
-            setTheMouseStyle(Cursor.WAIT_CURSOR);
+            loadTheMouseStyle(Cursor.WAIT_CURSOR);
 
             if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size()) {
                 ToastUtil.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
-                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+                loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
 
@@ -272,9 +258,8 @@ public class BookMainWindow {
 
         // 章节跳转
         jumpButton.addActionListener(e -> {
-
             // 等待鼠标样式
-            setTheMouseStyle(Cursor.WAIT_CURSOR);
+            loadTheMouseStyle(Cursor.WAIT_CURSOR);
 
             // 根据下标跳转
             instance.nowChapterIndex = chapterList.getSelectedIndex();
@@ -282,7 +267,7 @@ public class BookMainWindow {
             if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
                 ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
-                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+                loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 return;
             }
 
@@ -295,20 +280,24 @@ public class BookMainWindow {
 
         // 字号调小
         fontSizeDown.addActionListener(e -> {
-            if (fontSize == 1) {
+            if (settingDao.fontSize == 1) {
                 ToastUtil.showToastMassage(project, "已经是最小的了", ToastType.ERROR);
                 return;
             }
             // 调小字体
-            fontSize--;
-            textContent.setFont(new Font("", Font.BOLD, fontSize));
+            settingDao.fontSize--;
+            textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
+            // 持久化
+            settingDao.loadState(settingDao);
         });
 
-        // 字体增
+        // 字体调大
         fontSizeUp.addActionListener(e -> {
             // 调大字体
-            fontSize++;
-            textContent.setFont(new Font("", Font.BOLD, fontSize));
+            settingDao.fontSize++;
+            textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
+            // 持久化
+            settingDao.loadState(settingDao);
         });
 
         // 滑块滑动
@@ -318,6 +307,9 @@ public class BookMainWindow {
             if (!jSlider.getValueIsAdjusting()) {
                 paneTextContent.getVerticalScrollBar().setUnitIncrement(jSlider.getValue());
             }
+            // 持久化
+            settingDao.scrollSpacingScale = jSlider.getValue();
+            settingDao.loadState(settingDao);
         });
 
         // 阅读滚动
@@ -348,7 +340,11 @@ public class BookMainWindow {
 
                     if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
 
-                    setTheMouseStyle(Cursor.WAIT_CURSOR);
+                    // 同步字体等设置
+                    loadSetting();
+
+                    loadTheMouseStyle(Cursor.WAIT_CURSOR);
+
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
                     if (selectedContent.getDisplayName().equals(DataCenter.TAB_CONTROL_TITLE_HOME)) {
@@ -362,7 +358,7 @@ public class BookMainWindow {
                         // 回到顶部
                         textContent.setCaretPosition(1);
                     }
-                    setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+                    loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
                 }
             });
             toolWindow.installWatcher(contentManager);
@@ -398,7 +394,7 @@ public class BookMainWindow {
         @Override
         protected void done() {
             // 恢复默认鼠标样式
-            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+            loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
         }
     }
 
@@ -432,7 +428,7 @@ public class BookMainWindow {
             // 书本已切换
             isReadClick = true;
             // 恢复默认鼠标样式
-            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+            loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
         }
     }
 
@@ -475,8 +471,31 @@ public class BookMainWindow {
         @Override
         protected void done() {
             // 恢复默认鼠标样式
-            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+            loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
         }
+    }
+
+    /**
+     * 加载组件配置
+     */
+    public void loadModuleConfig() {
+        // 页面滚动步长
+        JScrollBar jScrollBar = new JScrollBar();
+        // 滚动步长为8
+        jScrollBar.setMaximum(8);
+        paneTextContent.setVerticalScrollBar(jScrollBar);
+
+        // 设置设备滑块 最大最小值
+        scrollSpacing.setMinimum(8);
+        scrollSpacing.setMaximum(26);
+
+        // 设置滑块刻度间距
+        scrollSpacing.setMajorTickSpacing(2);
+
+        // 显示标签
+        scrollSpacing.setPaintLabels(true);
+        scrollSpacing.setPaintTicks(true);
+        scrollSpacing.setPaintTrack(true);
     }
 
     /**
@@ -484,7 +503,7 @@ public class BookMainWindow {
      *
      * @param type 鼠标样式 {@link Cursor}
      */
-    public void setTheMouseStyle(int type) {
+    public void loadTheMouseStyle(int type) {
         Cursor cursor = new Cursor(type);
         bookMainJPanel.setCursor(cursor);
     }
@@ -492,7 +511,7 @@ public class BookMainWindow {
     /**
      * 初始化页面组件提示信息
      */
-    public void setComponentTooltip() {
+    public void loadComponentTooltip() {
         // 搜索按钮
         btnSearch.setToolTipText(DataCenter.SEARCH_BTN);
         // 阅读按钮
@@ -517,11 +536,11 @@ public class BookMainWindow {
      */
     public void loadReadingProgress() {
         // 等待鼠标样式
-        setTheMouseStyle(Cursor.WAIT_CURSOR);
+        loadTheMouseStyle(Cursor.WAIT_CURSOR);
 
         if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
             // 恢复默认鼠标样式
-            setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+            loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
             return;
         }
         // 清空下拉列表
@@ -541,7 +560,25 @@ public class BookMainWindow {
         textContent.setCaretPosition(1);
 
         // 恢复默认鼠标样式
-        setTheMouseStyle(Cursor.DEFAULT_CURSOR);
+        loadTheMouseStyle(Cursor.DEFAULT_CURSOR);
+    }
+
+    /**
+     * 加载持久化的设置 字体大小
+     */
+    public void loadSetting() {
+        // 同步滚动步长
+        if (settingDao.scrollSpacingScale != paneTextContent.getVerticalScrollBar().getUnitIncrement()) {
+            paneTextContent.getVerticalScrollBar().setUnitIncrement(Math.max(settingDao.scrollSpacingScale, 8));
+        }
+        // 字体大小
+        if (settingDao.fontSize != textContent.getFont().getSize()) {
+            textContent.setFont(new Font("", Font.BOLD, Math.max(settingDao.fontSize, 16)));
+        }
+        // 滑块刻度值
+        if (settingDao.scrollSpacingScale != scrollSpacing.getValue()) {
+            scrollSpacing.setValue(Math.max(settingDao.scrollSpacingScale, 8));
+        }
     }
 
 

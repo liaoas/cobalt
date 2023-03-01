@@ -147,6 +147,11 @@
                             serviceImplementation="com.liao.book.dao.ReadSubscriptDao"
                             testServiceImplementation="com.liao.book.dao.ReadSubscriptDao"
                             headlessImplementation="com.liao.book.dao.ReadSubscriptDao"/>
+
+        <applicationService id="WindowsSettingDao" serviceInterface="com.liao.book.dao.WindowsSettingDao"
+                            serviceImplementation="com.liao.book.dao.WindowsSettingDao"
+                            testServiceImplementation="com.liao.book.dao.WindowsSettingDao"
+                            headlessImplementation="com.liao.book.dao.WindowsSettingDao"/>
     </extensions>
 
     <project-components>
@@ -156,6 +161,10 @@
 
         <component>
             <implementation-class>com.liao.book.dao.ReadSubscriptDao</implementation-class>
+        </component>
+
+        <component>
+            <implementation-class>com.liao.book.dao.WindowsSettingDao</implementation-class>
         </component>
     </project-components>
 

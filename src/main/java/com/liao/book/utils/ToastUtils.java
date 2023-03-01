@@ -1,4 +1,4 @@
-package com.liao.book.utile;
+package com.liao.book.utils;
 
 import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationType;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  * @author LiAo
  * @since 2022/12/29
  */
-public class ToastUtil {
+public class ToastUtils {
 
     /**
      * 控制不同版本的消息发送类型
@@ -28,7 +28,7 @@ public class ToastUtil {
     public static void showToastMassage(@Nullable Project project, String content, ToastType toastType) {
         String is_notification_2020_3 = ProjectConfig.getConfigValue("is_notification_2020_3");
 
-        if (StringUtil.isNotEmpty(is_notification_2020_3) && is_notification_2020_3.equals("true")) {
+        if (StringUtils.isNotEmpty(is_notification_2020_3) && is_notification_2020_3.equals("true")) {
             // 使用2020.3 及其以后版本弹窗
             switch (toastType) {
                 case ERROR:

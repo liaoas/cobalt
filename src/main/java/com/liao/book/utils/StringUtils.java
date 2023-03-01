@@ -1,4 +1,4 @@
-package com.liao.book.utile;
+package com.liao.book.utils;
 
 /**
  * <p>
@@ -8,7 +8,7 @@ package com.liao.book.utile;
  * @author LiAo
  * @since 2022-12-28
  */
-public class StringUtil {
+public class StringUtils {
 
     /**
      * 空字符串

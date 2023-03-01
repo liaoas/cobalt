@@ -1,17 +1,17 @@
-package com.liao.book.utile;
+package com.liao.book.core;
 
 import com.liao.book.entity.BookData;
 
 /**
  * <p>
- * 表格内容赋值
+ * 数据类型转换
  * </p>
  *
  * @author LiAo
  * @since 2021/1/14
  */
-public class DataConvert {
-    public static String[] comvert(BookData noteData){
+public class Convert {
+    public static String[] bookData2Array(BookData noteData) {
         String[] raw = new String[5];
 
         raw[0] = noteData.getBookName();

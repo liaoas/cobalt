@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * <p>
- *
+ * 阅读窗口滚动位置持久化
  * </p>
  *
  * @author LiAo
@@ -34,7 +34,8 @@ public class ReadSubscriptDao implements PersistentStateComponent<ReadSubscriptD
     }
 
     @Override
-    public @Nullable ReadSubscriptDao getState() {
+    public @Nullable
+    ReadSubscriptDao getState() {
         return this;
     }
 

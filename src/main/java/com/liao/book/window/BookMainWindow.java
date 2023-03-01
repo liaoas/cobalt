@@ -22,6 +22,7 @@ import com.liao.book.service.impl.BookSearchServiceImpl;
 import com.liao.book.service.impl.BookTextServiceImpl;
 import com.liao.book.utile.DataConvert;
 import com.liao.book.utile.ToastUtil;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +37,7 @@ import java.util.Objects;
  * @author LiAo
  * @since 2021/1/14
  */
-@SuppressWarnings("all")
+
 public class BookMainWindow {
     // 搜索按钮
     private JButton btnSearch;
@@ -79,9 +80,6 @@ public class BookMainWindow {
 
     // 表格外围
     private JScrollPane tablePane;
-
-    // 同步阅读
-    private JButton synchronous;
 
     // 字体默认大小
     private Integer fontSize = 12;
@@ -317,22 +315,6 @@ public class BookMainWindow {
             textContent.setFont(new Font("", Font.BOLD, fontSize));
         });
 
-        // 同步阅读按钮
-        /*synchronous.addActionListener(e -> {
-
-            // 等待鼠标样式
-            setTheMouseStyle(Cursor.WAIT_CURSOR);
-
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
-                ToastUtil.showToastMassage(project, "未知章节", ToastType.ERROR);
-                // 恢复默认鼠标样式
-                setTheMouseStyle(Cursor.DEFAULT_CURSOR);
-                return;
-            }
-            // 加载阅读信息
-            new LoadChapterInformation().execute();
-        });*/
-
         // 滑块滑动事件
         scrollSpacing.addChangeListener(e -> {
             JSlider jSlider = (JSlider) e.getSource();
@@ -367,7 +349,7 @@ public class BookMainWindow {
             // 监听当前选中的面板 进行阅读进度同步
             contentManager.addContentManagerListener(new ContentManagerListener() {
                 @Override
-                public void selectionChanged(ContentManagerEvent event) {
+                public void selectionChanged(@NotNull ContentManagerEvent event) {
                     Content selectedContent = event.getContent();
                     if (selectedContent != lastSelectedContent) {
                         setTheMouseStyle(Cursor.WAIT_CURSOR);

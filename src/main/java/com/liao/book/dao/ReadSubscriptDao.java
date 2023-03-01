@@ -2,7 +2,6 @@ package com.liao.book.dao;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.RoamingType;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
@@ -19,8 +18,8 @@ import org.jetbrains.annotations.Nullable;
  */
 @State(name = "ReadSubscriptDao",
         storages = {
-                @Storage(value = "reading.subscript.dao.xml",
-                        roamingType = RoamingType.DEFAULT)
+                @Storage(value = "reading.subscript.dao.xml"
+                )
         }
 )
 public class ReadSubscriptDao implements PersistentStateComponent<ReadSubscriptDao> {

@@ -13,7 +13,7 @@ import org.jsoup.nodes.Element;
 public interface BookTextService {
 
 
-    public void searchBookChapterData(String url);
+    void searchBookChapterData(String url);
 
 
     /**
@@ -22,7 +22,7 @@ public interface BookTextService {
      * @param element 当前章节信息
      * @return 结果
      */
-    public String textFormat(Element element);
+    String textFormat(Element element);
 
     /**
      * 妙笔阁
@@ -30,5 +30,5 @@ public interface BookTextService {
      * @param element 章节内容
      * @return 数据
      */
-    public String textFormat_miao(Element element);
+    String textFormat_miao(Element element);
 }

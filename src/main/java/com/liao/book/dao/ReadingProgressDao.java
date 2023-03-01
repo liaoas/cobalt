@@ -2,7 +2,6 @@ package com.liao.book.dao;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.RoamingType;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
@@ -23,8 +22,8 @@ import java.util.List;
  */
 @State(name = "ReadingProgressDao",
         storages = {
-                @Storage(value = "reading.progress.dao.xml",
-                        roamingType = RoamingType.DEFAULT)
+                @Storage(value = "reading.progress.dao.xml"
+                )
         }
 )
 public class ReadingProgressDao implements PersistentStateComponent<ReadingProgressDao> {

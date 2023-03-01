@@ -1,6 +1,6 @@
 # 📘 IDEA EBook
 
-可以在IDEA中看电子书的摸鱼插件、你甚至可以用IDEA 写代码。
+可以在 IDEA 中看电子书的摸鱼插件、你甚至可以用 IDEA 写代码。
 
 ![](src/main/resources/img/20230215085505.png)
 

@@ -36,6 +36,7 @@ public class BookSearchServiceImpl implements BookSearchService {
     public static List<BookData> bookDataList = new ArrayList<>();
 
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+
     /**
      * 判断数据源
      *

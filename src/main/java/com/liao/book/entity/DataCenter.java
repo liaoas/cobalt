@@ -1,10 +1,6 @@
 package com.liao.book.entity;
 
-import com.intellij.util.xmlb.annotations.Transient;
-
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -16,29 +12,11 @@ import java.util.List;
  */
 public class DataCenter {
 
-    // 书籍列表
-    public static List<BookData> bookData;
-
     // 表头内容
     public static String[] head = {"文章名称", "最新章节", "作者", "更新", "链接"};
 
     // 数据模型
     public static DefaultTableModel tableModel = new DefaultTableModel(null, head);
-
-    // 书本连接
-    public static String link;
-
-    // 当前章节下标
-    // public static int nowChapterIndex = 0;
-
-    // 章节集合
-    // public static List<Chapter> chapters = new ArrayList<>();
-
-    // 章节内容
-    // public static String textContent;
-
-    // 全局搜索类型
-    // public static String searchType;
 
     // 笔趣阁
     public static final String BI_QU_GE = "新笔趣阁";
@@ -93,9 +71,6 @@ public class DataCenter {
 
     // 字体缩小
     public static final String FONT_SIZE_UP = "缩小";
-
-    // 同步阅读
-    public static final String SYNCHRONOUS = "同步";
 
     // 滚动间距
     public static final String SCROLL_SPACING = "阅读滚动间距";

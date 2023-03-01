@@ -20,7 +20,7 @@ public interface BookSearchService {
      * @param searchBookName 书名
      * @return 结果
      */
-    public List<BookData> getBookNameData(String searchBookName);
+    List<BookData> getBookNameData(String searchBookName);
 
 
     /**
@@ -29,7 +29,7 @@ public interface BookSearchService {
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
-    public List<BookData> searchBookNameData(String searchBookName);
+    List<BookData> searchBookNameData(String searchBookName);
 
     /**
      * 妙笔阁
@@ -37,7 +37,7 @@ public interface BookSearchService {
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
-    public List<BookData> searchBookNameData_miao(String searchBookName);
+    List<BookData> searchBookNameData_miao(String searchBookName);
 
     /**
      * 全本小说网
@@ -45,7 +45,7 @@ public interface BookSearchService {
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
-    public List<BookData> searchBookNameData_tai(String searchBookName);
+    List<BookData> searchBookNameData_tai(String searchBookName);
 
     /**
      * 笔趣阁www.biduoxs.com
@@ -53,7 +53,7 @@ public interface BookSearchService {
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
-    public List<BookData> searchBookNameData_bqg2(String searchBookName);
+    List<BookData> searchBookNameData_bqg2(String searchBookName);
 
     /**
      * 69书吧www.69shuba.cc
@@ -61,7 +61,7 @@ public interface BookSearchService {
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
-    public List<BookData> searchBookNameData_69shu(String searchBookName);
+    List<BookData> searchBookNameData_69shu(String searchBookName);
 
     /**
      * 58小说www.wbxsw.com
@@ -69,7 +69,7 @@ public interface BookSearchService {
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
-    public List<BookData> searchBookNameData_58(String searchBookName);
+    List<BookData> searchBookNameData_58(String searchBookName);
 
     /**
      * 顶点小说www.maxreader.net
@@ -77,7 +77,7 @@ public interface BookSearchService {
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
-    public List<BookData> searchBookNameData_top(String searchBookName);
+    List<BookData> searchBookNameData_top(String searchBookName);
 
     /**
      * 千千小说网 www.qqxsw.co
@@ -85,6 +85,6 @@ public interface BookSearchService {
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
-    public List<BookData> searchBookNameData_qian(String searchBookName);
+    List<BookData> searchBookNameData_qian(String searchBookName);
 
 }

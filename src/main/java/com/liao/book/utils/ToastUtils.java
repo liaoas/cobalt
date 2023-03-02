@@ -1,7 +1,6 @@
 package com.liao.book.utils;
 
-import com.intellij.notification.NotificationGroupManager;
-import com.intellij.notification.NotificationType;
+import com.intellij.notification.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.liao.book.config.ProjectConfig;

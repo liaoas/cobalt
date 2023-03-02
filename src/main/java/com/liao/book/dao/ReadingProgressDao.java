@@ -62,6 +62,7 @@ public class ReadingProgressDao implements PersistentStateComponent<ReadingProgr
     }
 
     public static ReadingProgressDao getInstance() {
+        ApplicationManager.getApplication().getService(ReadingProgressDao.class);
         return ApplicationManager.getApplication().getService(ReadingProgressDao.class);
     }
 }

@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/liaoas/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>1.4.6-2021.2</version>
+    <version>2.0.0-2021.2</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/IDEA-EBook">LiAo</vendor>
 
     <idea-version since-build="212" until-build="212.*"/>
@@ -172,7 +172,6 @@
             <implementation-class>com.liao.book.dao.WindowsSettingDao</implementation-class>
         </component>
     </project-components>
-
 
     <actions>
     </actions>

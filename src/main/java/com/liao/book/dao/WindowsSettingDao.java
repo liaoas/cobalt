@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 )
 public class WindowsSettingDao implements PersistentStateComponent<WindowsSettingDao> {
 
-    public int fontSize;
+    public int fontSize = 16;
 
     public int scrollSpacingScale;
 

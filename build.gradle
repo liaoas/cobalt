@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.liao'
-version '1.4.6-2021.2'
+version '2.0.0-2021.2'
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
@@ -12,7 +12,7 @@ tasks.withType(JavaCompile) {
 
 repositories {
     maven { url 'https://maven.aliyun.com/repository/public' }
-    maven{ url'http://maven.aliyun.com/nexus/content/groups/public/'}
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     mavenLocal()
     mavenCentral()
 }

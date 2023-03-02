@@ -65,9 +65,6 @@ public class FullScreenReading {
     // 滚动间距
     private JSlider scrollSpacing;
 
-    // 字体默认大小
-    private Integer fontSize = 12;
-
     // 全局模块对象
     private final Project project;
 
@@ -111,9 +108,7 @@ public class FullScreenReading {
 
     // 页面打开方法
     public FullScreenReading(Project project, ToolWindow toolWindow) {
-
         this.project = project;
-
         // 初始化信息
         init();
 
@@ -121,7 +116,6 @@ public class FullScreenReading {
         btnOn.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-
             if (instance.chapters.size() == 0 || instance.nowChapterIndex == 0) {
                 ToastUtils.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
@@ -135,17 +129,13 @@ public class FullScreenReading {
 
         // 下一章跳转
         underOn.addActionListener(e -> {
-
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-
             if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size()) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 return;
             }
-
             instance.nowChapterIndex = instance.nowChapterIndex + 1;
-
             // 加载阅读信息
             new LoadChapterInformation().execute();
         });
@@ -154,15 +144,12 @@ public class FullScreenReading {
         jumpButton.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-
             if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
                 ToastUtils.showToastMassage(project, "未知章节", ToastType.ERROR);
                 return;
             }
-
             // 根据下标跳转
             instance.nowChapterIndex = chapterList.getSelectedIndex();
-
             // 加载阅读信息
             new LoadChapterInformation().execute();
         });

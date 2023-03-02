@@ -125,6 +125,11 @@
             <li>Added 2022 version support</li>
             <li>Delete redundant search nodes</li>
         </ul>
+        <i>2023.03.02</i>
+        <ul>
+            <li>Added the reading progress saving function</li>
+            <li>Fixed several issues</li>
+        </ul>
 
                  ]]>
     </change-notes>

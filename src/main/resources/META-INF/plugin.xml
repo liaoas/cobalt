@@ -120,12 +120,12 @@
             <li>Increase the mouse status of task execution</li>
             <li>It's cold, everyone, keep warm</li>
         </ul>
-        <i>2022.12.29</i>
+        <i>2022.12.29-1.4.6</i>
         <ul>
             <li>Added 2022 version support</li>
             <li>Delete redundant search nodes</li>
         </ul>
-        <i>2023.03.02</i>
+        <i>2023.03.02-2.0.0</i>
         <ul>
             <li>Added the reading progress saving function</li>
             <li>Fixed several issues</li>

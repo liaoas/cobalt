@@ -4,6 +4,15 @@ import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.Chapter;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -17,6 +26,12 @@ public class ReadingUtils {
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+
+    // 默认章节标题正则表达式
+    private static final String CHAPTER_REGEX = "^\\s*[第卷][0123456789一二三四五六七八九十零〇百千两]*[章回部节集卷].*";
+
+    // Default Pattern
+    private static final Pattern CHAPTER_PATTERN = Pattern.compile(CHAPTER_REGEX);
 
     /**
      * 加载阅读进度
@@ -43,4 +58,42 @@ public class ReadingUtils {
         // 回到顶部
         textContent.setCaretPosition(1);
     }
+
+    /**
+     *
+     *
+     * @param filePath 文件路径
+     * @return <章节，章节内容>
+     * @throws IOException ex
+     */
+    public static Map<String, String> parseTxtNovel(String filePath) throws IOException {
+        Map<String, String> chapterMap = new LinkedHashMap<>();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(filePath)), "GBK"))) {
+            String line;
+            StringBuilder contentBuilder = new StringBuilder();
+            String title = null;
+
+            while ((line = reader.readLine()) != null) {
+                Matcher matcher = CHAPTER_PATTERN.matcher(line);
+                if (matcher.find()) {
+                    if (title != null) {
+                        chapterMap.put(title, contentBuilder.toString());
+                        contentBuilder.setLength(0);
+                    }
+                    title = line;
+                } else {
+                    contentBuilder.append(line);
+                    contentBuilder.append(System.lineSeparator());
+                }
+            }
+
+            if (title != null) {
+                chapterMap.put(title, contentBuilder.toString());
+            }
+        }
+
+        return chapterMap;
+    }
+
 }

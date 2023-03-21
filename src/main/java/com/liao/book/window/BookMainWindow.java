@@ -40,7 +40,6 @@ import java.util.Objects;
  * @author LiAo
  * @since 2021/1/14
  */
-
 public class BookMainWindow {
     // 搜索按钮
     private JButton btnSearch;
@@ -136,6 +135,13 @@ public class BookMainWindow {
         for (String dataSourceName : DataCenter.DATA_SOURCE) {
             sourceDropdown.addItem(dataSourceName);
         }
+
+        // btnSearch.setMargin(new Insets(0, 0, 0, 0));//设置边距
+        // btnSearch.setBorderPainted(false);//不绘制边框
+        // btnSearch.setFocusPainted(false);//选中后不绘制边框
+        // btnSearch.setContentAreaFilled(false);//不绘制按钮区域
+        // btnSearch.setText("");//不显示文字
+
 
         // 设置表格内容大小
         tablePane.setPreferredSize(new Dimension(-1, 30));

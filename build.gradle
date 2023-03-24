@@ -18,11 +18,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
-
     implementation group: 'cn.hutool', name: 'hutool-http', version: '5.8.11'
 
-    implementation group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
 }
 
 intellij {

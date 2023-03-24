@@ -160,11 +160,11 @@
       <grid id="13340" layout-manager="FormLayout">
         <rowspec value="center:30px:grow"/>
         <colspec value="center:40px:noGrow"/>
-        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="left:2dlu:noGrow"/>
         <colspec value="left:40px:noGrow"/>
-        <colspec value="left:4dlu:noGrow"/>
-        <colspec value="left:40px:noGrow"/>
-        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="left:2dlu:noGrow"/>
+        <colspec value="left:43px:noGrow"/>
+        <colspec value="left:2dlu:noGrow"/>
         <colspec value="left:d:grow"/>
         <constraints>
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -244,9 +244,9 @@
       <grid id="2aae7" layout-manager="FormLayout">
         <rowspec value="center:30px:grow"/>
         <colspec value="left:40px:noGrow"/>
-        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="left:2dlu:noGrow"/>
         <colspec value="left:40px:noGrow"/>
-        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="left:2dlu:noGrow"/>
         <colspec value="right:d:noGrow"/>
         <constraints>
           <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>

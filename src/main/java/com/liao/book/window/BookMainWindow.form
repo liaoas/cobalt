@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.window.BookMainWindow">
   <grid id="27dc6" binding="bookMainJPanel" layout-manager="FormLayout">
-    <rowspec value="center:29px:noGrow"/>
+    <rowspec value="fill:31px:noGrow"/>
     <rowspec value="top:0dlu:noGrow"/>
-    <rowspec value="top:180px:grow"/>
+    <rowspec value="top:181px:grow"/>
     <rowspec value="top:0dlu:noGrow"/>
     <rowspec value="top:d:noGrow"/>
     <rowspec value="top:0dlu:noGrow"/>
-    <rowspec value="center:29px:noGrow"/>
+    <rowspec value="fill:31px:noGrow"/>
     <rowspec value="top:0dlu:noGrow"/>
     <rowspec value="center:32px:noGrow"/>
     <colspec value="fill:d:grow"/>
@@ -23,9 +23,9 @@
     <children>
       <grid id="6e6fc" layout-manager="FormLayout">
         <rowspec value="center:30px:grow"/>
-        <colspec value="left:23px:noGrow"/>
+        <colspec value="left:28px:noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
-        <colspec value="left:23px:noGrow"/>
+        <colspec value="left:28px:noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
         <colspec value="left:d:grow"/>
         <colspec value="left:0dlu:noGrow"/>
@@ -36,9 +36,11 @@
         </constraints>
         <properties>
           <minimumSize width="-1" height="26"/>
-          <preferredSize width="334" height="34"/>
+          <preferredSize width="334" height="30"/>
         </properties>
-        <border type="none"/>
+        <border type="empty">
+          <size top="2" left="2" bottom="5" right="0"/>
+        </border>
         <children>
           <component id="7ec88" class="javax.swing.JTextField" binding="textSearchBar">
             <constraints>
@@ -47,7 +49,9 @@
               </grid>
               <forms defaultalign-horz="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <margin top="2" left="6" bottom="2" right="6"/>
+            </properties>
           </component>
           <component id="ce58a" class="javax.swing.JButton" binding="btnSearch">
             <constraints>
@@ -59,14 +63,18 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <borderPainted value="false"/>
+              <alignmentY value="0.0"/>
+              <borderPainted value="true"/>
               <contentAreaFilled value="false"/>
               <defaultCapable value="true"/>
               <focusPainted value="false"/>
               <hideActionText value="false"/>
               <horizontalTextPosition value="4"/>
               <icon value="img/search.png"/>
-              <margin top="0" left="6" bottom="0" right="0"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
               <text value=""/>
               <verticalTextPosition value="0"/>
             </properties>
@@ -90,10 +98,19 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <borderPainted value="false"/>
+              <alignmentY value="0.0"/>
+              <borderPainted value="true"/>
               <contentAreaFilled value="false"/>
+              <enabled value="true"/>
+              <focusCycleRoot value="false"/>
               <focusPainted value="false"/>
+              <focusTraversalPolicyProvider value="false"/>
               <icon value="img/start.png"/>
+              <iconTextGap value="0"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
               <text value=""/>
             </properties>
           </component>
@@ -110,7 +127,11 @@
           <minimumSize width="-1" height="21"/>
           <preferredSize width="150" height="50"/>
         </properties>
-        <border type="none"/>
+        <border type="empty">
+          <font/>
+          <title-color color="-4473925"/>
+          <size top="2" left="0" bottom="2" right="0"/>
+        </border>
         <children>
           <component id="3cade" class="javax.swing.JTable" binding="searchBookTable">
             <constraints/>
@@ -146,6 +167,8 @@
               <component id="3b043" class="javax.swing.JTextArea" binding="textContent">
                 <constraints/>
                 <properties>
+                  <alignmentX value="0.0"/>
+                  <alignmentY value="0.0"/>
                   <autoscrolls value="false"/>
                   <editable value="false"/>
                   <lineWrap value="true"/>
@@ -159,11 +182,11 @@
       </grid>
       <grid id="13340" layout-manager="FormLayout">
         <rowspec value="center:30px:grow"/>
-        <colspec value="center:23px:noGrow"/>
+        <colspec value="center:28px:noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
-        <colspec value="left:23px:noGrow"/>
+        <colspec value="left:28px:noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
-        <colspec value="left:23px:noGrow"/>
+        <colspec value="left:28px:noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
         <colspec value="left:d:grow"/>
         <constraints>
@@ -196,7 +219,7 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <borderPainted value="false"/>
+              <borderPainted value="true"/>
               <contentAreaFilled value="false"/>
               <focusPainted value="false"/>
               <icon value="img/next.png"/>
@@ -212,12 +235,16 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <borderPainted value="false"/>
+              <borderPainted value="true"/>
               <contentAreaFilled value="false"/>
               <focusPainted value="false"/>
               <horizontalTextPosition value="0"/>
               <icon value="img/go_with.png"/>
+              <iconTextGap value="0"/>
               <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
               <text value=""/>
             </properties>
           </component>
@@ -231,11 +258,14 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <borderPainted value="false"/>
+              <borderPainted value="true"/>
               <contentAreaFilled value="false"/>
               <defaultCapable value="true"/>
               <focusPainted value="false"/>
               <icon value="img/previous.png"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
               <text value=""/>
             </properties>
           </component>

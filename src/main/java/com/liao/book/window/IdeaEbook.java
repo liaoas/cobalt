@@ -14,6 +14,7 @@ import javax.swing.*;
  */
 public class IdeaEbook implements Configurable {
 
+    private IdeaEbookSettings ideaEbookSettings = new IdeaEbookSettings();
     @Override
     public @NlsContexts.ConfigurableName String getDisplayName() {
         return null;
@@ -21,7 +22,8 @@ public class IdeaEbook implements Configurable {
 
     @Override
     public @Nullable JComponent createComponent() {
-        return null;
+        JPanel panel1 = ideaEbookSettings.getPanel1();
+        return panel1;
     }
 
     @Override

@@ -157,6 +157,13 @@
                             serviceImplementation="com.liao.book.dao.WindowsSettingDao"
                             testServiceImplementation="com.liao.book.dao.WindowsSettingDao"
                             headlessImplementation="com.liao.book.dao.WindowsSettingDao"/>
+
+        <projectConfigurable
+                parentId="other"
+                instance="com.liao.book.window.IdeaEbook"
+                id="com.liao.book.window.IdeaEbook"
+                displayName="Idea Ebook"
+                nonDefaultProject="true"/>
     </extensions>
 
     <project-components>

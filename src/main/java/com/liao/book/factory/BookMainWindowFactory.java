@@ -8,6 +8,7 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.liao.book.entity.DataCenter;
 import com.liao.book.window.BookMainWindow;
+import com.liao.book.window.IdeaEbookSettings;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,6 +26,7 @@ public class BookMainWindowFactory implements ToolWindowFactory, DumbAware {
 
         // 创建NoteListWindow对象
         BookMainWindow noteListWindow = new BookMainWindow(project, toolWindow);
+        IdeaEbookSettings ideaEbookSettings = new IdeaEbookSettings();
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容

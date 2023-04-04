@@ -1,6 +1,7 @@
 package com.liao.book.ui;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.content.Content;
@@ -12,7 +13,7 @@ import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.dao.WindowsSettingDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
-import com.liao.book.entity.DataCenter;
+import com.liao.book.common.ModuleConstants;
 import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
 import com.liao.book.service.BookChapterService;
@@ -29,6 +30,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Objects;
 
@@ -88,6 +91,7 @@ public class MainUI {
 
     // 滚动间距
     private JSlider scrollSpacing;
+    private JButton settingBtn;
 
     // 全局模块对象
     private final Project project;
@@ -128,11 +132,11 @@ public class MainUI {
     // 初始化数据
     private void init() {
         // 初始化表格
-        searchBookTable.setModel(DataCenter.tableModel);
+        searchBookTable.setModel(ModuleConstants.tableModel);
         searchBookTable.setEnabled(true);
 
         // 加载数据源下拉框
-        for (String dataSourceName : DataCenter.DATA_SOURCE) {
+        for (String dataSourceName : ModuleConstants.DATA_SOURCE) {
             sourceDropdown.addItem(dataSourceName);
         }
 
@@ -172,7 +176,7 @@ public class MainUI {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.WAIT_CURSOR);
             // 清空表格数据
-            DataCenter.tableModel.setRowCount(0);
+            ModuleConstants.tableModel.setRowCount(0);
             // 获取搜索输入文本
             bookSearchName = textSearchBar.getText();
 
@@ -353,7 +357,7 @@ public class MainUI {
 
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
-                    if (selectedContent.getDisplayName().equals(DataCenter.TAB_CONTROL_TITLE_HOME)) {
+                    if (selectedContent.getDisplayName().equals(ModuleConstants.TAB_CONTROL_TITLE_HOME)) {
                         // 获取新的章节位置
                         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
 
@@ -368,6 +372,11 @@ public class MainUI {
                 }
             });
             toolWindow.installWatcher(contentManager);
+        });
+
+        // 设置单击事件
+        settingBtn.addActionListener(e -> {
+            ShowSettingsUtil.getInstance().showSettingsDialog(project, "Com.Liao.Book.Configurable.SettingConfigurable");
         });
     }
 
@@ -393,7 +402,7 @@ public class MainUI {
         protected void process(List<List<BookData>> chunks) {
             List<BookData> bookData = chunks.get(0);
             for (BookData bookDatum : bookData) {
-                DataCenter.tableModel.addRow(Convert.bookData2Array(bookDatum));
+                ModuleConstants.tableModel.addRow(Convert.bookData2Array(bookDatum));
             }
         }
 

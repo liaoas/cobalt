@@ -29,6 +29,8 @@
         <colspec value="left:0dlu:noGrow"/>
         <colspec value="left:d:grow"/>
         <colspec value="left:0dlu:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
         <colspec value="left:d:noGrow"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -81,7 +83,7 @@
           </component>
           <component id="b6306" class="javax.swing.JComboBox" binding="sourceDropdown">
             <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="78" height="19"/>
               </grid>
               <forms/>
@@ -108,6 +110,22 @@
               <icon value="img/start.png"/>
               <iconTextGap value="0"/>
               <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="1518" class="javax.swing.JButton" binding="settingBtn">
+            <constraints>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <borderPainted value="true"/>
+              <contentAreaFilled value="false"/>
+              <icon value="img/settings.png"/>
+              <label value=""/>
               <maximumSize width="28" height="29"/>
               <minimumSize width="28" height="29"/>
               <preferredSize width="28" height="29"/>

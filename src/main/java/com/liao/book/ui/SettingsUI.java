@@ -39,7 +39,7 @@ public class SettingsUI {
     private TextFieldWithBrowseButton selectFile;
 
     public SettingsUI() {
-
+        init();
     }
 
     public JPanel getSettingWin() {
@@ -69,7 +69,6 @@ public class SettingsUI {
         selectFile.addBrowseFolderListener("选择书籍文件", null, null, new FileChooserDescriptor(true, false, false, false, false, false) {
             @Override
             public void validateSelectedFiles(VirtualFile @NotNull [] files) throws Exception {
-                System.out.println(files);
             }
         });
     }

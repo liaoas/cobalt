@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.window.IdeaEbookSettings">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FormLayout">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.ui.SettingsUI">
+  <grid id="27dc6" binding="settingWin" default-binding="true" layout-manager="FormLayout">
     <rowspec value="center:20px:noGrow"/>
     <rowspec value="top:6dlu:noGrow"/>
     <rowspec value="center:d:noGrow"/>

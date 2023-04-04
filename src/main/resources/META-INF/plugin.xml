@@ -160,8 +160,8 @@
 
         <projectConfigurable
                 parentId="other"
-                instance="com.liao.book.window.IdeaEbook"
-                id="com.liao.book.window.IdeaEbook"
+                instance="com.liao.book.configurable.SettingConfigurable"
+                id="com.liao.book.configurable.SettingConfigurable"
                 displayName="Idea Ebook"
                 nonDefaultProject="true"/>
     </extensions>

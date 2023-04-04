@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.window.BookMainWindow">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.ui.MainUI">
   <grid id="27dc6" binding="bookMainJPanel" layout-manager="FormLayout">
     <rowspec value="fill:31px:noGrow"/>
     <rowspec value="top:0dlu:noGrow"/>

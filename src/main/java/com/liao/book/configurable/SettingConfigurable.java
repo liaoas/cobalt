@@ -1,20 +1,23 @@
-package com.liao.book.window;
+package com.liao.book.configurable;
 
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurableProvider;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.util.NlsContexts;
+import com.liao.book.ui.SettingsUI;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
 /**
+ * 设置窗口 Configurable
+ *
  * @author LiAo
  * @since 2023-04-03
  */
-public class IdeaEbook implements Configurable {
+public class SettingConfigurable implements Configurable {
 
-    private IdeaEbookSettings ideaEbookSettings = new IdeaEbookSettings();
+    private SettingsUI settingsUI = new SettingsUI();
+
     @Override
     public @NlsContexts.ConfigurableName String getDisplayName() {
         return null;
@@ -22,8 +25,7 @@ public class IdeaEbook implements Configurable {
 
     @Override
     public @Nullable JComponent createComponent() {
-        JPanel panel1 = ideaEbookSettings.getPanel1();
-        return panel1;
+        return settingsUI.getSettingWin();
     }
 
     @Override

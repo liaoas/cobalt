@@ -1,4 +1,4 @@
-package com.liao.book.window;
+package com.liao.book.ui;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
@@ -40,7 +40,7 @@ import java.util.Objects;
  * @author LiAo
  * @since 2021/1/14
  */
-public class BookMainWindow {
+public class MainUI {
     // 搜索按钮
     private JButton btnSearch;
 
@@ -161,7 +161,7 @@ public class BookMainWindow {
     }
 
     // 页面初始化加载
-    public BookMainWindow(Project project, ToolWindow toolWindow) {
+    public MainUI(Project project, ToolWindow toolWindow) {
         this.project = project;
         // 执行初始化表格
         init();

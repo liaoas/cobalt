@@ -6,7 +6,7 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.liao.book.entity.DataCenter;
-import com.liao.book.window.FullScreenReading;
+import com.liao.book.ui.FullScreenUI;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,7 +21,7 @@ public class FullScreenReadingFaction implements ToolWindowFactory {
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 创建NoteListWindow对象
-        FullScreenReading noteListWindow = new FullScreenReading(project, toolWindow);
+        FullScreenUI noteListWindow = new FullScreenUI(project, toolWindow);
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容

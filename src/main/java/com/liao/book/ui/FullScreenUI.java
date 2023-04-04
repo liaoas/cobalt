@@ -1,4 +1,4 @@
-package com.liao.book.window;
+package com.liao.book.ui;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
@@ -33,7 +33,7 @@ import java.util.List;
  * @since 2021/1/14
  */
 
-public class FullScreenReading {
+public class FullScreenUI {
 
     // 主体窗口
     private JPanel fullScreenPanel;
@@ -107,7 +107,7 @@ public class FullScreenReading {
     }
 
     // 页面打开方法
-    public FullScreenReading(Project project, ToolWindow toolWindow) {
+    public FullScreenUI(Project project, ToolWindow toolWindow) {
         this.project = project;
         // 初始化信息
         init();
@@ -213,8 +213,8 @@ public class FullScreenReading {
                         ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
 
                         // 切换了书本
-                        if (BookMainWindow.isReadClick) {
-                            BookMainWindow.isReadClick = false;
+                        if (MainUI.isReadClick) {
+                            MainUI.isReadClick = false;
                             startReading();
                         } else {
                             // 获取新的章节位置

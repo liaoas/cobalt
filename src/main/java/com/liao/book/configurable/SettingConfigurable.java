@@ -20,7 +20,7 @@ public class SettingConfigurable implements Configurable {
 
     @Override
     public @NlsContexts.ConfigurableName String getDisplayName() {
-        return null;
+        return "LiAo";
     }
 
     @Override
@@ -30,11 +30,11 @@ public class SettingConfigurable implements Configurable {
 
     @Override
     public boolean isModified() {
-        return false;
+        return settingsUI.isModified();
     }
 
     @Override
     public void apply() throws ConfigurationException {
-        System.out.println("apply");
+
     }
 }

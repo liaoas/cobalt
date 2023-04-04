@@ -6,7 +6,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.BookData;
-import com.liao.book.entity.DataCenter;
+import com.liao.book.common.ModuleConstants;
 import com.liao.book.service.BookSearchService;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -47,28 +47,28 @@ public class BookSearchServiceImpl implements BookSearchService {
     public List<BookData> getBookNameData(String searchBookName) {
 
         switch (instance.searchType) {
-            case DataCenter.BI_QU_GE:
+            case ModuleConstants.BI_QU_GE:
                 // 笔趣阁
                 return searchBookNameData(searchBookName);
-            case DataCenter.MI_BI_GE:
+            case ModuleConstants.MI_BI_GE:
                 // 妙笔阁
                 return searchBookNameData_miao(searchBookName);
-            case DataCenter.QUAN_BEN:
+            case ModuleConstants.QUAN_BEN:
                 // 全本小说网
                 return searchBookNameData_tai(searchBookName);
-            case DataCenter.BI_QU_GE_2:
+            case ModuleConstants.BI_QU_GE_2:
                 // 笔趣阁2
                 return searchBookNameData_bqg2(searchBookName);
-            case DataCenter.SHU_BA_69:
+            case ModuleConstants.SHU_BA_69:
                 // 69书吧
                 return searchBookNameData_69shu(searchBookName);
-            case DataCenter.SHU_BA_58:
+            case ModuleConstants.SHU_BA_58:
                 // 58小说
                 return searchBookNameData_58(searchBookName);
-            case DataCenter.SHU_TOP:
+            case ModuleConstants.SHU_TOP:
                 // 顶点小说
                 return searchBookNameData_top(searchBookName);
-            case DataCenter.QIAN_QIAN:
+            case ModuleConstants.QIAN_QIAN:
                 //千千小说
                 return searchBookNameData_qian(searchBookName);
         }

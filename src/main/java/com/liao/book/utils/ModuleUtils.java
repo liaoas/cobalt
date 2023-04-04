@@ -1,7 +1,7 @@
 package com.liao.book.utils;
 
 import com.liao.book.dao.WindowsSettingDao;
-import com.liao.book.entity.DataCenter;
+import com.liao.book.common.ModuleConstants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,23 +98,23 @@ public class ModuleUtils {
                                             JButton fontSizeUp, JSlider scrollSpacing) {
         // 搜索按钮
         if (btnSearch != null) {
-            btnSearch.setToolTipText(DataCenter.SEARCH_BTN);
+            btnSearch.setToolTipText(ModuleConstants.SEARCH_BTN);
         }
         // 阅读按钮
         if (openBook != null) {
-            openBook.setToolTipText(DataCenter.START_READ);
+            openBook.setToolTipText(ModuleConstants.START_READ);
         }
         // 上一章
-        btnOn.setToolTipText(DataCenter.BTN_ON);
+        btnOn.setToolTipText(ModuleConstants.BTN_ON);
         // 下一章
-        underOn.setToolTipText(DataCenter.UNDER_ON);
+        underOn.setToolTipText(ModuleConstants.UNDER_ON);
         // 跳转
-        jumpButton.setToolTipText(DataCenter.JUMP_BUTTON);
+        jumpButton.setToolTipText(ModuleConstants.JUMP_BUTTON);
         // 放大
-        fontSizeDown.setToolTipText(DataCenter.FONT_SIZE_DOWN);
+        fontSizeDown.setToolTipText(ModuleConstants.FONT_SIZE_DOWN);
         // 缩小
-        fontSizeUp.setToolTipText(DataCenter.FONT_SIZE_UP);
+        fontSizeUp.setToolTipText(ModuleConstants.FONT_SIZE_UP);
         // 滚动间距
-        scrollSpacing.setToolTipText(DataCenter.SCROLL_SPACING);
+        scrollSpacing.setToolTipText(ModuleConstants.SCROLL_SPACING);
     }
 }

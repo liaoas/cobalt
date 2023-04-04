@@ -1,5 +1,6 @@
 package com.liao.book.utils;
 
+import com.liao.book.common.Constants;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.Chapter;
 
@@ -27,11 +28,8 @@ public class ReadingUtils {
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
-    // 默认章节标题正则表达式
-    private static final String CHAPTER_REGEX = "^\\s*[第卷][0123456789一二三四五六七八九十零〇百千两]*[章回部节集卷].*";
-
     // Default Pattern
-    private static final Pattern CHAPTER_PATTERN = Pattern.compile(CHAPTER_REGEX);
+    private static final Pattern CHAPTER_PATTERN = Pattern.compile(Constants.DEFAULT_CHAPTER_REGULAR);
 
     /**
      * 加载阅读进度

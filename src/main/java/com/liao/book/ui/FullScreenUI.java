@@ -10,7 +10,7 @@ import com.intellij.ui.content.ContentManagerListener;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.dao.WindowsSettingDao;
 import com.liao.book.entity.Chapter;
-import com.liao.book.entity.DataCenter;
+import com.liao.book.common.ModuleConstants;
 import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
 import com.liao.book.service.BookTextService;
@@ -208,7 +208,7 @@ public class FullScreenUI {
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
 
-                    if (selectedContent.getDisplayName().equals(DataCenter.TAB_CONTROL_TITLE_UNFOLD)) {
+                    if (selectedContent.getDisplayName().equals(ModuleConstants.TAB_CONTROL_TITLE_UNFOLD)) {
                         // 等待鼠标样式
                         ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
 

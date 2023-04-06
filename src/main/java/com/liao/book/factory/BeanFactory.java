@@ -1,5 +1,7 @@
 package com.liao.book.factory;
 
+import com.sun.istack.NotNull;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ import java.util.Map;
  */
 public class BeanFactory {
 
-    // 存储Bean 实例
+    // 存储Bean 实例的容器
     private static final Map<String, Object> map = new HashMap<>();
 
     // 存储实例路径
@@ -30,6 +32,16 @@ public class BeanFactory {
         return map.get(key);
     }
 
+    /**
+     * 往对象容器中塞入Bean实例
+     *
+     * @param name 名称
+     * @param bean 实例对象
+     */
+    public static void setBean(String name, Object bean) {
+        map.put(name, bean);
+    }
+
     static {
 
         beanMap.put("BookChapterServiceImpl", "com.liao.book.service.impl.BookChapterServiceImpl");
@@ -43,11 +55,8 @@ public class BeanFactory {
                 Object value = Class.forName(beanValue).getDeclaredConstructor().newInstance();
                 map.put(baneName, value);
             }
-        } catch (InstantiationException |
-                IllegalAccessException |
-                ClassNotFoundException |
-                NoSuchMethodException |
-                InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException |
+                 InvocationTargetException e) {
             e.printStackTrace();
         }
     }

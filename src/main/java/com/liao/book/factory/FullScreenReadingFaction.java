@@ -21,11 +21,12 @@ public class FullScreenReadingFaction implements ToolWindowFactory {
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 创建NoteListWindow对象
-        FullScreenUI noteListWindow = new FullScreenUI(project, toolWindow);
+        FullScreenUI fullScreenUI = new FullScreenUI(project, toolWindow);
+        BeanFactory.setBean("FullScreenUI", fullScreenUI);
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(noteListWindow.getBookMainJPanel(),
+        Content content = contentFactory.createContent(fullScreenUI.getBookMainJPanel(),
                 ModuleConstants.TAB_CONTROL_TITLE_UNFOLD, true);
 
         // 给toolWindows设置内容

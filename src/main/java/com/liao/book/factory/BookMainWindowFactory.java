@@ -25,12 +25,12 @@ public class BookMainWindowFactory implements ToolWindowFactory, DumbAware {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
 
         // 创建NoteListWindow对象
-        MainUI noteListWindow = new MainUI(project, toolWindow);
-        SettingsUI ideaEbookSettings = new SettingsUI();
+        MainUI mainUI = new MainUI(project, toolWindow);
+        BeanFactory.setBean("MainUI", mainUI);
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(noteListWindow.getBookMainJPanel(),
+        Content content = contentFactory.createContent(mainUI.getBookMainJPanel(),
                 ModuleConstants.TAB_CONTROL_TITLE_HOME, false);
 
         // 给toolWindows设置内容

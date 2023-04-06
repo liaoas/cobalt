@@ -8,6 +8,9 @@ import com.liao.book.common.ModuleConstants;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Objects;
 
 /**
  * 插件设置页面窗口
@@ -74,6 +77,10 @@ public class SettingsUI {
         return isModified;
     }
 
+    public JComboBox<Integer> getFontSize() {
+        return fontSize;
+    }
+
     /**
      * 组件初始化函数
      */
@@ -128,6 +135,14 @@ public class SettingsUI {
             }
 
             isModified = true;
+        });
+
+        // 字体大小下拉框数值发生变化
+        fontSize.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                // 获取当前选中的项
+                isModified = true;
+            }
         });
     }
 

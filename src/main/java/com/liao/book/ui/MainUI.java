@@ -497,5 +497,9 @@ public class MainUI {
 
     private void createUIComponents() {
     }
+
+    public JTextArea getTextContent() {
+        return textContent;
+    }
 }
 

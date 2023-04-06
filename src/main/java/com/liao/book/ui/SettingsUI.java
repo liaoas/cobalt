@@ -146,4 +146,22 @@ public class SettingsUI {
         });
     }
 
+    /**
+     * 获取字体大小选中值
+     *
+     * @return 字体大小
+     */
+    public int getFontSizeSelectedItem() {
+        return Integer.parseInt(Objects.requireNonNull(fontSize.getSelectedItem()).toString());
+    }
+
+    /**
+     * 获取滚动速度选中值
+     *
+     * @return 滚动速度
+     */
+    public int getReadRollSelectedItem() {
+        return Integer.parseInt(Objects.requireNonNull(fontSize.getSelectedItem()).toString());
+    }
+
 }

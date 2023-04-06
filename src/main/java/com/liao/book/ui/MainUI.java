@@ -8,6 +8,7 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
+import com.liao.book.common.Constants;
 import com.liao.book.dao.ReadSubscriptDao;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.dao.WindowsSettingDao;
@@ -109,16 +110,13 @@ public class MainUI {
     public static boolean isReadClick = false;
 
     // 书籍爬虫
-    static BookSearchService searchService = (BookSearchServiceImpl) BeanFactory
-            .getBean("BookSearchServiceImpl");
+    static BookSearchService searchService = (BookSearchServiceImpl) BeanFactory.getBean("BookSearchServiceImpl");
 
     // 章节爬虫
-    static BookChapterService chapterService = (BookChapterServiceImpl) BeanFactory
-            .getBean("BookChapterServiceImpl");
+    static BookChapterService chapterService = (BookChapterServiceImpl) BeanFactory.getBean("BookChapterServiceImpl");
 
     // 内容爬虫
-    static BookTextService textService = (BookTextServiceImpl) BeanFactory
-            .getBean("BookTextServiceImpl");
+    static BookTextService textService = (BookTextServiceImpl) BeanFactory.getBean("BookTextServiceImpl");
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
@@ -154,8 +152,7 @@ public class MainUI {
         ModuleUtils.loadModuleConfig(paneTextContent, scrollSpacing);
 
         // 加载提示信息
-        ModuleUtils.loadComponentTooltip(btnSearch, openBook, btnOn, underOn, jumpButton,
-                fontSizeDown, fontSizeUp, scrollSpacing);
+        ModuleUtils.loadComponentTooltip(btnSearch, openBook, btnOn, underOn, jumpButton, fontSizeDown, fontSizeUp, scrollSpacing);
 
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
@@ -488,6 +485,21 @@ public class MainUI {
             // 恢复默认鼠标样式
             ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
         }
+    }
+
+    /**
+     * 应用字体大小的修改
+     */
+    public void appleFontSize() {
+        SettingsUI settingsUI1 = (SettingsUI) BeanFactory.getBean("SettingsUI");
+
+        JComboBox<Integer> fontSize = settingsUI1.getFontSize();
+
+        Object selectedItem = fontSize.getSelectedItem();
+
+        int size = selectedItem == null ? Constants.DEFAULT_FONT_SIZE : Integer.parseInt(fontSize.getSelectedItem().toString());
+
+        textContent.setFont(new Font("", Font.BOLD, size));
     }
 
     // 窗口信息

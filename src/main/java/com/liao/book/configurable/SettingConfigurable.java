@@ -29,6 +29,7 @@ public class SettingConfigurable implements Configurable {
 
     @Override
     public @Nullable JComponent createComponent() {
+        System.out.println("SettingsUI");
         BeanFactory.setBean("SettingsUI", settingsUI);
         return settingsUI.getSettingWin();
     }

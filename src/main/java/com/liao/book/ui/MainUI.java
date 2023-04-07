@@ -8,10 +8,9 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
-import com.liao.book.common.Constants;
 import com.liao.book.dao.ReadSubscriptDao;
 import com.liao.book.dao.ReadingProgressDao;
-import com.liao.book.dao.WindowsSettingDao;
+import com.liao.book.dao.SettingsDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.common.ModuleConstants;
@@ -31,8 +30,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Objects;
 
@@ -125,7 +122,7 @@ public class MainUI {
     static ReadSubscriptDao readSubscriptDao = ReadSubscriptDao.getInstance();
 
     // 页面设置持久化
-    static WindowsSettingDao settingDao = WindowsSettingDao.getInstance();
+    static SettingsDao settingDao = SettingsDao.getInstance();
 
     // 初始化数据
     private void init() {
@@ -492,8 +489,10 @@ public class MainUI {
      */
     private void applyFontSize() {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
-        int size = settingsUI.getFontSizeSelectedItem();
-        textContent.setFont(new Font("", Font.BOLD, size));
+        textContent.setFont(new Font("", Font.BOLD, settingsUI.getFontSizeVal()));
+        // 持久化
+        settingDao.fontSize = settingsUI.getFontSizeVal();
+        settingDao.loadState(settingDao);
     }
 
     /**
@@ -501,8 +500,11 @@ public class MainUI {
      */
     private void applyScrollSpacing() {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
-        int size = settingsUI.getReadRollSelectedItem();
-        paneTextContent.getVerticalScrollBar().setUnitIncrement(size);
+        paneTextContent.getVerticalScrollBar().setUnitIncrement(settingsUI.getReadRollVal());
+
+        // 持久化
+        settingDao.scrollSpacingScale = settingsUI.getReadRollVal();
+        settingDao.loadState(settingDao);
     }
 
     /**

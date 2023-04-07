@@ -153,15 +153,15 @@
                             testServiceImplementation="com.liao.book.dao.ReadSubscriptDao"
                             headlessImplementation="com.liao.book.dao.ReadSubscriptDao"/>
 
-        <applicationService id="WindowsSettingDao" serviceInterface="com.liao.book.dao.WindowsSettingDao"
-                            serviceImplementation="com.liao.book.dao.WindowsSettingDao"
-                            testServiceImplementation="com.liao.book.dao.WindowsSettingDao"
-                            headlessImplementation="com.liao.book.dao.WindowsSettingDao"/>
+        <applicationService id="SettingsDao" serviceInterface="com.liao.book.dao.SettingsDao"
+                            serviceImplementation="com.liao.book.dao.SettingsDao"
+                            testServiceImplementation="com.liao.book.dao.SettingsDao"
+                            headlessImplementation="com.liao.book.dao.SettingsDao"/>
 
         <projectConfigurable
                 parentId="other"
-                instance="com.liao.book.configurable.SettingConfigurable"
-                id="com.liao.book.configurable.SettingConfigurable"
+                instance="com.liao.book.configurable.SettingsConfigurable"
+                id="com.liao.book.configurable.SettingsConfigurable"
                 displayName="Idea Ebook"
                 nonDefaultProject="true"/>
     </extensions>
@@ -176,7 +176,7 @@
         </component>
 
         <component>
-            <implementation-class>com.liao.book.dao.WindowsSettingDao</implementation-class>
+            <implementation-class>com.liao.book.dao.SettingsDao</implementation-class>
         </component>
     </project-components>
 

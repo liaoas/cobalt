@@ -22,6 +22,7 @@ public class FullScreenReadingFaction implements ToolWindowFactory {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 创建NoteListWindow对象
         FullScreenUI fullScreenUI = new FullScreenUI(project, toolWindow);
+        // 加入容器
         BeanFactory.setBean("FullScreenUI", fullScreenUI);
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();

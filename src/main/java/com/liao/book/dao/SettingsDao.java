@@ -5,6 +5,7 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.liao.book.common.Constants;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,38 +17,32 @@ import org.jetbrains.annotations.Nullable;
  * @author LiAo
  * @since 2023-03-01
  */
-@State(name = "WindowsSettingDao",
-        storages = {
-                @Storage(value = "windows.setting.dao.xml"
-                )
-        }
-)
-public class WindowsSettingDao implements PersistentStateComponent<WindowsSettingDao> {
+@State(name = "SettingsDao", storages = {@Storage(value = "idea.ebook.settings.dao.xml")})
+public class SettingsDao implements PersistentStateComponent<SettingsDao> {
 
-    public int fontSize = 16;
+    public int fontSize = Constants.DEFAULT_FONT_SIZE;
 
-    public int scrollSpacingScale;
+    public int scrollSpacingScale = Constants.DEFAULT_READ_ROLL_SIZE;
 
-    public WindowsSettingDao() {
+    public SettingsDao() {
     }
 
-    public WindowsSettingDao(int fontSize, int scrollSpacingSize) {
+    public SettingsDao(int fontSize, int scrollSpacingSize) {
         this.fontSize = fontSize;
         this.scrollSpacingScale = scrollSpacingSize;
     }
 
     @Override
-    public @Nullable
-    WindowsSettingDao getState() {
+    public @Nullable SettingsDao getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull WindowsSettingDao windowsSettingDao) {
+    public void loadState(@NotNull SettingsDao windowsSettingDao) {
         XmlSerializerUtil.copyBean(windowsSettingDao, this);
     }
 
-    public static WindowsSettingDao getInstance() {
-        return ApplicationManager.getApplication().getService(WindowsSettingDao.class);
+    public static SettingsDao getInstance() {
+        return ApplicationManager.getApplication().getService(SettingsDao.class);
     }
 }

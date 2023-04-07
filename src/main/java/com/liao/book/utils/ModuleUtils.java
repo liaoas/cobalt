@@ -1,6 +1,6 @@
 package com.liao.book.utils;
 
-import com.liao.book.dao.WindowsSettingDao;
+import com.liao.book.dao.SettingsDao;
 import com.liao.book.common.ModuleConstants;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.awt.*;
 public class ModuleUtils {
 
     // 页面设置持久化
-    static WindowsSettingDao settingDao = WindowsSettingDao.getInstance();
+    static SettingsDao settingDao = SettingsDao.getInstance();
 
     /**
      * 加载页面鼠标样式
@@ -39,13 +39,16 @@ public class ModuleUtils {
      */
     public static void loadSetting(JScrollPane paneTextContent, JTextArea textContent, JSlider scrollSpacing) {
         // 同步滚动步长
-        if (settingDao.scrollSpacingScale != paneTextContent.getVerticalScrollBar().getUnitIncrement()) {
+        /*if (settingDao.scrollSpacingScale != paneTextContent.getVerticalScrollBar().getUnitIncrement()) {
             paneTextContent.getVerticalScrollBar().setUnitIncrement(Math.max(settingDao.scrollSpacingScale, 8));
-        }
+        }*/
+
+        paneTextContent.getVerticalScrollBar().setUnitIncrement(settingDao.scrollSpacingScale);
         // 字体大小
-        if (settingDao.fontSize != textContent.getFont().getSize()) {
+        /*if (settingDao.fontSize != textContent.getFont().getSize()) {
             textContent.setFont(new Font("", Font.BOLD, Math.max(settingDao.fontSize, 16)));
-        }
+        }*/
+        textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
         // 滑块刻度值
         if (settingDao.scrollSpacingScale != scrollSpacing.getValue()) {
             scrollSpacing.setValue(Math.max(settingDao.scrollSpacingScale, 8));
@@ -93,9 +96,7 @@ public class ModuleUtils {
      * @param fontSizeUp    缩小
      * @param scrollSpacing 滚动间距
      */
-    public static void loadComponentTooltip(JButton btnSearch, JButton openBook, JButton btnOn,
-                                            JButton underOn, JButton jumpButton, JButton fontSizeDown,
-                                            JButton fontSizeUp, JSlider scrollSpacing) {
+    public static void loadComponentTooltip(JButton btnSearch, JButton openBook, JButton btnOn, JButton underOn, JButton jumpButton, JButton fontSizeDown, JButton fontSizeUp, JSlider scrollSpacing) {
         // 搜索按钮
         if (btnSearch != null) {
             btnSearch.setToolTipText(ModuleConstants.SEARCH_BTN);

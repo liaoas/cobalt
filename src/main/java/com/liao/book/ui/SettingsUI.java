@@ -5,16 +5,13 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.common.Constants;
 import com.liao.book.common.ModuleConstants;
+import com.liao.book.dao.SettingsDao;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Objects;
-import java.util.regex.Pattern;
 
 /**
  * 插件设置页面窗口
@@ -22,6 +19,7 @@ import java.util.regex.Pattern;
  * @author LiAo
  * @since 2023-04-03
  */
+@SuppressWarnings("all")
 public class SettingsUI {
 
     /**
@@ -69,6 +67,19 @@ public class SettingsUI {
      */
     public boolean isModified = false;
 
+    /**
+     * 字体大小值
+     */
+    private int fontSizeVal = Constants.DEFAULT_FONT_SIZE;
+
+    /**
+     * 滚轮速度大小值
+     */
+    private int readRollVal = Constants.DEFAULT_READ_ROLL_SIZE;
+
+    // 页面设置持久化
+    private static SettingsDao settingDao = SettingsDao.getInstance();
+
     public SettingsUI() {
         init();
     }
@@ -85,12 +96,20 @@ public class SettingsUI {
         isModified = modified;
     }
 
-    public JComboBox<Integer> getFontSize() {
-        return fontSize;
+    public int getFontSizeVal() {
+        return fontSizeVal;
     }
 
-    public JComboBox<Integer> getReadRoll() {
-        return readRoll;
+    public void setFontSizeVal(int fontSizeVal) {
+        this.fontSizeVal = fontSizeVal;
+    }
+
+    public int getReadRollVal() {
+        return readRollVal;
+    }
+
+    public void setReadRollVal(int readRollVal) {
+        this.readRollVal = readRollVal;
     }
 
     /**
@@ -101,6 +120,8 @@ public class SettingsUI {
         bindingComponentData();
         // 加载组件事件
         bindingComponentEvent();
+        // 加载持久化状态
+        loadPersistentState();
     }
 
 
@@ -123,7 +144,7 @@ public class SettingsUI {
     }
 
     /**
-     * 绑定组件相关事件
+     * 绑定组件响应事件
      */
     private void bindingComponentEvent() {
         // 书籍选择
@@ -152,7 +173,20 @@ public class SettingsUI {
         // 字体大小下拉框数值发生变化
         fontSize.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                isModified = true;
+                String selectedItem = String.valueOf(fontSize.getSelectedItem());
+                fontSizeVal = selectedItem == null ? Constants.DEFAULT_FONT_SIZE : Integer.parseInt(selectedItem);
+                // 通知 apple 按钮
+                informApplyState();
+            }
+        });
+
+        // 滚轮速度下拉框数值发生变化
+        readRoll.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                String selectedItem = String.valueOf(readRoll.getSelectedItem());
+                readRollVal = selectedItem == null ? Constants.DEFAULT_READ_ROLL_SIZE : Integer.parseInt(selectedItem);
+                // 通知 apple 按钮
+                informApplyState();
             }
         });
 
@@ -161,25 +195,24 @@ public class SettingsUI {
             @Override
             public void keyReleased(KeyEvent e) {
                 JTextField editor = (JTextField) fontSize.getEditor().getEditorComponent();
-                System.out.println(editor.getText());
-                System.out.println(Constants.INTERGER_PATTERN.matcher(editor.getText()).matches());
-            }
-        });
-
-        // 滚轮速度下拉框数值发生变化
-        readRoll.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                // 获取当前选中的项
-                isModified = true;
+                if (Constants.INTERGER_PATTERN.matcher(editor.getText()).matches()) {
+                    fontSizeVal = Integer.parseInt(editor.getText());
+                    // 通知 apple 按钮
+                    informApplyState();
+                }
             }
         });
 
         // 监听滚轮速度下拉框键盘输入选项
-        fontSize.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+        readRoll.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                // 获取当前选中的项
-                isModified = true;
+                JTextField editor = (JTextField) readRoll.getEditor().getEditorComponent();
+                if (Constants.INTERGER_PATTERN.matcher(editor.getText()).matches()) {
+                    readRollVal = Integer.parseInt(editor.getText());
+                    // 通知 apple 按钮
+                    informApplyState();
+                }
             }
         });
     }
@@ -202,6 +235,22 @@ public class SettingsUI {
     public int getReadRollSelectedItem() {
         String selectedItem = String.valueOf(readRoll.getSelectedItem());
         return selectedItem == null ? Constants.DEFAULT_READ_ROLL_SIZE : Integer.parseInt(selectedItem);
+    }
+
+    /**
+     * 通知 Apple 状态
+     */
+    private void informApplyState() {
+        // 通知 apple 按钮
+        isModified = true;
+    }
+
+    /**
+     * 加载持久化状态
+     */
+    private void loadPersistentState() {
+        fontSize.setSelectedItem(settingDao.fontSize);
+        readRoll.setSelectedItem(settingDao.scrollSpacingScale);
     }
 
 }

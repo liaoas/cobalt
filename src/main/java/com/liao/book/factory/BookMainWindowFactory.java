@@ -26,6 +26,7 @@ public class BookMainWindowFactory implements ToolWindowFactory, DumbAware {
 
         // 创建NoteListWindow对象
         MainUI mainUI = new MainUI(project, toolWindow);
+        // 加入容器
         BeanFactory.setBean("MainUI", mainUI);
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();

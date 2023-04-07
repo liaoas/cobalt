@@ -8,7 +8,7 @@ import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
 import com.liao.book.dao.ReadingProgressDao;
-import com.liao.book.dao.WindowsSettingDao;
+import com.liao.book.dao.SettingsDao;
 import com.liao.book.entity.Chapter;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.enums.ToastType;
@@ -79,7 +79,7 @@ public class FullScreenUI {
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
     // 页面设置持久化
-    static WindowsSettingDao settingDao = WindowsSettingDao.getInstance();
+    static SettingsDao settingDao = SettingsDao.getInstance();
 
     // 窗口信息
     public JPanel getBookMainJPanel() {

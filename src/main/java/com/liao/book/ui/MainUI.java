@@ -8,12 +8,13 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
+import com.liao.book.common.ModuleConstants;
+import com.liao.book.core.Convert;
 import com.liao.book.dao.ReadSubscriptDao;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.dao.SettingsDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
-import com.liao.book.common.ModuleConstants;
 import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
 import com.liao.book.service.BookChapterService;
@@ -22,7 +23,6 @@ import com.liao.book.service.BookTextService;
 import com.liao.book.service.impl.BookChapterServiceImpl;
 import com.liao.book.service.impl.BookSearchServiceImpl;
 import com.liao.book.service.impl.BookTextServiceImpl;
-import com.liao.book.core.Convert;
 import com.liao.book.utils.ModuleUtils;
 import com.liao.book.utils.ReadingUtils;
 import com.liao.book.utils.ToastUtils;
@@ -72,12 +72,6 @@ public class MainUI {
     // 章节内容外部框
     private JScrollPane paneTextContent;
 
-    // 字体放大
-    private JButton fontSizeDown;
-
-    // 字体调小
-    private JButton fontSizeUp;
-
     // 章节目录下拉列表
     private JComboBox<String> chapterList;
 
@@ -87,8 +81,7 @@ public class MainUI {
     // 搜索下拉列表数据源
     private JComboBox<String> sourceDropdown;
 
-    // 滚动间距
-    private JSlider scrollSpacing;
+    // 设置按钮
     private JButton settingBtn;
 
     // 全局模块对象
@@ -146,16 +139,16 @@ public class MainUI {
         tablePane.setPreferredSize(new Dimension(-1, 30));
 
         // 加载组件配置信息
-        ModuleUtils.loadModuleConfig(paneTextContent, scrollSpacing);
+        ModuleUtils.loadModuleConfig(paneTextContent);
 
         // 加载提示信息
-        ModuleUtils.loadComponentTooltip(btnSearch, openBook, btnOn, underOn, jumpButton, fontSizeDown, fontSizeUp, scrollSpacing);
+        ModuleUtils.loadComponentTooltip(btnSearch, openBook, settingBtn, btnOn, underOn, jumpButton);
 
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
 
         // 加载持久化的设置
-        ModuleUtils.loadSetting(paneTextContent, textContent, scrollSpacing);
+        ModuleUtils.loadSetting(paneTextContent, textContent);
     }
 
     // 页面初始化加载
@@ -282,40 +275,6 @@ public class MainUI {
             instance.loadState(instance);
         });
 
-        // 字号调小
-        fontSizeDown.addActionListener(e -> {
-            if (settingDao.fontSize == 1) {
-                ToastUtils.showToastMassage(project, "已经是最小的了", ToastType.ERROR);
-                return;
-            }
-            // 调小字体
-            settingDao.fontSize--;
-            textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
-            // 持久化
-            settingDao.loadState(settingDao);
-        });
-
-        // 字体调大
-        fontSizeUp.addActionListener(e -> {
-            // 调大字体
-            settingDao.fontSize++;
-            textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
-            // 持久化
-            settingDao.loadState(settingDao);
-        });
-
-        // 滑块滑动
-        scrollSpacing.addChangeListener(e -> {
-            JSlider jSlider = (JSlider) e.getSource();
-            // 判断滑块是否停止
-            if (!jSlider.getValueIsAdjusting()) {
-                paneTextContent.getVerticalScrollBar().setUnitIncrement(jSlider.getValue());
-            }
-            // 持久化
-            settingDao.scrollSpacingScale = jSlider.getValue();
-            settingDao.loadState(settingDao);
-        });
-
         // 阅读滚动
         paneTextContent.getVerticalScrollBar().addAdjustmentListener(e -> {
             int textWinIndex = paneTextContent.getVerticalScrollBar().getValue();
@@ -345,7 +304,7 @@ public class MainUI {
                     if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
 
                     // 同步字体等设置
-                    ModuleUtils.loadSetting(paneTextContent, textContent, scrollSpacing);
+                    ModuleUtils.loadSetting(paneTextContent, textContent);
 
                     ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.WAIT_CURSOR);
 

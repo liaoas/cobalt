@@ -35,24 +35,12 @@ public class ModuleUtils {
      *
      * @param paneTextContent 章节内容外部框
      * @param textContent     章节内容
-     * @param scrollSpacing   滚动间距
      */
-    public static void loadSetting(JScrollPane paneTextContent, JTextArea textContent, JSlider scrollSpacing) {
+    public static void loadSetting(JScrollPane paneTextContent, JTextArea textContent) {
         // 同步滚动步长
-        /*if (settingDao.scrollSpacingScale != paneTextContent.getVerticalScrollBar().getUnitIncrement()) {
-            paneTextContent.getVerticalScrollBar().setUnitIncrement(Math.max(settingDao.scrollSpacingScale, 8));
-        }*/
-
         paneTextContent.getVerticalScrollBar().setUnitIncrement(settingDao.scrollSpacingScale);
         // 字体大小
-        /*if (settingDao.fontSize != textContent.getFont().getSize()) {
-            textContent.setFont(new Font("", Font.BOLD, Math.max(settingDao.fontSize, 16)));
-        }*/
         textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
-        // 滑块刻度值
-        if (settingDao.scrollSpacingScale != scrollSpacing.getValue()) {
-            scrollSpacing.setValue(Math.max(settingDao.scrollSpacingScale, 8));
-        }
     }
 
     /**
@@ -62,41 +50,26 @@ public class ModuleUtils {
      * 页面滚动步长
      *
      * @param paneTextContent 章节内容外部框
-     * @param scrollSpacing   滚动间距
      */
-    public static void loadModuleConfig(JScrollPane paneTextContent, JSlider scrollSpacing) {
+    public static void loadModuleConfig(JScrollPane paneTextContent) {
         // 页面滚动步长
         JScrollBar jScrollBar = new JScrollBar();
         // 滚动步长为8
         jScrollBar.setMaximum(8);
         paneTextContent.setVerticalScrollBar(jScrollBar);
-
-        // 设置设备滑块 最大最小值
-        scrollSpacing.setMinimum(8);
-        scrollSpacing.setMaximum(26);
-
-        // 设置滑块刻度间距
-        scrollSpacing.setMajorTickSpacing(2);
-
-        // 显示标签
-        scrollSpacing.setPaintLabels(true);
-        scrollSpacing.setPaintTicks(true);
-        scrollSpacing.setPaintTrack(true);
     }
 
     /**
      * 初始化页面组件提示信息
      *
-     * @param btnSearch     搜索按钮
-     * @param openBook      阅读按钮
-     * @param btnOn         上一章
-     * @param underOn       下一章
-     * @param jumpButton    跳转
-     * @param fontSizeDown  放大
-     * @param fontSizeUp    缩小
-     * @param scrollSpacing 滚动间距
+     * @param btnSearch  搜索按钮
+     * @param openBook   阅读按钮
+     * @param settingBtn 设置按钮
+     * @param btnOn      上一章
+     * @param underOn    下一章
+     * @param jumpButton 跳转
      */
-    public static void loadComponentTooltip(JButton btnSearch, JButton openBook, JButton btnOn, JButton underOn, JButton jumpButton, JButton fontSizeDown, JButton fontSizeUp, JSlider scrollSpacing) {
+    public static void loadComponentTooltip(JButton btnSearch, JButton openBook, JButton settingBtn, JButton btnOn, JButton underOn, JButton jumpButton) {
         // 搜索按钮
         if (btnSearch != null) {
             btnSearch.setToolTipText(ModuleConstants.SEARCH_BTN);
@@ -105,17 +78,16 @@ public class ModuleUtils {
         if (openBook != null) {
             openBook.setToolTipText(ModuleConstants.START_READ);
         }
+
+        // 设置按钮
+        if (settingBtn != null) {
+            settingBtn.setToolTipText(ModuleConstants.SETTINGS);
+        }
         // 上一章
         btnOn.setToolTipText(ModuleConstants.BTN_ON);
         // 下一章
         underOn.setToolTipText(ModuleConstants.UNDER_ON);
         // 跳转
         jumpButton.setToolTipText(ModuleConstants.JUMP_BUTTON);
-        // 放大
-        fontSizeDown.setToolTipText(ModuleConstants.FONT_SIZE_DOWN);
-        // 缩小
-        fontSizeUp.setToolTipText(ModuleConstants.FONT_SIZE_UP);
-        // 滚动间距
-        scrollSpacing.setToolTipText(ModuleConstants.SCROLL_SPACING);
     }
 }

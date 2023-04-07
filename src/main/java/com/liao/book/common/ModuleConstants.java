@@ -70,14 +70,8 @@ public class ModuleConstants {
     // 跳转章节
     public static final String JUMP_BUTTON = "章节跳转";
 
-    // 文字放大
-    public static final String FONT_SIZE_DOWN = "放大";
-
-    // 字体缩小
-    public static final String FONT_SIZE_UP = "缩小";
-
-    // 滚动间距
-    public static final String SCROLL_SPACING = "阅读滚动间距";
+    // 文字设置
+    public static final String SETTINGS = "设置";
 
     /*****************组件默认数据*****************/
 

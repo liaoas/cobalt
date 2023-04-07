@@ -2,6 +2,7 @@ package com.liao.book.configurable;
 
 import com.intellij.openapi.options.Configurable;
 import com.liao.book.factory.BeanFactory;
+import com.liao.book.ui.FullScreenUI;
 import com.liao.book.ui.MainUI;
 import com.liao.book.ui.SettingsUI;
 import org.jetbrains.annotations.Nullable;
@@ -48,5 +49,9 @@ public class SettingsConfigurable implements Configurable {
         MainUI mainUI = (MainUI) BeanFactory.getBean("MainUI");
 
         mainUI.apply();
+
+        FullScreenUI fullScreenUI = (FullScreenUI) BeanFactory.getBean("FullScreenUI");
+
+        fullScreenUI.apply();
     }
 }

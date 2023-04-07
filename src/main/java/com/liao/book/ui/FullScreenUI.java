@@ -56,15 +56,6 @@ public class FullScreenUI {
     // 跳转到指定章节
     private JButton jumpButton;
 
-    // 字体加
-    private JButton fontSizeDown;
-
-    // 字体减
-    private JButton fontSizeUp;
-
-    // 滚动间距
-    private JSlider scrollSpacing;
-
     // 全局模块对象
     private final Project project;
 
@@ -93,16 +84,15 @@ public class FullScreenUI {
         chapterList.setPreferredSize(new Dimension(1200, 20));
 
         // 加载组件配置信息
-        ModuleUtils.loadModuleConfig(paneTextContent, scrollSpacing);
+        ModuleUtils.loadModuleConfig(paneTextContent);
 
         // 加载提示信息
-        ModuleUtils.loadComponentTooltip(null, null, btnOn, underOn, jumpButton,
-                fontSizeDown, fontSizeUp, scrollSpacing);
+        ModuleUtils.loadComponentTooltip(null, null, null, btnOn, underOn, jumpButton);
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
 
         // 加载持久化的设置
-        ModuleUtils.loadSetting(paneTextContent, textContent, scrollSpacing);
+        ModuleUtils.loadSetting(paneTextContent, textContent);
 
     }
 
@@ -154,40 +144,6 @@ public class FullScreenUI {
             new LoadChapterInformation().execute();
         });
 
-        // 字号调小
-        fontSizeDown.addActionListener(e -> {
-            if (settingDao.fontSize == 1) {
-                ToastUtils.showToastMassage(project, "已经是最小的了", ToastType.ERROR);
-                return;
-            }
-            // 调小字体
-            settingDao.fontSize--;
-            textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
-            // 持久化
-            settingDao.loadState(settingDao);
-        });
-
-        // 字体增大
-        fontSizeUp.addActionListener(e -> {
-            // 调大字体
-            settingDao.fontSize++;
-            textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
-            // 持久化
-            settingDao.loadState(settingDao);
-        });
-
-        // 滑块滑动
-        scrollSpacing.addChangeListener(e -> {
-            JSlider jSlider = (JSlider) e.getSource();
-            // 判断滑块是否停止
-            if (!jSlider.getValueIsAdjusting()) {
-                paneTextContent.getVerticalScrollBar().setUnitIncrement(jSlider.getValue());
-            }
-            // 持久化
-            settingDao.scrollSpacingScale = jSlider.getValue();
-            settingDao.loadState(settingDao);
-        });
-
         // 窗口加载结束
         ApplicationManager.getApplication().invokeLater(() -> {
             // 窗口未初始化
@@ -203,7 +159,7 @@ public class FullScreenUI {
                     if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
 
                     // 加载持久化的设置
-                    ModuleUtils.loadSetting(paneTextContent, textContent, scrollSpacing);
+                    ModuleUtils.loadSetting(paneTextContent, textContent);
 
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
@@ -288,6 +244,40 @@ public class FullScreenUI {
             // 恢复默认鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.DEFAULT_CURSOR);
         }
+    }
+
+    /**
+     * 应用字体大小的修改
+     */
+    private void applyFontSize() {
+        SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
+        textContent.setFont(new Font("", Font.BOLD, settingsUI.getFontSizeVal()));
+        // 持久化
+        settingDao.fontSize = settingsUI.getFontSizeVal();
+        settingDao.loadState(settingDao);
+    }
+
+    /**
+     * 应用滚动速度滑块
+     */
+    private void applyScrollSpacing() {
+        SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
+        paneTextContent.getVerticalScrollBar().setUnitIncrement(settingsUI.getReadRollVal());
+
+        // 持久化
+        settingDao.scrollSpacingScale = settingsUI.getReadRollVal();
+        settingDao.loadState(settingDao);
+    }
+
+    /**
+     * 页面统一的Apply
+     */
+    public void apply() {
+        // 字体大小
+        applyFontSize();
+
+        // 滑块滚动
+        applyScrollSpacing();
     }
 
 

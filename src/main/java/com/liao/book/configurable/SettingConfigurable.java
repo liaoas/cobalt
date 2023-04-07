@@ -20,17 +20,21 @@ import java.util.Objects;
  */
 public class SettingConfigurable implements Configurable {
 
-    private SettingsUI settingsUI = new SettingsUI();
+    /**
+     * 创建自定义设置页面UI
+     */
+    private final SettingsUI settingsUI = new SettingsUI();
 
     @Override
-    public @NlsContexts.ConfigurableName String getDisplayName() {
-        return "LiAo";
+    public String getDisplayName() {
+        return null;
     }
 
     @Override
     public @Nullable JComponent createComponent() {
-        System.out.println("SettingsUI");
-        BeanFactory.setBean("SettingsUI", settingsUI);
+        if (!BeanFactory.containsBeanName("SettingsUI")) {
+            BeanFactory.setBean("SettingsUI", settingsUI);
+        }
         return settingsUI.getSettingWin();
     }
 

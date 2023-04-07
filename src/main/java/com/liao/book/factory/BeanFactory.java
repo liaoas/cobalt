@@ -42,6 +42,16 @@ public class BeanFactory {
         map.put(name, bean);
     }
 
+    /**
+     * 判断容器中是否已经存在相关key
+     *
+     * @param name beanName
+     * @return 对象
+     */
+    public static boolean containsBeanName(String name) {
+        return map.containsKey(name);
+    }
+
     static {
 
         beanMap.put("BookChapterServiceImpl", "com.liao.book.service.impl.BookChapterServiceImpl");

@@ -490,16 +490,30 @@ public class MainUI {
     /**
      * 应用字体大小的修改
      */
-    public void appleFontSize() {
-        SettingsUI settingsUI1 = (SettingsUI) BeanFactory.getBean("SettingsUI");
-
-        JComboBox<Integer> fontSize = settingsUI1.getFontSize();
-
-        Object selectedItem = fontSize.getSelectedItem();
-
-        int size = selectedItem == null ? Constants.DEFAULT_FONT_SIZE : Integer.parseInt(fontSize.getSelectedItem().toString());
-
+    private void applyFontSize() {
+        SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
+        int size = settingsUI.getFontSizeSelectedItem();
         textContent.setFont(new Font("", Font.BOLD, size));
+    }
+
+    /**
+     * 应用滚动速度滑块
+     */
+    private void applyScrollSpacing() {
+        SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
+        int size = settingsUI.getReadRollSelectedItem();
+        paneTextContent.getVerticalScrollBar().setUnitIncrement(size);
+    }
+
+    /**
+     * 页面统一的Apply
+     */
+    public void apply() {
+        // 字体大小
+        applyFontSize();
+
+        // 滑块滚动
+        applyScrollSpacing();
     }
 
     // 窗口信息

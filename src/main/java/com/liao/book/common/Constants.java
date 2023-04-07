@@ -1,5 +1,7 @@
 package com.liao.book.common;
 
+import java.util.regex.Pattern;
+
 /**
  * <p>
  * 常量信息
@@ -19,4 +21,20 @@ public class Constants {
      * 默认字体大小
      */
     public static final int DEFAULT_FONT_SIZE = 16;
+
+    /**
+     * 默认滚轮速度
+     */
+    public static final int DEFAULT_READ_ROLL_SIZE = 8;
+
+    /**
+     * 页面大小数值设置正则
+     */
+    public static final String SIZE_REGULAR = "^[1-9][0-9]?$|^100$";
+
+    /**
+     * 默认正则
+     */
+    public static final Pattern INTERGER_PATTERN = Pattern.compile(SIZE_REGULAR);
+
 }

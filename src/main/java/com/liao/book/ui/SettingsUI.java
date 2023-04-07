@@ -8,9 +8,13 @@ import com.liao.book.common.ModuleConstants;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * 插件设置页面窗口
@@ -77,8 +81,16 @@ public class SettingsUI {
         return isModified;
     }
 
+    public void setModified(boolean modified) {
+        isModified = modified;
+    }
+
     public JComboBox<Integer> getFontSize() {
         return fontSize;
+    }
+
+    public JComboBox<Integer> getReadRoll() {
+        return readRoll;
     }
 
     /**
@@ -140,6 +152,32 @@ public class SettingsUI {
         // 字体大小下拉框数值发生变化
         fontSize.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
+                isModified = true;
+            }
+        });
+
+        // 监听字体大小下拉框键盘输入选项
+        fontSize.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                JTextField editor = (JTextField) fontSize.getEditor().getEditorComponent();
+                System.out.println(editor.getText());
+                System.out.println(Constants.INTERGER_PATTERN.matcher(editor.getText()).matches());
+            }
+        });
+
+        // 滚轮速度下拉框数值发生变化
+        readRoll.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                // 获取当前选中的项
+                isModified = true;
+            }
+        });
+
+        // 监听滚轮速度下拉框键盘输入选项
+        fontSize.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
                 // 获取当前选中的项
                 isModified = true;
             }
@@ -152,7 +190,8 @@ public class SettingsUI {
      * @return 字体大小
      */
     public int getFontSizeSelectedItem() {
-        return Integer.parseInt(Objects.requireNonNull(fontSize.getSelectedItem()).toString());
+        String selectedItem = String.valueOf(fontSize.getSelectedItem());
+        return selectedItem == null ? Constants.DEFAULT_FONT_SIZE : Integer.parseInt(selectedItem);
     }
 
     /**
@@ -161,7 +200,8 @@ public class SettingsUI {
      * @return 滚动速度
      */
     public int getReadRollSelectedItem() {
-        return Integer.parseInt(Objects.requireNonNull(fontSize.getSelectedItem()).toString());
+        String selectedItem = String.valueOf(readRoll.getSelectedItem());
+        return selectedItem == null ? Constants.DEFAULT_READ_ROLL_SIZE : Integer.parseInt(selectedItem);
     }
 
 }

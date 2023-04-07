@@ -32,9 +32,12 @@ public class SettingConfigurable implements Configurable {
 
     @Override
     public @Nullable JComponent createComponent() {
-        if (!BeanFactory.containsBeanName("SettingsUI")) {
-            BeanFactory.setBean("SettingsUI", settingsUI);
-        }
+
+        // 状态改为未修改
+        settingsUI.setModified(false);
+
+        BeanFactory.setBean("SettingsUI", settingsUI);
+
         return settingsUI.getSettingWin();
     }
 
@@ -47,14 +50,7 @@ public class SettingConfigurable implements Configurable {
     public void apply() {
 
         MainUI mainUI = (MainUI) BeanFactory.getBean("MainUI");
-        SettingsUI settingsUI1 = (SettingsUI) BeanFactory.getBean("SettingsUI");
 
-        JTextArea textContent = mainUI.getTextContent();
-
-        JComboBox<Integer> fontSize = settingsUI1.getFontSize();
-
-        int integer = Integer.parseInt(Objects.requireNonNull(fontSize.getSelectedItem()).toString());
-
-        textContent.setFont(new Font("", Font.BOLD, integer));
+        mainUI.apply();
     }
 }

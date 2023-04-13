@@ -3,10 +3,10 @@ package com.liao.book.parse;
 import com.liao.book.common.Constants;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -26,16 +26,16 @@ public class TxtContentParser {
     private static final Pattern CHAPTER_PATTERN = Pattern.compile(Constants.DEFAULT_CHAPTER_REGULAR);
 
     /**
-     * 解析本地 txt 格式小说文件
+     * 解析本地 txt 文件为 Map 格式，K 为章节名称，Value 为章节内容
      *
-     * @param filePath 文件路径
+     * @param file txt 文件
      * @return <章节，章节内容>
      * @throws IOException ex
      */
-    public static Map<String, String> parseTxt(String filePath) throws IOException {
+    public static Map<String, String> parseTxt(File file) throws IOException {
         Map<String, String> chapterMap = new LinkedHashMap<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(filePath)), "GBK"))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), "GBK"))) {
             String line;
             StringBuilder contentBuilder = new StringBuilder();
             String title = null;

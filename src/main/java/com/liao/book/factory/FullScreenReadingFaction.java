@@ -1,6 +1,7 @@
 package com.liao.book.factory;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
@@ -8,6 +9,8 @@ import com.intellij.ui.content.ContentFactory;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.ui.FullScreenUI;
 import org.jetbrains.annotations.NotNull;
+
+import javax.swing.*;
 
 /**
  * <p>
@@ -27,9 +30,10 @@ public class FullScreenReadingFaction implements ToolWindowFactory {
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(fullScreenUI.getBookMainJPanel(),
-                ModuleConstants.TAB_CONTROL_TITLE_UNFOLD, true);
-
+        Content content = contentFactory.createContent(fullScreenUI.getBookMainJPanel(), ModuleConstants.TAB_CONTROL_TITLE_UNFOLD, true);
+        Icon icon = IconLoader.getIcon("/img/full_screen.png");
+        content.setIcon(icon);
+        content.putUserData(ToolWindow.SHOW_CONTENT_ICON, Boolean.TRUE);
         // 给toolWindows设置内容
         toolWindow.getContentManager().addContent(content);
 

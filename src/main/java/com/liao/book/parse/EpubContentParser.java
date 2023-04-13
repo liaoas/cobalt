@@ -30,7 +30,7 @@ public class EpubContentParser {
      * 解析 epub 文件为 Map 格式，K 为章节名称，Value 为章节内容
      *
      * @param file epub 文件
-     * @return Map
+     * @return <章节，章节内容>
      */
     public static Map<String, String> parseEpub(File file) {
         Map<String, String> result = new LinkedHashMap<>();

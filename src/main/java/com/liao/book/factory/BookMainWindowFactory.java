@@ -2,14 +2,21 @@ package com.liao.book.factory;
 
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import com.intellij.openapi.wm.impl.ToolWindowImpl;
+import com.intellij.ui.content.AlertIcon;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import com.intellij.ui.content.impl.ContentImpl;
+import com.intellij.util.IconUtil;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.ui.MainUI;
 import com.liao.book.ui.SettingsUI;
 import org.jetbrains.annotations.NotNull;
+
+import javax.swing.*;
 
 /**
  * <p>
@@ -31,8 +38,10 @@ public class BookMainWindowFactory implements ToolWindowFactory, DumbAware {
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(mainUI.getBookMainJPanel(),
-                ModuleConstants.TAB_CONTROL_TITLE_HOME, false);
+        Content content = contentFactory.createContent(mainUI.getBookMainJPanel(), ModuleConstants.TAB_CONTROL_TITLE_HOME, false);
+        Icon icon = IconLoader.getIcon("/img/home.png");
+        content.setIcon(icon);
+        content.putUserData(ToolWindow.SHOW_CONTENT_ICON, Boolean.TRUE);
 
         // 给toolWindows设置内容
         toolWindow.getContentManager().addContent(content);

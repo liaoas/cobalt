@@ -81,8 +81,6 @@ public class FullScreenUI {
     // 初始化数据
     private void init() {
 
-        chapterList.setPreferredSize(new Dimension(1200, 20));
-
         // 加载组件配置信息
         ModuleUtils.loadModuleConfig(paneTextContent);
 

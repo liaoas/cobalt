@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.ui.FullScreenUI">
   <grid id="27dc6" binding="fullScreenPanel" layout-manager="FormLayout">
-    <rowspec value="center:d:grow"/>
+    <rowspec value="top:d:grow"/>
     <rowspec value="top:0dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:max(d;0px):noGrow"/>
     <rowspec value="top:0dlu:noGrow"/>
-    <rowspec value="center:31px:noGrow"/>
+    <rowspec value="center:max(d;1px):noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
-      <xy x="20" y="20" width="532" height="400"/>
+      <xy x="20" y="20" width="622" height="507"/>
     </constraints>
     <properties>
       <minimumSize width="-1" height="179"/>
@@ -18,14 +18,14 @@
     <border type="none"/>
     <children>
       <grid id="30d1c" layout-manager="FormLayout">
-        <rowspec value="center:30px:grow"/>
-        <colspec value="left:28px:noGrow"/>
+        <rowspec value="center:30px:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
-        <colspec value="fill:28px:noGrow"/>
+        <colspec value="fill:31px:noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
-        <colspec value="fill:28px:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
-        <colspec value="left:d:grow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-vert="false"/>
@@ -38,49 +38,71 @@
         <children>
           <component id="5347e" class="javax.swing.JButton" binding="btnOn">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <forms/>
             </constraints>
             <properties>
               <contentAreaFilled value="false"/>
+              <focusPainted value="false"/>
               <icon value="img/previous.png"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
               <text value=""/>
             </properties>
           </component>
           <component id="d53f2" class="javax.swing.JButton" binding="underOn">
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <forms/>
             </constraints>
             <properties>
               <borderPainted value="true"/>
               <contentAreaFilled value="false"/>
+              <focusPainted value="false"/>
               <icon value="img/next.png"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
               <text value=""/>
             </properties>
           </component>
-          <component id="7177" class="javax.swing.JComboBox" binding="chapterList">
-            <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <forms/>
-            </constraints>
-            <properties/>
-          </component>
           <component id="e352" class="javax.swing.JButton" binding="jumpButton">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false"/>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
               <forms/>
             </constraints>
             <properties>
               <contentAreaFilled value="false"/>
+              <focusPainted value="false"/>
+              <horizontalTextPosition value="0"/>
               <icon value="img/go_with.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
               <text value=""/>
+            </properties>
+          </component>
+          <component id="81eb5" class="javax.swing.JComboBox" binding="chapterList">
+            <constraints>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <alignmentX value="0.0"/>
+              <alignmentY value="0.0"/>
+              <lightWeightPopupEnabled value="true"/>
+              <opaque value="true"/>
+              <verifyInputWhenFocusTarget value="true"/>
+              <visible value="true"/>
             </properties>
           </component>
         </children>
       </grid>
-      <grid id="7033d" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <grid id="7033d" layout-manager="FormLayout">
+        <rowspec value="center:100px:grow"/>
+        <colspec value="fill:d:grow"/>
         <constraints>
           <grid row="0" column="0" row-span="3" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
@@ -90,18 +112,25 @@
         <children>
           <scrollpane id="1b3ed" binding="paneTextContent">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false" defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <minimumSize width="-1" height="15"/>
+              <minimumSize width="14" height="15"/>
+              <preferredSize width="739" height="17"/>
             </properties>
             <border type="none"/>
             <children>
               <component id="65d82" class="javax.swing.JTextArea" binding="textContent">
                 <constraints/>
                 <properties>
+                  <alignmentX value="0.0"/>
+                  <alignmentY value="0.0"/>
+                  <autoscrolls value="false"/>
                   <editable value="false"/>
                   <lineWrap value="true"/>
+                  <minimumSize width="739" height="17"/>
+                  <preferredSize width="739" height="17"/>
                   <wrapStyleWord value="true"/>
                 </properties>
               </component>

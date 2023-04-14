@@ -4,7 +4,7 @@ import cn.hutool.http.HttpUtil;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.Chapter;
 import com.liao.book.common.ModuleConstants;
-import com.liao.book.service.BookChapterService;
+import com.liao.book.service.ChapterService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,7 +18,7 @@ import org.jsoup.select.Elements;
  * @author LiAo
  * @since 2021/1/14
  */
-public class BookChapterServiceImpl implements BookChapterService {
+public class ChapterServiceImpl implements ChapterService {
 
     // 重试次数
     public static int index = 2;

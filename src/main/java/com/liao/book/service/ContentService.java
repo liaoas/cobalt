@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
  * @author LiAo
  * @since 2021/1/14
  */
-public interface BookTextService {
+public interface ContentService {
 
 
     void searchBookChapterData(String url);

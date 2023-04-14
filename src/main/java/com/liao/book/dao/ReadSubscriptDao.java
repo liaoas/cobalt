@@ -16,12 +16,7 @@ import org.jetbrains.annotations.Nullable;
  * @author LiAo
  * @since 2023-02-28
  */
-@State(name = "ReadSubscriptDao",
-        storages = {
-                @Storage(value = "reading.subscript.dao.xml"
-                )
-        }
-)
+@State(name = "ReadSubscriptDao", storages = {@Storage(value = "idea.ebook.settings.dao.xml")})
 public class ReadSubscriptDao implements PersistentStateComponent<ReadSubscriptDao> {
 
     public int homeTextWinIndex;

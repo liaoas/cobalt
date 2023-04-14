@@ -8,7 +8,7 @@ package com.liao.book.service;
  * @author LiAo
  * @since 2021/1/14
  */
-public interface BookChapterService {
+public interface ChapterService {
 
     void getBookChapterByType(String link);
 

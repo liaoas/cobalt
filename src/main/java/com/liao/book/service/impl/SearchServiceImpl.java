@@ -7,7 +7,7 @@ import cn.hutool.http.HttpUtil;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.common.ModuleConstants;
-import com.liao.book.service.BookSearchService;
+import com.liao.book.service.SearchService;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,7 +27,7 @@ import java.util.List;
  * @author LiAo
  * @since 2021/1/13
  */
-public class BookSearchServiceImpl implements BookSearchService {
+public class SearchServiceImpl implements SearchService {
 
     // 重试次数
     public static int index = 2;

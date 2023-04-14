@@ -12,7 +12,7 @@ import java.util.List;
  * @author LiAo
  * @since 2021/1/13
  */
-public interface BookSearchService {
+public interface SearchService {
 
     /**
      * 判断数据源

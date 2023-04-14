@@ -17,12 +17,12 @@ import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
-import com.liao.book.service.BookChapterService;
-import com.liao.book.service.BookSearchService;
-import com.liao.book.service.BookTextService;
-import com.liao.book.service.impl.BookChapterServiceImpl;
-import com.liao.book.service.impl.BookSearchServiceImpl;
-import com.liao.book.service.impl.BookTextServiceImpl;
+import com.liao.book.service.ChapterService;
+import com.liao.book.service.SearchService;
+import com.liao.book.service.ContentService;
+import com.liao.book.service.impl.ChapterServiceImpl;
+import com.liao.book.service.impl.SearchServiceImpl;
+import com.liao.book.service.impl.ContentServiceImpl;
 import com.liao.book.utils.ModuleUtils;
 import com.liao.book.utils.ReadingUtils;
 import com.liao.book.utils.ToastUtils;
@@ -100,13 +100,13 @@ public class MainUI {
     public static boolean isReadClick = false;
 
     // 书籍爬虫
-    static BookSearchService searchService = (BookSearchServiceImpl) BeanFactory.getBean("BookSearchServiceImpl");
+    static SearchService searchService = (SearchServiceImpl) BeanFactory.getBean("SearchServiceImpl");
 
     // 章节爬虫
-    static BookChapterService chapterService = (BookChapterServiceImpl) BeanFactory.getBean("BookChapterServiceImpl");
+    static ChapterService chapterService = (ChapterServiceImpl) BeanFactory.getBean("ChapterServiceImpl");
 
     // 内容爬虫
-    static BookTextService textService = (BookTextServiceImpl) BeanFactory.getBean("BookTextServiceImpl");
+    static ContentService textService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
@@ -178,7 +178,7 @@ public class MainUI {
             instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
 
             // 重置 重试次数
-            BookSearchServiceImpl.index = 2;
+            SearchServiceImpl.index = 2;
 
             // 根据数据源类型 搜索
             new SearchBooks().execute();
@@ -204,7 +204,7 @@ public class MainUI {
             valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
 
             // 重置重试次数
-            BookChapterServiceImpl.index = 2;
+            ChapterServiceImpl.index = 2;
 
             // 执行开始阅读
             new StartReading().execute();
@@ -410,7 +410,7 @@ public class MainUI {
             Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
 
             // 重置重试次数
-            BookTextServiceImpl.index = 2;
+            ContentServiceImpl.index = 2;
 
             // 内容
             textService.searchBookChapterData(chapter.getLink());

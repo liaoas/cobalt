@@ -2,7 +2,7 @@ package com.liao.book.service.impl;
 
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.common.ModuleConstants;
-import com.liao.book.service.BookTextService;
+import com.liao.book.service.ContentService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,7 +19,7 @@ import java.net.URL;
  * @author LiAo
  * @since 2021/1/14
  */
-public class BookTextServiceImpl implements BookTextService {
+public class ContentServiceImpl implements ContentService {
 
     // 重试次数
     public static int index = 2;

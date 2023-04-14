@@ -20,12 +20,7 @@ import java.util.List;
  * @author LiAo
  * @since 2023-02-24
  */
-@State(name = "ReadingProgressDao",
-        storages = {
-                @Storage(value = "reading.progress.dao.xml"
-                )
-        }
-)
+@State(name = "ReadingProgressDao", storages = {@Storage(value = "idea.ebook.settings.dao.xml")})
 public class ReadingProgressDao implements PersistentStateComponent<ReadingProgressDao> {
 
     // 全局搜索类型

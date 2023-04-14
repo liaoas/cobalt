@@ -13,8 +13,8 @@ import com.liao.book.entity.Chapter;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
-import com.liao.book.service.BookTextService;
-import com.liao.book.service.impl.BookTextServiceImpl;
+import com.liao.book.service.ContentService;
+import com.liao.book.service.impl.ContentServiceImpl;
 import com.liao.book.utils.ModuleUtils;
 import com.liao.book.utils.ReadingUtils;
 import com.liao.book.utils.ToastUtils;
@@ -63,8 +63,8 @@ public class FullScreenUI {
     private Content lastSelectedContent = null;
 
     // 内容爬虫
-    static BookTextService textService = (BookTextServiceImpl) BeanFactory
-            .getBean("BookTextServiceImpl");
+    static ContentService contentService = (ContentServiceImpl) BeanFactory
+            .getBean("ContentServiceImpl");
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
@@ -212,10 +212,10 @@ public class FullScreenUI {
             Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
 
             // 重置重试次数
-            BookTextServiceImpl.index = 2;
+            ContentServiceImpl.index = 2;
 
             // 内容
-            textService.searchBookChapterData(chapter.getLink());
+            contentService.searchBookChapterData(chapter.getLink());
 
             if (instance.textContent == null) {
                 ToastUtils.showToastMassage(project, "章节内容为空", ToastType.ERROR);

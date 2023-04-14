@@ -38,7 +38,7 @@ public class MainUIContent {
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
         Content content = contentFactory.createContent(mainUI.getBookMainJPanel(), ModuleConstants.TAB_CONTROL_TITLE_HOME, false);
-        Icon icon = IconLoader.getIcon("/img/home.png");
+        Icon icon = IconLoader.getIcon("/img/home.png", MainUIContent.class);
         content.setIcon(icon);
         content.putUserData(ToolWindow.SHOW_CONTENT_ICON, Boolean.TRUE);
 

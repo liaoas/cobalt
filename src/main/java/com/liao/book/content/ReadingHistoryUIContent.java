@@ -31,14 +31,14 @@ public class ReadingHistoryUIContent {
      */
     public void create(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 创建NoteListWindow对象
-        ReadingHistoryUI  readingHistoryUI = new ReadingHistoryUI(project, toolWindow);
+        ReadingHistoryUI readingHistoryUI = new ReadingHistoryUI(project, toolWindow);
         // 加入容器
         BeanFactory.setBean("ReadingHistoryUI", readingHistoryUI);
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
         Content content = contentFactory.createContent(readingHistoryUI.getBookMainJPanel(), ModuleConstants.TAB_CONTROL_READING_HISTORY, true);
-        Icon icon = IconLoader.getIcon("/img/time.svg");
+        Icon icon = IconLoader.getIcon("/img/time.svg", ReadingHistoryUIContent.class);
         content.setIcon(icon);
         content.putUserData(ToolWindow.SHOW_CONTENT_ICON, Boolean.TRUE);
         // 给toolWindows设置内容

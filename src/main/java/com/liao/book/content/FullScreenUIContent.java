@@ -37,7 +37,7 @@ public class FullScreenUIContent {
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
         Content content = contentFactory.createContent(fullScreenUI.getBookMainJPanel(), ModuleConstants.TAB_CONTROL_TITLE_UNFOLD, true);
-        Icon icon = IconLoader.getIcon("/img/full_screen.png");
+        Icon icon = IconLoader.getIcon("/img/full_screen.png", FullScreenUIContent.class);
         content.setIcon(icon);
         content.putUserData(ToolWindow.SHOW_CONTENT_ICON, Boolean.TRUE);
         // 给toolWindows设置内容

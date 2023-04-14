@@ -28,7 +28,7 @@ public class FullScreenUIContent {
      * @param project    项目对象
      * @param toolWindow 窗口对象
      */
-    public void create(@NotNull Project project, @NotNull ToolWindow toolWindow) {
+    public void createContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 创建NoteListWindow对象
         FullScreenUI fullScreenUI = new FullScreenUI(project, toolWindow);
         // 加入容器
@@ -36,7 +36,7 @@ public class FullScreenUIContent {
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(fullScreenUI.getBookMainJPanel(), ModuleConstants.TAB_CONTROL_TITLE_UNFOLD, true);
+        Content content = contentFactory.createContent(fullScreenUI.getFullScreenPanel(), ModuleConstants.TAB_CONTROL_TITLE_UNFOLD, true);
         Icon icon = IconLoader.getIcon("/img/full-screen.svg", FullScreenUIContent.class);
         content.setIcon(icon);
         content.putUserData(ToolWindow.SHOW_CONTENT_ICON, Boolean.TRUE);

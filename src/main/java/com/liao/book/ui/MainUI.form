@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.ui.MainUI">
-  <grid id="27dc6" binding="bookMainJPanel" layout-manager="FormLayout">
+  <grid id="27dc6" binding="mainPanel" layout-manager="FormLayout">
     <rowspec value="fill:31px:noGrow"/>
-    <rowspec value="top:0dlu:noGrow"/>
+    <rowspec value="top:2dlu:noGrow"/>
     <rowspec value="top:181px:grow"/>
-    <rowspec value="top:0dlu:noGrow"/>
-    <rowspec value="top:d:noGrow"/>
-    <rowspec value="top:0dlu:noGrow"/>
+    <rowspec value="top:2dlu:noGrow"/>
+    <rowspec value="top:349px:noGrow"/>
+    <rowspec value="top:2dlu:noGrow"/>
     <rowspec value="fill:31px:noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
@@ -21,15 +21,15 @@
     <children>
       <grid id="6e6fc" layout-manager="FormLayout">
         <rowspec value="center:30px:grow"/>
-        <colspec value="left:28px:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
         <colspec value="left:28px:noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
         <colspec value="left:d:grow"/>
         <colspec value="left:0dlu:noGrow"/>
         <colspec value="fill:max(d;4px):noGrow"/>
-        <colspec value="left:0dlu:noGrow"/>
-        <colspec value="left:d:noGrow"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
@@ -44,7 +44,7 @@
         <children>
           <component id="7ec88" class="javax.swing.JTextField" binding="textSearchBar">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="599" height="19"/>
               </grid>
               <forms defaultalign-horz="false"/>
@@ -53,9 +53,66 @@
               <margin top="2" left="6" bottom="2" right="6"/>
             </properties>
           </component>
-          <component id="ce58a" class="javax.swing.JButton" binding="btnSearch">
+          <component id="78688" class="javax.swing.JButton" binding="openBook">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="5" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="22" height="22"/>
+                <preferred-size width="112" height="19"/>
+                <maximum-size width="22" height="22"/>
+              </grid>
+              <forms defaultalign-vert="false"/>
+            </constraints>
+            <properties>
+              <alignmentY value="0.0"/>
+              <autoscrolls value="false"/>
+              <background color="-12828863"/>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <enabled value="true"/>
+              <focusCycleRoot value="true"/>
+              <focusPainted value="false"/>
+              <focusTraversalPolicyProvider value="false"/>
+              <hideActionText value="false"/>
+              <icon value="img/start.png"/>
+              <iconTextGap value="0"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <selected value="false"/>
+              <text value=""/>
+              <verifyInputWhenFocusTarget value="true"/>
+            </properties>
+          </component>
+          <component id="1518" class="javax.swing.JButton" binding="settingBtn">
+            <constraints>
+              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <background color="-12828863"/>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <icon value="img/settings.png"/>
+              <label value=""/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="b6306" class="javax.swing.JComboBox" binding="sourceDropdown">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="78" height="19"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="ce58a" class="javax.swing.JButton" binding="btnSearch">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="5" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="22" height="22"/>
                 <preferred-size width="22" height="19"/>
                 <maximum-size width="22" height="22"/>
@@ -64,7 +121,8 @@
             </constraints>
             <properties>
               <alignmentY value="0.0"/>
-              <borderPainted value="true"/>
+              <background color="-12828863"/>
+              <borderPainted value="false"/>
               <contentAreaFilled value="false"/>
               <defaultCapable value="true"/>
               <focusPainted value="false"/>
@@ -77,57 +135,6 @@
               <preferredSize width="28" height="29"/>
               <text value=""/>
               <verticalTextPosition value="0"/>
-            </properties>
-          </component>
-          <component id="b6306" class="javax.swing.JComboBox" binding="sourceDropdown">
-            <constraints>
-              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="78" height="19"/>
-              </grid>
-              <forms/>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="78688" class="javax.swing.JButton" binding="openBook">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="5" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <minimum-size width="22" height="22"/>
-                <preferred-size width="112" height="19"/>
-                <maximum-size width="22" height="22"/>
-              </grid>
-              <forms defaultalign-vert="false"/>
-            </constraints>
-            <properties>
-              <alignmentY value="0.0"/>
-              <borderPainted value="true"/>
-              <contentAreaFilled value="false"/>
-              <enabled value="true"/>
-              <focusCycleRoot value="false"/>
-              <focusPainted value="false"/>
-              <focusTraversalPolicyProvider value="false"/>
-              <icon value="img/start.png"/>
-              <iconTextGap value="0"/>
-              <margin top="0" left="0" bottom="0" right="0"/>
-              <maximumSize width="28" height="29"/>
-              <minimumSize width="28" height="29"/>
-              <preferredSize width="28" height="29"/>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="1518" class="javax.swing.JButton" binding="settingBtn">
-            <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <forms/>
-            </constraints>
-            <properties>
-              <borderPainted value="true"/>
-              <contentAreaFilled value="false"/>
-              <icon value="img/settings.png"/>
-              <label value=""/>
-              <maximumSize width="28" height="29"/>
-              <minimumSize width="28" height="29"/>
-              <preferredSize width="28" height="29"/>
-              <text value=""/>
             </properties>
           </component>
         </children>
@@ -197,7 +204,7 @@
         </children>
       </grid>
       <grid id="13340" layout-manager="FormLayout">
-        <rowspec value="center:30px:grow"/>
+        <rowspec value="center:31px:grow"/>
         <colspec value="center:28px:noGrow"/>
         <colspec value="left:0dlu:noGrow"/>
         <colspec value="left:28px:noGrow"/>
@@ -235,7 +242,7 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <borderPainted value="true"/>
+              <borderPainted value="false"/>
               <contentAreaFilled value="false"/>
               <focusPainted value="false"/>
               <icon value="img/next.png"/>
@@ -251,7 +258,7 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <borderPainted value="true"/>
+              <borderPainted value="false"/>
               <contentAreaFilled value="false"/>
               <focusPainted value="false"/>
               <horizontalTextPosition value="0"/>
@@ -274,7 +281,7 @@
               <forms defaultalign-vert="false"/>
             </constraints>
             <properties>
-              <borderPainted value="true"/>
+              <borderPainted value="false"/>
               <contentAreaFilled value="false"/>
               <defaultCapable value="true"/>
               <focusPainted value="false"/>

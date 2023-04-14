@@ -49,7 +49,7 @@ public class MainUI {
     private JTextField textSearchBar;
 
     // 窗口
-    private JPanel bookMainJPanel;
+    private JPanel mainPanel;
 
     // 开始阅读按钮
     private JButton openBook;
@@ -161,7 +161,7 @@ public class MainUI {
         btnSearch.addActionListener(e -> {
 
             // 等待鼠标样式
-            ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.WAIT_CURSOR);
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
             // 清空表格数据
             ModuleConstants.tableModel.setRowCount(0);
             // 获取搜索输入文本
@@ -170,7 +170,7 @@ public class MainUI {
             if (bookSearchName == null || bookSearchName.equals("")) {
                 ToastUtils.showToastMassage(project, "请输入书籍名称", ToastType.ERROR);
                 // 等待鼠标样式
-                ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+                ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
 
@@ -188,7 +188,7 @@ public class MainUI {
         openBook.addActionListener(e -> {
 
             // 等待鼠标样式
-            ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.WAIT_CURSOR);
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
             // 获取选中行数据
             int selectedRow = searchBookTable.getSelectedRow();
@@ -196,7 +196,7 @@ public class MainUI {
             if (selectedRow < 0) {
                 ToastUtils.showToastMassage(project, "还没有选择要读哪本书", ToastType.ERROR);
                 // 恢复默认鼠标样式
-                ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+                ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
 
@@ -215,12 +215,12 @@ public class MainUI {
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
-            ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.WAIT_CURSOR);
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
             if (instance.chapters.size() == 0 || instance.nowChapterIndex == 0) {
                 ToastUtils.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
-                ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+                ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
@@ -234,12 +234,12 @@ public class MainUI {
         // 下一章跳转
         underOn.addActionListener(e -> {
             // 等待鼠标样式
-            ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.WAIT_CURSOR);
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
             if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size()) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
-                ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+                ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
 
@@ -256,7 +256,7 @@ public class MainUI {
         // 章节跳转
         jumpButton.addActionListener(e -> {
             // 等待鼠标样式
-            ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.WAIT_CURSOR);
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
             // 根据下标跳转
             instance.nowChapterIndex = chapterList.getSelectedIndex();
@@ -264,7 +264,7 @@ public class MainUI {
             if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
                 ToastUtils.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
-                ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+                ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
 
@@ -306,7 +306,7 @@ public class MainUI {
                     // 同步字体等设置
                     ModuleUtils.loadSetting(paneTextContent, textContent);
 
-                    ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.WAIT_CURSOR);
+                    ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
@@ -321,7 +321,7 @@ public class MainUI {
                         // 回到顶部
                         textContent.setCaretPosition(1);
                     }
-                    ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+                    ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 }
             });
             toolWindow.installWatcher(contentManager);
@@ -362,7 +362,7 @@ public class MainUI {
         @Override
         protected void done() {
             // 恢复默认鼠标样式
-            ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
         }
     }
 
@@ -396,7 +396,7 @@ public class MainUI {
             // 书本已切换
             isReadClick = true;
             // 恢复默认鼠标样式
-            ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
         }
     }
 
@@ -439,7 +439,7 @@ public class MainUI {
         @Override
         protected void done() {
             // 恢复默认鼠标样式
-            ModuleUtils.loadTheMouseStyle(bookMainJPanel, Cursor.DEFAULT_CURSOR);
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
         }
     }
 
@@ -478,8 +478,8 @@ public class MainUI {
     }
 
     // 窗口信息
-    public JPanel getBookMainJPanel() {
-        return bookMainJPanel;
+    public JPanel getMainPanel() {
+        return mainPanel;
     }
 
     private void createUIComponents() {

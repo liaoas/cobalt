@@ -18,11 +18,11 @@ public class ReadingHistoryUI {
     // 全局模块对象
     private final Project project;
 
-    private JPanel panel1;
+    private JPanel readingHistoryPanel;
 
     // 窗口信息
-    public JPanel getBookMainJPanel() {
-        return panel1;
+    public JPanel getReadingHistoryPanel() {
+        return readingHistoryPanel;
     }
 
     // 页面打开方法

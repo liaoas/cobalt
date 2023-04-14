@@ -73,13 +73,14 @@ public class FullScreenUI {
     static SettingsDao settingDao = SettingsDao.getInstance();
 
     // 窗口信息
-    public JPanel getBookMainJPanel() {
+    public JPanel getFullScreenPanel() {
         return fullScreenPanel;
     }
 
-
     // 初始化数据
     private void init() {
+
+        paneTextContent.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         // 加载组件配置信息
         ModuleUtils.loadModuleConfig(paneTextContent);

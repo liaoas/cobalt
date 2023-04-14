@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.ui.ReadingHistoryUI">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FormLayout">
-    <rowspec value="center:d:noGrow"/>
+  <grid id="27dc6" binding="readingHistoryPanel" default-binding="true" layout-manager="FormLayout">
+    <rowspec value="center:19px:noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>

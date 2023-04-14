@@ -4,7 +4,7 @@
     <rowspec value="top:d:grow"/>
     <rowspec value="top:0dlu:noGrow"/>
     <rowspec value="center:max(d;0px):noGrow"/>
-    <rowspec value="top:0dlu:noGrow"/>
+    <rowspec value="top:2dlu:noGrow"/>
     <rowspec value="center:max(d;1px):noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
@@ -42,6 +42,7 @@
               <forms/>
             </constraints>
             <properties>
+              <borderPainted value="false"/>
               <contentAreaFilled value="false"/>
               <focusPainted value="false"/>
               <icon value="img/previous.png"/>
@@ -57,7 +58,7 @@
               <forms/>
             </constraints>
             <properties>
-              <borderPainted value="true"/>
+              <borderPainted value="false"/>
               <contentAreaFilled value="false"/>
               <focusPainted value="false"/>
               <icon value="img/next.png"/>
@@ -73,6 +74,7 @@
               <forms/>
             </constraints>
             <properties>
+              <borderPainted value="false"/>
               <contentAreaFilled value="false"/>
               <focusPainted value="false"/>
               <horizontalTextPosition value="0"/>
@@ -101,37 +103,30 @@
         </children>
       </grid>
       <grid id="7033d" layout-manager="FormLayout">
-        <rowspec value="center:100px:grow"/>
+        <rowspec value="center:d:grow"/>
         <colspec value="fill:d:grow"/>
         <constraints>
           <grid row="0" column="0" row-span="3" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
-        <properties/>
+        <properties>
+          <minimumSize width="-1" height="24"/>
+          <preferredSize width="739" height="500"/>
+        </properties>
         <border type="none"/>
         <children>
-          <scrollpane id="1b3ed" binding="paneTextContent">
+          <scrollpane id="e9140" binding="paneTextContent">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
               <forms defaultalign-horz="false" defaultalign-vert="false"/>
             </constraints>
-            <properties>
-              <minimumSize width="14" height="15"/>
-              <preferredSize width="739" height="17"/>
-            </properties>
+            <properties/>
             <border type="none"/>
             <children>
-              <component id="65d82" class="javax.swing.JTextArea" binding="textContent">
+              <component id="f285a" class="javax.swing.JTextArea" binding="textContent">
                 <constraints/>
                 <properties>
-                  <alignmentX value="0.0"/>
-                  <alignmentY value="0.0"/>
-                  <autoscrolls value="false"/>
-                  <editable value="false"/>
                   <lineWrap value="true"/>
-                  <minimumSize width="739" height="17"/>
-                  <preferredSize width="739" height="17"/>
-                  <wrapStyleWord value="true"/>
                 </properties>
               </component>
             </children>

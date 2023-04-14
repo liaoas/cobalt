@@ -54,6 +54,8 @@ public class ModuleConstants {
 
     public static final String TAB_CONTROL_TITLE_UNFOLD = "全屏";
 
+    public static final String TAB_CONTROL_READING_HISTORY = "历史";
+
     /*****************组件悬浮提示*****************/
     // 搜索按钮
     public static final String SEARCH_BTN = "搜索";

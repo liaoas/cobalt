@@ -86,7 +86,7 @@ public class BookSearchServiceImpl implements BookSearchService {
     public List<BookData> searchBookNameData(String searchBookName) {
         bookDataList.clear();
         try {
-            Connection connect = Jsoup.connect("https://www.ibiquge.la/modules/article/waps.php");
+            Connection connect = Jsoup.connect("https://www.ibiquges.com/modules/article/waps.php");
             // 设置请求头
             connect.data("searchkey", searchBookName);
 

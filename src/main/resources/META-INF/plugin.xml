@@ -138,7 +138,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="IDEA Ebook" icon="/img/book.svg" factoryClass="com.liao.book.factory.BookMainWindowFactory"
+        <toolWindow id="IDEA Ebook" icon="/img/book.svg" factoryClass="com.liao.book.factory.ViewFaction"
                     anchor="right"/>
 
         <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>

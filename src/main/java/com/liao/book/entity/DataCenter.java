@@ -19,16 +19,16 @@ public class DataCenter {
     public static DefaultTableModel tableModel = new DefaultTableModel(null, head);
 
     // 笔趣阁
-    public static final String BI_QU_GE = "新笔趣阁";
+    public static final String BI_QU_GE = "笔趣阁";
+
+    // 笔趣阁
+    public static final String XIANG_SHU = "香书小说";
 
     // 妙笔阁
     public static final String MI_BI_GE = "妙笔阁";
 
     // 全本小说
     public static final String QUAN_BEN = "全本小说";
-
-    // 笔趣阁
-    public static final String BI_QU_GE_2 = "笔趣阁";
 
     // 69书吧
     public static final String SHU_BA_69 = "69书吧";
@@ -43,7 +43,7 @@ public class DataCenter {
     public static final String QIAN_QIAN = "千千小说";
 
     // 数据源
-    public static final String[] DATA_SOURCE = new String[]{BI_QU_GE, MI_BI_GE,};
+    public static final String[] DATA_SOURCE = new String[]{BI_QU_GE, XIANG_SHU};
 
     // 选项卡白标签
     public static final String TAB_CONTROL_TITLE_HOME = "首页";

@@ -38,7 +38,7 @@ public class BookTextServiceImpl implements BookTextService {
 
         try {
             switch (instance.searchType) {
-                case DataCenter.BI_QU_GE:
+                case DataCenter.XIANG_SHU:
                     url = "https://www.xbiquge.la/" + url;
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 笔趣阁
@@ -76,7 +76,7 @@ public class BookTextServiceImpl implements BookTextService {
                     textContent = textContent.replace(" ！", "");
                     instance.textContent = textContent;
                     break;
-                case DataCenter.BI_QU_GE_2:
+                case DataCenter.BI_QU_GE:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 笔趣阁2
                     content = parse.getElementById("content");

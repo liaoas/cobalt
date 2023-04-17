@@ -1,8 +1,8 @@
 package com.liao.book.service.impl;
 
 import com.liao.book.dao.ReadingProgressDao;
-import com.liao.book.common.ModuleConstants;
-import com.liao.book.service.ContentService;
+import com.liao.book.entity.DataCenter;
+import com.liao.book.service.BookTextService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,7 +19,7 @@ import java.net.URL;
  * @author LiAo
  * @since 2021/1/14
  */
-public class ContentServiceImpl implements ContentService {
+public class BookTextServiceImpl implements BookTextService {
 
     // 重试次数
     public static int index = 2;
@@ -38,14 +38,14 @@ public class ContentServiceImpl implements ContentService {
 
         try {
             switch (instance.searchType) {
-                case ModuleConstants.BI_QU_GE:
+                case DataCenter.XIANG_SHU:
                     url = "https://www.xbiquge.la/" + url;
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 笔趣阁
                     content = parse.getElementById("content");
                     instance.textContent = textFormat(content);
                     break;
-                case ModuleConstants.MI_BI_GE:
+                case DataCenter.MI_BI_GE:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 妙笔阁
                     content = parse.getElementById("content");
@@ -58,7 +58,7 @@ public class ContentServiceImpl implements ContentService {
                         textContent = textContent.replace(textContent.substring(adStart, adEnd), "");
                     instance.textContent = textContent;
                     break;
-                case ModuleConstants.QUAN_BEN:
+                case DataCenter.QUAN_BEN:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 全本小说网
                     content = parse.getElementById("content");
@@ -67,7 +67,7 @@ public class ContentServiceImpl implements ContentService {
                     textContent = textContent.replace(" ！", "");
                     instance.textContent = textContent;
                     break;
-                case ModuleConstants.QIAN_QIAN:
+                case DataCenter.QIAN_QIAN:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 千千小说网
                     content = parse.getElementById("content");
@@ -76,7 +76,7 @@ public class ContentServiceImpl implements ContentService {
                     textContent = textContent.replace(" ！", "");
                     instance.textContent = textContent;
                     break;
-                case ModuleConstants.BI_QU_GE_2:
+                case DataCenter.BI_QU_GE:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 笔趣阁2
                     content = parse.getElementById("content");
@@ -88,7 +88,7 @@ public class ContentServiceImpl implements ContentService {
                     textContent = textContent.replace("xh:.126.81.50", "");
                     instance.textContent = textContent;
                     break;
-                case ModuleConstants.SHU_BA_69:
+                case DataCenter.SHU_BA_69:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 69书吧
                     content = parse.getElementById("htmlContent");
@@ -98,7 +98,7 @@ public class ContentServiceImpl implements ContentService {
                     textContent = textContent.replace("最新章节！", "");
                     instance.textContent = textContent;
                     break;
-                case ModuleConstants.SHU_BA_58:
+                case DataCenter.SHU_BA_58:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 58小说
                     content = parse.getElementById("content");
@@ -111,7 +111,7 @@ public class ContentServiceImpl implements ContentService {
                             "朋友推荐哦！", "");
                     instance.textContent = textContent;
                     break;
-                case ModuleConstants.SHU_TOP:
+                case DataCenter.SHU_TOP:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 顶点小说
                     content = parse.getElementsByClass("pt-read-text").get(0);
@@ -122,9 +122,6 @@ public class ContentServiceImpl implements ContentService {
                     textContent = textContent.replace("顶点小说www.maxreader.net”最新章节第一时间免费阅读。"
                             , "");
                     instance.textContent = textContent;
-                    break;
-                case ModuleConstants.IMPORT:
-
                     break;
             }
         } catch (Exception e) {

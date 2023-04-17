@@ -3,8 +3,8 @@ package com.liao.book.service.impl;
 import cn.hutool.http.HttpUtil;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.Chapter;
-import com.liao.book.common.ModuleConstants;
-import com.liao.book.service.ChapterService;
+import com.liao.book.entity.DataCenter;
+import com.liao.book.service.BookChapterService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,7 +18,7 @@ import org.jsoup.select.Elements;
  * @author LiAo
  * @since 2021/1/14
  */
-public class ChapterServiceImpl implements ChapterService {
+public class BookChapterServiceImpl implements BookChapterService {
 
     // 重试次数
     public static int index = 2;
@@ -29,32 +29,32 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public void getBookChapterByType(String link) {
         switch (instance.searchType) {
-            case ModuleConstants.BI_QU_GE:
+            case DataCenter.XIANG_SHU:
                 // 笔趣阁
                 searchBookChapterData(link);
                 break;
-            case ModuleConstants.MI_BI_GE:
+            case DataCenter.MI_BI_GE:
                 // 妙笔阁
                 searchBookChapterData_miao(link);
                 break;
-            case ModuleConstants.QUAN_BEN:
-            case ModuleConstants.QIAN_QIAN:
+            case DataCenter.QUAN_BEN:
+            case DataCenter.QIAN_QIAN:
                 // 全本小说网
                 searchBookChapterData_tai(link);
                 break;
-            case ModuleConstants.BI_QU_GE_2:
+            case DataCenter.BI_QU_GE:
                 // 笔趣阁2
                 searchBookChapterData_bqg2(link);
                 break;
-            case ModuleConstants.SHU_BA_69:
+            case DataCenter.SHU_BA_69:
                 // 69书吧
                 searchBookChapterData_69shu(link);
                 break;
-            case ModuleConstants.SHU_BA_58:
+            case DataCenter.SHU_BA_58:
                 // 58小说
                 searchBookChapterData_58(link);
                 break;
-            case ModuleConstants.SHU_TOP:
+            case DataCenter.SHU_TOP:
                 // 顶点小说
                 searchBookChapterData_top(link);
                 break;
@@ -196,7 +196,7 @@ public class ChapterServiceImpl implements ChapterService {
                 String name = element.getElementsByTag("a").eq(0).text();
 
                 chapter.setName(name);
-                chapter.setLink("https://www.biduoxs.com" + attr);
+                chapter.setLink(attr);
 
                 instance.chapters.add(chapter);
             }

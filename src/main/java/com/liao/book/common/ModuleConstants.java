@@ -26,30 +26,12 @@ public class ModuleConstants {
     // 笔趣阁
     public static final String XIANG_SHU = "香书小说";
 
-    // 妙笔阁
-    public static final String MI_BI_GE = "妙笔阁";
-
-    // 全本小说
-    public static final String QUAN_BEN = "全本小说";
-
-    // 69书吧
-    public static final String SHU_BA_69 = "69书吧";
-
-    // 58小说
-    public static final String SHU_BA_58 = "58小说";
-
-    // 顶点小说
-    public static final String SHU_TOP = "顶点小说";
-
-    // 千千小说
-    public static final String QIAN_QIAN = "千千小说";
-
     // 本地导入
     public static final String IMPORT = "导入";
 
 
     // 搜索数据源
-    public static final String[] DATA_SOURCE = new String[]{BI_QU_GE, MI_BI_GE};
+    public static final String[] DATA_SOURCE = new String[]{BI_QU_GE, XIANG_SHU};
 
     /*****************选项卡标题*****************/
 

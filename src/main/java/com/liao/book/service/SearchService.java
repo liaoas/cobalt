@@ -24,7 +24,7 @@ public interface SearchService {
 
 
     /**
-     * 笔趣阁
+     * 香书小说
      *
      * @param searchBookName 书籍名称
      * @return 搜索列表
@@ -32,59 +32,12 @@ public interface SearchService {
     List<BookData> searchBookNameData(String searchBookName);
 
     /**
-     * 妙笔阁
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    List<BookData> searchBookNameData_miao(String searchBookName);
-
-    /**
-     * 全本小说网
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    List<BookData> searchBookNameData_tai(String searchBookName);
-
-    /**
-     * 笔趣阁www.biduoxs.com
+     * 笔趣阁
      *
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
     List<BookData> searchBookNameData_bqg2(String searchBookName);
 
-    /**
-     * 69书吧www.69shuba.cc
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    List<BookData> searchBookNameData_69shu(String searchBookName);
-
-    /**
-     * 58小说www.wbxsw.com
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    List<BookData> searchBookNameData_58(String searchBookName);
-
-    /**
-     * 顶点小说www.maxreader.net
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    List<BookData> searchBookNameData_top(String searchBookName);
-
-    /**
-     * 千千小说网 www.qqxsw.co
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    List<BookData> searchBookNameData_qian(String searchBookName);
 
 }

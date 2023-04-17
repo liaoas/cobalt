@@ -13,22 +13,19 @@ import org.jsoup.nodes.Element;
 public interface ContentService {
 
 
+    /**
+     * 获取章节内容
+     *
+     * @param url 链接
+     */
     void searchBookChapterData(String url);
 
 
     /**
-     * 笔趣阁
+     * 书籍内容格式化
      *
      * @param element 当前章节信息
      * @return 结果
      */
     String textFormat(Element element);
-
-    /**
-     * 妙笔阁
-     *
-     * @param element 章节内容
-     * @return 数据
-     */
-    String textFormat_miao(Element element);
 }

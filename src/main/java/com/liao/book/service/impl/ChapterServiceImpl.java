@@ -29,7 +29,7 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public void getBookChapterByType(String link) {
         switch (instance.searchType) {
-            case ModuleConstants.BI_QU_GE:
+            case ModuleConstants.XIANG_SHU:
                 // 笔趣阁
                 searchBookChapterData(link);
                 break;
@@ -42,7 +42,7 @@ public class ChapterServiceImpl implements ChapterService {
                 // 全本小说网
                 searchBookChapterData_tai(link);
                 break;
-            case ModuleConstants.BI_QU_GE_2:
+            case ModuleConstants.BI_QU_GE:
                 // 笔趣阁2
                 searchBookChapterData_bqg2(link);
                 break;
@@ -196,7 +196,7 @@ public class ChapterServiceImpl implements ChapterService {
                 String name = element.getElementsByTag("a").eq(0).text();
 
                 chapter.setName(name);
-                chapter.setLink("https://www.biduoxs.com" + attr);
+                chapter.setLink(attr);
 
                 instance.chapters.add(chapter);
             }

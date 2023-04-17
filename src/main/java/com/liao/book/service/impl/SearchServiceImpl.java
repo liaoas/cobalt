@@ -56,7 +56,7 @@ public class SearchServiceImpl implements SearchService {
             case ModuleConstants.QUAN_BEN:
                 // 全本小说网
                 return searchBookNameData_tai(searchBookName);
-            case ModuleConstants.BI_QU_GE_2:
+            case ModuleConstants.BI_QU_GE:
                 // 笔趣阁2
                 return searchBookNameData_bqg2(searchBookName);
             case ModuleConstants.SHU_BA_69:
@@ -232,41 +232,38 @@ public class SearchServiceImpl implements SearchService {
     }
 
     /**
-     * 笔趣阁www.biduoxs.com
+     * 笔趣阁 www.biduoxs.com www.biquge5200.com
      *
      * @param searchBookName 书籍名称
      * @return 搜索列表
      */
     public List<BookData> searchBookNameData_bqg2(String searchBookName) {
         bookDataList.clear();
-        String url = "https://www.biduoxs.com/search.php";
+        String url = "http://www.biquge5200.com/modules/article/search.php?searchkey=" + searchBookName;
 
-        HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put("q", searchBookName);
-
-        String result1 = HttpUtil.get(url, paramMap);
+        String result1 = HttpUtil.get(url);
 
         try {
             Document parse = Jsoup.parse(result1);
 
-            Elements grid = parse.getElementsByClass("result-game-item-detail");
-
+            // Document parse = Jsoup.parse(result1);
+            Elements grid = parse.getElementsByTag("tr");
             for (Element element : grid) {
                 BookData bookData = new BookData();
                 // 文章名称
-                String bookName = element.getElementsByTag("span").eq(0).text();
+                String bookName = element.getElementsByTag("a").eq(0).text();
                 bookData.setBookName(bookName);
                 // 链接
-                String bookLink = "https://www.biduoxs.com" + element.getElementsByTag("a").eq(0).attr("href");
-                bookData.setBookLink(bookLink);
+                String bookLink = element.getElementsByTag("a").eq(0).attr("href");
+                bookData.setBookLink("http://www.biquge5200.com/" + bookLink);
                 // 章节信息
-                String chapter = element.getElementsByClass("result-game-item-info-tag-item").eq(0).text();
+                String chapter = element.getElementsByTag("a").eq(1).text();
                 bookData.setChapter(chapter);
                 // 作者
-                String author = element.getElementsByTag("span").eq(2).text();
+                String author = element.getElementsByTag("td").eq(2).text();
                 bookData.setAuthor(author);
                 // 更新时间
-                String updateDate = element.getElementsByTag("span").eq(6).text();
+                String updateDate = element.getElementsByTag("td").eq(4).text();
                 bookData.setUpdateDate(updateDate);
 
                 if (!"".equals(bookName)) {
@@ -410,8 +407,7 @@ public class SearchServiceImpl implements SearchService {
                 String bookName = element.getElementsByTag("a").eq(0).attr("title");
                 bookData.setBookName(bookName);
                 // 链接
-                String bookLink = "https://www.maxreader.net" +
-                        element.getElementsByTag("a").eq(0).attr("href").replace("/book/", "/read/");
+                String bookLink = "https://www.maxreader.net" + element.getElementsByTag("a").eq(0).attr("href").replace("/book/", "/read/");
                 bookData.setBookLink(bookLink);
                 // 章节信息
                 String chapter = element.getElementsByTag("a").eq(4).attr("title");

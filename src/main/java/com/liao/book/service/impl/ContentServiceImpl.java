@@ -38,7 +38,7 @@ public class ContentServiceImpl implements ContentService {
 
         try {
             switch (instance.searchType) {
-                case ModuleConstants.BI_QU_GE:
+                case ModuleConstants.XIANG_SHU:
                     url = "https://www.xbiquge.la/" + url;
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 笔趣阁
@@ -76,7 +76,7 @@ public class ContentServiceImpl implements ContentService {
                     textContent = textContent.replace(" ！", "");
                     instance.textContent = textContent;
                     break;
-                case ModuleConstants.BI_QU_GE_2:
+                case ModuleConstants.BI_QU_GE:
                     parse = Jsoup.parse(new URL(url), 60000);
                     // 笔趣阁2
                     content = parse.getElementById("content");

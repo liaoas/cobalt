@@ -21,16 +21,16 @@ public class ModuleConstants {
     /*****************数据源类型*****************/
 
     // 笔趣阁
-    public static final String BI_QU_GE = "新笔趣阁";
+    public static final String BI_QU_GE = "笔趣阁";
+
+    // 笔趣阁
+    public static final String XIANG_SHU = "香书小说";
 
     // 妙笔阁
     public static final String MI_BI_GE = "妙笔阁";
 
     // 全本小说
     public static final String QUAN_BEN = "全本小说";
-
-    // 笔趣阁
-    public static final String BI_QU_GE_2 = "笔趣阁";
 
     // 69书吧
     public static final String SHU_BA_69 = "69书吧";

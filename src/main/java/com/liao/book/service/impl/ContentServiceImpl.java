@@ -123,6 +123,9 @@ public class ContentServiceImpl implements ContentService {
                             , "");
                     instance.textContent = textContent;
                     break;
+                case ModuleConstants.IMPORT:
+
+                    break;
             }
         } catch (Exception e) {
             if (index == 0) {

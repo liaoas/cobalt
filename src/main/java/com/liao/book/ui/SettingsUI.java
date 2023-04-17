@@ -1,6 +1,7 @@
 package com.liao.book.ui;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.common.Constants;
@@ -122,6 +123,12 @@ public class SettingsUI {
         bindingComponentEvent();
         // 加载持久化状态
         loadPersistentState();
+
+        // 创建一个只允许选择 .txt 文件的 FileChooserDescriptor
+        FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFileDescriptor();
+
+        // 创建 TextFieldWithBrowseButton 组件，并将 FileChooserDescriptor 传递给它
+        selectFile.addBrowseFolderListener(null, null, null, descriptor);
     }
 
 

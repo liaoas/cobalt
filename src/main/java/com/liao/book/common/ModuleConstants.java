@@ -44,6 +44,10 @@ public class ModuleConstants {
     // 千千小说
     public static final String QIAN_QIAN = "千千小说";
 
+    // 本地导入
+    public static final String IMPORT = "导入";
+
+
     // 搜索数据源
     public static final String[] DATA_SOURCE = new String[]{BI_QU_GE, MI_BI_GE};
 

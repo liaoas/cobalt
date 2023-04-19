@@ -7,6 +7,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.common.Constants;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.dao.SettingsDao;
+import com.liao.book.factory.BeanFactory;
+import com.liao.book.service.impl.ImportServiceImpl;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -69,6 +71,11 @@ public class SettingsUI {
     public boolean isModified = false;
 
     /**
+     * 是否导入书籍
+     */
+    public boolean isSelBook = false;
+
+    /**
      * 字体大小值
      */
     private int fontSizeVal = Constants.DEFAULT_FONT_SIZE;
@@ -81,6 +88,10 @@ public class SettingsUI {
     // 页面设置持久化
     private static SettingsDao settingDao = SettingsDao.getInstance();
 
+    // 书籍导入处理类
+    private static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
+
+
     public SettingsUI() {
         init();
     }
@@ -91,6 +102,10 @@ public class SettingsUI {
 
     public boolean isModified() {
         return isModified;
+    }
+
+    public boolean isSelBook() {
+        return isSelBook;
     }
 
     public void setModified(boolean modified) {
@@ -158,8 +173,16 @@ public class SettingsUI {
         selectFile.addBrowseFolderListener("选择书籍文件", null, null, new FileChooserDescriptor(true, false, false, false, false, false) {
             @Override
             public void validateSelectedFiles(VirtualFile @NotNull [] files) {
-                if (files.length != 0) {
-                    isModified = true;
+                if (files.length == 0) {
+                    return;
+                }
+
+                VirtualFile file = files[0];
+
+                // 解析并导入
+                if (importService.importBook(file)) {
+                    // 导入成功
+                    isSelBook = true;
                 }
             }
         });

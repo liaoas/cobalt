@@ -40,7 +40,7 @@ public class SettingsConfigurable implements Configurable {
 
     @Override
     public boolean isModified() {
-        return settingsUI.isModified();
+        return settingsUI.isModified() || settingsUI.isSelBook();
     }
 
     @Override

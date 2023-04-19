@@ -1,11 +1,9 @@
 package com.liao.book.parse;
 
+import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.common.Constants;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -30,17 +28,21 @@ public class TxtContentParser {
      *
      * @param file txt 文件
      * @return <章节，章节内容>
-     * @throws IOException ex
      */
-    public static Map<String, String> parseTxt(File file) throws IOException {
+    public static Map<String, String> parseTxt(InputStream file) {
         Map<String, String> chapterMap = new LinkedHashMap<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), "GBK"))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file, "GBK"))) {
             String line;
             StringBuilder contentBuilder = new StringBuilder();
             String title = null;
 
-            while ((line = reader.readLine()) != null) {
+            while (true) {
+                try {
+                    if ((line = reader.readLine()) == null) break;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 Matcher matcher = CHAPTER_PATTERN.matcher(line);
                 if (matcher.find()) {
                     if (title != null) {
@@ -57,6 +59,8 @@ public class TxtContentParser {
             if (title != null) {
                 chapterMap.put(title, contentBuilder.toString());
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return chapterMap;

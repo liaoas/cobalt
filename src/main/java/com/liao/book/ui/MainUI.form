@@ -40,6 +40,7 @@
         </properties>
         <border type="empty">
           <size top="2" left="2" bottom="5" right="0"/>
+          <color color="-11447983"/>
         </border>
         <children>
           <component id="7ec88" class="javax.swing.JTextField" binding="textSearchBar">
@@ -263,7 +264,7 @@
               <focusPainted value="false"/>
               <horizontalTextPosition value="0"/>
               <icon value="img/go_with.png"/>
-              <iconTextGap value="0"/>
+              <iconTextGap value="4"/>
               <margin top="0" left="0" bottom="0" right="0"/>
               <maximumSize width="28" height="29"/>
               <minimumSize width="28" height="29"/>

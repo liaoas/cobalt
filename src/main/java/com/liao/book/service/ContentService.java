@@ -28,4 +28,11 @@ public interface ContentService {
      * @return 结果
      */
     String textFormat(Element element);
+
+    /**
+     * 获取手动导入的章节内容
+     *
+     * @param url 链接/map key
+     */
+    void getImportBook(String url);
 }

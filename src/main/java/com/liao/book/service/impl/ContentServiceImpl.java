@@ -2,6 +2,7 @@ package com.liao.book.service.impl;
 
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.common.ModuleConstants;
+import com.liao.book.entity.ImportBookData;
 import com.liao.book.service.ContentService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,6 +11,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 
 import java.net.URL;
+import java.util.Map;
 
 /**
  * <p>
@@ -58,7 +60,7 @@ public class ContentServiceImpl implements ContentService {
                     instance.textContent = textContent;
                     break;
                 case ModuleConstants.IMPORT:
-
+                    getImportBook(url);
                     break;
             }
         } catch (Exception e) {
@@ -104,5 +106,20 @@ public class ContentServiceImpl implements ContentService {
         }
         // 返回格式化后的目录
         return stringBuilder.toString();
+    }
+
+    /**
+     * 获取手动导入的章节内容
+     *
+     * @param url 链接/map key
+     * @return 内容
+     */
+    @Override
+    public void getImportBook(String url) {
+        ImportBookData instance1 = ImportBookData.getInstance();
+
+        Map<String, String> bookMap = instance1.getBookMap();
+
+        instance.textContent = bookMap.get(url);
     }
 }

@@ -57,6 +57,7 @@ public class BeanFactory {
         beanMap.put("ChapterServiceImpl", "com.liao.book.service.impl.ChapterServiceImpl");
         beanMap.put("SearchServiceImpl", "com.liao.book.service.impl.SearchServiceImpl");
         beanMap.put("ContentServiceImpl", "com.liao.book.service.impl.ContentServiceImpl");
+        beanMap.put("ImportServiceImpl", "com.liao.book.service.impl.ImportServiceImpl");
         beanMap.put("ReadingProgressDao", "com.liao.book.dao.ReadingProgressDao");
 
         try {

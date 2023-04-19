@@ -4,11 +4,14 @@ import cn.hutool.http.HttpUtil;
 import com.liao.book.dao.ReadingProgressDao;
 import com.liao.book.entity.Chapter;
 import com.liao.book.common.ModuleConstants;
+import com.liao.book.entity.ImportBookData;
 import com.liao.book.service.ChapterService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.List;
 
 /**
  * <p>
@@ -40,7 +43,10 @@ public class ChapterServiceImpl implements ChapterService {
                 break;
             case ModuleConstants.BI_QU_GE:
                 // 笔趣阁2
-                searchBookChapterData_bqg2(link);
+                searchBookChapterDataBQG(link);
+                break;
+            case ModuleConstants.IMPORT:
+                importChapterData();
                 break;
         }
     }
@@ -73,7 +79,7 @@ public class ChapterServiceImpl implements ChapterService {
      * @param link 链接
      */
     @Override
-    public void searchBookChapterData_bqg2(String link) {
+    public void searchBookChapterDataBQG(String link) {
 
         instance.chapters.clear();
 
@@ -86,8 +92,22 @@ public class ChapterServiceImpl implements ChapterService {
             }
 
             index--;
-            searchBookChapterData_bqg2(link);
+            searchBookChapterDataBQG(link);
         }
+    }
+
+    /**
+     * 加载手动导入的章节信息
+     */
+    @Override
+    public void importChapterData() {
+        instance.chapters.clear();
+
+        ImportBookData importBookData = ImportBookData.getInstance();
+        List<String> chapterList = importBookData.getChapterList();
+        chapterList.forEach(item -> {
+            instance.chapters.add(new Chapter(item, item));
+        });
     }
 
     /**

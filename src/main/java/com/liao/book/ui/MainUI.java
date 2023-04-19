@@ -108,6 +108,8 @@ public class MainUI {
     // 内容爬虫
     static ContentService textService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
 
+
+
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
@@ -127,13 +129,6 @@ public class MainUI {
         for (String dataSourceName : ModuleConstants.DATA_SOURCE) {
             sourceDropdown.addItem(dataSourceName);
         }
-
-        // btnSearch.setMargin(new Insets(0, 0, 0, 0));//设置边距
-        // btnSearch.setBorderPainted(false);//不绘制边框
-        // btnSearch.setFocusPainted(false);//选中后不绘制边框
-        // btnSearch.setContentAreaFilled(false);//不绘制按钮区域
-        // btnSearch.setText("");//不显示文字
-
 
         // 设置表格内容大小
         tablePane.setPreferredSize(new Dimension(-1, 30));
@@ -329,7 +324,7 @@ public class MainUI {
 
         // 设置单击事件
         settingBtn.addActionListener(e -> {
-            ShowSettingsUtil.getInstance().showSettingsDialog(project, "Com.Liao.Book.Configurable.SettingConfigurable");
+            ShowSettingsUtil.getInstance().showSettingsDialog(project, "com.liao.book.configurable.SettingsConfigurable");
         });
     }
 
@@ -467,6 +462,22 @@ public class MainUI {
     }
 
     /**
+     * 书籍导入
+     */
+    private void applyImportBook() {
+        SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
+        if (settingsUI.isSelBook) {
+            instance.searchType = ModuleConstants.IMPORT;
+
+            // 执行开始阅读
+            new StartReading().execute();
+
+            // 阅读进度持久化
+            instance.loadState(instance);
+        }
+    }
+
+    /**
      * 页面统一的Apply
      */
     public void apply() {
@@ -475,6 +486,9 @@ public class MainUI {
 
         // 滑块滚动
         applyScrollSpacing();
+
+        // 导入的书籍展示
+        applyImportBook();
     }
 
     // 窗口信息

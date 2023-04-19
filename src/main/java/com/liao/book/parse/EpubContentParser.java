@@ -5,10 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.LinkedHashMap;
@@ -32,9 +29,9 @@ public class EpubContentParser {
      * @param file epub 文件
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseEpub(File file) {
+    public static Map<String, String> parseEpub(InputStream file) {
         Map<String, String> result = new LinkedHashMap<>();
-        try (ZipInputStream zipStream = new ZipInputStream(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8)) {
+        try (ZipInputStream zipStream = new ZipInputStream(file, StandardCharsets.UTF_8)) {
             ZipEntry entry;
             while ((entry = zipStream.getNextEntry()) != null) {
                 if (!entry.isDirectory() && entry.getName().endsWith(".html") && entry.getName().contains("chapter")) {

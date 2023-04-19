@@ -30,6 +30,12 @@ public interface ChapterService {
      *
      * @param link 链接
      */
-    void searchBookChapterData_bqg2(String link);
+    void searchBookChapterDataBQG(String link);
+
+
+    /**
+     * 加载手动导入的章节信息
+     */
+    void importChapterData();
 
 }

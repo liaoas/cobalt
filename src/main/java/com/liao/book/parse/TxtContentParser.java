@@ -1,11 +1,13 @@
 package com.liao.book.parse;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import com.liao.book.common.Constants;
+import com.liao.book.utils.LocalCharsetUtil;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -27,13 +29,16 @@ public class TxtContentParser {
     /**
      * 解析本地 txt 文件为 Map 格式，K 为章节名称，Value 为章节内容
      *
-     * @param file txt 文件
+     * @param filePath txt 文件路径
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseTxt(InputStream file) {
+    public static Map<String, String> parseTxt(String filePath) {
+
         Map<String, String> chapterMap = new LinkedHashMap<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file, "GBK"))) {
+        String fileCharset = LocalCharsetUtil.getFileCharset(filePath);
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), fileCharset))) {
             String line;
             StringBuilder contentBuilder = new StringBuilder();
             String title = null;
@@ -66,4 +71,6 @@ public class TxtContentParser {
 
         return chapterMap;
     }
+
+
 }

@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/liaoas/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>2.0.1</version>
+    <version>3.1.0</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/IDEA-EBook">LiAo</vendor>
 
     <idea-version since-build="201.*" until-build="231.*"/>

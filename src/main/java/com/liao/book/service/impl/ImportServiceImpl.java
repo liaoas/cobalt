@@ -38,25 +38,20 @@ public class ImportServiceImpl implements ImportService {
 
         if (StringUtils.isEmpty(extension)) return false;
 
-        // 获取文件流
-        InputStream inputStream;
-        try {
-            inputStream = file.getInputStream();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        // 获取文件路径
+        String filePath = file.getPath();
 
-        assert extension != null;
+        if (StringUtils.isEmpty(filePath)) return false;
 
         Map<String, String> bookMap = new HashMap<>(16);
 
         // 执行书籍解析
         try {
             if (extension.equals("txt") || extension.equals("TXT")) {
-                bookMap = TxtContentParser.parseTxt(inputStream);
+                bookMap = TxtContentParser.parseTxt(filePath);
             } else if (extension.equals("epub") || extension.equals("EPUB")) {
                 // epub
-                bookMap = EpubContentParser.parseEpub(inputStream);
+                bookMap = EpubContentParser.parseEpub(filePath);
             }
         } catch (Exception e) {
             return false;

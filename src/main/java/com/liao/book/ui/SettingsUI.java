@@ -165,7 +165,7 @@ public class SettingsUI {
         fontSize.setSelectedItem(16);
 
         // 默认正则值
-        chapterRegular.setText("下次版本更新");
+        chapterRegular.setText("下次版本更新，目前只可导入书籍");
     }
 
     /**

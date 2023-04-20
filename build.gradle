@@ -31,6 +31,6 @@ intellij {
     plugins 'java'
 }
 patchPluginXml {
-    sinceBuild '201.*'
+    sinceBuild '211.*'
     untilBuild '231.*'
 }

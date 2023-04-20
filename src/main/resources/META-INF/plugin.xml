@@ -4,7 +4,7 @@
     <version>3.1.0</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/IDEA-EBook">LiAo</vendor>
 
-    <idea-version since-build="201.*" until-build="231.*"/>
+    <idea-version since-build="211.*" until-build="231.*"/>
 
     <description><![CDATA[
         IDEA EBook can be used to read books, can make your IntelliJ IDEA more interesting.
@@ -133,6 +133,11 @@
         <i>2023.04.17-2.0.1</i>
         <ul>
             <li>Repair failed interface</li>
+        </ul>
+        <i>2023.04.20-3.1.0</i>
+        <ul>
+            <li>Book import function</li>
+            <li>New Settings page</li>
         </ul>
 
                  ]]>

@@ -182,6 +182,7 @@ public class MainUI {
 
             // 根据数据源类型 搜索
             new SearchBooks().execute();
+
         });
 
         // 开始阅读
@@ -189,6 +190,9 @@ public class MainUI {
 
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
+
+            // 获取数据源类型
+            instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
 
             // 获取选中行数据
             int selectedRow = searchBookTable.getSelectedRow();
@@ -361,6 +365,8 @@ public class MainUI {
 
         @Override
         protected void done() {
+
+            instance.searchType = ModuleConstants.IMPORT;
             // 恢复默认鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
         }
@@ -395,6 +401,12 @@ public class MainUI {
 
             // 书本已切换
             isReadClick = true;
+
+            if (!instance.searchType.equals(ModuleConstants.IMPORT)) {
+                // 本地导入书籍清空
+                instance.importPath = null;
+            }
+
             // 恢复默认鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
         }
@@ -484,6 +496,7 @@ public class MainUI {
 
             if (!importService.importBook(file)) {
                 ToastUtils.showToastMassage(project, "书籍导入失败", ToastType.ERROR);
+                return;
             }
 
             // 执行开始阅读

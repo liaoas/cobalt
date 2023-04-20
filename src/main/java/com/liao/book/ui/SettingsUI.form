@@ -170,7 +170,10 @@
               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <forms/>
             </constraints>
-            <properties/>
+            <properties>
+              <editable value="true"/>
+              <text value="仅支持 txt、epub"/>
+            </properties>
           </component>
         </children>
       </grid>
@@ -208,6 +211,7 @@
             </constraints>
             <properties>
               <enabled value="false"/>
+              <text value="下个版本更新"/>
             </properties>
           </component>
           <component id="a720a" class="javax.swing.JCheckBox" binding="overrideCheckBox" default-binding="true">

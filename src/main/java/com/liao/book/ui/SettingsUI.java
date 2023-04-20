@@ -6,8 +6,8 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.common.Constants;
 import com.liao.book.common.ModuleConstants;
-import com.liao.book.persistence.SettingsDao;
 import com.liao.book.factory.BeanFactory;
+import com.liao.book.persistence.SettingsDao;
 import com.liao.book.service.impl.ImportServiceImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -186,6 +186,9 @@ public class SettingsUI {
         selectFile.addBrowseFolderListener("选择书籍文件", null, null, new FileChooserDescriptor(true, false, false, false, false, false) {
             @Override
             public void validateSelectedFiles(VirtualFile @NotNull [] files) {
+
+                selectFileEditable();
+
                 if (files.length == 0) {
                     return;
                 }
@@ -200,6 +203,7 @@ public class SettingsUI {
                     importBookPath = file.getPath();
                 }
             }
+
         });
 
         // 正则 Override 复选框单击事件
@@ -260,6 +264,10 @@ public class SettingsUI {
                 }
             }
         });
+    }
+
+    private void selectFileEditable() {
+        selectFile.setEditable(true);
     }
 
     /**

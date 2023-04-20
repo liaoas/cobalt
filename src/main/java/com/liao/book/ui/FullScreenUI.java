@@ -7,12 +7,12 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
-import com.liao.book.persistence.ReadingProgressDao;
-import com.liao.book.persistence.SettingsDao;
-import com.liao.book.entity.Chapter;
 import com.liao.book.common.ModuleConstants;
+import com.liao.book.entity.Chapter;
 import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
+import com.liao.book.persistence.ReadingProgressDao;
+import com.liao.book.persistence.SettingsDao;
 import com.liao.book.service.ContentService;
 import com.liao.book.service.impl.ContentServiceImpl;
 import com.liao.book.utils.ModuleUtils;
@@ -63,8 +63,7 @@ public class FullScreenUI {
     private Content lastSelectedContent = null;
 
     // 内容爬虫
-    static ContentService contentService = (ContentServiceImpl) BeanFactory
-            .getBean("ContentServiceImpl");
+    static ContentService contentService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
@@ -120,7 +119,7 @@ public class FullScreenUI {
         underOn.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size()) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size() - 1) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 return;
             }
@@ -278,6 +277,4 @@ public class FullScreenUI {
         // 滑块滚动
         applyScrollSpacing();
     }
-
-
 }

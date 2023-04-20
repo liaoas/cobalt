@@ -10,19 +10,19 @@ import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.core.Convert;
-import com.liao.book.persistence.ReadSubscriptDao;
-import com.liao.book.persistence.ReadingProgressDao;
-import com.liao.book.persistence.SettingsDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
+import com.liao.book.persistence.ReadSubscriptDao;
+import com.liao.book.persistence.ReadingProgressDao;
+import com.liao.book.persistence.SettingsDao;
 import com.liao.book.service.ChapterService;
-import com.liao.book.service.SearchService;
 import com.liao.book.service.ContentService;
+import com.liao.book.service.SearchService;
 import com.liao.book.service.impl.ChapterServiceImpl;
-import com.liao.book.service.impl.SearchServiceImpl;
 import com.liao.book.service.impl.ContentServiceImpl;
+import com.liao.book.service.impl.SearchServiceImpl;
 import com.liao.book.utils.ModuleUtils;
 import com.liao.book.utils.ReadingUtils;
 import com.liao.book.utils.ToastUtils;
@@ -230,7 +230,7 @@ public class MainUI {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size()) {
+            if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size() - 1) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);

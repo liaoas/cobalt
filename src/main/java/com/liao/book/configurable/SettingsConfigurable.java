@@ -20,7 +20,7 @@ public class SettingsConfigurable implements Configurable {
     /**
      * 创建自定义设置页面UI
      */
-    public static final SettingsUI settingsUI = new SettingsUI();
+    public static SettingsUI settingsUI = null;
 
     @Override
     public String getDisplayName() {
@@ -30,8 +30,13 @@ public class SettingsConfigurable implements Configurable {
     @Override
     public @Nullable JComponent createComponent() {
 
+        settingsUI = new SettingsUI();
+
         // 状态改为未修改
         settingsUI.setModified(false);
+
+        // 加载持久化状态
+        settingsUI.loadPersistentState();
 
         BeanFactory.setBean("SettingsUI", settingsUI);
 

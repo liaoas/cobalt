@@ -2,19 +2,17 @@ package com.liao.book.ui;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.common.Constants;
 import com.liao.book.common.ModuleConstants;
-import com.liao.book.factory.BeanFactory;
+import com.liao.book.persistence.ReadingProgressDao;
 import com.liao.book.persistence.SettingsDao;
-import com.liao.book.service.impl.ImportServiceImpl;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * 插件设置页面窗口
@@ -93,9 +91,7 @@ public class SettingsUI {
     // 页面设置持久化
     private static SettingsDao settingDao = SettingsDao.getInstance();
 
-    // 书籍导入处理类
-    private static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
-
+    private static ReadingProgressDao progressDao = ReadingProgressDao.getInstance();
 
     public SettingsUI() {
         init();
@@ -155,8 +151,6 @@ public class SettingsUI {
         // 创建一个只允许选择 .txt 文件的 FileChooserDescriptor
         FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFileDescriptor();
 
-        // 创建 TextFieldWithBrowseButton 组件，并将 FileChooserDescriptor 传递给它
-        selectFile.addBrowseFolderListener(null, null, null, descriptor);
     }
 
 
@@ -187,21 +181,16 @@ public class SettingsUI {
             @Override
             public void validateSelectedFiles(VirtualFile @NotNull [] files) {
 
-                selectFileEditable();
-
                 if (files.length == 0) {
                     return;
                 }
 
                 VirtualFile file = files[0];
 
-                // 解析并导入
-                if (importService.importBook(file)) {
-                    // 导入成功
-                    isSelBook = true;
-                    // 路径
-                    importBookPath = file.getPath();
-                }
+                importBookPath = file.getPath();
+
+                isSelBook = true;
+
             }
 
         });
@@ -266,10 +255,6 @@ public class SettingsUI {
         });
     }
 
-    private void selectFileEditable() {
-        selectFile.setEditable(true);
-    }
-
     /**
      * 获取字体大小选中值
      *
@@ -301,9 +286,10 @@ public class SettingsUI {
     /**
      * 加载持久化状态
      */
-    private void loadPersistentState() {
+    public void loadPersistentState() {
         fontSize.setSelectedItem(settingDao.fontSize);
         readRoll.setSelectedItem(settingDao.scrollSpacingScale);
+        selectFile.setText(progressDao.importPath);
     }
 
 }

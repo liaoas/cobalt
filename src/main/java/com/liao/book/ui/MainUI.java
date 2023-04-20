@@ -3,6 +3,8 @@ package com.liao.book.ui;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
@@ -22,6 +24,7 @@ import com.liao.book.service.ContentService;
 import com.liao.book.service.SearchService;
 import com.liao.book.service.impl.ChapterServiceImpl;
 import com.liao.book.service.impl.ContentServiceImpl;
+import com.liao.book.service.impl.ImportServiceImpl;
 import com.liao.book.service.impl.SearchServiceImpl;
 import com.liao.book.utils.ModuleUtils;
 import com.liao.book.utils.ReadingUtils;
@@ -85,7 +88,7 @@ public class MainUI {
     private JButton settingBtn;
 
     // 全局模块对象
-    private final Project project;
+    public final Project project;
 
     // 搜索书籍名称
     private String bookSearchName;
@@ -117,6 +120,9 @@ public class MainUI {
 
     // 页面设置持久化
     static SettingsDao settingDao = SettingsDao.getInstance();
+
+    // 书籍导入处理类
+    static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
 
     // 初始化数据
     private void init() {
@@ -471,6 +477,14 @@ public class MainUI {
             instance.searchType = ModuleConstants.IMPORT;
 
             instance.importPath = settingsUI.getImportBookPath();
+
+            VirtualFile file = LocalFileSystem.getInstance().findFileByPath(instance.importPath);
+
+            assert file != null;
+
+            if (!importService.importBook(file)) {
+                ToastUtils.showToastMassage(project, "书籍导入失败", ToastType.ERROR);
+            }
 
             // 执行开始阅读
             new StartReading().execute();

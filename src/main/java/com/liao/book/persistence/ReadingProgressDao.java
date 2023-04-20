@@ -1,4 +1,4 @@
-package com.liao.book.dao;
+package com.liao.book.persistence;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -35,14 +35,17 @@ public class ReadingProgressDao implements PersistentStateComponent<ReadingProgr
     // 章节内容
     public String textContent;
 
+    public String importPath;
+
     public ReadingProgressDao() {
     }
 
-    public ReadingProgressDao(String searchType, int nowChapterIndex, List<Chapter> chapters, String textContent) {
+    public ReadingProgressDao(String searchType, int nowChapterIndex, List<Chapter> chapters, String textContent, String importPath) {
         this.searchType = searchType;
         this.nowChapterIndex = nowChapterIndex;
         this.chapters = chapters;
         this.textContent = textContent;
+        this.importPath = importPath;
     }
 
     @Override

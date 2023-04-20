@@ -1,6 +1,6 @@
 package com.liao.book.utils;
 
-import com.liao.book.dao.SettingsDao;
+import com.liao.book.persistence.SettingsDao;
 import com.liao.book.common.ModuleConstants;
 
 import javax.swing.*;

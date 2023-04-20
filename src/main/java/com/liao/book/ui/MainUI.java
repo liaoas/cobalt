@@ -10,9 +10,9 @@ import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.core.Convert;
-import com.liao.book.dao.ReadSubscriptDao;
-import com.liao.book.dao.ReadingProgressDao;
-import com.liao.book.dao.SettingsDao;
+import com.liao.book.persistence.ReadSubscriptDao;
+import com.liao.book.persistence.ReadingProgressDao;
+import com.liao.book.persistence.SettingsDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.enums.ToastType;
@@ -107,7 +107,6 @@ public class MainUI {
 
     // 内容爬虫
     static ContentService textService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
-
 
 
     // 阅读进度持久化
@@ -466,8 +465,12 @@ public class MainUI {
      */
     private void applyImportBook() {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
+
+        instance.loadState(instance);
         if (settingsUI.isSelBook) {
             instance.searchType = ModuleConstants.IMPORT;
+
+            instance.importPath = settingsUI.getImportBookPath();
 
             // 执行开始阅读
             new StartReading().execute();

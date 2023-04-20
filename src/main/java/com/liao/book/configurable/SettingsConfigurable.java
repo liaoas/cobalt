@@ -53,5 +53,6 @@ public class SettingsConfigurable implements Configurable {
         FullScreenUI fullScreenUI = (FullScreenUI) BeanFactory.getBean("FullScreenUI");
 
         fullScreenUI.apply();
+
     }
 }

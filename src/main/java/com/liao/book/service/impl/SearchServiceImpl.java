@@ -2,7 +2,7 @@ package com.liao.book.service.impl;
 
 import cn.hutool.http.HttpUtil;
 import com.liao.book.common.ModuleConstants;
-import com.liao.book.dao.ReadingProgressDao;
+import com.liao.book.persistence.ReadingProgressDao;
 import com.liao.book.entity.BookData;
 import com.liao.book.service.SearchService;
 import org.jsoup.Connection;

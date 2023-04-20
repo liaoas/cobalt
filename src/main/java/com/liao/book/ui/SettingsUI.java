@@ -6,7 +6,7 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.common.Constants;
 import com.liao.book.common.ModuleConstants;
-import com.liao.book.dao.SettingsDao;
+import com.liao.book.persistence.SettingsDao;
 import com.liao.book.factory.BeanFactory;
 import com.liao.book.service.impl.ImportServiceImpl;
 import org.jetbrains.annotations.NotNull;
@@ -85,6 +85,11 @@ public class SettingsUI {
      */
     private int readRollVal = Constants.DEFAULT_READ_ROLL_SIZE;
 
+    /**
+     * 导入书籍的路径
+     */
+    private String importBookPath = null;
+
     // 页面设置持久化
     private static SettingsDao settingDao = SettingsDao.getInstance();
 
@@ -126,6 +131,14 @@ public class SettingsUI {
 
     public void setReadRollVal(int readRollVal) {
         this.readRollVal = readRollVal;
+    }
+
+    public String getImportBookPath() {
+        return importBookPath;
+    }
+
+    public void setImportBookPath(String importBookPath) {
+        this.importBookPath = importBookPath;
     }
 
     /**
@@ -183,6 +196,8 @@ public class SettingsUI {
                 if (importService.importBook(file)) {
                     // 导入成功
                     isSelBook = true;
+                    // 路径
+                    importBookPath = file.getPath();
                 }
             }
         });

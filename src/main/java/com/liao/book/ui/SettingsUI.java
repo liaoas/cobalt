@@ -148,9 +148,6 @@ public class SettingsUI {
         // 加载持久化状态
         loadPersistentState();
 
-        // 创建一个只允许选择 .txt 文件的 FileChooserDescriptor
-        FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFileDescriptor();
-
     }
 
 
@@ -168,8 +165,7 @@ public class SettingsUI {
         fontSize.setSelectedItem(16);
 
         // 默认正则值
-        chapterRegular.setText(Constants.DEFAULT_CHAPTER_REGULAR);
-
+        chapterRegular.setText("下次版本更新");
     }
 
     /**
@@ -190,7 +186,6 @@ public class SettingsUI {
                 importBookPath = file.getPath();
 
                 isSelBook = true;
-
             }
 
         });

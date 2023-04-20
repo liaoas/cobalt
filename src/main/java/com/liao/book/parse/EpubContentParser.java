@@ -1,14 +1,13 @@
 package com.liao.book.parse;
 
+import com.liao.book.utils.LocalCharsetUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,9 +30,9 @@ public class EpubContentParser {
      * @param file epub 文件
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseEpub(InputStream file) {
+    public static Map<String, String> parseEpub(String file) {
         Map<String, String> result = new LinkedHashMap<>();
-        try (ZipInputStream zipStream = new ZipInputStream(file, StandardCharsets.UTF_8)) {
+        try (ZipInputStream zipStream = new ZipInputStream(new FileInputStream(file), Charset.forName(LocalCharsetUtil.getFileCharset(file)))) {
             ZipEntry entry;
             while ((entry = zipStream.getNextEntry()) != null) {
                 if (!entry.isDirectory() && entry.getName().endsWith(".html") && entry.getName().contains("chapter")) {
@@ -62,7 +61,7 @@ public class EpubContentParser {
      */
     private static String readEntry(ZipInputStream zipStream) {
         StringBuilder sb = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(zipStream, StandardCharsets.UTF_8));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(zipStream));
         String line;
         while (true) {
             try {

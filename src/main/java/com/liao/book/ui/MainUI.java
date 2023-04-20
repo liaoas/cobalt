@@ -191,9 +191,6 @@ public class MainUI {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
-            // 获取数据源类型
-            instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
-
             // 获取选中行数据
             int selectedRow = searchBookTable.getSelectedRow();
 
@@ -203,6 +200,9 @@ public class MainUI {
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
+
+            // 获取数据源类型
+            instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
 
             // 获取书籍链接
             valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
@@ -333,7 +333,10 @@ public class MainUI {
 
         // 设置单击事件
         settingBtn.addActionListener(e -> {
-            ShowSettingsUtil.getInstance().showSettingsDialog(project, "com.liao.book.configurable.SettingsConfigurable");
+            try {
+                ShowSettingsUtil.getInstance().showSettingsDialog(project, "com.liao.book.configurable.SettingsConfigurable");
+            } catch (Exception ignored) {
+            }
         });
     }
 
@@ -486,7 +489,6 @@ public class MainUI {
 
         instance.loadState(instance);
         if (settingsUI.isSelBook) {
-            instance.searchType = ModuleConstants.IMPORT;
 
             instance.importPath = settingsUI.getImportBookPath();
 
@@ -498,6 +500,8 @@ public class MainUI {
                 ToastUtils.showToastMassage(project, "书籍导入失败", ToastType.ERROR);
                 return;
             }
+
+            instance.searchType = ModuleConstants.IMPORT;
 
             // 执行开始阅读
             new StartReading().execute();

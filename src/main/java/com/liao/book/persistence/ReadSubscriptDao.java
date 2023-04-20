@@ -1,4 +1,4 @@
-package com.liao.book.dao;
+package com.liao.book.persistence;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;

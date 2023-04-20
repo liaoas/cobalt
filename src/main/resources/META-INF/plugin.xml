@@ -147,20 +147,20 @@
 
         <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
 
-        <applicationService id="ReadingProgressDao" serviceInterface="com.liao.book.dao.ReadingProgressDao"
-                            serviceImplementation="com.liao.book.dao.ReadingProgressDao"
-                            testServiceImplementation="com.liao.book.dao.ReadingProgressDao"
-                            headlessImplementation="com.liao.book.dao.ReadingProgressDao"/>
+        <applicationService id="ReadingProgressDao" serviceInterface="com.liao.book.persistence.ReadingProgressDao"
+                            serviceImplementation="com.liao.book.persistence.ReadingProgressDao"
+                            testServiceImplementation="com.liao.book.persistence.ReadingProgressDao"
+                            headlessImplementation="com.liao.book.persistence.ReadingProgressDao"/>
 
-        <applicationService id="ReadSubscriptDao" serviceInterface="com.liao.book.dao.ReadSubscriptDao"
-                            serviceImplementation="com.liao.book.dao.ReadSubscriptDao"
-                            testServiceImplementation="com.liao.book.dao.ReadSubscriptDao"
-                            headlessImplementation="com.liao.book.dao.ReadSubscriptDao"/>
+        <applicationService id="ReadSubscriptDao" serviceInterface="com.liao.book.persistence.ReadSubscriptDao"
+                            serviceImplementation="com.liao.book.persistence.ReadSubscriptDao"
+                            testServiceImplementation="com.liao.book.persistence.ReadSubscriptDao"
+                            headlessImplementation="com.liao.book.persistence.ReadSubscriptDao"/>
 
-        <applicationService id="SettingsDao" serviceInterface="com.liao.book.dao.SettingsDao"
-                            serviceImplementation="com.liao.book.dao.SettingsDao"
-                            testServiceImplementation="com.liao.book.dao.SettingsDao"
-                            headlessImplementation="com.liao.book.dao.SettingsDao"/>
+        <applicationService id="SettingsDao" serviceInterface="com.liao.book.persistence.SettingsDao"
+                            serviceImplementation="com.liao.book.persistence.SettingsDao"
+                            testServiceImplementation="com.liao.book.persistence.SettingsDao"
+                            headlessImplementation="com.liao.book.persistence.SettingsDao"/>
 
         <projectConfigurable
                 parentId="other"
@@ -172,15 +172,15 @@
 
     <project-components>
         <component>
-            <implementation-class>com.liao.book.dao.ReadingProgressDao</implementation-class>
+            <implementation-class>com.liao.book.persistence.ReadingProgressDao</implementation-class>
         </component>
 
         <component>
-            <implementation-class>com.liao.book.dao.ReadSubscriptDao</implementation-class>
+            <implementation-class>com.liao.book.persistence.ReadSubscriptDao</implementation-class>
         </component>
 
         <component>
-            <implementation-class>com.liao.book.dao.SettingsDao</implementation-class>
+            <implementation-class>com.liao.book.persistence.SettingsDao</implementation-class>
         </component>
     </project-components>
 

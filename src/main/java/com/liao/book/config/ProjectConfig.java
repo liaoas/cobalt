@@ -1,4 +1,3 @@
-
 package com.liao.book.config;
 
 import com.intellij.AbstractBundle;
@@ -9,7 +8,7 @@ import org.jetbrains.annotations.PropertyKey;
  * <p>
  * Config 配置信息获取
  * AbstractBundle 类 2022.2 API 删除 改为 DynamicBundle
- * https://plugins.jetbrains.com/docs/intellij/api-changes-list-2022.html#intellij-platform-20222
+ * <a href="https://plugins.jetbrains.com/docs/intellij/api-changes-list-2022.html#intellij-platform-20222">...</a>
  *
  * </p>
  *
@@ -34,8 +33,7 @@ public class ProjectConfig extends AbstractBundle {
      * @param params params
      * @return value
      */
-    public static String getConfigValue(
-            @NotNull @PropertyKey(resourceBundle = CONFIG_NAME) String key, @NotNull Object... params) {
+    public static String getConfigValue(@NotNull @PropertyKey(resourceBundle = CONFIG_NAME) String key, @NotNull Object... params) {
         return config.getMessage(key, params);
     }
 }

@@ -1,6 +1,6 @@
 package com.liao.book.service.impl;
 
-import com.liao.book.dao.ReadingProgressDao;
+import com.liao.book.persistence.ReadingProgressDao;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.entity.ImportBookData;
 import com.liao.book.service.ContentService;

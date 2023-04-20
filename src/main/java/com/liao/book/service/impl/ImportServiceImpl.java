@@ -2,18 +2,18 @@ package com.liao.book.service.impl;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.entity.ImportBookData;
-import com.liao.book.factory.BeanFactory;
 import com.liao.book.parse.EpubContentParser;
 import com.liao.book.parse.TxtContentParser;
-import com.liao.book.service.ChapterService;
 import com.liao.book.service.ImportService;
 import com.liao.book.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>

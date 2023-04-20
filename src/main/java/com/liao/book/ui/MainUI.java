@@ -334,7 +334,7 @@ public class MainUI {
         // 设置单击事件
         settingBtn.addActionListener(e -> {
             try {
-                ShowSettingsUtil.getInstance().showSettingsDialog(project, "com.liao.book.configurable.SettingsConfigurable");
+                ShowSettingsUtil.getInstance().showSettingsDialog(project, "Idea Ebook");
             } catch (Exception ignored) {
             }
         });

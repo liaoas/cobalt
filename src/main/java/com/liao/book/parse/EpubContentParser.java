@@ -10,9 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -32,7 +30,7 @@ public class EpubContentParser {
      * @param file epub 文件
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseEpub(String file) {
+    public static Map<String, String> parseEpub(String file, List<String> chapterList) {
 
         // 存储小说
         Map<String, String> result = new LinkedHashMap<>();
@@ -43,7 +41,12 @@ public class EpubContentParser {
         try (ZipInputStream zipStream = new ZipInputStream(new FileInputStream(file))) {
             ZipEntry entry;
             while ((entry = zipStream.getNextEntry()) != null) {
-                if (!entry.isDirectory() && entry.getName().endsWith(".html") && entry.getName().contains("chapter")) {
+
+                if (entry.isDirectory() || !entry.getName().endsWith(".html")) {
+                    continue;
+                }
+
+                if (entry.getName().contains("chapter")) {
 
                     Document doc = readEntry(zipStream, charsetMap.get(entry.getName()));
 
@@ -51,6 +54,10 @@ public class EpubContentParser {
                     String chapterContent = getContent(doc);
 
                     result.put(title, chapterContent);
+                } else if (entry.getName().contains("toc")) {
+                    Document doc = readEntry(zipStream, charsetMap.get(entry.getName()));
+
+                    getChapterToc(doc, chapterList);
                 }
                 zipStream.closeEntry();
             }
@@ -97,7 +104,7 @@ public class EpubContentParser {
         try (ZipInputStream zipStream = new ZipInputStream(new FileInputStream(filePath))) {
             ZipEntry entry;
             while ((entry = zipStream.getNextEntry()) != null) {
-                if (!entry.isDirectory() && entry.getName().endsWith(".html") && entry.getName().contains("chapter")) {
+                if (!entry.isDirectory() && entry.getName().endsWith(".html")) {
 
                     Charset charset = getCharset(zipStream);
 
@@ -137,6 +144,19 @@ public class EpubContentParser {
         Document parse = Jsoup.parse(sb.toString());
 
         return parse.charset();
+    }
+
+    /**
+     * 解析目录
+     *
+     * @param doc         文档
+     * @param chapterList 存储目录
+     */
+    private static void getChapterToc(Document doc, List<String> chapterList) {
+        Elements a = doc.getElementsByTag("a");
+        for (Element tocANode : a) {
+            chapterList.add(tocANode.text());
+        }
     }
 
     /**

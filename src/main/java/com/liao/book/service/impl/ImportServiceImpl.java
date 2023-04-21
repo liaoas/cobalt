@@ -43,23 +43,24 @@ public class ImportServiceImpl implements ImportService {
 
         if (StringUtils.isEmpty(filePath)) return false;
 
+        // 存储书籍信息
         Map<String, String> bookMap = new HashMap<>(16);
 
+        // 存储目录信息
+        List<String> chapterList = new ArrayList<>(16);
         // 执行书籍解析
         try {
             if (extension.equals("txt") || extension.equals("TXT")) {
-                bookMap = TxtContentParser.parseTxt(filePath);
+                bookMap = TxtContentParser.parseTxt(filePath, chapterList);
             } else if (extension.equals("epub") || extension.equals("EPUB")) {
                 // epub
-                bookMap = EpubContentParser.parseEpub(filePath);
+                bookMap = EpubContentParser.parseEpub(filePath, chapterList);
             }
         } catch (Exception e) {
             return false;
         }
 
-        if (bookMap.isEmpty()) return false;
-
-        List<String> chapterList = new ArrayList<>(bookMap.keySet());
+        if (bookMap.isEmpty() || chapterList.isEmpty()) return false;
 
         // 存储书籍
         ImportBookData instance = ImportBookData.getInstance();

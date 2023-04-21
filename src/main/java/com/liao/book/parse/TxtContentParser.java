@@ -1,14 +1,14 @@
 package com.liao.book.parse;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
 import com.liao.book.common.Constants;
 import com.liao.book.utils.LocalCharsetUtil;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +32,7 @@ public class TxtContentParser {
      * @param filePath txt 文件路径
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseTxt(String filePath) {
+    public static Map<String, String> parseTxt(String filePath, List<String> chapterList) {
 
         Map<String, String> chapterMap = new LinkedHashMap<>();
 
@@ -53,6 +53,7 @@ public class TxtContentParser {
                 if (matcher.find()) {
                     if (title != null) {
                         chapterMap.put(title, contentBuilder.toString());
+                        chapterList.add(title);
                         contentBuilder.setLength(0);
                     }
                     title = line;
@@ -64,6 +65,7 @@ public class TxtContentParser {
 
             if (title != null) {
                 chapterMap.put(title, contentBuilder.toString());
+                chapterList.add(title);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

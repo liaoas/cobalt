@@ -104,10 +104,8 @@ public class ChapterServiceImpl implements ChapterService {
         instance.chapters.clear();
 
         ImportBookData importBookData = ImportBookData.getInstance();
-        List<String> chapterList = importBookData.getChapterList();
-        chapterList.forEach(item -> {
-            instance.chapters.add(new Chapter(item, item));
-        });
+        List<Chapter> chapterList = importBookData.getChapterList();
+        instance.chapters.addAll(chapterList);
     }
 
     /**

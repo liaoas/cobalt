@@ -1,6 +1,7 @@
 package com.liao.book.service.impl;
 
 import com.intellij.openapi.vfs.VirtualFile;
+import com.liao.book.entity.Chapter;
 import com.liao.book.entity.ImportBookData;
 import com.liao.book.parse.EpubContentParser;
 import com.liao.book.parse.TxtContentParser;
@@ -47,9 +48,10 @@ public class ImportServiceImpl implements ImportService {
         Map<String, String> bookMap = new HashMap<>(16);
 
         // 存储目录信息
-        List<String> chapterList = new ArrayList<>(16);
+        List<Chapter> chapterList = new ArrayList<>(16);
         // 执行书籍解析
         try {
+            assert extension != null;
             if (extension.equals("txt") || extension.equals("TXT")) {
                 bookMap = TxtContentParser.parseTxt(filePath, chapterList);
             } else if (extension.equals("epub") || extension.equals("EPUB")) {

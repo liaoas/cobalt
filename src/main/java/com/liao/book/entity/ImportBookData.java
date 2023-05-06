@@ -22,7 +22,7 @@ public class ImportBookData {
     private Map<String, String> bookMap = new HashMap<>(16);
 
     // 存储章节列表
-    private List<String> chapterList = new ArrayList<>(16);
+    private List<Chapter> chapterList = new ArrayList<>(16);
 
     private ImportBookData() {
     }
@@ -39,11 +39,11 @@ public class ImportBookData {
         INSTANCE.bookMap = bookMap;
     }
 
-    public List<String> getChapterList() {
+    public List<Chapter> getChapterList() {
         return INSTANCE.chapterList;
     }
 
-    public void setChapterList(List<String> chapterList) {
+    public void setChapterList(List<Chapter> chapterList) {
         INSTANCE.chapterList = chapterList;
     }
 }

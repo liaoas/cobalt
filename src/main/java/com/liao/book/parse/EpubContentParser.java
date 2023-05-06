@@ -1,5 +1,6 @@
 package com.liao.book.parse;
 
+import com.liao.book.entity.Chapter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -24,13 +26,20 @@ import java.util.zip.ZipInputStream;
  */
 public class EpubContentParser {
 
+    // Epub 内容文件后缀
+    private static final String EPUB_FILE_SUFFIX = ".html";
+
+    // 获取文件分隔符
+    // private static final String fileSeparator = FileSystems.getDefault().getSeparator();
+    private static final String fileSeparator = "/";
+
     /**
      * 解析 epub 文件为 Map 格式，K 为章节名称，Value 为章节内容
      *
      * @param file epub 文件
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseEpub(String file, List<String> chapterList) {
+    public static Map<String, String> parseEpub(String file, List<Chapter> chapterList) {
 
         // 存储小说
         Map<String, String> result = new LinkedHashMap<>();
@@ -38,27 +47,38 @@ public class EpubContentParser {
         // 存储文件名称对应的编码格式
         Map<String, Charset> charsetMap = getCharsetMap(file);
 
+        // 是否解析了章节
+        boolean isParser = false;
+
         try (ZipInputStream zipStream = new ZipInputStream(new FileInputStream(file))) {
             ZipEntry entry;
             while ((entry = zipStream.getNextEntry()) != null) {
 
-                if (entry.isDirectory() || !entry.getName().endsWith(".html")) {
+                if (entry.isDirectory() || !entry.getName().endsWith(EPUB_FILE_SUFFIX)) {
                     continue;
                 }
 
-                if (entry.getName().contains("chapter")) {
-
+                if (!isParser) {
+                    // 第一个html文件为目录文件
                     Document doc = readEntry(zipStream, charsetMap.get(entry.getName()));
-
-                    String title = getTitle(doc);
-                    String chapterContent = getContent(doc);
-
-                    result.put(title, chapterContent);
-                } else if (entry.getName().contains("toc")) {
-                    Document doc = readEntry(zipStream, charsetMap.get(entry.getName()));
-
                     getChapterToc(doc, chapterList);
+                    isParser = true;
+                    zipStream.closeEntry();
+                    continue;
                 }
+
+                Document doc = readEntry(zipStream, charsetMap.get(entry.getName()));
+
+                String chapterContent = getContent(doc);
+
+                String name = entry.getName();
+
+                // 截取文件名称 / 前面部分
+                int i = name.lastIndexOf(fileSeparator);
+                if (i != -1) name = name.substring(i + 1);
+
+                result.put(name, chapterContent);
+
                 zipStream.closeEntry();
             }
         } catch (IOException e) {
@@ -104,7 +124,7 @@ public class EpubContentParser {
         try (ZipInputStream zipStream = new ZipInputStream(new FileInputStream(filePath))) {
             ZipEntry entry;
             while ((entry = zipStream.getNextEntry()) != null) {
-                if (!entry.isDirectory() && entry.getName().endsWith(".html")) {
+                if (!entry.isDirectory() && entry.getName().endsWith(EPUB_FILE_SUFFIX)) {
 
                     Charset charset = getCharset(zipStream);
 
@@ -152,21 +172,33 @@ public class EpubContentParser {
      * @param doc         文档
      * @param chapterList 存储目录
      */
-    private static void getChapterToc(Document doc, List<String> chapterList) {
+    private static void getChapterToc(Document doc, List<Chapter> chapterList) {
         Elements a = doc.getElementsByTag("a");
         for (Element tocANode : a) {
-            chapterList.add(tocANode.text());
-        }
-    }
+            String href = tocANode.attr("href");
 
-    /**
-     * 解析章节标题
-     *
-     * @param doc 文档
-     * @return 标题
-     */
-    private static String getTitle(Document doc) {
-        return doc.getElementById("title").text();
+            int i = href.lastIndexOf(fileSeparator);
+
+            // 截取文件名称 / 前面部分
+            if (i != -1) href = href.substring(i + 1);
+
+            // 判断 href 链接.html 之后是否有后缀，并截取
+            int suffixIndex = href.lastIndexOf(EPUB_FILE_SUFFIX);
+
+            if (suffixIndex == -1) continue;
+
+            int index = suffixIndex + EPUB_FILE_SUFFIX.length();
+
+            // 没有后缀
+            if (href.length() == index) {
+                chapterList.add(new Chapter(href, tocANode.text()));
+                continue;
+            }
+
+            // 有后缀
+            String fileName = href.substring(0, index);
+            chapterList.add(new Chapter(fileName, tocANode.text()));
+        }
     }
 
     /**

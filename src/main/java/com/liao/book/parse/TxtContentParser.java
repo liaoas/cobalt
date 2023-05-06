@@ -1,6 +1,7 @@
 package com.liao.book.parse;
 
 import com.liao.book.common.Constants;
+import com.liao.book.entity.Chapter;
 import com.liao.book.utils.LocalCharsetUtil;
 
 import java.io.BufferedReader;
@@ -32,7 +33,7 @@ public class TxtContentParser {
      * @param filePath txt 文件路径
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseTxt(String filePath, List<String> chapterList) {
+    public static Map<String, String> parseTxt(String filePath, List<Chapter> chapterList) {
 
         Map<String, String> chapterMap = new LinkedHashMap<>();
 
@@ -53,7 +54,7 @@ public class TxtContentParser {
                 if (matcher.find()) {
                     if (title != null) {
                         chapterMap.put(title, contentBuilder.toString());
-                        chapterList.add(title);
+                        chapterList.add(new Chapter(title, title));
                         contentBuilder.setLength(0);
                     }
                     title = line;
@@ -65,7 +66,7 @@ public class TxtContentParser {
 
             if (title != null) {
                 chapterMap.put(title, contentBuilder.toString());
-                chapterList.add(title);
+                chapterList.add(new Chapter(title, title));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

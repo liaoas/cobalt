@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.liao.book.ui.ReadingHistoryUI">
   <grid id="27dc6" binding="readingHistoryPanel" default-binding="true" layout-manager="FormLayout">
-    <rowspec value="center:19px:noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:25px:noGrow"/>
+    <rowspec value="top:20dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:20dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
@@ -11,22 +13,40 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="6e408" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value="敬请期待"/>
-        </properties>
-      </component>
       <component id="70a58" class="javax.swing.JLabel">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
-          <text value="有Bug 请反馈至：https://github.com/liaoas/IDEA-EBook"/>
+          <text value="插件问题请反馈至：https://github.com/liaoas/IDEA-EBook"/>
+        </properties>
+      </component>
+      <component id="1c68" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="txt 转 epub 工具为：EasyPub，百度有很多下载链接"/>
+        </properties>
+      </component>
+      <component id="238d2" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="2023-05-06：修复 epub 格式书籍导入"/>
+        </properties>
+      </component>
+      <component id="bd7ee" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="                   今日立夏丨愿你生如夏花，热烈绚烂，一路芬芳！"/>
         </properties>
       </component>
     </children>

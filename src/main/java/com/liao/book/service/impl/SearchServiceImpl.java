@@ -114,7 +114,7 @@ public class SearchServiceImpl implements SearchService {
      */
     public List<BookData> searchBookNameData_bqg2(String searchBookName) {
         bookDataList.clear();
-        String url = "http://www.biquge5200.com/modules/article/search.php?searchkey=" + searchBookName;
+        String url = "https://www.biquge5200.com/modules/article/search.php?searchkey=" + searchBookName;
 
         String result1 = HttpUtil.get(url);
 
@@ -130,7 +130,7 @@ public class SearchServiceImpl implements SearchService {
                 bookData.setBookName(bookName);
                 // 链接
                 String bookLink = element.getElementsByTag("a").eq(0).attr("href");
-                bookData.setBookLink("http://www.biquge5200.com/" + bookLink);
+                bookData.setBookLink("https://www.biquge5200.com/" + bookLink);
                 // 章节信息
                 String chapter = element.getElementsByTag("a").eq(1).text();
                 bookData.setChapter(chapter);

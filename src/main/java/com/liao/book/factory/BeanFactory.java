@@ -64,8 +64,7 @@ public class BeanFactory {
                 map.put(baneName, value);
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException |
-                 InvocationTargetException e) {
-            e.printStackTrace();
+                 InvocationTargetException ignored) {
         }
     }
 }

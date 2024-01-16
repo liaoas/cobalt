@@ -172,6 +172,11 @@
                             testServiceImplementation="com.liao.book.persistence.SettingsDao"
                             headlessImplementation="com.liao.book.persistence.SettingsDao"/>
 
+        <applicationService id="SpiderActionDao" serviceInterface="com.liao.book.persistence.SpiderActionDao"
+                            serviceImplementation="com.liao.book.persistence.SpiderActionDao"
+                            testServiceImplementation="com.liao.book.persistence.SpiderActionDao"
+                            headlessImplementation="com.liao.book.persistence.SpiderActionDao"/>
+
         <projectConfigurable
                 parentId="other"
                 instance="com.liao.book.configurable.SettingsConfigurable"
@@ -191,6 +196,10 @@
 
         <component>
             <implementation-class>com.liao.book.persistence.SettingsDao</implementation-class>
+        </component>
+
+        <component>
+            <implementation-class>com.liao.book.persistence.SpiderActionDao</implementation-class>
         </component>
     </project-components>
 

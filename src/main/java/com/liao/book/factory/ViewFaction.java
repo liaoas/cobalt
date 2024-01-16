@@ -1,16 +1,22 @@
 package com.liao.book.factory;
 
+import com.intellij.lang.javascript.boilerplate.GithubDownloadUtil;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import com.liao.book.config.ProjectConfig;
 import com.liao.book.content.FullScreenUIContent;
 import com.liao.book.content.MainUIContent;
 import com.liao.book.content.ReadingHistoryUIContent;
+import com.liao.book.persistence.SpiderActionDao;
 import com.liao.book.ui.FullScreenUI;
 import com.liao.book.ui.MainUI;
 import com.liao.book.ui.ReadingHistoryUI;
+import com.rabbit.foot.core.github.GitHubFileReader;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +36,11 @@ import java.util.List;
  */
 public class ViewFaction implements ToolWindowFactory, DumbAware {
 
+    private final static Logger log = LoggerFactory.getLogger(ViewFaction.class);
+
+    // 页面设置持久化
+    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+
     /**
      * 创建窗口容器
      *
@@ -47,6 +58,9 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
 
         // 加载全局Button组件鼠标悬浮样式
         loadOverallComponentStyle();
+
+        // 加载爬虫配置文件，回填组件
+        initSpiderConfig();
     }
 
     /**
@@ -116,5 +130,44 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
             }
             l2.add(component);
         }
+    }
+
+
+    /**
+     * 加载爬虫喷子h
+     */
+    public void initSpiderConfig() {
+
+        log.info("读取 persistence 为空......");
+
+        if (!spiderActionDao.spiderActionStr.equals("{}")) return;
+
+        // 加载远程配置中心配置
+        loadGitHubConfig();
+    }
+
+    /**
+     * 加载GitHub配置，并持久化
+     */
+    public static void loadGitHubConfig() {
+
+        String configValue = null;
+
+        try {
+            configValue = GitHubFileReader.getFileContent("liaoas", "rabbit-foot", "src/main/resources/spider-action-test.json");
+
+            log.info("爬虫资源获取成功->{}...", configValue.substring(0, 200));
+        } catch (Exception exception) {
+            log.error("从目标网站加载配置文件失败->{}", "https://github.com/liaoas/rabbit-foot/blob/main/src/main/resources/spider-action-test.json");
+        }
+
+        if (configValue != null && configValue.isEmpty()) {
+            log.error("爬虫资源获取为空");
+            throw new RuntimeException("爬虫资源获取为空");
+        }
+
+        spiderActionDao.spiderActionStr = configValue;
+
+        spiderActionDao.loadState(spiderActionDao);
     }
 }

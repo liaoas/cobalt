@@ -19,6 +19,7 @@ import com.liao.book.factory.BeanFactory;
 import com.liao.book.persistence.ReadSubscriptDao;
 import com.liao.book.persistence.ReadingProgressDao;
 import com.liao.book.persistence.SettingsDao;
+import com.liao.book.persistence.SpiderActionDao;
 import com.liao.book.service.ChapterService;
 import com.liao.book.service.ContentService;
 import com.liao.book.service.SearchService;
@@ -29,6 +30,7 @@ import com.liao.book.service.impl.SearchServiceImpl;
 import com.liao.book.utils.ModuleUtils;
 import com.liao.book.utils.ReadingUtils;
 import com.liao.book.utils.ToastUtils;
+import com.rabbit.foot.core.Resources;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -121,6 +123,9 @@ public class MainUI {
     // 页面设置持久化
     static SettingsDao settingDao = SettingsDao.getInstance();
 
+    // 爬虫资源配置项
+    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+
     // 书籍导入处理类
     static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
 
@@ -131,7 +136,8 @@ public class MainUI {
         searchBookTable.setEnabled(true);
 
         // 加载数据源下拉框
-        for (String dataSourceName : ModuleConstants.DATA_SOURCE) {
+        Resources.getObjectNode(spiderActionDao.spiderActionStr);
+        for (String dataSourceName : Resources.getResourceNames()) {
             sourceDropdown.addItem(dataSourceName);
         }
 

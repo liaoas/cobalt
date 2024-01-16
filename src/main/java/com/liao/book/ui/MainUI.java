@@ -33,6 +33,12 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
@@ -157,6 +163,7 @@ public class MainUI {
         // 执行初始化表格
         init();
 
+
         // 搜索
         btnSearch.addActionListener(e -> {
 
@@ -167,7 +174,7 @@ public class MainUI {
             // 获取搜索输入文本
             bookSearchName = textSearchBar.getText();
 
-            if (bookSearchName == null || bookSearchName.equals("")) {
+            if (bookSearchName == null || bookSearchName.trim().isEmpty()) {
                 ToastUtils.showToastMassage(project, "请输入书籍名称", ToastType.ERROR);
                 // 等待鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
@@ -221,7 +228,7 @@ public class MainUI {
         btnOn.addActionListener(e -> {
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex == 0) {
+            if (instance.chapters.isEmpty() || instance.nowChapterIndex == 0) {
                 ToastUtils.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
@@ -240,7 +247,7 @@ public class MainUI {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size() - 1) {
+            if (instance.chapters.isEmpty() || instance.nowChapterIndex == instance.chapters.size() - 1) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
@@ -265,7 +272,7 @@ public class MainUI {
             // 根据下标跳转
             instance.nowChapterIndex = chapterList.getSelectedIndex();
 
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
+            if (instance.chapters.isEmpty() || instance.nowChapterIndex < 0) {
                 ToastUtils.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
@@ -348,7 +355,7 @@ public class MainUI {
         protected Void doInBackground() {
             List<BookData> bookData = searchService.getBookNameData(bookSearchName);
 
-            if (bookData == null || bookData.size() == 0) {
+            if (bookData == null || bookData.isEmpty()) {
                 ToastUtils.showToastMassage(project, "没有找到啊", ToastType.ERROR);
                 return null;
             }

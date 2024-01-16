@@ -11,16 +11,26 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 repositories {
-    maven { url 'https://maven.aliyun.com/repository/public' }
-    maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+
     mavenLocal()
+
+    maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+
+    maven { url 'https://maven.aliyun.com/repository/public' }
+
     mavenCentral()
 }
 
 dependencies {
-    implementation group: 'cn.hutool', name: 'hutool-http', version: '5.8.11'
+    implementation group: 'com.rabbit.foot', name: 'rabbit-foot', version: '1.0.9'
+}
 
-    implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
 }
 
 intellij {
@@ -32,5 +42,5 @@ intellij {
 }
 patchPluginXml {
     sinceBuild '211.*'
-    untilBuild '231.*'
+    untilBuild '232.*'
 }

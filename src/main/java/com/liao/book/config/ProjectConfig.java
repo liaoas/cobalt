@@ -1,6 +1,8 @@
 package com.liao.book.config;
 
 import com.intellij.AbstractBundle;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 
@@ -9,7 +11,7 @@ import org.jetbrains.annotations.PropertyKey;
  * Config 配置信息获取
  * AbstractBundle 类 2022.2 API 删除 改为 DynamicBundle
  * <a href="https://plugins.jetbrains.com/docs/intellij/api-changes-list-2022.html#intellij-platform-20222">...</a>
- *
+ * <p>
  * </p>
  *
  * @author LiAo
@@ -18,7 +20,7 @@ import org.jetbrains.annotations.PropertyKey;
 public class ProjectConfig extends AbstractBundle {
 
     // 配置文件名称
-    public static final String CONFIG_NAME = "application";
+    public final static String CONFIG_NAME = "application";
 
     private static final ProjectConfig config = new ProjectConfig();
 
@@ -33,6 +35,7 @@ public class ProjectConfig extends AbstractBundle {
      * @param params params
      * @return value
      */
+
     public static String getConfigValue(@NotNull @PropertyKey(resourceBundle = CONFIG_NAME) String key, @NotNull Object... params) {
         return config.getMessage(key, params);
     }

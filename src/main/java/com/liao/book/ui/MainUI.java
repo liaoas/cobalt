@@ -16,6 +16,7 @@ import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.enums.ToastType;
 import com.liao.book.factory.BeanFactory;
+import com.liao.book.factory.ViewFaction;
 import com.liao.book.persistence.ReadSubscriptDao;
 import com.liao.book.persistence.ReadingProgressDao;
 import com.liao.book.persistence.SettingsDao;
@@ -136,6 +137,7 @@ public class MainUI {
         searchBookTable.setEnabled(true);
 
         // 加载数据源下拉框
+        ViewFaction.loadGitHubConfig();
         Resources.getObjectNode(spiderActionDao.spiderActionStr);
         for (String dataSourceName : Resources.getResourceNames()) {
             sourceDropdown.addItem(dataSourceName);

@@ -4,7 +4,9 @@ import cn.hutool.http.HttpUtil;
 import com.liao.book.common.ModuleConstants;
 import com.liao.book.entity.BookData;
 import com.liao.book.persistence.ReadingProgressDao;
+import com.liao.book.persistence.SpiderActionDao;
 import com.liao.book.service.SearchService;
+import com.rabbit.foot.core.factory.ResolverFactory;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,7 +32,10 @@ public class SearchServiceImpl implements SearchService {
     // 存储数据
     public static List<BookData> bookDataList = new ArrayList<>();
 
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+
+    // 阅读进度持久化
+    static ReadingProgressDao readingProgressDao = ReadingProgressDao.getInstance();
 
     /**
      * 判断数据源
@@ -41,15 +46,18 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<BookData> getBookNameData(String searchBookName) {
 
-        switch (instance.searchType) {
+        /*switch (instance.searchType) {
             case ModuleConstants.XIANG_SHU:
                 // 笔趣阁
                 return searchBookNameData(searchBookName);
             case ModuleConstants.BI_QU_GE:
                 // 笔趣阁2
                 return searchBookNameData_bqg2(searchBookName);
-        }
-        return null;
+        }*/
+
+        ResolverFactory<BookData> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, readingProgressDao.searchType, "search", searchBookName);
+        List<BookData> capture = search.capture();
+        return capture;
     }
 
 

@@ -161,7 +161,7 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
             log.error("从目标网站加载配置文件失败->{}", "https://github.com/liaoas/rabbit-foot/blob/main/src/main/resources/spider-action-test.json");
         }
 
-        if (configValue != null && configValue.isEmpty()) {
+        if (configValue == null && configValue.isEmpty()) {
             log.error("爬虫资源获取为空");
             throw new RuntimeException("爬虫资源获取为空");
         }

@@ -153,12 +153,17 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
 
         String configValue = null;
 
+        String owner = ProjectConfig.getConfigValue("spider_config_owner");
+        String repo = ProjectConfig.getConfigValue("spider_config_repo");
+        String path = ProjectConfig.getConfigValue("spider_config_path");
+
         try {
-            configValue = GitHubFileReader.getFileContent("liaoas", "rabbit-foot", "src/main/resources/spider-action-test.json");
+
+            configValue = GitHubFileReader.getFileContent(owner, repo, path);
 
             log.info("爬虫资源获取成功->{}...", configValue.substring(0, 200));
         } catch (Exception exception) {
-            log.error("从目标网站加载配置文件失败->{}", "https://github.com/liaoas/rabbit-foot/blob/main/src/main/resources/spider-action-test.json");
+            log.error("从目标网站加载配置文件失败...... url->{};owner->{};repo->{};path->{}", GitHubFileReader.GITHUB_API_URL, owner, repo, path);
         }
 
         if (configValue == null && configValue.isEmpty()) {

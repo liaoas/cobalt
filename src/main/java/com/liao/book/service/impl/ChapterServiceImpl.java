@@ -2,10 +2,13 @@ package com.liao.book.service.impl;
 
 import cn.hutool.http.HttpUtil;
 import com.liao.book.common.ModuleConstants;
+import com.liao.book.entity.BookData;
 import com.liao.book.entity.Chapter;
 import com.liao.book.entity.ImportBookData;
 import com.liao.book.persistence.ReadingProgressDao;
+import com.liao.book.persistence.SpiderActionDao;
 import com.liao.book.service.ChapterService;
+import com.rabbit.foot.core.factory.ResolverFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,6 +32,8 @@ public class ChapterServiceImpl implements ChapterService {
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
+    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+
     /**
      * 爬取章节信息
      *
@@ -37,18 +42,33 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public void getBookChapterByType(String link) {
         switch (instance.searchType) {
-            case ModuleConstants.XIANG_SHU:
+            /*case ModuleConstants.XIANG_SHU:
                 // 笔趣阁
                 searchBookChapterData(link);
                 break;
             case ModuleConstants.BI_QU_GE:
                 // 笔趣阁2
                 searchBookChapterDataBQG(link);
-                break;
+                break;*/
             case ModuleConstants.IMPORT:
                 importChapterData();
                 break;
+            default:
+                rabbitFootChapterData(link);
+
         }
+    }
+
+    @Override
+    public void rabbitFootChapterData(String link) {
+
+        instance.chapters.clear();
+
+        ResolverFactory<Chapter> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, "chapter", link);
+
+        List<Chapter> capture = search.capture();
+
+        instance.chapters.addAll(capture);
     }
 
     /**
@@ -107,6 +127,8 @@ public class ChapterServiceImpl implements ChapterService {
         List<Chapter> chapterList = importBookData.getChapterList();
         instance.chapters.addAll(chapterList);
     }
+
+
 
     /**
      * 解析页面书籍章节内容

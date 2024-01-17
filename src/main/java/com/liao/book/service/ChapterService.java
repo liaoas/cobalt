@@ -38,4 +38,7 @@ public interface ChapterService {
      */
     void importChapterData();
 
+
+    void rabbitFootChapterData(String link);
+
 }

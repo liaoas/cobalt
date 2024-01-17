@@ -1,9 +1,12 @@
 package com.liao.book.service.impl;
 
 import com.liao.book.common.ModuleConstants;
+import com.liao.book.entity.Chapter;
 import com.liao.book.entity.ImportBookData;
 import com.liao.book.persistence.ReadingProgressDao;
+import com.liao.book.persistence.SpiderActionDao;
 import com.liao.book.service.ContentService;
+import com.rabbit.foot.core.factory.ResolverFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,6 +14,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +32,8 @@ public class ContentServiceImpl implements ContentService {
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+
+    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
 
     /**
      * 获取章节内容
@@ -61,6 +67,13 @@ public class ContentServiceImpl implements ContentService {
                     break;
                 case ModuleConstants.IMPORT:
                     getImportBook(url);
+                    break;
+                default:
+                    ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, "content", url);
+
+                    List<String> capture = search.capture();
+
+                    instance.textContent = capture.get(0);
                     break;
             }
         } catch (Exception e) {

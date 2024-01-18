@@ -1,8 +1,6 @@
 package com.liao.book.ui;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.liao.book.common.Constants;
@@ -12,7 +10,9 @@ import com.liao.book.persistence.SettingsDao;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * 插件设置页面窗口
@@ -62,6 +62,7 @@ public class SettingsUI {
      * 章节正则override
      */
     private JCheckBox overrideCheckBox;
+    private JButton 拉取Button;
 
     /**
      * 页面是否修改

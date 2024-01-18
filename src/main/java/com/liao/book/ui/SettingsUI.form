@@ -13,8 +13,6 @@
     <rowspec value="top:13dlu:noGrow"/>
     <rowspec value="center:29px:noGrow"/>
     <rowspec value="top:3dlu:noGrow"/>
-    <rowspec value="center:29px:noGrow"/>
-    <rowspec value="top:3dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
@@ -262,7 +260,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text value="爬虫描述"/>
+              <text value="爬虫规则"/>
             </properties>
           </component>
           <component id="5f010" class="javax.swing.JProgressBar">
@@ -276,36 +274,13 @@
           </component>
         </children>
       </grid>
-      <grid id="ff36b" layout-manager="FormLayout">
-        <rowspec value="center:d:grow"/>
-        <colspec value="fill:d:grow"/>
-        <constraints>
-          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <forms top="0" left="16" bottom="0" right="0"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="42409" class="javax.swing.JCheckBox" default-binding="true">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <forms/>
-            </constraints>
-            <properties>
-              <actionCommand value=""/>
-              <label value="手动输入"/>
-              <text value="手动输入"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
       <grid id="8d053" layout-manager="FormLayout">
         <rowspec value="center:d:grow"/>
         <colspec value="fill:d:grow"/>
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:max(d;4px):noGrow"/>
         <constraints>
-          <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms top="0" left="16" bottom="0" right="0"/>
         </constraints>
         <properties>
@@ -314,7 +289,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="3149a" class="com.intellij.ui.components.fields.ExpandableTextField">
+          <component id="3149a" class="com.intellij.ui.components.fields.ExpandableTextField" binding="reptileConfigInput">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="116" height="30"/>
@@ -322,10 +297,10 @@
               <forms/>
             </constraints>
             <properties>
-              <enabled value="false"/>
+              <enabled value="true"/>
             </properties>
           </component>
-          <component id="46e44" class="javax.swing.JButton" binding="拉取Button" default-binding="true">
+          <component id="46e44" class="javax.swing.JButton" binding="reptilePullBut">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <forms/>

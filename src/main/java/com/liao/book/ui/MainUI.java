@@ -137,7 +137,7 @@ public class MainUI {
         searchBookTable.setEnabled(true);
 
         // 加载数据源下拉框
-        ViewFaction.loadGitHubConfig();
+        ViewFaction.initSpiderConfig();
         Resources.getObjectNode(spiderActionDao.spiderActionStr);
         for (String dataSourceName : Resources.getResourceNames()) {
             sourceDropdown.addItem(dataSourceName);

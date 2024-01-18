@@ -51,12 +51,12 @@ public class SettingsConfigurable implements Configurable {
     @Override
     public void apply() {
 
-        MainUI mainUI = (MainUI) BeanFactory.getBean("MainUI");
+        settingsUI.apply();
 
+        MainUI mainUI = (MainUI) BeanFactory.getBean("MainUI");
         mainUI.apply();
 
         FullScreenUI fullScreenUI = (FullScreenUI) BeanFactory.getBean("FullScreenUI");
-
         fullScreenUI.apply();
 
     }

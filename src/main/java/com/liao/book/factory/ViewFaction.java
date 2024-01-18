@@ -136,20 +136,22 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
     /**
      * 加载爬虫喷子h
      */
-    public void initSpiderConfig() {
+    public static void initSpiderConfig() {
 
         log.info("读取 persistence 为空......");
 
         if (!spiderActionDao.spiderActionStr.equals("{}")) return;
 
         // 加载远程配置中心配置
-        loadGitHubConfig();
+        spiderActionDao.spiderActionStr = loadGitHubConfig();
+
+        spiderActionDao.loadState(spiderActionDao);
     }
 
     /**
      * 加载GitHub配置，并持久化
      */
-    public static void loadGitHubConfig() {
+    public static String loadGitHubConfig() {
 
         String configValue = null;
 
@@ -171,8 +173,6 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
             throw new RuntimeException("爬虫资源获取为空");
         }
 
-        spiderActionDao.spiderActionStr = configValue;
-
-        spiderActionDao.loadState(spiderActionDao);
+        return configValue;
     }
 }

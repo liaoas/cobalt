@@ -3,16 +3,17 @@ package com.liao.book.ui;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.ui.components.fields.ExpandableTextField;
 import com.liao.book.common.Constants;
 import com.liao.book.common.ModuleConstants;
+import com.liao.book.factory.ViewFaction;
 import com.liao.book.persistence.ReadingProgressDao;
 import com.liao.book.persistence.SettingsDao;
+import com.liao.book.persistence.SpiderActionDao;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * 插件设置页面窗口
@@ -62,7 +63,16 @@ public class SettingsUI {
      * 章节正则override
      */
     private JCheckBox overrideCheckBox;
-    private JButton 拉取Button;
+
+    /**
+     * 爬虫规则拉取按钮
+     */
+    private JButton reptilePullBut;
+
+    /**
+     * 爬虫规则输入框
+     */
+    private ExpandableTextField reptileConfigInput;
 
     /**
      * 页面是否修改
@@ -94,8 +104,11 @@ public class SettingsUI {
 
     private static ReadingProgressDao progressDao = ReadingProgressDao.getInstance();
 
+    private static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+
     public SettingsUI() {
         init();
+
     }
 
     public JPanel getSettingWin() {
@@ -148,7 +161,6 @@ public class SettingsUI {
         bindingComponentEvent();
         // 加载持久化状态
         loadPersistentState();
-
     }
 
 
@@ -249,6 +261,30 @@ public class SettingsUI {
                 }
             }
         });
+
+        // 规则拉去按钮
+        reptilePullBut.addActionListener(e -> {
+            String config = ViewFaction.loadGitHubConfig();
+            reptileConfigInput.setText(config);
+            // 通知 apple 按钮
+            informApplyState();
+        });
+
+        // 爬虫规则输入框监听
+        reptileConfigInput.addInputMethodListener(new InputMethodListener() {
+            @Override
+            public void inputMethodTextChanged(InputMethodEvent event) {
+                // 通知 apple 按钮
+                informApplyState();
+            }
+
+            @Override
+            public void caretPositionChanged(InputMethodEvent event) {
+                // 通知 apple 按钮
+                informApplyState();
+            }
+        });
+
     }
 
     /**
@@ -286,6 +322,17 @@ public class SettingsUI {
         fontSize.setSelectedItem(settingDao.fontSize);
         readRoll.setSelectedItem(settingDao.scrollSpacingScale);
         selectFile.setText(progressDao.importPath);
+        reptileConfigInput.setText(spiderActionDao.spiderActionStr);
+    }
+
+    public void apply() {
+        // 保存规则，若为空则跳过
+        String reptileConfig = reptileConfigInput.getText();
+
+        if (reptileConfig != null && !reptileConfig.isEmpty()) {
+            spiderActionDao.spiderActionStr = reptileConfig;
+            spiderActionDao.loadState(spiderActionDao);
+        }
     }
 
 }

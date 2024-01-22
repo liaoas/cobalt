@@ -21,7 +21,7 @@ public class ModuleConstants {
     /*****************数据源类型*****************/
 
     // 笔趣阁
-    public static final String BI_QU_GE = "笔趣阁";
+    public static final String BI_QU_GE = "笔趣阁$";
 
     // 笔趣阁
     public static final String XIANG_SHU = "香书小说";

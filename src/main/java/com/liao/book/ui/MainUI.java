@@ -137,11 +137,7 @@ public class MainUI {
         searchBookTable.setEnabled(true);
 
         // 加载数据源下拉框
-        ViewFaction.initSpiderConfig();
-        Resources.getObjectNode(spiderActionDao.spiderActionStr);
-        for (String dataSourceName : Resources.getResourceNames()) {
-            sourceDropdown.addItem(dataSourceName);
-        }
+        loadDataOrigin();
 
         // 设置表格内容大小
         tablePane.setPreferredSize(new Dimension(-1, 30));
@@ -521,6 +517,19 @@ public class MainUI {
     }
 
     /**
+     * 加载数据源下拉框
+     */
+    private void loadDataOrigin() {
+        sourceDropdown.removeAllItems();
+        // 加载数据源下拉框
+        ViewFaction.initSpiderConfig();
+        Resources.getObjectNode(spiderActionDao.spiderActionStr);
+        for (String dataSourceName : Resources.getResourceNames()) {
+            sourceDropdown.addItem(dataSourceName);
+        }
+    }
+
+    /**
      * 页面统一的Apply
      */
     public void apply() {
@@ -532,6 +541,9 @@ public class MainUI {
 
         // 导入的书籍展示
         applyImportBook();
+
+        // 加载数据源下拉框
+        loadDataOrigin();
     }
 
     // 窗口信息

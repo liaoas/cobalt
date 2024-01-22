@@ -1,5 +1,5 @@
 <idea-plugin url="https://github.com/liaoas/cobalt">
-    <id>com.cobalt.plugin.id</id>
+    <id>com.liao.hello_book.plugin.id</id>
     <name>Cobalt</name>
     <version>4.0.2</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/cobalt">LiAo</vendor>

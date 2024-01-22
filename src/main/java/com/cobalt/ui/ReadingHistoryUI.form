@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.cobalt.ui.ReadingHistoryUI">
+  <grid id="27dc6" binding="readingHistoryPanel" default-binding="true" layout-manager="FormLayout">
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <colspec value="fill:d:grow"/>
+    <constraints>
+      <xy x="20" y="20" width="552" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="25e4e" class="javax.swing.JTextArea" binding="textArea">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value="2024-01-22：新增动态爬虫&#10;&#10;祝大家新年快乐&#10;&#10;第一次使用，请至设置页面拉取爬虫规则。&#10;&#10;后期站点失效，可根据爬虫规则的更改，进行维护并拉取，无需重新编码&#10;&#10;规则仓库: https://github.com/liaoas/rabbit-foot/&#10;&#10;txt 转 epub 工具为：EasyPub，百度有很多下载链接"/>
+        </properties>
+      </component>
+      <component id="1c68" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

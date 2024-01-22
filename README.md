@@ -1,6 +1,6 @@
-# ![](src/main/resources/META-INF/pluginIcon.svg) IDEA EBook
+# ![](src/main/resources/META-INF/pluginIcon.svg) Cobalt
 
-可以在 IDEA 中看电子书的摸鱼插件、你甚至可以用 IDEA 写代码。
+可以在 IDE 中看电子书的摸鱼插件、你甚至可以用 IDE 写代码。
 
 ![](src/main/resources/img/20230525140430.png)
 
@@ -17,17 +17,17 @@
 ## 📦 安装
 
 ### 🗺️ 在线安装
-- Jetbrains ide:     `File` > `Settings` > `Plugins` > `Marketplact`  搜索  IDEA EBook
+- Jetbrains ide:     `File` > `Settings` > `Plugins` > `Marketplact`  搜索  Cobalt
 
 ### 🧶 离线安装
-- [IDEA EBook](https://plugins.jetbrains.com/plugin/15870-idea-ebook) 下载对应你 ide 的版本
-- Jetbrains ide:     `File` > `Settings` > `Plugins` > ⚙️ > `Install Plugin from Disk` 选中下载的 IDEA EBook-{version}.zip 文件
+- [Cobalt](https://plugins.jetbrains.com/plugin/15870-idea-ebook) 下载对应你 ide 的版本
+- Jetbrains ide:     `File` > `Settings` > `Plugins` > ⚙️ > `Install Plugin from Disk` 选中下载的 Cobalt-{version}.zip 文件
 
 
 
 ## 🎫 使用说明
 
-- 安装该插件后，单击屏幕右侧的 IDEA EBook ![](src/main/resources/img/fish.svg) 按钮
+- 安装该插件后，单击屏幕右侧的 Cobalt ![](src/main/resources/img/fish.svg) 按钮
 - 在顶部搜索框中输入书名，然后单击右侧的搜索 ![](src/main/resources/img/search.png) 按钮
 - 左上角下拉列表可以调整数据爬取站点，默认为 笔趣阁
 - 单击搜索结果的行使其突出显示。 点击右上角以开始阅读按钮 ![](src/main/resources/img/start.png) 开始阅读第一章
@@ -54,7 +54,7 @@
 ## 🏗️ 添砖加瓦
 ### ✂️ 分支说明
 
-IDEA EBook 的源码分为两个分支：
+Cobalt 的源码分为两个分支：
 
 | 分支    | 描述                                               |
 |--------|---------------------------------------------------------------|

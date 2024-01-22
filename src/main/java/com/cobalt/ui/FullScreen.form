@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.cobalt.ui.FullScreenUI">
+  <grid id="27dc6" binding="fullScreenPanel" layout-manager="FormLayout">
+    <rowspec value="top:d:grow"/>
+    <rowspec value="top:0dlu:noGrow"/>
+    <rowspec value="center:max(d;0px):noGrow"/>
+    <rowspec value="top:2dlu:noGrow"/>
+    <rowspec value="center:max(d;1px):noGrow"/>
+    <colspec value="fill:d:grow"/>
+    <constraints>
+      <xy x="20" y="20" width="622" height="507"/>
+    </constraints>
+    <properties>
+      <minimumSize width="-1" height="179"/>
+      <preferredSize width="739" height="120"/>
+      <verifyInputWhenFocusTarget value="false"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="30d1c" layout-manager="FormLayout">
+        <rowspec value="center:30px:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="fill:31px:noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <minimumSize width="-1" height="22"/>
+          <preferredSize width="162" height="30"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="5347e" class="javax.swing.JButton" binding="btnOn">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <focusPainted value="false"/>
+              <icon value="img/previous.png"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="d53f2" class="javax.swing.JButton" binding="underOn">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <focusPainted value="false"/>
+              <icon value="img/next.png"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="e352" class="javax.swing.JButton" binding="jumpButton">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <focusPainted value="false"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="img/go_with.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="81eb5" class="javax.swing.JComboBox" binding="chapterList">
+            <constraints>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <alignmentX value="0.0"/>
+              <alignmentY value="0.0"/>
+              <lightWeightPopupEnabled value="true"/>
+              <opaque value="true"/>
+              <verifyInputWhenFocusTarget value="true"/>
+              <visible value="true"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="7033d" layout-manager="FormLayout">
+        <rowspec value="center:d:grow"/>
+        <colspec value="fill:d:grow"/>
+        <constraints>
+          <grid row="0" column="0" row-span="3" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <minimumSize width="-1" height="24"/>
+          <preferredSize width="739" height="500"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <scrollpane id="e9140" binding="paneTextContent">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false" defaultalign-vert="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="f285a" class="javax.swing.JTextArea" binding="textContent">
+                <constraints/>
+                <properties>
+                  <lineWrap value="true"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.cobalt.ui.MainUI">
+  <grid id="27dc6" binding="mainPanel" layout-manager="FormLayout">
+    <rowspec value="fill:31px:noGrow"/>
+    <rowspec value="top:2dlu:noGrow"/>
+    <rowspec value="top:181px:grow"/>
+    <rowspec value="top:2dlu:noGrow"/>
+    <rowspec value="top:349px:noGrow"/>
+    <rowspec value="top:2dlu:noGrow"/>
+    <rowspec value="fill:31px:noGrow"/>
+    <colspec value="fill:d:grow"/>
+    <constraints>
+      <xy x="20" y="20" width="739" height="599"/>
+    </constraints>
+    <properties>
+      <minimumSize width="-1" height="179"/>
+      <preferredSize width="739" height="120"/>
+      <verifyInputWhenFocusTarget value="false"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="6e6fc" layout-manager="FormLayout">
+        <rowspec value="center:30px:grow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="left:28px:noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="left:d:grow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <minimumSize width="-1" height="26"/>
+          <preferredSize width="334" height="30"/>
+        </properties>
+        <border type="empty">
+          <size top="2" left="2" bottom="5" right="0"/>
+          <color color="-11447983"/>
+        </border>
+        <children>
+          <component id="7ec88" class="javax.swing.JTextField" binding="textSearchBar">
+            <constraints>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="599" height="19"/>
+              </grid>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <margin top="2" left="6" bottom="2" right="6"/>
+            </properties>
+          </component>
+          <component id="78688" class="javax.swing.JButton" binding="openBook">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="5" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="22" height="22"/>
+                <preferred-size width="112" height="19"/>
+                <maximum-size width="22" height="22"/>
+              </grid>
+              <forms defaultalign-vert="false"/>
+            </constraints>
+            <properties>
+              <alignmentY value="0.0"/>
+              <autoscrolls value="false"/>
+              <background color="-12828863"/>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <enabled value="true"/>
+              <focusCycleRoot value="true"/>
+              <focusPainted value="false"/>
+              <focusTraversalPolicyProvider value="false"/>
+              <hideActionText value="false"/>
+              <icon value="img/start.png"/>
+              <iconTextGap value="0"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <selected value="false"/>
+              <text value=""/>
+              <verifyInputWhenFocusTarget value="true"/>
+            </properties>
+          </component>
+          <component id="1518" class="javax.swing.JButton" binding="settingBtn">
+            <constraints>
+              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <background color="-12828863"/>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <icon value="img/settings.png"/>
+              <label value=""/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="b6306" class="javax.swing.JComboBox" binding="sourceDropdown">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="78" height="19"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="ce58a" class="javax.swing.JButton" binding="btnSearch">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="5" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="22" height="22"/>
+                <preferred-size width="22" height="19"/>
+                <maximum-size width="22" height="22"/>
+              </grid>
+              <forms defaultalign-vert="false"/>
+            </constraints>
+            <properties>
+              <alignmentY value="0.0"/>
+              <background color="-12828863"/>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <defaultCapable value="true"/>
+              <focusPainted value="false"/>
+              <hideActionText value="false"/>
+              <horizontalTextPosition value="4"/>
+              <icon value="img/search.png"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+              <verticalTextPosition value="0"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="b7658" binding="tablePane">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="146"/>
+          </grid>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <minimumSize width="-1" height="21"/>
+          <preferredSize width="150" height="50"/>
+        </properties>
+        <border type="empty">
+          <font/>
+          <title-color color="-4473925"/>
+          <size top="2" left="0" bottom="2" right="0"/>
+        </border>
+        <children>
+          <component id="3cade" class="javax.swing.JTable" binding="searchBookTable">
+            <constraints/>
+            <properties>
+              <preferredScrollableViewportSize width="-1" height="100"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="fc146" layout-manager="FormLayout">
+        <rowspec value="center:d:grow"/>
+        <colspec value="center:d:grow"/>
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <minimumSize width="-1" height="24"/>
+          <preferredSize width="739" height="500"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <scrollpane id="c7391" binding="paneTextContent">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="735" height="288"/>
+              </grid>
+              <forms defaultalign-horz="false" defaultalign-vert="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="3b043" class="javax.swing.JTextArea" binding="textContent">
+                <constraints/>
+                <properties>
+                  <alignmentX value="0.0"/>
+                  <alignmentY value="0.0"/>
+                  <autoscrolls value="false"/>
+                  <editable value="false"/>
+                  <lineWrap value="true"/>
+                  <text value=""/>
+                  <wrapStyleWord value="true"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <grid id="13340" layout-manager="FormLayout">
+        <rowspec value="center:31px:grow"/>
+        <colspec value="center:28px:noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="left:28px:noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="left:28px:noGrow"/>
+        <colspec value="left:0dlu:noGrow"/>
+        <colspec value="left:d:grow"/>
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <minimumSize width="-1" height="22"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="bf990" class="javax.swing.JComboBox" binding="chapterList">
+            <constraints>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="40" height="-1"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <model/>
+            </properties>
+          </component>
+          <component id="5a1d9" class="javax.swing.JButton" binding="underOn">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="5" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="22" height="22"/>
+                <preferred-size width="22" height="22"/>
+                <maximum-size width="22" height="22"/>
+              </grid>
+              <forms defaultalign-vert="false"/>
+            </constraints>
+            <properties>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <focusPainted value="false"/>
+              <icon value="img/next.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="3c5c5" class="javax.swing.JButton" binding="jumpButton">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="5" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="26" height="26"/>
+                <preferred-size width="26" height="26"/>
+              </grid>
+              <forms defaultalign-vert="false"/>
+            </constraints>
+            <properties>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <focusPainted value="false"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="img/go_with.png"/>
+              <iconTextGap value="4"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="f9b75" class="javax.swing.JButton" binding="btnOn">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="5" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="22" height="22"/>
+                <preferred-size width="22" height="22"/>
+                <maximum-size width="22" height="22"/>
+              </grid>
+              <forms defaultalign-vert="false"/>
+            </constraints>
+            <properties>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="false"/>
+              <defaultCapable value="true"/>
+              <focusPainted value="false"/>
+              <icon value="img/previous.png"/>
+              <maximumSize width="28" height="29"/>
+              <minimumSize width="28" height="29"/>
+              <preferredSize width="28" height="29"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

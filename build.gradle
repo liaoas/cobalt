@@ -3,8 +3,8 @@ plugins {
     id 'org.jetbrains.intellij' version '0.7.3'
 }
 
-group 'com.liao'
-version '4.0.1'
+group 'com.cobalt'
+version '4.0.2'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
@@ -35,7 +35,7 @@ sourceSets {
 
 intellij {
     version '2021.2.4'
-    pluginName 'IDEA-EBook'
+    pluginName 'Cobalt'
     updateSinceUntilBuild false
     sameSinceUntilBuild false
     plugins 'java'

@@ -19,6 +19,7 @@ public class ReadingHistoryUI {
     private final Project project;
 
     private JPanel readingHistoryPanel;
+    private JTextArea textArea;
 
     // 窗口信息
     public JPanel getReadingHistoryPanel() {

@@ -1,10 +1,10 @@
 <idea-plugin url="https://github.com/liaoas/IDEA-EBook">
     <id>com.liao.hello_book.plugin.id</id>
     <name>IDEA EBook</name>
-    <version>3.1.1</version>
+    <version>4.0.1</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/IDEA-EBook">LiAo</vendor>
 
-    <idea-version since-build="211.*" until-build="232.*"/>
+    <idea-version since-build="211.*" until-build="233.*"/>
 
     <description><![CDATA[
         IDEA EBook can be used to read books, can make your IntelliJ IDEA more interesting.
@@ -142,6 +142,10 @@
         <i>2023.05.06-3.1.1</i>
         <ul>
             <li>Fixed a problem with book parsing in EPUB file format</li>
+        </ul>
+        <i>2024.01.22-4.0.1</i>
+        <ul>
+            <li>New dynamic crawler: rabbit-foot</li>
         </ul>
 
 

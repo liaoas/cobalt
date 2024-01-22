@@ -20,7 +20,7 @@
         </constraints>
         <properties>
           <enabled value="false"/>
-          <text value="2024-01-22：新增动态爬虫&#10;&#10;祝大家新年快乐&#10;&#10;第一次使用，请至设置页面拉取爬虫规则。&#10;&#10;后期站点失效，可根据爬虫规则的更改，进行维护并拉取，无需重新编码&#10;&#10;规则仓库: https://github.com/liaoas/rabbit-foot/&#10;&#10;txt 转 epub 工具为：EasyPub，百度有很多下载链接"/>
+          <text value="2024-01-22：新增动态爬虫&#10;&#10;祝大家新年快乐&#10;&#10;第一次使用，请至设置页面拉取爬虫规则。&#10;&#10;后期站点失效，可根据爬虫规则的更改，进行维护并拉取，无需重新编码&#10;&#10;有问题可反馈至 : https://github.com/liaoas/cobalt/issues&#10;&#10;规则仓库: https://github.com/liaoas/rabbit-foot/&#10;&#10;txt 转 epub 工具为：EasyPub，百度有很多下载链接"/>
         </properties>
       </component>
       <component id="1c68" class="javax.swing.JLabel">

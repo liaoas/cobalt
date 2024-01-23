@@ -1,10 +1,10 @@
 <idea-plugin url="https://github.com/liaoas/cobalt">
     <id>com.liao.hello_book.plugin.id</id>
     <name>Cobalt</name>
-    <version>4.0.2</version>
+    <version>4.0.1</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/cobalt">LiAo</vendor>
 
-    <idea-version since-build="211.*" until-build="233.*"/>
+    <idea-version since-build="222.*" until-build="233.*"/>
 
     <description><![CDATA[
         Cobalt can be used to read books, can make your ide more interesting.
@@ -142,9 +142,8 @@
         <i>2024.01.22-4.0.1</i>
         <ul>
             <li>New dynamic crawler: rabbit-foot</li>
+            <li>Added support for intellij version 2023.3</li>
         </ul>
-
-
                  ]]>
     </change-notes>
 

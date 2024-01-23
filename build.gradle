@@ -1,14 +1,16 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.7.3'
+    /*ideaIC 211.1 - 222.1 JDK 11*/
+    /*id 'org.jetbrains.intellij' version '0.7.3'*/
+    /*ideaIC 222.2 - 223.3 JDK 17*/
+    id 'org.jetbrains.intellij' version '1.17.0'
 }
 
-group 'com.cobalt'
-version '4.0.2'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
 }
+
 
 repositories {
 
@@ -21,10 +23,6 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation group: 'com.rabbit.foot', name: 'rabbit-foot', version: '1.0.9'
-}
-
 sourceSets {
     main {
         resources {
@@ -33,14 +31,36 @@ sourceSets {
     }
 }
 
+dependencies {
+    implementation group: 'com.rabbit.foot', name: 'rabbit-foot', version: '1.0.9'
+}
+
+group 'com.cobalt'
+version '4.0.1 222-233'
+
 intellij {
-    version '2021.2.4'
-    pluginName 'Cobalt'
+    /*ideaIC 211.1 - 222.1 JDK 11*/
+    /*version '2021.2.4'*/
+    /*version '2022.1.1'*/
+    /*pluginName 'Cobalt'
     updateSinceUntilBuild false
     sameSinceUntilBuild false
-    plugins 'java'
+    plugins 'java'*/
+
+    /*ideaIC 222.2 - 223.3 JDK 17*/
+    /*version.set('2022.2.1')*/
+    /*version.set('2023.1.1')*/
+    /*version.set('2023.2.1')*/
+    version.set("2023.3.2")
+    type.set("IC")
+    pluginName = 'Cobalt'
+    updateSinceUntilBuild = false
+    sameSinceUntilBuild = false
+
+
 }
+
 patchPluginXml {
-    sinceBuild '211.*'
-    untilBuild '233.*'
+    sinceBuild = '222.*'
+    untilBuild = '233.*'
 }

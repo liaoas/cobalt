@@ -4,7 +4,7 @@
     <version>4.0.1</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/cobalt">LiAo</vendor>
 
-    <idea-version since-build="222.*" until-build="233.*"/>
+    <idea-version since-build="222.*" until-build="241.*"/>
 
     <description><![CDATA[
         Cobalt can be used to read books, can make your ide more interesting.

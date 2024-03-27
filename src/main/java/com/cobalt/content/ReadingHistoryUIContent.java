@@ -34,7 +34,10 @@ public class ReadingHistoryUIContent {
         // 加入容器
         BeanFactory.setBean("ReadingHistoryUI", readingHistoryUI);
         // 获取内容工厂实例
-        ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
+        // ideaIC 211.1 - 221.1
+        /*ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();*/
+        // ideaIC 222.1 - 223.2 JDK 17
+        ContentFactory contentFactory = ContentFactory.getInstance();
         // 获取用于toolWindows显示的内容
         Content content = contentFactory.createContent(readingHistoryUI.getReadingHistoryPanel(), ModuleConstants.TAB_CONTROL_READING_HISTORY, true);
         Icon icon = IconLoader.getIcon("/img/time.svg", ReadingHistoryUIContent.class);

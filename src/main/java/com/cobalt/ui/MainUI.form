@@ -3,9 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="FormLayout">
     <rowspec value="fill:31px:noGrow"/>
     <rowspec value="top:2dlu:noGrow"/>
-    <rowspec value="top:181px:grow"/>
-    <rowspec value="top:2dlu:noGrow"/>
-    <rowspec value="top:349px:noGrow"/>
+    <rowspec value="center:d:grow"/>
     <rowspec value="top:2dlu:noGrow"/>
     <rowspec value="fill:31px:noGrow"/>
     <colspec value="fill:d:grow"/>
@@ -140,70 +138,6 @@
           </component>
         </children>
       </grid>
-      <scrollpane id="b7658" binding="tablePane">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="146"/>
-          </grid>
-          <forms defaultalign-horz="false" defaultalign-vert="false"/>
-        </constraints>
-        <properties>
-          <minimumSize width="-1" height="21"/>
-          <preferredSize width="150" height="50"/>
-        </properties>
-        <border type="empty">
-          <font/>
-          <title-color color="-4473925"/>
-          <size top="2" left="0" bottom="2" right="0"/>
-        </border>
-        <children>
-          <component id="3cade" class="javax.swing.JTable" binding="searchBookTable">
-            <constraints/>
-            <properties>
-              <preferredScrollableViewportSize width="-1" height="100"/>
-            </properties>
-          </component>
-        </children>
-      </scrollpane>
-      <grid id="fc146" layout-manager="FormLayout">
-        <rowspec value="center:d:grow"/>
-        <colspec value="center:d:grow"/>
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <minimumSize width="-1" height="24"/>
-          <preferredSize width="739" height="500"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <scrollpane id="c7391" binding="paneTextContent">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="735" height="288"/>
-              </grid>
-              <forms defaultalign-horz="false" defaultalign-vert="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="3b043" class="javax.swing.JTextArea" binding="textContent">
-                <constraints/>
-                <properties>
-                  <alignmentX value="0.0"/>
-                  <alignmentY value="0.0"/>
-                  <autoscrolls value="false"/>
-                  <editable value="false"/>
-                  <lineWrap value="true"/>
-                  <text value=""/>
-                  <wrapStyleWord value="true"/>
-                </properties>
-              </component>
-            </children>
-          </scrollpane>
-        </children>
-      </grid>
       <grid id="13340" layout-manager="FormLayout">
         <rowspec value="center:31px:grow"/>
         <colspec value="center:28px:noGrow"/>
@@ -214,8 +148,8 @@
         <colspec value="left:0dlu:noGrow"/>
         <colspec value="left:d:grow"/>
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <forms/>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-vert="false"/>
         </constraints>
         <properties>
           <minimumSize width="-1" height="22"/>
@@ -295,6 +229,81 @@
           </component>
         </children>
       </grid>
+      <splitpane id="75935">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+          <forms defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <dividerLocation value="200"/>
+          <orientation value="0"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <scrollpane id="b7658" binding="tablePane">
+            <constraints>
+              <splitpane position="left"/>
+            </constraints>
+            <properties>
+              <minimumSize width="-1" height="21"/>
+              <preferredSize width="150" height="50"/>
+            </properties>
+            <border type="empty">
+              <font/>
+              <title-color color="-4473925"/>
+              <size top="2" left="0" bottom="2" right="0"/>
+            </border>
+            <children>
+              <component id="3cade" class="javax.swing.JTable" binding="searchBookTable">
+                <constraints/>
+                <properties>
+                  <preferredScrollableViewportSize width="-1" height="100"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <grid id="fc146" layout-manager="FormLayout">
+            <rowspec value="center:d:grow"/>
+            <colspec value="center:d:grow"/>
+            <constraints>
+              <splitpane position="right"/>
+            </constraints>
+            <properties>
+              <minimumSize width="-1" height="24"/>
+              <preferredSize width="739" height="500"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <scrollpane id="c7391" binding="paneTextContent">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="735" height="288"/>
+                  </grid>
+                  <forms defaultalign-horz="false" defaultalign-vert="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="3b043" class="javax.swing.JTextArea" binding="textContent">
+                    <constraints/>
+                    <properties>
+                      <alignmentX value="0.0"/>
+                      <alignmentY value="0.0"/>
+                      <autoscrolls value="false"/>
+                      <editable value="false"/>
+                      <lineWrap value="true"/>
+                      <text value=""/>
+                      <wrapStyleWord value="true"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+        </children>
+      </splitpane>
     </children>
   </grid>
 </form>

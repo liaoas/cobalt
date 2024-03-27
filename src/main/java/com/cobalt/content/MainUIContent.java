@@ -35,7 +35,10 @@ public class MainUIContent {
         // 加入容器
         BeanFactory.setBean("MainUI", mainUI);
         // 获取内容工厂实例
-        ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
+        // ideaIC 211.1 - 221.1
+        /*ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();*/
+        // ideaIC 222.1 - 223.2 JDK 17
+        ContentFactory contentFactory = ContentFactory.getInstance();
         // 获取用于toolWindows显示的内容
         Content content = contentFactory.createContent(mainUI.getMainPanel(), ModuleConstants.TAB_CONTROL_TITLE_HOME, false);
         Icon icon = IconLoader.getIcon("/img/home.svg", MainUIContent.class);

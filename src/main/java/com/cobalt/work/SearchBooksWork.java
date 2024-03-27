@@ -28,9 +28,6 @@ public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
 
     static SearchService searchService = (SearchServiceImpl) BeanFactory.getBean("SearchServiceImpl");
 
-    // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
-
     // 搜索书籍名称
     private final String bookSearchName;
 
@@ -70,8 +67,6 @@ public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
 
     @Override
     protected void done() {
-
-        instance.searchType = ModuleConstants.IMPORT;
         // 恢复默认鼠标样式
         ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
     }

@@ -46,18 +46,18 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<BookData> getBookNameData(String searchBookName) {
 
-        switch (readingProgressDao.searchType) {
-            case ModuleConstants.XIANG_SHU:
+        return switch (readingProgressDao.searchType) {
+            case ModuleConstants.XIANG_SHU ->
                 // 笔趣阁
-                return searchBookNameData(searchBookName);
-            case ModuleConstants.BI_QU_GE:
+                    searchBookNameData(searchBookName);
+            case ModuleConstants.BI_QU_GE ->
                 // 笔趣阁2
-                return searchBookNameData_bqg2(searchBookName);
-            default:
+                    searchBookNameData_bqg2(searchBookName);
+            default -> {
                 ResolverFactory<BookData> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, readingProgressDao.searchType, "search", searchBookName);
-
-                return search.capture();
-        }
+                yield search.capture();
+            }
+        };
     }
 
 
@@ -97,7 +97,7 @@ public class SearchServiceImpl implements SearchService {
                 String updateDate = element.getElementsByTag("td").eq(3).text();
                 bookData.setUpdateDate(updateDate);
 
-                if (!"".equals(bookName)) {
+                if (!bookName.isEmpty()) {
                     bookDataList.add(bookData);
                 }
             }
@@ -149,12 +149,11 @@ public class SearchServiceImpl implements SearchService {
                 String updateDate = element.getElementsByTag("td").eq(4).text();
                 bookData.setUpdateDate(updateDate);
 
-                if (!"".equals(bookName)) {
+                if (!bookName.isEmpty()) {
                     bookDataList.add(bookData);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return bookDataList;
     }

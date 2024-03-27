@@ -69,8 +69,7 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
         List<Component> components = getComponents();
 
         for (Component component : components) {
-            if (component instanceof JButton) {
-                JButton button = (JButton) component;
+            if (component instanceof JButton button) {
                 button.addMouseListener(new MouseAdapter() {
                     public void mouseEntered(MouseEvent e) {
                         // 鼠标进入组件时设置背景色
@@ -123,8 +122,7 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
     private void recursionComponent(List<Component> l1, List<Component> l2) {
 
         for (Component component : l1) {
-            if (component instanceof JPanel) {
-                JPanel panel = (JPanel) component;
+            if (component instanceof JPanel panel) {
                 recursionComponent(Arrays.asList(panel.getComponents()), l2);
             }
             l2.add(component);
@@ -167,7 +165,7 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
             log.error("从目标网站加载配置文件失败...... url->{};owner->{};repo->{};path->{}", GitHubFileReader.GITHUB_API_URL, owner, repo, path);
         }
 
-        if (configValue == null && configValue.isEmpty()) {
+        if (configValue == null || configValue.isEmpty()) {
             log.error("爬虫资源获取为空");
             throw new RuntimeException("爬虫资源获取为空");
         }

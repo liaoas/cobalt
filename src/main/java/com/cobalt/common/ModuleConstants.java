@@ -29,10 +29,6 @@ public class ModuleConstants {
     // 本地导入
     public static final String IMPORT = "导入";
 
-
-    // 搜索数据源
-    public static final String[] DATA_SOURCE = new String[]{BI_QU_GE, XIANG_SHU};
-
     /*****************选项卡标题*****************/
 
     // 选项卡标签

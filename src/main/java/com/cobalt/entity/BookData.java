@@ -28,14 +28,6 @@ public class BookData {
     public BookData() {
     }
 
-    public BookData(String bookName, String chapter, String author, String updateDate,String bookLink) {
-        this.bookName = bookName;
-        this.chapter = chapter;
-        this.author = author;
-        this.updateDate = updateDate;
-        this.bookLink = bookLink;
-    }
-
     public String getBookName() {
         return bookName;
     }

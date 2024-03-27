@@ -1,7 +1,5 @@
 package com.cobalt.factory;
 
-import com.rabbit.foot.core.factory.ResolverFactory;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;

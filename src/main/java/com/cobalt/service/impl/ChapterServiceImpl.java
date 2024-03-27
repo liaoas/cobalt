@@ -40,21 +40,10 @@ public class ChapterServiceImpl implements ChapterService {
      */
     @Override
     public void getBookChapterByType(String link) {
-        switch (instance.searchType) {
-            /*case ModuleConstants.XIANG_SHU:
-                // 笔趣阁
-                searchBookChapterData(link);
-                break;
-            case ModuleConstants.BI_QU_GE:
-                // 笔趣阁2
-                searchBookChapterDataBQG(link);
-                break;*/
-            case ModuleConstants.IMPORT:
-                importChapterData();
-                break;
-            default:
-                rabbitFootChapterData(link);
-
+        if (instance.searchType.equals(ModuleConstants.IMPORT)) {
+            importChapterData();
+        } else {
+            rabbitFootChapterData(link);
         }
     }
 

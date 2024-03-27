@@ -1,9 +1,14 @@
 package com.cobalt.ui;
 
+import com.cobalt.common.ModuleConstants;
+import com.cobalt.entity.Chapter;
 import com.cobalt.enums.ToastType;
+import com.cobalt.factory.BeanFactory;
 import com.cobalt.persistence.ReadingProgressDao;
 import com.cobalt.persistence.SettingsDao;
 import com.cobalt.utils.ModuleUtils;
+import com.cobalt.utils.ReadingUtils;
+import com.cobalt.utils.ToastUtils;
 import com.cobalt.work.OpenChapterWord;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
@@ -12,18 +17,10 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.Chapter;
-import com.cobalt.factory.BeanFactory;
-import com.cobalt.service.ContentService;
-import com.cobalt.service.impl.ContentServiceImpl;
-import com.cobalt.utils.ReadingUtils;
-import com.cobalt.utils.ToastUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 /**
  * <p>
@@ -62,9 +59,6 @@ public class FullScreenUI {
 
     // 用于判断是否是当前选项卡切换
     private Content lastSelectedContent = null;
-
-    // 内容爬虫
-    static ContentService contentService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
@@ -105,7 +99,7 @@ public class FullScreenUI {
         btnOn.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex == 0) {
+            if (instance.chapters.isEmpty() || instance.nowChapterIndex == 0) {
                 ToastUtils.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.DEFAULT_CURSOR);
@@ -122,7 +116,7 @@ public class FullScreenUI {
         underOn.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex == instance.chapters.size() - 1) {
+            if (instance.chapters.isEmpty() || instance.nowChapterIndex == instance.chapters.size() - 1) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 return;
             }
@@ -135,7 +129,7 @@ public class FullScreenUI {
         jumpButton.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.size() == 0 || instance.nowChapterIndex < 0) {
+            if (instance.chapters.isEmpty() || instance.nowChapterIndex < 0) {
                 ToastUtils.showToastMassage(project, "未知章节", ToastType.ERROR);
                 return;
             }

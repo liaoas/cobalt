@@ -9,11 +9,7 @@ import com.cobalt.persistence.ReadSubscriptDao;
 import com.cobalt.persistence.ReadingProgressDao;
 import com.cobalt.persistence.SettingsDao;
 import com.cobalt.persistence.SpiderActionDao;
-import com.cobalt.service.ChapterService;
-import com.cobalt.service.ContentService;
-import com.cobalt.service.SearchService;
 import com.cobalt.service.impl.ChapterServiceImpl;
-import com.cobalt.service.impl.ContentServiceImpl;
 import com.cobalt.service.impl.ImportServiceImpl;
 import com.cobalt.service.impl.SearchServiceImpl;
 import com.cobalt.utils.ModuleUtils;
@@ -95,9 +91,6 @@ public class MainUI {
     // 全局模块对象
     public final Project project;
 
-    // 搜索书籍名称
-    private String bookSearchName;
-
     // 书籍链接
     private String valueAt;
 
@@ -106,16 +99,6 @@ public class MainUI {
 
     // 是否切换了书本（是否点击了开始阅读按钮）
     public static boolean isReadClick = false;
-
-    // 书籍爬虫
-    static SearchService searchService = (SearchServiceImpl) BeanFactory.getBean("SearchServiceImpl");
-
-    // 章节爬虫
-    static ChapterService chapterService = (ChapterServiceImpl) BeanFactory.getBean("ChapterServiceImpl");
-
-    // 内容爬虫
-    static ContentService textService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
-
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
@@ -164,9 +147,7 @@ public class MainUI {
         init();
 
         // 搜索
-        btnSearch.addActionListener(e -> {
-            searchBook();
-        });
+        btnSearch.addActionListener(e -> searchBook());
 
         // 书籍搜索框键盘按键事件
         textSearchBar.addKeyListener(new KeyListener() {
@@ -353,7 +334,8 @@ public class MainUI {
         // 清空表格数据
         ModuleConstants.tableModel.setRowCount(0);
         // 获取搜索输入文本
-        bookSearchName = textSearchBar.getText();
+        // 搜索书籍名称
+        String bookSearchName = textSearchBar.getText();
 
         if (bookSearchName == null || bookSearchName.trim().isEmpty()) {
             ToastUtils.showToastMassage(project, "请输入书籍名称", ToastType.ERROR);
@@ -461,10 +443,6 @@ public class MainUI {
     }
 
     private void createUIComponents() {
-    }
-
-    public JTextArea getTextContent() {
-        return textContent;
     }
 }
 

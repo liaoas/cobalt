@@ -4,6 +4,7 @@ import com.cobalt.enums.ToastType;
 import com.cobalt.persistence.ReadingProgressDao;
 import com.cobalt.persistence.SettingsDao;
 import com.cobalt.utils.ModuleUtils;
+import com.cobalt.work.OpenChapterWord;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -112,7 +113,9 @@ public class FullScreenUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
-            new LoadChapterInformation().execute();
+            // new LoadChapterInformation().execute();
+
+            new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 下一章跳转
@@ -125,7 +128,7 @@ public class FullScreenUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex + 1;
             // 加载阅读信息
-            new LoadChapterInformation().execute();
+            new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 章节跳转
@@ -139,7 +142,7 @@ public class FullScreenUI {
             // 根据下标跳转
             instance.nowChapterIndex = chapterList.getSelectedIndex();
             // 加载阅读信息
-            new LoadChapterInformation().execute();
+            new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 窗口加载结束
@@ -198,50 +201,7 @@ public class FullScreenUI {
             chapterList.addItem(chapter1.getName());
         }
         // 加载阅读信息
-        new LoadChapterInformation().execute();
-    }
-
-    /**
-     * 异步GUI 线程加载 加载章节信息
-     */
-    final class LoadChapterInformation extends SwingWorker<Void, Chapter> {
-        @Override
-        protected Void doInBackground() {
-            // 清空书本表格
-            Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
-
-            // 重置重试次数
-            ContentServiceImpl.index = 2;
-
-            // 内容
-            contentService.searchBookChapterData(chapter.getLink());
-
-            if (instance.textContent == null) {
-                ToastUtils.showToastMassage(project, "章节内容为空", ToastType.ERROR);
-                return null;
-            }
-
-            //将当前进度信息加入chunks中
-            publish(chapter);
-            return null;
-        }
-
-        @Override
-        protected void process(List<Chapter> chapters) {
-            Chapter chapter = chapters.get(0);
-            // 章节内容赋值
-            textContent.setText(instance.textContent);
-            // 设置下拉框的值
-            chapterList.setSelectedItem(chapter.getName());
-            // 回到顶部
-            textContent.setCaretPosition(1);
-        }
-
-        @Override
-        protected void done() {
-            // 恢复默认鼠标样式
-            ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.DEFAULT_CURSOR);
-        }
+        new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
     }
 
     /**

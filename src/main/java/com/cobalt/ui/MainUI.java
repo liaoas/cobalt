@@ -1,6 +1,7 @@
 package com.cobalt.ui;
 
-import com.cobalt.core.Convert;
+import com.cobalt.common.ModuleConstants;
+import com.cobalt.entity.Chapter;
 import com.cobalt.enums.ToastType;
 import com.cobalt.factory.BeanFactory;
 import com.cobalt.factory.ViewFaction;
@@ -16,6 +17,11 @@ import com.cobalt.service.impl.ContentServiceImpl;
 import com.cobalt.service.impl.ImportServiceImpl;
 import com.cobalt.service.impl.SearchServiceImpl;
 import com.cobalt.utils.ModuleUtils;
+import com.cobalt.utils.ReadingUtils;
+import com.cobalt.utils.ToastUtils;
+import com.cobalt.work.OpenBoosWork;
+import com.cobalt.work.OpenChapterWord;
+import com.cobalt.work.SearchBooksWork;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
@@ -26,21 +32,13 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.BookData;
-import com.cobalt.entity.Chapter;
-import com.cobalt.utils.ReadingUtils;
-import com.cobalt.utils.ToastUtils;
 import com.rabbit.foot.core.Resources;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -179,9 +177,11 @@ public class MainUI {
                     searchBook();
                 }
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -213,7 +213,7 @@ public class MainUI {
             ChapterServiceImpl.index = 2;
 
             // 执行开始阅读
-            new StartReading().execute();
+            new OpenBoosWork(valueAt, chapterList, project, textContent, mainPanel).execute();
 
             // 阅读进度持久化
             instance.loadState(instance);
@@ -230,8 +230,9 @@ public class MainUI {
                 return;
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
+
             // 加载阅读信息
-            new LoadChapterInformation().execute();
+            new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
 
             // 阅读进度持久化
             instance.loadState(instance);
@@ -253,7 +254,7 @@ public class MainUI {
             instance.nowChapterIndex = instance.nowChapterIndex + 1;
 
             // 加载阅读信息
-            new LoadChapterInformation().execute();
+            new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
 
             // 阅读进度持久化
             instance.loadState(instance);
@@ -275,7 +276,7 @@ public class MainUI {
             }
 
             // 加载阅读信息
-            new LoadChapterInformation().execute();
+            new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
 
             // 阅读进度持久化
             instance.loadState(instance);
@@ -367,126 +368,7 @@ public class MainUI {
         // 重置 重试次数
         SearchServiceImpl.index = 2;
 
-        // 根据数据源类型 搜索
-        new SearchBooks().execute();
-    }
-
-    /**
-     * 书籍搜索
-     */
-    final class SearchBooks extends SwingWorker<Void, List<BookData>> {
-        @Override
-        protected Void doInBackground() {
-            List<BookData> bookData = searchService.getBookNameData(bookSearchName);
-
-            if (bookData == null || bookData.isEmpty()) {
-                ToastUtils.showToastMassage(project, "没有找到啊", ToastType.ERROR);
-                return null;
-            }
-
-            //将当前进度信息加入chunks中
-            publish(bookData);
-            return null;
-        }
-
-        @Override
-        protected void process(List<List<BookData>> chunks) {
-            List<BookData> bookData = chunks.get(0);
-            for (BookData bookDatum : bookData) {
-                ModuleConstants.tableModel.addRow(Convert.bookData2Array(bookDatum));
-            }
-        }
-
-        @Override
-        protected void done() {
-
-            instance.searchType = ModuleConstants.IMPORT;
-            // 恢复默认鼠标样式
-            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
-        }
-    }
-
-    /**
-     * 开始阅读
-     */
-    final class StartReading extends SwingWorker<Void, Void> {
-
-        @Override
-        protected Void doInBackground() {
-            chapterService.getBookChapterByType(valueAt);
-            return null;
-        }
-
-        @Override
-        protected void done() {
-            // 清空章节信息
-            instance.nowChapterIndex = 0;
-
-            // 清空下拉列表
-            chapterList.removeAllItems();
-
-            // 加载下拉列表
-            for (Chapter chapter : instance.chapters) {
-                chapterList.addItem(chapter.getName());
-            }
-
-            // 解析当前章节内容
-            new LoadChapterInformation().execute();
-
-            // 书本已切换
-            isReadClick = true;
-
-            if (!instance.searchType.equals(ModuleConstants.IMPORT)) {
-                // 本地导入书籍清空
-                instance.importPath = null;
-            }
-
-            // 恢复默认鼠标样式
-            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
-        }
-    }
-
-    /**
-     * 加载章节信息
-     */
-    final class LoadChapterInformation extends SwingWorker<Void, Chapter> {
-        @Override
-        protected Void doInBackground() {
-            // 清空书本表格
-            Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
-
-            // 重置重试次数
-            ContentServiceImpl.index = 2;
-
-            // 内容
-            textService.searchBookChapterData(chapter.getLink());
-
-            if (instance.textContent == null) {
-                ToastUtils.showToastMassage(project, "章节内容为空", ToastType.ERROR);
-                return null;
-            }
-
-            //将当前进度信息加入chunks中
-            publish(chapter);
-            return null;
-        }
-
-        @Override
-        protected void process(List<Chapter> chapters) {
-            Chapter chapter = chapters.get(0);
-            // 章节内容赋值
-            textContent.setText(instance.textContent);
-            // 设置下拉框的值
-            chapterList.setSelectedItem(chapter.getName());
-            // 回到顶部
-            textContent.setCaretPosition(1);
-        }
-
-        @Override
-        protected void done() {
-            // 恢复默认鼠标样式
-            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
-        }
+        new SearchBooksWork(bookSearchName, project, mainPanel).execute();
     }
 
     /**
@@ -536,7 +418,7 @@ public class MainUI {
             instance.searchType = ModuleConstants.IMPORT;
 
             // 执行开始阅读
-            new StartReading().execute();
+            new OpenBoosWork(valueAt, chapterList, project, textContent, mainPanel).execute();
 
             // 阅读进度持久化
             instance.loadState(instance);

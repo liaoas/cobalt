@@ -36,6 +36,10 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.Objects;
 
@@ -161,33 +165,26 @@ public class MainUI {
         // 执行初始化表格
         init();
 
-
         // 搜索
         btnSearch.addActionListener(e -> {
+            searchBook();
+        });
 
-            // 等待鼠标样式
-            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
-            // 清空表格数据
-            ModuleConstants.tableModel.setRowCount(0);
-            // 获取搜索输入文本
-            bookSearchName = textSearchBar.getText();
-
-            if (bookSearchName == null || bookSearchName.trim().isEmpty()) {
-                ToastUtils.showToastMassage(project, "请输入书籍名称", ToastType.ERROR);
-                // 等待鼠标样式
-                ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
-                return;
+        // 书籍搜索框键盘按键事件
+        textSearchBar.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // 检查按下的键是否是回车键
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    searchBook();
+                }
             }
-
-            // 获取数据源类型
-            instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
-
-            // 重置 重试次数
-            SearchServiceImpl.index = 2;
-
-            // 根据数据源类型 搜索
-            new SearchBooks().execute();
-
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
         });
 
         // 开始阅读
@@ -345,6 +342,35 @@ public class MainUI {
         });
     }
 
+
+    /**
+     * 搜索书籍
+     */
+    private void searchBook() {
+        // 等待鼠标样式
+        ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
+        // 清空表格数据
+        ModuleConstants.tableModel.setRowCount(0);
+        // 获取搜索输入文本
+        bookSearchName = textSearchBar.getText();
+
+        if (bookSearchName == null || bookSearchName.trim().isEmpty()) {
+            ToastUtils.showToastMassage(project, "请输入书籍名称", ToastType.ERROR);
+            // 等待鼠标样式
+            ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
+            return;
+        }
+
+        // 获取数据源类型
+        instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
+
+        // 重置 重试次数
+        SearchServiceImpl.index = 2;
+
+        // 根据数据源类型 搜索
+        new SearchBooks().execute();
+    }
+
     /**
      * 书籍搜索
      */
@@ -485,6 +511,7 @@ public class MainUI {
         settingDao.scrollSpacingScale = settingsUI.getReadRollVal();
         settingDao.loadState(settingDao);
     }
+
 
     /**
      * 书籍导入

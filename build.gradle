@@ -32,7 +32,7 @@ sourceSets {
 }
 
 dependencies {
-    implementation group: 'com.rabbit.foot', name: 'rabbit-foot', version: '1.0.9'
+    implementation group: 'com.rabbit.foot', name: 'rabbit-foot', version: '1.0.10'
 }
 
 group 'com.cobalt'

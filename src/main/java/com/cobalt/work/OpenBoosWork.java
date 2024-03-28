@@ -34,7 +34,7 @@ public final class OpenBoosWork extends SwingWorker<Void, Void> {
     public final Project project;
 
     // 章节内容
-    private final JTextArea textContent;
+    private final JEditorPane textContent;
 
     // 窗口
     private final JPanel mainPanel;
@@ -46,7 +46,7 @@ public final class OpenBoosWork extends SwingWorker<Void, Void> {
     static ChapterService chapterService = (ChapterServiceImpl) BeanFactory.getBean("ChapterServiceImpl");
 
 
-    public OpenBoosWork(String valueAt, JComboBox<String> chapterList, Project project, JTextArea textContent, JPanel mainPanel) {
+    public OpenBoosWork(String valueAt, JComboBox<String> chapterList, Project project, JEditorPane textContent, JPanel mainPanel) {
         this.valueAt = valueAt;
         this.chapterList = chapterList;
         this.project = project;

@@ -123,10 +123,11 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="f285a" class="javax.swing.JTextArea" binding="textContent">
+              <component id="5b27" class="javax.swing.JEditorPane" binding="textContent">
                 <constraints/>
                 <properties>
-                  <lineWrap value="true"/>
+                  <contentType value="text/html"/>
+                  <editable value="false"/>
                 </properties>
               </component>
             </children>

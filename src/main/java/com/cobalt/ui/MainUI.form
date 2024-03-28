@@ -237,7 +237,7 @@
           <forms defaultalign-vert="false"/>
         </constraints>
         <properties>
-          <dividerLocation value="200"/>
+          <dividerLocation value="166"/>
           <orientation value="0"/>
         </properties>
         <border type="none"/>
@@ -286,16 +286,11 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="3b043" class="javax.swing.JTextArea" binding="textContent">
+                  <component id="706ac" class="javax.swing.JEditorPane" binding="textContent">
                     <constraints/>
                     <properties>
-                      <alignmentX value="0.0"/>
-                      <alignmentY value="0.0"/>
-                      <autoscrolls value="false"/>
+                      <contentType value="text/html"/>
                       <editable value="false"/>
-                      <lineWrap value="true"/>
-                      <text value=""/>
-                      <wrapStyleWord value="true"/>
                     </properties>
                   </component>
                 </children>

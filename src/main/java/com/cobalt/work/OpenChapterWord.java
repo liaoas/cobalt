@@ -28,7 +28,7 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
     public final Project project;
 
     // 章节内容
-    private final JTextArea textContent;
+    private final JEditorPane textContent;
 
     // 章节目录下拉列表
     private final JComboBox<String> chapterList;
@@ -43,7 +43,7 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
     // 内容爬虫
     static ContentService textService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
 
-    public OpenChapterWord(Project project, JTextArea textContent, JComboBox<String> chapterList, JPanel mainPanel) {
+    public OpenChapterWord(Project project, JEditorPane textContent, JComboBox<String> chapterList, JPanel mainPanel) {
         this.project = project;
         this.textContent = textContent;
         this.chapterList = chapterList;

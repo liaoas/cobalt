@@ -71,7 +71,7 @@ public class MainUI {
     private JButton jumpButton;
 
     // 章节内容
-    private JTextArea textContent;
+    private JEditorPane textContent;
 
     // 章节内容外部框
     private JScrollPane paneTextContent;

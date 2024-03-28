@@ -36,7 +36,7 @@ public class ModuleUtils {
      * @param paneTextContent 章节内容外部框
      * @param textContent     章节内容
      */
-    public static void loadSetting(JScrollPane paneTextContent, JTextArea textContent) {
+    public static void loadSetting(JScrollPane paneTextContent, JEditorPane textContent) {
         // 同步滚动步长
         paneTextContent.getVerticalScrollBar().setUnitIncrement(settingDao.scrollSpacingScale);
         // 字体大小

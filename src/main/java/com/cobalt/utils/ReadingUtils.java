@@ -31,7 +31,7 @@ public class ReadingUtils {
      * @param chapterList 章节列表
      * @param textContent 书籍内容
      */
-    public static void loadReadingProgress(JComboBox<String> chapterList, JTextArea textContent) {
+    public static void loadReadingProgress(JComboBox<String> chapterList, JEditorPane textContent) {
         if (instance.chapters.isEmpty()) return;
 
         // 清空下拉列表

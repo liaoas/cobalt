@@ -40,7 +40,7 @@ public class FullScreenUI {
     private JScrollPane paneTextContent;
 
     // 书籍内容
-    private JTextArea textContent;
+    private JEditorPane textContent;
 
     // 上一章按钮
     private JButton btnOn;

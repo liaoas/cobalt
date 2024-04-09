@@ -106,7 +106,9 @@ public class ContentServiceImpl implements ContentService {
             }
 
             // 是否为标签
-            if (childNode instanceof Element childElement) {
+            if (childNode instanceof Element ) {
+
+                Element childElement = (Element) childNode;
 
                 if (childElement.tag().getName().equalsIgnoreCase("br")) {
                     stringBuilder.append("\n");

@@ -69,7 +69,9 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
         List<Component> components = getComponents();
 
         for (Component component : components) {
-            if (component instanceof JButton button) {
+            if (component instanceof JButton) {
+                JButton button = (JButton) component;
+
                 button.addMouseListener(new MouseAdapter() {
                     public void mouseEntered(MouseEvent e) {
                         // 鼠标进入组件时设置背景色
@@ -122,7 +124,9 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
     private void recursionComponent(List<Component> l1, List<Component> l2) {
 
         for (Component component : l1) {
-            if (component instanceof JPanel panel) {
+            if (component instanceof JPanel) {
+
+                JPanel panel = (JPanel) component;
                 recursionComponent(Arrays.asList(panel.getComponents()), l2);
             }
             l2.add(component);

@@ -47,18 +47,17 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<BookData> getBookNameData(String searchBookName) {
 
-        return switch (readingProgressDao.searchType) {
-            case ModuleConstants.XIANG_SHU ->
+        switch (readingProgressDao.searchType) {
+            case ModuleConstants.XIANG_SHU:
                 // 笔趣阁
-                    searchBookNameData(searchBookName);
-            case ModuleConstants.BI_QU_GE ->
+                return searchBookNameData(searchBookName);
+            case ModuleConstants.BI_QU_GE:
                 // 笔趣阁2
-                    searchBookNameData_bqg2(searchBookName);
-            default -> {
+                return searchBookNameData_bqg2(searchBookName);
+            default:
                 ResolverFactory<BookData> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, readingProgressDao.searchType, ReptileType.SEARCH, searchBookName);
-                yield search.capture();
-            }
-        };
+                return search.capture();
+        }
     }
 
 

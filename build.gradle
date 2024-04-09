@@ -36,7 +36,7 @@ dependencies {
 }
 
 group 'com.cobalt'
-version '4.0.1 222-241'
+version '4.0.2 222-243'
 
 intellij {
     /*ideaIC 211.1 - 222.1 JDK 11*/
@@ -63,5 +63,5 @@ intellij {
 
 patchPluginXml {
     sinceBuild = '222.*'
-    untilBuild = '241.*'
+    untilBuild = '243.*'
 }

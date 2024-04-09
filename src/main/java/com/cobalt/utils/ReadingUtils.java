@@ -4,6 +4,7 @@ import com.cobalt.common.ModuleConstants;
 import com.cobalt.entity.Chapter;
 import com.cobalt.factory.BeanFactory;
 import com.cobalt.persistence.ReadingProgressDao;
+import com.cobalt.persistence.SettingsDao;
 import com.cobalt.service.impl.ImportServiceImpl;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -22,6 +23,9 @@ public class ReadingUtils {
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+
+    // 页面设置持久化
+    static SettingsDao settingDao = SettingsDao.getInstance();
 
     static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
 
@@ -43,8 +47,11 @@ public class ReadingUtils {
         }
 
         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+
         // 章节内容赋值
-        textContent.setText(instance.textContent);
+        String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+        textContent.setText(htmlContent);
+
         // 设置下拉框的值
         chapterList.setSelectedItem(chapter.getName());
         // 回到顶部

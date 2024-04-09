@@ -1,7 +1,10 @@
 package com.cobalt.utils;
 
-import com.cobalt.persistence.SettingsDao;
 import com.cobalt.common.ModuleConstants;
+import com.cobalt.factory.BeanFactory;
+import com.cobalt.persistence.ReadingProgressDao;
+import com.cobalt.persistence.SettingsDao;
+import com.cobalt.ui.SettingsUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +21,9 @@ public class ModuleUtils {
 
     // 页面设置持久化
     static SettingsDao settingDao = SettingsDao.getInstance();
+
+    // 阅读进度持久化
+    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
 
     /**
      * 加载页面鼠标样式
@@ -89,5 +95,32 @@ public class ModuleUtils {
         underOn.setToolTipText(ModuleConstants.UNDER_ON);
         // 跳转
         jumpButton.setToolTipText(ModuleConstants.JUMP_BUTTON);
+    }
+
+
+    /**
+     * 将文本内容格式化为 html 格式 用于 JEditorPane contentType 类型为 text/html 时文本大小的切换
+     *
+     * @param fontSize 字体大小
+     * @param content  内容
+     * @return 格式化后 html 的大小
+     */
+    public static String fontSizeFromHtml(int fontSize, String content) {
+        content = "<html><body style='font-size:" + fontSize + "px'>" + content + "</body></html>";
+        return content;
+    }
+
+    /**
+     * 应用字体大小的修改
+     */
+    public static void applyFontSize(JEditorPane textContent) {
+        SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
+        textContent.setFont(new Font("", Font.BOLD, settingsUI.getFontSizeVal()));
+
+        String htmlContent = ModuleUtils.fontSizeFromHtml(settingsUI.getFontSizeVal(), instance.textContent);
+        textContent.setText(htmlContent);
+        // 持久化
+        settingDao.fontSize = settingsUI.getFontSizeVal();
+        settingDao.loadState(settingDao);
     }
 }

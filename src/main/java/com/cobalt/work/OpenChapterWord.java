@@ -4,6 +4,7 @@ import com.cobalt.entity.Chapter;
 import com.cobalt.enums.ToastType;
 import com.cobalt.factory.BeanFactory;
 import com.cobalt.persistence.ReadingProgressDao;
+import com.cobalt.persistence.SettingsDao;
 import com.cobalt.service.ContentService;
 import com.cobalt.service.impl.ContentServiceImpl;
 import com.cobalt.utils.ModuleUtils;
@@ -23,7 +24,7 @@ import java.util.List;
  * @since 2024-03-27
  */
 public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
-    
+
     // 全局模块对象
     public final Project project;
 
@@ -39,6 +40,9 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
 
     // 阅读进度持久化
     static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+
+    // 页面设置持久化
+    static SettingsDao settingDao = SettingsDao.getInstance();
 
     // 内容爬虫
     static ContentService textService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
@@ -74,8 +78,10 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
     @Override
     protected void process(List<Chapter> chapters) {
         Chapter chapter = chapters.get(0);
+
         // 章节内容赋值
-        textContent.setText(instance.textContent);
+        String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+        textContent.setText(htmlContent);
         // 设置下拉框的值
         chapterList.setSelectedItem(chapter.getName());
         // 回到顶部

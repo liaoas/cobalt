@@ -88,6 +88,9 @@ public class MainUI {
     // 设置按钮
     private JButton settingBtn;
 
+    // 表格与文本内容分隔栏
+    private JSplitPane bookTabContentSplit;
+
     // 全局模块对象
     public final Project project;
 
@@ -303,7 +306,8 @@ public class MainUI {
                         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
 
                         // 章节内容赋值
-                        textContent.setText(instance.textContent);
+                        String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+                        textContent.setText(htmlContent);
                         // 设置下拉框的值
                         chapterList.setSelectedItem(chapter.getName());
                         // 回到顶部
@@ -321,6 +325,12 @@ public class MainUI {
                 ShowSettingsUtil.getInstance().showSettingsDialog(project, "Cobalt_Settings");
             } catch (Exception ignored) {
             }
+        });
+
+        // 分割面板变动
+        bookTabContentSplit.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, evt -> {
+            // int newLocation = (int) evt.getNewValue();
+            // TODO: 2024/4/09 暂时不做处理
         });
     }
 
@@ -351,17 +361,6 @@ public class MainUI {
         SearchServiceImpl.index = 2;
 
         new SearchBooksWork(bookSearchName, project, mainPanel).execute();
-    }
-
-    /**
-     * 应用字体大小的修改
-     */
-    private void applyFontSize() {
-        SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
-        textContent.setFont(new Font("", Font.BOLD, settingsUI.getFontSizeVal()));
-        // 持久化
-        settingDao.fontSize = settingsUI.getFontSizeVal();
-        settingDao.loadState(settingDao);
     }
 
     /**
@@ -425,7 +424,7 @@ public class MainUI {
      */
     public void apply() {
         // 字体大小
-        applyFontSize();
+        ModuleUtils.applyFontSize(textContent);
 
         // 滑块滚动
         applyScrollSpacing();

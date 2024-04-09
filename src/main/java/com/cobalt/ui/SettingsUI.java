@@ -182,7 +182,7 @@ public class SettingsUI {
     }
 
     /**
-     * 绑定组件响应事件
+     * 绑定页面上的组件监听事件
      */
     private void bindingComponentEvent() {
         // 书籍选择

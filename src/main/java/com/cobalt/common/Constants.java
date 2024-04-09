@@ -28,6 +28,11 @@ public class Constants {
     public static final int DEFAULT_READ_ROLL_SIZE = 8;
 
     /**
+     * Main 页面分割面板默认位置
+     */
+    public static final int DEFAULT_MAIN_SPLIT_POSITION = 300;
+
+    /**
      * 页面大小数值设置正则
      */
     public static final String SIZE_REGULAR = "^[1-9][0-9]?$|^100$";

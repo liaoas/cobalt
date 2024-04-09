@@ -171,7 +171,8 @@ public class FullScreenUI {
                             // 获取新的章节位置
                             Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
                             // 章节内容赋值
-                            textContent.setText(instance.textContent);
+                            String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+                            textContent.setText(htmlContent);
                             // 设置下拉框的值
                             chapterList.setSelectedItem(chapter.getName());
                             // 回到顶部
@@ -199,17 +200,6 @@ public class FullScreenUI {
     }
 
     /**
-     * 应用字体大小的修改
-     */
-    private void applyFontSize() {
-        SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
-        textContent.setFont(new Font("", Font.BOLD, settingsUI.getFontSizeVal()));
-        // 持久化
-        settingDao.fontSize = settingsUI.getFontSizeVal();
-        settingDao.loadState(settingDao);
-    }
-
-    /**
      * 应用滚动速度滑块
      */
     private void applyScrollSpacing() {
@@ -226,7 +216,7 @@ public class FullScreenUI {
      */
     public void apply() {
         // 字体大小
-        applyFontSize();
+        ModuleUtils.applyFontSize(textContent);
 
         // 滑块滚动
         applyScrollSpacing();

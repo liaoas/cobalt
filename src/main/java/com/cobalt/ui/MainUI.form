@@ -229,7 +229,7 @@
           </component>
         </children>
       </grid>
-      <splitpane id="75935">
+      <splitpane id="75935" binding="bookTabContentSplit">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="200" height="200"/>
@@ -237,7 +237,7 @@
           <forms defaultalign-vert="false"/>
         </constraints>
         <properties>
-          <dividerLocation value="50"/>
+          <dividerLocation value="102"/>
           <dividerSize value="10"/>
           <orientation value="0"/>
         </properties>
@@ -302,4 +302,9 @@
       </splitpane>
     </children>
   </grid>
+  <inspectionSuppressions>
+    <suppress inspection="NoLabelFor" id="b7658"/>
+    <suppress inspection="NoLabelFor" id="c7391"/>
+    <suppress inspection="NoLabelFor" id="706ac"/>
+  </inspectionSuppressions>
 </form>

@@ -140,7 +140,7 @@ public class MainUI {
         ReadingUtils.loadReadingProgress(chapterList, textContent);
 
         // 加载持久化的设置
-        ModuleUtils.loadSetting(paneTextContent, textContent);
+        ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
     }
 
     // 页面初始化加载
@@ -295,7 +295,7 @@ public class MainUI {
                     if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
 
                     // 同步字体等设置
-                    ModuleUtils.loadSetting(paneTextContent, textContent);
+                    ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
 
                     ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
 
@@ -329,8 +329,8 @@ public class MainUI {
 
         // 分割面板变动
         bookTabContentSplit.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, evt -> {
-            // int newLocation = (int) evt.getNewValue();
-            // TODO: 2024/4/09 暂时不做处理
+            settingDao.scrollSpacingScale = (int) evt.getNewValue();
+            settingDao.loadState(settingDao);
         });
     }
 

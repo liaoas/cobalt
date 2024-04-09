@@ -237,8 +237,8 @@
           <forms defaultalign-vert="false"/>
         </constraints>
         <properties>
-          <dividerLocation value="102"/>
-          <dividerSize value="10"/>
+          <dividerLocation value="300"/>
+          <dividerSize value="6"/>
           <orientation value="0"/>
         </properties>
         <border type="none"/>

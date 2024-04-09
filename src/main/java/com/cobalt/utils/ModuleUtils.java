@@ -42,11 +42,17 @@ public class ModuleUtils {
      * @param paneTextContent 章节内容外部框
      * @param textContent     章节内容
      */
-    public static void loadSetting(JScrollPane paneTextContent, JEditorPane textContent) {
+    public static void loadSetting(JScrollPane paneTextContent, JEditorPane textContent, JSplitPane bookTabContentSplit) {
         // 同步滚动步长
         paneTextContent.getVerticalScrollBar().setUnitIncrement(settingDao.scrollSpacingScale);
         // 字体大小
         textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
+
+        if (bookTabContentSplit == null) {
+            return;
+        }
+
+        bookTabContentSplit.setDividerLocation(settingDao.scrollSpacingScale);
     }
 
     /**

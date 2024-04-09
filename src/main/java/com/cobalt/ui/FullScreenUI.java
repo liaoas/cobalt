@@ -85,7 +85,7 @@ public class FullScreenUI {
         ReadingUtils.loadReadingProgress(chapterList, textContent);
 
         // 加载持久化的设置
-        ModuleUtils.loadSetting(paneTextContent, textContent);
+        ModuleUtils.loadSetting(paneTextContent, textContent, null);
 
     }
 
@@ -154,7 +154,7 @@ public class FullScreenUI {
                     if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
 
                     // 加载持久化的设置
-                    ModuleUtils.loadSetting(paneTextContent, textContent);
+                    ModuleUtils.loadSetting(paneTextContent, textContent, null);
 
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;

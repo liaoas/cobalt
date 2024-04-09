@@ -24,12 +24,15 @@ public class SettingsDao implements PersistentStateComponent<SettingsDao> {
 
     public int scrollSpacingScale = Constants.DEFAULT_READ_ROLL_SIZE;
 
+    public int splitPosition = Constants.DEFAULT_MAIN_SPLIT_POSITION;
+
     public SettingsDao() {
     }
 
-    public SettingsDao(int fontSize, int scrollSpacingSize) {
+    public SettingsDao(int fontSize, int scrollSpacingSize, int splitPosition) {
         this.fontSize = fontSize;
         this.scrollSpacingScale = scrollSpacingSize;
+        this.splitPosition = splitPosition;
     }
 
     @Override

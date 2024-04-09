@@ -5,6 +5,7 @@ import com.cobalt.persistence.SpiderActionDao;
 import com.cobalt.common.ModuleConstants;
 import com.cobalt.entity.ImportBookData;
 import com.cobalt.service.ContentService;
+import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -68,7 +69,7 @@ public class ContentServiceImpl implements ContentService {
                     getImportBook(url);
                     break;
                 default:
-                    ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, "content", url);
+                    ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType,  ReptileType.CONTENT, url);
 
                     List<String> capture = search.capture();
 

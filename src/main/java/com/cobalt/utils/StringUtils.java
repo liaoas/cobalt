@@ -13,7 +13,7 @@ public class StringUtils {
     /**
      * 空字符串
      */
-    private static final String NULLSTR = "";
+    private static final String NULL_STR = "";
 
     /**
      * * 判断一个对象是否为空
@@ -32,7 +32,7 @@ public class StringUtils {
      * @return true：为空 false：非空
      */
     public static boolean isEmpty(String str) {
-        return isNull(str) || NULLSTR.equals(str);
+        return isNull(str) || NULL_STR.equals(str);
     }
 
     /**

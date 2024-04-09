@@ -6,6 +6,7 @@ import com.cobalt.persistence.SpiderActionDao;
 import com.cobalt.common.ModuleConstants;
 import com.cobalt.entity.BookData;
 import com.cobalt.service.SearchService;
+import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -54,7 +55,7 @@ public class SearchServiceImpl implements SearchService {
                 // 笔趣阁2
                     searchBookNameData_bqg2(searchBookName);
             default -> {
-                ResolverFactory<BookData> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, readingProgressDao.searchType, "search", searchBookName);
+                ResolverFactory<BookData> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, readingProgressDao.searchType, ReptileType.SEARCH, searchBookName);
                 yield search.capture();
             }
         };

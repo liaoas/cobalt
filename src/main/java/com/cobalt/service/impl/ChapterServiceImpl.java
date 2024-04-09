@@ -7,6 +7,7 @@ import com.cobalt.common.ModuleConstants;
 import com.cobalt.entity.Chapter;
 import com.cobalt.entity.ImportBookData;
 import com.cobalt.service.ChapterService;
+import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -52,7 +53,7 @@ public class ChapterServiceImpl implements ChapterService {
 
         instance.chapters.clear();
 
-        ResolverFactory<Chapter> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, "chapter", link);
+        ResolverFactory<Chapter> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, ReptileType.CHAPTER, link);
 
         List<Chapter> capture = search.capture();
 

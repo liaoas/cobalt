@@ -49,7 +49,7 @@
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
-              <margin top="2" left="6" bottom="2" right="6"/>
+              <margin top="2" left="9" bottom="2" right="6"/>
             </properties>
           </component>
           <component id="78688" class="javax.swing.JButton" binding="openBook">
@@ -237,7 +237,8 @@
           <forms defaultalign-vert="false"/>
         </constraints>
         <properties>
-          <dividerLocation value="166"/>
+          <dividerLocation value="50"/>
+          <dividerSize value="10"/>
           <orientation value="0"/>
         </properties>
         <border type="none"/>

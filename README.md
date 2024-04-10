@@ -40,7 +40,7 @@
 
 爬虫规则用于动态控制插件数据源解析规则，详情请见拙作 [rabbit-foot](https://github.com/liaoas/rabbit-foot)
 
-![Setting.png](src%2Fmain%2Fresources%2Fimg%2FSetting.png)
+![Setting.png](src/main/resources/img/Setting.png)
 
 ## 📥书籍导入
 

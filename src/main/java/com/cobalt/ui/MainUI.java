@@ -1,20 +1,20 @@
 package com.cobalt.ui;
 
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.Chapter;
-import com.cobalt.enums.ToastType;
-import com.cobalt.factory.BeanFactory;
-import com.cobalt.factory.ViewFaction;
-import com.cobalt.persistence.ReadSubscriptDao;
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SettingsDao;
-import com.cobalt.persistence.SpiderActionDao;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.enums.ToastType;
+import com.cobalt.common.model.Chapter;
+import com.cobalt.common.utils.ModuleUtils;
+import com.cobalt.common.utils.ReadingUtils;
+import com.cobalt.common.utils.ToastUtils;
+import com.cobalt.framework.factory.BeanFactory;
+import com.cobalt.framework.factory.ViewFaction;
+import com.cobalt.framework.persistence.ReadSubscriptPersistent;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SettingsPersistent;
+import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.impl.ChapterServiceImpl;
 import com.cobalt.service.impl.ImportServiceImpl;
 import com.cobalt.service.impl.SearchServiceImpl;
-import com.cobalt.utils.ModuleUtils;
-import com.cobalt.utils.ReadingUtils;
-import com.cobalt.utils.ToastUtils;
 import com.cobalt.work.OpenBoosWork;
 import com.cobalt.work.OpenChapterWord;
 import com.cobalt.work.SearchBooksWork;
@@ -104,16 +104,16 @@ public class MainUI {
     public static boolean isReadClick = false;
 
     // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     // 阅读窗口滚动位置持久化
-    static ReadSubscriptDao readSubscriptDao = ReadSubscriptDao.getInstance();
+    static ReadSubscriptPersistent readSubscriptDao = ReadSubscriptPersistent.getInstance();
 
     // 页面设置持久化
-    static SettingsDao settingDao = SettingsDao.getInstance();
+    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
     // 爬虫资源配置项
-    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     // 书籍导入处理类
     static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");

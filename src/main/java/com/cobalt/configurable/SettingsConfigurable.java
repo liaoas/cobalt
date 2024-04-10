@@ -1,6 +1,6 @@
 package com.cobalt.configurable;
 
-import com.cobalt.factory.BeanFactory;
+import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.ui.FullScreenUI;
 import com.cobalt.ui.MainUI;
 import com.cobalt.ui.SettingsUI;

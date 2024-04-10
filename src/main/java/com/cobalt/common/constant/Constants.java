@@ -1,4 +1,4 @@
-package com.cobalt.common;
+package com.cobalt.common.constant;
 
 import java.util.regex.Pattern;
 

@@ -1,13 +1,13 @@
 package com.cobalt.content;
 
-import com.cobalt.factory.BeanFactory;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.ui.FullScreenUI;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
-import com.cobalt.common.ModuleConstants;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;

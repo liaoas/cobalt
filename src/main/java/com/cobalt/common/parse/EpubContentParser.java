@@ -1,6 +1,6 @@
-package com.cobalt.parse;
+package com.cobalt.common.parse;
 
-import com.cobalt.entity.Chapter;
+import com.cobalt.common.model.Chapter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -51,7 +51,7 @@ public class EpubContentParser {
 
         // 是否解析了章节
         boolean isParser = false;
-	
+
         try (ZipInputStream zipStream = new ZipInputStream(new FileInputStream(file))) {
             ZipEntry entry;
             while ((entry = zipStream.getNextEntry()) != null) {

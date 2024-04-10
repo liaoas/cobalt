@@ -1,6 +1,7 @@
-package com.cobalt.utils;
+package com.cobalt.common.utils;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 
 /**
  * <p>

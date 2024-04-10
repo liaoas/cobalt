@@ -1,15 +1,14 @@
 package com.cobalt.work;
 
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.core.Convert;
-import com.cobalt.entity.BookData;
-import com.cobalt.enums.ToastType;
-import com.cobalt.factory.BeanFactory;
-import com.cobalt.persistence.ReadingProgressDao;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.core.Convert;
+import com.cobalt.common.enums.ToastType;
+import com.cobalt.common.model.BookData;
+import com.cobalt.common.utils.ModuleUtils;
+import com.cobalt.common.utils.ToastUtils;
+import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.service.SearchService;
 import com.cobalt.service.impl.SearchServiceImpl;
-import com.cobalt.utils.ModuleUtils;
-import com.cobalt.utils.ToastUtils;
 import com.intellij.openapi.project.Project;
 
 import javax.swing.*;

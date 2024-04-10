@@ -1,17 +1,17 @@
-package com.cobalt.factory;
+package com.cobalt.framework.factory;
 
-import com.cobalt.persistence.SpiderActionDao;
+import com.cobalt.config.ProjectConfig;
+import com.cobalt.content.FullScreenUIContent;
+import com.cobalt.content.MainUIContent;
+import com.cobalt.content.ReadingHistoryUIContent;
+import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.ui.FullScreenUI;
+import com.cobalt.ui.MainUI;
 import com.cobalt.ui.ReadingHistoryUI;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
-import com.cobalt.config.ProjectConfig;
-import com.cobalt.content.FullScreenUIContent;
-import com.cobalt.content.MainUIContent;
-import com.cobalt.content.ReadingHistoryUIContent;
-import com.cobalt.ui.MainUI;
 import com.rabbit.foot.core.github.GitHubFileReader;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
     private final static Logger log = LoggerFactory.getLogger(ViewFaction.class);
 
     // 页面设置持久化
-    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     /**
      * 创建窗口容器

@@ -1,4 +1,4 @@
-package com.cobalt.persistence;
+package com.cobalt.framework.persistence;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -16,30 +16,30 @@ import org.jetbrains.annotations.Nullable;
  * @author LiAo
  * @since 2023-02-28
  */
-@State(name = "ReadSubscriptDao", storages = {@Storage(value = "cobalt.settings.dao.xml")})
-public class ReadSubscriptDao implements PersistentStateComponent<ReadSubscriptDao> {
+@State(name = "ReadSubscriptDao", storages = {@Storage(value = "cobalt.persistent.xml")})
+public class ReadSubscriptPersistent implements PersistentStateComponent<ReadSubscriptPersistent> {
 
     public int homeTextWinIndex;
 
-    public ReadSubscriptDao() {
+    public ReadSubscriptPersistent() {
     }
 
-    public ReadSubscriptDao(int homeTextWinIndex) {
+    public ReadSubscriptPersistent(int homeTextWinIndex) {
         this.homeTextWinIndex = homeTextWinIndex;
     }
 
     @Override
     public @Nullable
-    ReadSubscriptDao getState() {
+    ReadSubscriptPersistent getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull ReadSubscriptDao readSubscriptDao) {
+    public void loadState(@NotNull ReadSubscriptPersistent readSubscriptDao) {
         XmlSerializerUtil.copyBean(readSubscriptDao, this);
     }
 
-    public static ReadSubscriptDao getInstance() {
-        return ApplicationManager.getApplication().getService(ReadSubscriptDao.class);
+    public static ReadSubscriptPersistent getInstance() {
+        return ApplicationManager.getApplication().getService(ReadSubscriptPersistent.class);
     }
 }

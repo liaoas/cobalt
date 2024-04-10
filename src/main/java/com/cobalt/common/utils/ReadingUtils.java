@@ -1,10 +1,10 @@
-package com.cobalt.utils;
+package com.cobalt.common.utils;
 
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.Chapter;
-import com.cobalt.factory.BeanFactory;
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SettingsDao;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.model.Chapter;
+import com.cobalt.framework.factory.BeanFactory;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SettingsPersistent;
 import com.cobalt.service.impl.ImportServiceImpl;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -22,10 +22,10 @@ import javax.swing.*;
 public class ReadingUtils {
 
     // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     // 页面设置持久化
-    static SettingsDao settingDao = SettingsDao.getInstance();
+    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
     static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
 

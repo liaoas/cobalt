@@ -1,4 +1,4 @@
-package com.cobalt.enums;
+package com.cobalt.common.enums;
 
 /**
  * <p>

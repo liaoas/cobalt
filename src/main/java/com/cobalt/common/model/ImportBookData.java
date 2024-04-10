@@ -1,4 +1,4 @@
-package com.cobalt.entity;
+package com.cobalt.common.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

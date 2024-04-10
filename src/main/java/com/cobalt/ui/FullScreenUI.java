@@ -1,14 +1,14 @@
 package com.cobalt.ui;
 
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.Chapter;
-import com.cobalt.enums.ToastType;
-import com.cobalt.factory.BeanFactory;
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SettingsDao;
-import com.cobalt.utils.ModuleUtils;
-import com.cobalt.utils.ReadingUtils;
-import com.cobalt.utils.ToastUtils;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.enums.ToastType;
+import com.cobalt.common.model.Chapter;
+import com.cobalt.common.utils.ModuleUtils;
+import com.cobalt.common.utils.ReadingUtils;
+import com.cobalt.common.utils.ToastUtils;
+import com.cobalt.framework.factory.BeanFactory;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SettingsPersistent;
 import com.cobalt.work.OpenChapterWord;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
@@ -61,10 +61,10 @@ public class FullScreenUI {
     private Content lastSelectedContent = null;
 
     // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     // 页面设置持久化
-    static SettingsDao settingDao = SettingsDao.getInstance();
+    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
     // 窗口信息
     public JPanel getFullScreenPanel() {

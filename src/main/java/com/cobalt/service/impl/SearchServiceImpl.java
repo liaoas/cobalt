@@ -1,10 +1,10 @@
 package com.cobalt.service.impl;
 
 import cn.hutool.http.HttpUtil;
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SpiderActionDao;
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.BookData;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.model.BookData;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.SearchService;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
@@ -33,10 +33,10 @@ public class SearchServiceImpl implements SearchService {
     // 存储数据
     public static List<BookData> bookDataList = new ArrayList<>();
 
-    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     // 阅读进度持久化
-    static ReadingProgressDao readingProgressDao = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent readingProgressDao = ReadingProgressPersistent.getInstance();
 
     /**
      * 判断数据源

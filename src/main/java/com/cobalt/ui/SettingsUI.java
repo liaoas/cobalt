@@ -1,15 +1,15 @@
 package com.cobalt.ui;
 
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SettingsDao;
-import com.cobalt.persistence.SpiderActionDao;
+import com.cobalt.common.constant.Constants;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.framework.factory.ViewFaction;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SettingsPersistent;
+import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.components.fields.ExpandableTextField;
-import com.cobalt.common.Constants;
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.factory.ViewFaction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -100,11 +100,11 @@ public class SettingsUI {
     private String importBookPath = null;
 
     // 页面设置持久化
-    private static SettingsDao settingDao = SettingsDao.getInstance();
+    private static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
-    private static ReadingProgressDao progressDao = ReadingProgressDao.getInstance();
+    private static ReadingProgressPersistent progressDao = ReadingProgressPersistent.getInstance();
 
-    private static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+    private static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     public SettingsUI() {
         init();

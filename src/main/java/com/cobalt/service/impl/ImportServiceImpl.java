@@ -1,12 +1,12 @@
 package com.cobalt.service.impl;
 
-import com.cobalt.parse.EpubContentParser;
-import com.cobalt.parse.TxtContentParser;
-import com.cobalt.utils.StringUtils;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.cobalt.entity.Chapter;
-import com.cobalt.entity.ImportBookData;
+import com.cobalt.common.model.Chapter;
+import com.cobalt.common.model.ImportBookData;
+import com.cobalt.common.parse.EpubContentParser;
+import com.cobalt.common.parse.TxtContentParser;
+import com.cobalt.common.utils.StringUtils;
 import com.cobalt.service.ImportService;
+import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

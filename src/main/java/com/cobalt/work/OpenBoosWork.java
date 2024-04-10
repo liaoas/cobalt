@@ -1,13 +1,13 @@
 package com.cobalt.work;
 
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.Chapter;
-import com.cobalt.factory.BeanFactory;
-import com.cobalt.persistence.ReadingProgressDao;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.model.Chapter;
+import com.cobalt.common.utils.ModuleUtils;
+import com.cobalt.framework.factory.BeanFactory;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.service.ChapterService;
 import com.cobalt.service.impl.ChapterServiceImpl;
 import com.cobalt.ui.MainUI;
-import com.cobalt.utils.ModuleUtils;
 import com.intellij.openapi.project.Project;
 
 import javax.swing.*;
@@ -40,7 +40,7 @@ public final class OpenBoosWork extends SwingWorker<Void, Void> {
     private final JPanel mainPanel;
 
     // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     // 章节爬虫
     static ChapterService chapterService = (ChapterServiceImpl) BeanFactory.getBean("ChapterServiceImpl");

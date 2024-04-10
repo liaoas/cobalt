@@ -1,4 +1,4 @@
-package com.cobalt.utils;
+package com.cobalt.common.utils;
 
 /**
  * <p>

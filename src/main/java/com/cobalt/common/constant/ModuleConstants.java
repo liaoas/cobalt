@@ -1,4 +1,4 @@
-package com.cobalt.common;
+package com.cobalt.common.constant;
 
 import javax.swing.table.DefaultTableModel;
 

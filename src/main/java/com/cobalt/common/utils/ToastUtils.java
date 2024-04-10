@@ -1,8 +1,9 @@
-package com.cobalt.utils;
+package com.cobalt.common.utils;
 
+import com.cobalt.common.enums.ToastType;
 import com.cobalt.config.ProjectConfig;
-import com.cobalt.enums.ToastType;
-import com.intellij.notification.*;
+import com.intellij.notification.NotificationGroupManager;
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import org.jetbrains.annotations.Nullable;

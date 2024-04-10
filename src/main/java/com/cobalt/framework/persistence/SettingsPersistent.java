@@ -1,11 +1,11 @@
-package com.cobalt.persistence;
+package com.cobalt.framework.persistence;
 
+import com.cobalt.common.constant.Constants;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import com.cobalt.common.Constants;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,8 +17,8 @@ import org.jetbrains.annotations.Nullable;
  * @author LiAo
  * @since 2023-03-01
  */
-@State(name = "SettingsDao", storages = {@Storage(value = "cobalt.settings.dao.xml")})
-public class SettingsDao implements PersistentStateComponent<SettingsDao> {
+@State(name = "SettingsDao", storages = {@Storage(value = "cobalt.persistent.xml")})
+public class SettingsPersistent implements PersistentStateComponent<SettingsPersistent> {
 
     public int fontSize = Constants.DEFAULT_FONT_SIZE;
 
@@ -26,26 +26,26 @@ public class SettingsDao implements PersistentStateComponent<SettingsDao> {
 
     public int splitPosition = Constants.DEFAULT_MAIN_SPLIT_POSITION;
 
-    public SettingsDao() {
+    public SettingsPersistent() {
     }
 
-    public SettingsDao(int fontSize, int scrollSpacingSize, int splitPosition) {
+    public SettingsPersistent(int fontSize, int scrollSpacingSize, int splitPosition) {
         this.fontSize = fontSize;
         this.scrollSpacingScale = scrollSpacingSize;
         this.splitPosition = splitPosition;
     }
 
     @Override
-    public @Nullable SettingsDao getState() {
+    public @Nullable SettingsPersistent getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull SettingsDao windowsSettingDao) {
+    public void loadState(@NotNull SettingsPersistent windowsSettingDao) {
         XmlSerializerUtil.copyBean(windowsSettingDao, this);
     }
 
-    public static SettingsDao getInstance() {
-        return ApplicationManager.getApplication().getService(SettingsDao.class);
+    public static SettingsPersistent getInstance() {
+        return ApplicationManager.getApplication().getService(SettingsPersistent.class);
     }
 }

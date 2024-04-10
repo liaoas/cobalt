@@ -1,9 +1,9 @@
-package com.cobalt.utils;
+package com.cobalt.common.utils;
 
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.factory.BeanFactory;
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SettingsDao;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.framework.factory.BeanFactory;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SettingsPersistent;
 import com.cobalt.ui.SettingsUI;
 
 import javax.swing.*;
@@ -20,10 +20,10 @@ import java.awt.*;
 public class ModuleUtils {
 
     // 页面设置持久化
-    static SettingsDao settingDao = SettingsDao.getInstance();
+    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
     // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     /**
      * 加载页面鼠标样式

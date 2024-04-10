@@ -1,14 +1,14 @@
 package com.cobalt.work;
 
-import com.cobalt.entity.Chapter;
-import com.cobalt.enums.ToastType;
-import com.cobalt.factory.BeanFactory;
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SettingsDao;
+import com.cobalt.common.enums.ToastType;
+import com.cobalt.common.model.Chapter;
+import com.cobalt.common.utils.ModuleUtils;
+import com.cobalt.common.utils.ToastUtils;
+import com.cobalt.framework.factory.BeanFactory;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SettingsPersistent;
 import com.cobalt.service.ContentService;
 import com.cobalt.service.impl.ContentServiceImpl;
-import com.cobalt.utils.ModuleUtils;
-import com.cobalt.utils.ToastUtils;
 import com.intellij.openapi.project.Project;
 
 import javax.swing.*;
@@ -39,10 +39,10 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
 
 
     // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     // 页面设置持久化
-    static SettingsDao settingDao = SettingsDao.getInstance();
+    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
     // 内容爬虫
     static ContentService textService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");

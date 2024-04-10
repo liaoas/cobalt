@@ -1,11 +1,11 @@
-package com.cobalt.persistence;
+package com.cobalt.framework.persistence;
 
+import com.cobalt.common.model.Chapter;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import com.cobalt.entity.Chapter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,8 +20,8 @@ import java.util.List;
  * @author LiAo
  * @since 2023-02-24
  */
-@State(name = "ReadingProgressDao", storages = {@Storage(value = "cobalt.settings.dao.xml")})
-public class ReadingProgressDao implements PersistentStateComponent<ReadingProgressDao> {
+@State(name = "ReadingProgressDao", storages = {@Storage(value = "cobalt.settings.persistent.xml")})
+public class ReadingProgressPersistent implements PersistentStateComponent<ReadingProgressPersistent> {
 
     // 全局搜索类型
     public String searchType;
@@ -37,10 +37,10 @@ public class ReadingProgressDao implements PersistentStateComponent<ReadingProgr
 
     public String importPath;
 
-    public ReadingProgressDao() {
+    public ReadingProgressPersistent() {
     }
 
-    public ReadingProgressDao(String searchType, int nowChapterIndex, List<Chapter> chapters, String textContent, String importPath) {
+    public ReadingProgressPersistent(String searchType, int nowChapterIndex, List<Chapter> chapters, String textContent, String importPath) {
         this.searchType = searchType;
         this.nowChapterIndex = nowChapterIndex;
         this.chapters = chapters;
@@ -50,18 +50,18 @@ public class ReadingProgressDao implements PersistentStateComponent<ReadingProgr
 
     @Override
     @Nullable
-    public ReadingProgressDao getState() {
+    public ReadingProgressPersistent getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull ReadingProgressDao s) {
+    public void loadState(@NotNull ReadingProgressPersistent s) {
         XmlSerializerUtil.copyBean(s, this);
     }
 
-    public static ReadingProgressDao getInstance() {
-        ApplicationManager.getApplication().getService(ReadingProgressDao.class);
-        return ApplicationManager.getApplication().getService(ReadingProgressDao.class);
+    public static ReadingProgressPersistent getInstance() {
+        ApplicationManager.getApplication().getService(ReadingProgressPersistent.class);
+        return ApplicationManager.getApplication().getService(ReadingProgressPersistent.class);
     }
 }
 

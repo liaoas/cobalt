@@ -1,11 +1,11 @@
 package com.cobalt.service.impl;
 
 import cn.hutool.http.HttpUtil;
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SpiderActionDao;
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.Chapter;
-import com.cobalt.entity.ImportBookData;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.model.Chapter;
+import com.cobalt.common.model.ImportBookData;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ChapterService;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
@@ -30,9 +30,9 @@ public class ChapterServiceImpl implements ChapterService {
     public static int index = 2;
 
     // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
-    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     /**
      * 爬取章节信息
@@ -116,7 +116,6 @@ public class ChapterServiceImpl implements ChapterService {
         List<Chapter> chapterList = importBookData.getChapterList();
         instance.chapters.addAll(chapterList);
     }
-
 
 
     /**

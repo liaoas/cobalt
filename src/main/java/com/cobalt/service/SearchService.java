@@ -1,6 +1,6 @@
 package com.cobalt.service;
 
-import com.cobalt.entity.BookData;
+import com.cobalt.common.model.BookData;
 
 import java.util.List;
 

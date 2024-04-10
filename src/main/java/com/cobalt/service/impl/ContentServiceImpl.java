@@ -1,9 +1,9 @@
 package com.cobalt.service.impl;
 
-import com.cobalt.persistence.ReadingProgressDao;
-import com.cobalt.persistence.SpiderActionDao;
-import com.cobalt.common.ModuleConstants;
-import com.cobalt.entity.ImportBookData;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.model.ImportBookData;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ContentService;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
@@ -31,9 +31,9 @@ public class ContentServiceImpl implements ContentService {
     public static int index = 2;
 
     // 阅读进度持久化
-    static ReadingProgressDao instance = ReadingProgressDao.getInstance();
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
-    static SpiderActionDao spiderActionDao = SpiderActionDao.getInstance();
+    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     /**
      * 获取章节内容
@@ -69,7 +69,7 @@ public class ContentServiceImpl implements ContentService {
                     getImportBook(url);
                     break;
                 default:
-                    ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType,  ReptileType.CONTENT, url);
+                    ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, ReptileType.CONTENT, url);
 
                     List<String> capture = search.capture();
 
@@ -106,7 +106,7 @@ public class ContentServiceImpl implements ContentService {
             }
 
             // 是否为标签
-            if (childNode instanceof Element ) {
+            if (childNode instanceof Element) {
 
                 Element childElement = (Element) childNode;
 

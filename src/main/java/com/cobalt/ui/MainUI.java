@@ -329,7 +329,7 @@ public class MainUI {
 
         // 分割面板变动
         bookTabContentSplit.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, evt -> {
-            settingDao.scrollSpacingScale = (int) evt.getNewValue();
+            settingDao.splitPosition = (int) evt.getNewValue();
             settingDao.loadState(settingDao);
         });
     }
@@ -369,7 +369,8 @@ public class MainUI {
     private void applyScrollSpacing() {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
         paneTextContent.getVerticalScrollBar().setUnitIncrement(settingsUI.getReadRollVal());
-
+        // 还原滚动位置
+        textContent.setCaretPosition(readSubscriptDao.homeTextWinIndex);
         // 持久化
         settingDao.scrollSpacingScale = settingsUI.getReadRollVal();
         settingDao.loadState(settingDao);

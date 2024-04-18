@@ -2,6 +2,7 @@ package com.cobalt.common.utils;
 
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.framework.factory.BeanFactory;
+import com.cobalt.framework.persistence.ReadSubscriptPersistent;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
 import com.cobalt.ui.SettingsUI;
@@ -24,6 +25,9 @@ public class ModuleUtils {
 
     // 阅读进度持久化
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
+
+    // 阅读窗口滚动位置持久化
+    static ReadSubscriptPersistent readSubscriptDao = ReadSubscriptPersistent.getInstance();
 
     /**
      * 加载页面鼠标样式
@@ -121,10 +125,10 @@ public class ModuleUtils {
      */
     public static void applyFontSize(JEditorPane textContent) {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
-        textContent.setFont(new Font("", Font.BOLD, settingsUI.getFontSizeVal()));
-
         String htmlContent = ModuleUtils.fontSizeFromHtml(settingsUI.getFontSizeVal(), instance.textContent);
         textContent.setText(htmlContent);
+        // 还原滚动位置
+        textContent.setCaretPosition(readSubscriptDao.homeTextWinIndex);
         // 持久化
         settingDao.fontSize = settingsUI.getFontSizeVal();
         settingDao.loadState(settingDao);

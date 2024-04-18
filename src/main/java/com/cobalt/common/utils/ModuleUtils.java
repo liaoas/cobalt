@@ -52,7 +52,7 @@ public class ModuleUtils {
             return;
         }
 
-        bookTabContentSplit.setDividerLocation(settingDao.scrollSpacingScale);
+        bookTabContentSplit.setDividerLocation(settingDao.splitPosition);
     }
 
     /**

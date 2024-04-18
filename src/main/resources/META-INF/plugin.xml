@@ -157,7 +157,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Cobalt" icon="/img/fish.svg" factoryClass="com.cobalt.factory.ViewFaction"
+        <toolWindow id="Cobalt" icon="/img/fish.svg" factoryClass="com.cobalt.framework.factory.ViewFaction"
                     anchor="right"/>
 
         <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>

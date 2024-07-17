@@ -424,14 +424,15 @@ public class MainUI {
      * 页面统一的Apply
      */
     public void apply() {
+
+        // 导入的书籍展示
+        applyImportBook();
+
         // 字体大小
         ModuleUtils.applyFontSize(textContent);
 
         // 滑块滚动
         applyScrollSpacing();
-
-        // 导入的书籍展示
-        applyImportBook();
 
         // 加载数据源下拉框
         loadDataOrigin();

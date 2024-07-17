@@ -1,7 +1,9 @@
 package com.cobalt.common.utils;
 
+import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.model.Chapter;
+import com.cobalt.common.model.ImportBookData;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
@@ -47,15 +49,22 @@ public class ReadingUtils {
         }
 
         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+        // 存储窗口组件
+        ImportBookData bookData = ImportBookData.getInstance();
 
-        // 章节内容赋值
-        String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
-        textContent.setText(htmlContent);
+        if (!instance.searchType.equals(ModuleConstants.IMPORT) &&
+                (!bookData.getBookType().equals(Constants.EPUB_STR_UPPERCASE) ||
+                        !bookData.getBookType().equals(Constants.EPUB_STR_LOWERCASE))) {
+            // 章节内容赋值
+            String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+            textContent.setText(htmlContent);
+            // 回到顶部
+            textContent.setCaretPosition(1);
+        }
 
         // 设置下拉框的值
         chapterList.setSelectedItem(chapter.getName());
-        // 回到顶部
-        textContent.setCaretPosition(1);
+
 
         // 加载持久化书籍
         if (instance.searchType.equals(ModuleConstants.IMPORT) && StringUtils.isNotEmpty(instance.importPath)) {

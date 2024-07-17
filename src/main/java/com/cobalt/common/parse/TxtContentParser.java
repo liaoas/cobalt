@@ -2,6 +2,7 @@ package com.cobalt.common.parse;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.model.Chapter;
+import com.cobalt.common.model.ImportBookData;
 import com.cobalt.common.utils.LocalCharsetUtil;
 
 import java.io.BufferedReader;
@@ -33,7 +34,7 @@ public class TxtContentParser {
      * @param filePath txt 文件路径
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseTxt(String filePath, List<Chapter> chapterList) {
+    public static Map<String, String> parseTxt(String filePath, List<Chapter> chapterList, ImportBookData instance) {
 
         Map<String, String> chapterMap = new LinkedHashMap<>();
 
@@ -72,8 +73,9 @@ public class TxtContentParser {
             throw new RuntimeException(e);
         }
 
+        instance.setChapterList(chapterList);
+        instance.setBookMap(chapterMap);
+
         return chapterMap;
     }
-
-
 }

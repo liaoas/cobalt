@@ -33,6 +33,10 @@ sourceSets {
 
 dependencies {
     implementation group: 'com.rabbit.foot', name: 'rabbit-foot', version: '1.0.11'
+
+    implementation group: 'nl.siegmann.epublib', name: 'epublib-core', version: '4.0'
+
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.13'
 }
 
 group 'com.cobalt'

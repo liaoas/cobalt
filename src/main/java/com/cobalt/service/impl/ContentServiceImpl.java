@@ -1,18 +1,24 @@
 package com.cobalt.service.impl;
 
+import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.model.ImportBookData;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ContentService;
+import com.cobalt.viewer.HTMLDocumentFactory;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
+import nl.siegmann.epublib.browsersupport.Navigator;
+import nl.siegmann.epublib.domain.Book;
+import nl.siegmann.epublib.domain.Resource;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 
+import javax.swing.text.html.HTMLDocument;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -129,9 +135,26 @@ public class ContentServiceImpl implements ContentService {
      */
     @Override
     public void getImportBook(String url) {
-        ImportBookData instance1 = ImportBookData.getInstance();
+        ImportBookData bookData = ImportBookData.getInstance();
 
-        Map<String, String> bookMap = instance1.getBookMap();
+        Map<String, String> bookMap = bookData.getBookMap();
+
+        if (bookData.getBookType().equals(Constants.EPUB_STR_LOWERCASE) ||
+                bookData.getBookType().equals(Constants.EPUB_STR_UPPERCASE)) {
+
+            int i = Integer.parseInt(bookMap.get(url));
+
+            Book book = bookData.getEpubBookBook();
+
+            Resource resource = book.getTableOfContents().getTocReferences().get(i).getResource();
+
+            Navigator navigator = new Navigator(book);
+            HTMLDocumentFactory htmlDocumentFactory = new HTMLDocumentFactory(navigator, bookData.getTextContent().getEditorKit());
+            htmlDocumentFactory.init(book);
+            HTMLDocument document = htmlDocumentFactory.getDocument(resource);
+            String string = document.toString();
+            bookData.getTextContent().setDocument(document);
+        }
 
         instance.textContent = bookMap.get(url);
     }

@@ -42,4 +42,17 @@ public class Constants {
      */
     public static final Pattern INTERGER_PATTERN = Pattern.compile(SIZE_REGULAR);
 
+    /**
+     * epub
+     */
+    public static final String EPUB_STR_UPPERCASE = "EPUB";
+    public static final String EPUB_STR_LOWERCASE = "epub";
+
+    /**
+     * txt
+     */
+    public static final String TXT_STR_UPPERCASE = "TXT";
+    public static final String TXT_STR_LOWERCASE = "txt";
 }
+
+

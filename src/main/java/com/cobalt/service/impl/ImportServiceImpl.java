@@ -1,5 +1,6 @@
 package com.cobalt.service.impl;
 
+import com.cobalt.common.constant.Constants;
 import com.cobalt.common.model.Chapter;
 import com.cobalt.common.model.ImportBookData;
 import com.cobalt.common.parse.EpubContentParser;
@@ -48,27 +49,23 @@ public class ImportServiceImpl implements ImportService {
         // 存储目录信息
         List<Chapter> chapterList = new ArrayList<>(16);
         // 执行书籍解析
+
+        // 存储书籍
+        ImportBookData instance = ImportBookData.getInstance();
         try {
-            assert extension != null;
-            if (extension.equals("txt") || extension.equals("TXT")) {
-                bookMap = TxtContentParser.parseTxt(filePath, chapterList);
-            } else if (extension.equals("epub") || extension.equals("EPUB")) {
+            if (extension.equals(Constants.TXT_STR_LOWERCASE) || extension.equals(Constants.TXT_STR_UPPERCASE)) {
+                bookMap = TxtContentParser.parseTxt(filePath, chapterList, instance);
+                instance.setBookType(Constants.TXT_STR_LOWERCASE);
+            } else if (extension.equals(Constants.EPUB_STR_LOWERCASE) || extension.equals(Constants.EPUB_STR_UPPERCASE)) {
                 // epub
-                bookMap = EpubContentParser.parseEpub(filePath, chapterList);
+                bookMap = EpubContentParser.parseEpubByEpubLib(filePath, chapterList, instance);
+                instance.setBookType(Constants.EPUB_STR_LOWERCASE);
             }
         } catch (Exception e) {
             return false;
         }
 
-        if (bookMap.isEmpty() || chapterList.isEmpty()) return false;
-
-        // 存储书籍
-        ImportBookData instance = ImportBookData.getInstance();
-
-        instance.setChapterList(chapterList);
-        instance.setBookMap(bookMap);
-
-        return true;
+        return !bookMap.isEmpty() && !chapterList.isEmpty();
     }
 
 }

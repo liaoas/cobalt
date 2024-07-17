@@ -1,5 +1,8 @@
 package com.cobalt.common.model;
 
+import nl.siegmann.epublib.domain.Book;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +27,15 @@ public class ImportBookData {
     // 存储章节列表
     private List<Chapter> chapterList = new ArrayList<>(16);
 
+    // 书籍类型
+    private String bookType = "";
+
+    // Epub Book
+    private Book epubBook = null;
+
+    // 章节内容
+    private JEditorPane textContent;
+
     private ImportBookData() {
     }
 
@@ -45,5 +57,29 @@ public class ImportBookData {
 
     public void setChapterList(List<Chapter> chapterList) {
         INSTANCE.chapterList = chapterList;
+    }
+
+    public String getBookType() {
+        return INSTANCE.bookType;
+    }
+
+    public void setBookType(String bookType) {
+        INSTANCE.bookType = bookType;
+    }
+
+    public JEditorPane getTextContent() {
+        return INSTANCE.textContent;
+    }
+
+    public void setTextContent(JEditorPane textContent) {
+        INSTANCE.textContent = textContent;
+    }
+
+    public Book getEpubBookBook() {
+        return INSTANCE.epubBook;
+    }
+
+    public void setEpubBookBook(Book ePubBook) {
+        INSTANCE.epubBook = ePubBook;
     }
 }

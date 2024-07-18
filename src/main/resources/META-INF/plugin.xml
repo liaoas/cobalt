@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/liaoas/cobalt">
     <id>com.liao.hello_book.plugin.id</id>
     <name>Cobalt</name>
-    <version>4.0.2 222-243</version>
+    <version>4.0.3 222-243</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/cobalt">LiAo</vendor>
 
     <idea-version since-build="222.*" until-build="243.*"/>
@@ -149,6 +149,11 @@
             <li>rabbit-foot version：1.0.11</li>
             <li>Added the JSplitPane component of the Main page</li>
             <li>Reading page HTML formatting support</li>
+        </ul>
+        <i>2024.07.18-4.0.3</i>
+        <ul>
+            <li>Resolve the problem of epub format book parsing failure</li>
+            <li>Use epublib as the parsing engine</li>
         </ul>
                  ]]>
     </change-notes>

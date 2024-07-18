@@ -37,25 +37,18 @@ public class FullScreenUI {
 
     // 主体窗口
     private JPanel fullScreenPanel;
-
     // 文章内容滑动
     private JScrollPane paneTextContent;
-
     // 书籍内容
     private JEditorPane textContent;
-
     // 上一章按钮
     private JButton btnOn;
-
     // 下一章按钮
     private JButton underOn;
-
     // 章节列表
     private JComboBox<String> chapterList;
-
     // 跳转到指定章节
     private JButton jumpButton;
-
     // 全局模块对象
     private final Project project;
 
@@ -64,28 +57,23 @@ public class FullScreenUI {
 
     // 阅读进度持久化
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
-
     // 页面设置持久化
     static SettingsPersistent settingDao = SettingsPersistent.getInstance();
-
     // 窗口信息
     public JPanel getFullScreenPanel() {
         return fullScreenPanel;
     }
 
+
     // 初始化数据
     private void init() {
-
         paneTextContent.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
         // 加载组件配置信息
         ModuleUtils.loadModuleConfig(paneTextContent);
-
         // 加载提示信息
         ModuleUtils.loadComponentTooltip(null, null, null, btnOn, underOn, jumpButton);
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
-
         // 加载持久化的设置
         ModuleUtils.loadSetting(paneTextContent, textContent, null);
     }
@@ -95,7 +83,6 @@ public class FullScreenUI {
         this.project = project;
         // 初始化信息
         init();
-
         // 上一章节跳转
         btnOn.addActionListener(e -> {
             // 等待鼠标样式
@@ -108,8 +95,6 @@ public class FullScreenUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
-            // new LoadChapterInformation().execute();
-
             new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
@@ -144,7 +129,6 @@ public class FullScreenUI {
         ApplicationManager.getApplication().invokeLater(() -> {
             // 窗口未初始化
             if (project.isDisposed() || toolWindow == null) return;
-
             final ContentManager contentManager = toolWindow.getContentManager();
             // 监听当前选中的面板 进行阅读进度同步
             contentManager.addContentManagerListener(new ContentManagerListener() {
@@ -153,22 +137,17 @@ public class FullScreenUI {
                     Content selectedContent = event.getContent();
 
                     if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
-
                     // 加载持久化的设置
                     ModuleUtils.loadSetting(paneTextContent, textContent, null);
-
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
-
                     if (selectedContent.getDisplayName().equals(ModuleConstants.TAB_CONTROL_TITLE_UNFOLD)) {
                         // 等待鼠标样式
                             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-
                         // 切换了书本
                         if (MainUI.isReadClick) {
                             MainUI.isReadClick = false;
                             startReading();
-
                         } else {
                             // 页面回显
                             if (!instance.searchType.equals(ModuleConstants.IMPORT) && !instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
@@ -200,7 +179,6 @@ public class FullScreenUI {
     public void startReading() {
         // 清空下拉列表
         chapterList.removeAllItems();
-
         // 加载下拉列表
         for (Chapter chapter1 : instance.chapters) {
             chapterList.addItem(chapter1.getName());
@@ -215,7 +193,6 @@ public class FullScreenUI {
     private void applyScrollSpacing() {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
         paneTextContent.getVerticalScrollBar().setUnitIncrement(settingsUI.getReadRollVal());
-
         // 持久化
         settingDao.scrollSpacingScale = settingsUI.getReadRollVal();
         settingDao.loadState(settingDao);
@@ -227,7 +204,6 @@ public class FullScreenUI {
     public void apply() {
         // 字体大小
         ModuleUtils.applyFontSize(textContent);
-
         // 滑块滚动
         applyScrollSpacing();
     }

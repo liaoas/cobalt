@@ -48,60 +48,44 @@ import java.util.Objects;
  * @since 2021/1/14
  */
 public class MainUI {
+
     // 搜索按钮
     private JButton btnSearch;
-
     // 搜索文本框
     private JTextField textSearchBar;
-
     // 窗口
     private JPanel mainPanel;
-
     // 开始阅读按钮
     private JButton openBook;
-
     // 搜索书本新信息
     private JTable searchBookTable;
-
     // 上一章按钮
     private JButton btnOn;
-
     // 下一章按钮
     private JButton underOn;
-
     // 章节跳转按钮
     private JButton jumpButton;
-
     // 章节内容
     private JEditorPane textContent;
-
     // 章节内容外部框
     private JScrollPane paneTextContent;
-
     // 章节目录下拉列表
     private JComboBox<String> chapterList;
-
     // 表格外围
     private JScrollPane tablePane;
-
     // 搜索下拉列表数据源
     private JComboBox<String> sourceDropdown;
-
     // 设置按钮
     private JButton settingBtn;
-
     // 表格与文本内容分隔栏
     private JSplitPane bookTabContentSplit;
 
     // 全局模块对象
     public final Project project;
-
     // 书籍链接
     private String valueAt;
-
     // 用于判断是否是当前选项卡切换
     private Content lastSelectedContent = null;
-
     // 是否切换了书本（是否点击了开始阅读按钮）
     public static boolean isReadClick = false;
 
@@ -148,10 +132,8 @@ public class MainUI {
         this.project = project;
         // 执行初始化表格
         init();
-
         // 搜索
         btnSearch.addActionListener(e -> searchBook());
-
         // 书籍搜索框键盘按键事件
         textSearchBar.addKeyListener(new KeyListener() {
             @Override
@@ -161,50 +143,45 @@ public class MainUI {
                     searchBook();
                 }
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
         });
 
+
         // 开始阅读
         openBook.addActionListener(e -> {
-
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
-
             // 获取选中行数据
             int selectedRow = searchBookTable.getSelectedRow();
-
             if (selectedRow < 0) {
                 ToastUtils.showToastMassage(project, "还没有选择要读哪本书", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
-
             // 获取数据源类型
             instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
-
             // 获取书籍链接
             valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
-
             // 重置重试次数
             ChapterServiceImpl.index = 2;
-
             // 执行开始阅读
             new OpenBoosWork(valueAt, chapterList, project, textContent, mainPanel).execute();
-
             // 阅读进度持久化
             instance.loadState(instance);
         });
 
+
         // 上一章节跳转
         btnOn.addActionListener(e -> {
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
-
             if (instance.chapters.isEmpty() || instance.nowChapterIndex == 0) {
                 ToastUtils.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
@@ -212,57 +189,51 @@ public class MainUI {
                 return;
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
-
             // 加载阅读信息
             new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
-
             // 阅读进度持久化
             instance.loadState(instance);
         });
+
 
         // 下一章跳转
         underOn.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
-
             if (instance.chapters.isEmpty() || instance.nowChapterIndex == instance.chapters.size() - 1) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
-
             // 章节下标加一
             instance.nowChapterIndex = instance.nowChapterIndex + 1;
-
             // 加载阅读信息
             new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
-
             // 阅读进度持久化
             instance.loadState(instance);
         });
+
 
         // 章节跳转
         jumpButton.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
-
             // 根据下标跳转
             instance.nowChapterIndex = chapterList.getSelectedIndex();
-
             if (instance.chapters.isEmpty() || instance.nowChapterIndex < 0) {
                 ToastUtils.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
-
             // 加载阅读信息
             new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
 
             // 阅读进度持久化
             instance.loadState(instance);
         });
+
 
         // 阅读滚动
         paneTextContent.getVerticalScrollBar().addAdjustmentListener(e -> {
@@ -274,41 +245,32 @@ public class MainUI {
             }
         });
 
+
         // 窗口加载结束
         ApplicationManager.getApplication().invokeLater(() -> {
-
             paneTextContent.getVerticalScrollBar().setValue(readSubscriptDao.homeTextWinIndex);
-
             // 窗口未初始化
             if (project.isDisposed() || toolWindow == null) return;
-
             final ContentManager contentManager = toolWindow.getContentManager();
-
             // 监听当前选中的面板 进行阅读进度同步
             contentManager.addContentManagerListener(new ContentManagerListener() {
                 @Override
                 public void selectionChanged(@NotNull ContentManagerEvent event) {
                     Content selectedContent = event.getContent();
-
                     if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
-
                     // 同步字体等设置
                     ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
-
                     ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
-
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
                     if (selectedContent.getDisplayName().equals(ModuleConstants.TAB_CONTROL_TITLE_HOME)) {
                         // 获取新的章节位置
                         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
-
                         // 页面回显
                         if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
                             ImportBookData bookData = ImportBookData.getInstance();
                             bookData.setTextContent(textContent);
                             textContent.setDocument(bookData.getBookHTMLDocument());
-
                         } else {
                             // 章节内容赋值
                             String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
@@ -324,6 +286,7 @@ public class MainUI {
             });
             toolWindow.installWatcher(contentManager);
         });
+
 
         // 设置单击事件
         settingBtn.addActionListener(e -> {
@@ -359,16 +322,14 @@ public class MainUI {
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
             return;
         }
-
         // 获取数据源类型
         instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
         instance.bookType = ModuleConstants.NETWORK;
-
         // 重置 重试次数
         SearchServiceImpl.index = 2;
-
         new SearchBooksWork(bookSearchName, project, mainPanel).execute();
     }
+
 
     /**
      * 应用滚动速度滑块
@@ -389,26 +350,21 @@ public class MainUI {
      */
     private void applyImportBook() {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
-
         instance.loadState(instance);
         if (settingsUI.isSelBook) {
-
             instance.importPath = settingsUI.getImportBookPath();
-
             VirtualFile file = LocalFileSystem.getInstance().findFileByPath(instance.importPath);
-
-            assert file != null;
-
+            if (file == null) {
+                ToastUtils.showToastMassage(project, "文件不存在", ToastType.ERROR);
+                return;
+            }
             if (!importService.importBook(file)) {
                 ToastUtils.showToastMassage(project, "书籍导入失败", ToastType.ERROR);
                 return;
             }
-
             instance.searchType = ModuleConstants.IMPORT;
-
             // 执行开始阅读
             new OpenBoosWork(valueAt, chapterList, project, textContent, mainPanel).execute();
-
             // 阅读进度持久化
             instance.loadState(instance);
         }
@@ -427,28 +383,27 @@ public class MainUI {
         }
     }
 
+
     /**
      * 页面统一的Apply
      */
     public void apply() {
-
         // 导入的书籍展示
         applyImportBook();
-
         // 字体大小
         ModuleUtils.applyFontSize(textContent);
-
         // 滑块滚动
         applyScrollSpacing();
-
         // 加载数据源下拉框
         loadDataOrigin();
     }
+
 
     // 窗口信息
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
 
     private void createUIComponents() {
     }

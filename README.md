@@ -2,9 +2,9 @@
 
 可以在 IDE 中看电子书的摸鱼插件、你甚至可以用 IDE 写代码。
 
-![](src/main/resources/img/Main.png)
+![](src/main/resources/img/main.png)
 
-![](src/main/resources/img/FullScreen.png)
+![](src/main/resources/img/full-screen.png)
 
 
 ## 🔎 搜索 

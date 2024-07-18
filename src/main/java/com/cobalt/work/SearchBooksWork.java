@@ -26,13 +26,10 @@ import java.util.List;
 public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
 
     static SearchService searchService = (SearchServiceImpl) BeanFactory.getBean("SearchServiceImpl");
-
     // 搜索书籍名称
     private final String bookSearchName;
-
     // 全局模块对象
     public final Project project;
-
     // 窗口
     private final JPanel mainPanel;
 
@@ -50,7 +47,6 @@ public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
             ToastUtils.showToastMassage(project, "没有找到啊", ToastType.ERROR);
             return null;
         }
-
         //将当前进度信息加入chunks中
         publish(bookData);
         return null;
@@ -69,5 +65,4 @@ public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
         // 恢复默认鼠标样式
         ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
     }
-
 }

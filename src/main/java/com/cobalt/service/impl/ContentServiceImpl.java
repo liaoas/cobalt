@@ -2,7 +2,7 @@ package com.cobalt.service.impl;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.model.ImportBookData;
+import com.cobalt.entity.ImportBookData;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ContentService;

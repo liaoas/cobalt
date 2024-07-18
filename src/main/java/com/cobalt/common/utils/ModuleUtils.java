@@ -2,7 +2,6 @@ package com.cobalt.common.utils;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.model.ImportBookData;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadSubscriptPersistent;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
@@ -49,21 +48,14 @@ public class ModuleUtils {
      * @param textContent     章节内容
      */
     public static void loadSetting(JScrollPane paneTextContent, JEditorPane textContent, JSplitPane bookTabContentSplit) {
-        // 存储窗口组件
-        ImportBookData instance = ImportBookData.getInstance();
-
         // 同步滚动步长
         paneTextContent.getVerticalScrollBar().setUnitIncrement(settingDao.scrollSpacingScale);
         // 字体大小
         textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
-
         if (bookTabContentSplit == null) {
             return;
         }
-
         bookTabContentSplit.setDividerLocation(settingDao.splitPosition);
-
-        instance.setTextContent(textContent);
     }
 
     /**
@@ -133,7 +125,7 @@ public class ModuleUtils {
     public static void applyFontSize(JEditorPane textContent) {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
 
-        if (instance.searchType.equals(ModuleConstants.IMPORT) && !instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+        if (!instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
             // 章节内容赋值
             String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
             textContent.setText(htmlContent);

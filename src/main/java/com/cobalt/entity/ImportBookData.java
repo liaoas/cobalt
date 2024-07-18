@@ -1,4 +1,4 @@
-package com.cobalt.common.model;
+package com.cobalt.entity;
 
 import nl.siegmann.epublib.domain.Book;
 
@@ -38,7 +38,7 @@ public class ImportBookData {
     private HTMLDocument bookHTMLDocument = null;
 
     // 章节内容
-    private JEditorPane textContent;
+    private JEditorPane textContent = null;
 
     private ImportBookData() {
     }

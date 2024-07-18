@@ -1,6 +1,6 @@
 package com.cobalt.common.core;
 
-import com.cobalt.common.model.BookData;
+import com.cobalt.entity.BookData;
 
 /**
  * <p>

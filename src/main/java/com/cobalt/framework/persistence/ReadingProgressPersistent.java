@@ -1,6 +1,7 @@
 package com.cobalt.framework.persistence;
 
-import com.cobalt.common.model.Chapter;
+import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.entity.Chapter;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
@@ -24,7 +25,7 @@ import java.util.List;
 public class ReadingProgressPersistent implements PersistentStateComponent<ReadingProgressPersistent> {
 
     // 全局搜索类型
-    public String searchType;
+    public String searchType = ModuleConstants.NETWORK;
 
     // 当前章节下标
     public int nowChapterIndex;
@@ -37,7 +38,7 @@ public class ReadingProgressPersistent implements PersistentStateComponent<Readi
 
     public String importPath;
 
-    public String bookType;
+    public String bookType = ModuleConstants.NETWORK;
 
     public ReadingProgressPersistent() {
     }

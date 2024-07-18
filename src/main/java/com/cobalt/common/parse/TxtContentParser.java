@@ -1,8 +1,8 @@
 package com.cobalt.common.parse;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.model.Chapter;
-import com.cobalt.common.model.ImportBookData;
+import com.cobalt.entity.Chapter;
+import com.cobalt.entity.ImportBookData;
 import com.cobalt.common.utils.LocalCharsetUtil;
 
 import java.io.BufferedReader;

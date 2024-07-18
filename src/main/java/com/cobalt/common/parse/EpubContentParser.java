@@ -1,23 +1,14 @@
 package com.cobalt.common.parse;
 
-import com.cobalt.common.model.Chapter;
-import com.cobalt.common.model.ImportBookData;
-import com.github.weisj.jsvg.C;
+import com.cobalt.entity.Chapter;
+import com.cobalt.entity.ImportBookData;
 import nl.siegmann.epublib.domain.*;
 import nl.siegmann.epublib.epub.EpubReader;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 /**
  * <p>

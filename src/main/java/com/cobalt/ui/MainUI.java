@@ -3,8 +3,8 @@ package com.cobalt.ui;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.enums.ToastType;
-import com.cobalt.common.model.Chapter;
-import com.cobalt.common.model.ImportBookData;
+import com.cobalt.entity.Chapter;
+import com.cobalt.entity.ImportBookData;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
 import com.cobalt.common.utils.ToastUtils;
@@ -107,43 +107,36 @@ public class MainUI {
 
     // 阅读进度持久化
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
-
     // 阅读窗口滚动位置持久化
     static ReadSubscriptPersistent readSubscriptDao = ReadSubscriptPersistent.getInstance();
-
     // 页面设置持久化
     static SettingsPersistent settingDao = SettingsPersistent.getInstance();
-
     // 爬虫资源配置项
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
-
     // 书籍导入处理类
     static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
+
 
     // 初始化数据
     private void init() {
         // 初始化表格
         searchBookTable.setModel(ModuleConstants.tableModel);
         searchBookTable.setEnabled(true);
-
         // 加载数据源下拉框
         loadDataOrigin();
-
         // 设置表格内容大小
         tablePane.setPreferredSize(new Dimension(-1, 30));
-
         // 加载组件配置信息
         ModuleUtils.loadModuleConfig(paneTextContent);
-
         // 加载提示信息
         ModuleUtils.loadComponentTooltip(btnSearch, openBook, settingBtn, btnOn, underOn, jumpButton);
-
         // 加载持久化的设置
         ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
-
+        // 存储窗口组件
+        ImportBookData bookData = ImportBookData.getInstance();
+        bookData.setTextContent(textContent);
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
-
         // 页面回显
         if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
             new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
@@ -168,11 +161,9 @@ public class MainUI {
                     searchBook();
                 }
             }
-
             @Override
             public void keyReleased(KeyEvent e) {
             }
-
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -315,8 +306,9 @@ public class MainUI {
                         // 页面回显
                         if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
                             ImportBookData bookData = ImportBookData.getInstance();
-                            textContent.setDocument(bookData.getBookHTMLDocument());
                             bookData.setTextContent(textContent);
+                            textContent.setDocument(bookData.getBookHTMLDocument());
+
                         } else {
                             // 章节内容赋值
                             String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
@@ -370,6 +362,7 @@ public class MainUI {
 
         // 获取数据源类型
         instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
+        instance.bookType = ModuleConstants.NETWORK;
 
         // 重置 重试次数
         SearchServiceImpl.index = 2;

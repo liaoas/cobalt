@@ -1,4 +1,4 @@
-package com.cobalt.common.model;
+package com.cobalt.entity;
 
 /**
  * <p>

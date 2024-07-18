@@ -2,7 +2,7 @@ package com.cobalt.service.impl;
 
 import cn.hutool.http.HttpUtil;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.model.BookData;
+import com.cobalt.entity.BookData;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.SearchService;
@@ -56,7 +56,8 @@ public class SearchServiceImpl implements SearchService {
                 return searchBookNameData_bqg2(searchBookName);
             default:
                 ResolverFactory<BookData> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, readingProgressDao.searchType, ReptileType.SEARCH, searchBookName);
-                return search.capture();
+                List<BookData> capture = search.capture();
+                return capture;
         }
     }
 

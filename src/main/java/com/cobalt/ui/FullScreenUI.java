@@ -3,8 +3,8 @@ package com.cobalt.ui;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.enums.ToastType;
-import com.cobalt.common.model.Chapter;
-import com.cobalt.common.model.ImportBookData;
+import com.cobalt.entity.Chapter;
+import com.cobalt.entity.ImportBookData;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
 import com.cobalt.common.utils.ToastUtils;
@@ -162,29 +162,31 @@ public class FullScreenUI {
 
                     if (selectedContent.getDisplayName().equals(ModuleConstants.TAB_CONTROL_TITLE_UNFOLD)) {
                         // 等待鼠标样式
-                        ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
+                            ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
 
                         // 切换了书本
                         if (MainUI.isReadClick) {
                             MainUI.isReadClick = false;
                             startReading();
+
                         } else {
-                            // 获取新的章节位置
-                            Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
                             // 页面回显
-                            if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
-                                ImportBookData bookData = ImportBookData.getInstance();
-                                textContent.setDocument(bookData.getBookHTMLDocument());
-                                bookData.setTextContent(textContent);
-                            } else {
+                            if (!instance.searchType.equals(ModuleConstants.IMPORT) && !instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                                // 获取新的章节位置
+                                Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
                                 // 章节内容赋值
                                 String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
                                 textContent.setText(htmlContent);
+                                // 设置下拉框的值
+                                chapterList.setSelectedItem(chapter.getName());
+                                // 回到顶部
+                                textContent.setCaretPosition(1);
                             }
-                            // 设置下拉框的值
-                            chapterList.setSelectedItem(chapter.getName());
-                            // 回到顶部
-                            textContent.setCaretPosition(1);
+                        }
+                        if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                            ImportBookData bookData = ImportBookData.getInstance();
+                            bookData.setTextContent(textContent);
+                            textContent.setDocument(bookData.getBookHTMLDocument());
                         }
                         ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.DEFAULT_CURSOR);
                     }

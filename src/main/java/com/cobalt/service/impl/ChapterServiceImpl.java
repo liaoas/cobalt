@@ -2,8 +2,8 @@ package com.cobalt.service.impl;
 
 import cn.hutool.http.HttpUtil;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.model.Chapter;
-import com.cobalt.common.model.ImportBookData;
+import com.cobalt.entity.Chapter;
+import com.cobalt.entity.ImportBookData;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ChapterService;

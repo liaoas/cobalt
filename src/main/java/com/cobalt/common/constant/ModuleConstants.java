@@ -29,6 +29,9 @@ public class ModuleConstants {
     // 本地导入
     public static final String IMPORT = "导入";
 
+    // 网络
+    public static final String NETWORK = "网络";
+
     /*****************选项卡标题*****************/
 
     // 选项卡标签

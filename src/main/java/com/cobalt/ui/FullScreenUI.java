@@ -1,6 +1,5 @@
 package com.cobalt.ui;
 
-import com.cobalt.common.component.CommonComponent;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.enums.ToastType;

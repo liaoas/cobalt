@@ -1,6 +1,5 @@
 package com.cobalt.ui;
 
-import com.cobalt.common.component.CommonComponent;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.enums.ToastType;
@@ -141,8 +140,6 @@ public class MainUI {
 
         // 加载持久化的设置
         ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
-
-        CommonComponent.INSTANCE.setMainTextContent(textContent);
 
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);

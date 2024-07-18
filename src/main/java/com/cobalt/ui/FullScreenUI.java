@@ -1,8 +1,11 @@
 package com.cobalt.ui;
 
+import com.cobalt.common.component.CommonComponent;
+import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.model.Chapter;
+import com.cobalt.common.model.ImportBookData;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
 import com.cobalt.common.utils.ToastUtils;
@@ -86,7 +89,6 @@ public class FullScreenUI {
 
         // 加载持久化的设置
         ModuleUtils.loadSetting(paneTextContent, textContent, null);
-
     }
 
     // 页面打开方法
@@ -170,9 +172,16 @@ public class FullScreenUI {
                         } else {
                             // 获取新的章节位置
                             Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
-                            // 章节内容赋值
-                            String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
-                            textContent.setText(htmlContent);
+                            // 页面回显
+                            if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                                ImportBookData bookData = ImportBookData.getInstance();
+                                textContent.setDocument(bookData.getBookHTMLDocument());
+                                bookData.setTextContent(textContent);
+                            } else {
+                                // 章节内容赋值
+                                String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+                                textContent.setText(htmlContent);
+                            }
                             // 设置下拉框的值
                             chapterList.setSelectedItem(chapter.getName());
                             // 回到顶部

@@ -139,21 +139,21 @@ public class ContentServiceImpl implements ContentService {
 
         Map<String, String> bookMap = bookData.getBookMap();
 
-        if (bookData.getBookType().equals(Constants.EPUB_STR_LOWERCASE) ||
-                bookData.getBookType().equals(Constants.EPUB_STR_UPPERCASE)) {
+        if (instance.bookType.equals(Constants.EPUB_STR_LOWERCASE) && !bookMap.isEmpty()) {
 
-            int i = Integer.parseInt(bookMap.get(url));
+            int index = Integer.parseInt(bookMap.get(url));
 
             Book book = bookData.getEpubBookBook();
 
-            Resource resource = book.getTableOfContents().getTocReferences().get(i).getResource();
+            Resource resource = book.getTableOfContents().getTocReferences().get(index).getResource();
 
             Navigator navigator = new Navigator(book);
             HTMLDocumentFactory htmlDocumentFactory = new HTMLDocumentFactory(navigator, bookData.getTextContent().getEditorKit());
             htmlDocumentFactory.init(book);
             HTMLDocument document = htmlDocumentFactory.getDocument(resource);
-            String string = document.toString();
             bookData.getTextContent().setDocument(document);
+
+            bookData.setBookHTMLDocument(document);
         }
 
         instance.textContent = bookMap.get(url);

@@ -1,8 +1,11 @@
 package com.cobalt.ui;
 
+import com.cobalt.common.component.CommonComponent;
+import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.model.Chapter;
+import com.cobalt.common.model.ImportBookData;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
 import com.cobalt.common.utils.ToastUtils;
@@ -136,11 +139,18 @@ public class MainUI {
         // 加载提示信息
         ModuleUtils.loadComponentTooltip(btnSearch, openBook, settingBtn, btnOn, underOn, jumpButton);
 
+        // 加载持久化的设置
+        ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
+
+        CommonComponent.INSTANCE.setMainTextContent(textContent);
+
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
 
-        // 加载持久化的设置
-        ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
+        // 页面回显
+        if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+            new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
+        }
     }
 
     // 页面初始化加载
@@ -305,9 +315,16 @@ public class MainUI {
                         // 获取新的章节位置
                         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
 
-                        // 章节内容赋值
-                        String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
-                        textContent.setText(htmlContent);
+                        // 页面回显
+                        if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                            ImportBookData bookData = ImportBookData.getInstance();
+                            textContent.setDocument(bookData.getBookHTMLDocument());
+                            bookData.setTextContent(textContent);
+                        } else {
+                            // 章节内容赋值
+                            String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+                            textContent.setText(htmlContent);
+                        }
                         // 设置下拉框的值
                         chapterList.setSelectedItem(chapter.getName());
                         // 回到顶部
@@ -370,7 +387,7 @@ public class MainUI {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
         paneTextContent.getVerticalScrollBar().setUnitIncrement(settingsUI.getReadRollVal());
         // 还原滚动位置
-        textContent.setCaretPosition(readSubscriptDao.homeTextWinIndex);
+        // textContent.setCaretPosition(readSubscriptDao.homeTextWinIndex);
         // 持久化
         settingDao.scrollSpacingScale = settingsUI.getReadRollVal();
         settingDao.loadState(settingDao);

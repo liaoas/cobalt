@@ -3,6 +3,7 @@ package com.cobalt.common.model;
 import nl.siegmann.epublib.domain.Book;
 
 import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,9 @@ public class ImportBookData {
 
     // Epub Book
     private Book epubBook = null;
+
+    // HTMLDocument
+    private HTMLDocument bookHTMLDocument = null;
 
     // 章节内容
     private JEditorPane textContent;
@@ -81,5 +85,13 @@ public class ImportBookData {
 
     public void setEpubBookBook(Book ePubBook) {
         INSTANCE.epubBook = ePubBook;
+    }
+
+    public HTMLDocument getBookHTMLDocument() {
+        return INSTANCE.bookHTMLDocument;
+    }
+
+    public void setBookHTMLDocument(HTMLDocument bookHTMLDocument) {
+        INSTANCE.bookHTMLDocument = bookHTMLDocument;
     }
 }

@@ -132,19 +132,15 @@ public class ModuleUtils {
      */
     public static void applyFontSize(JEditorPane textContent) {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
-        // 存储窗口组件
-        ImportBookData bookData = ImportBookData.getInstance();
 
-        if (!instance.searchType.equals(ModuleConstants.IMPORT) &&
-                (!bookData.getBookType().equals(Constants.EPUB_STR_UPPERCASE) ||
-                        !bookData.getBookType().equals(Constants.EPUB_STR_LOWERCASE))) {
+        if (instance.searchType.equals(ModuleConstants.IMPORT) && !instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
             // 章节内容赋值
             String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
             textContent.setText(htmlContent);
         }
 
         // 还原滚动位置
-        textContent.setCaretPosition(readSubscriptDao.homeTextWinIndex);
+        // textContent.setCaretPosition(readSubscriptDao.homeTextWinIndex);
         // 持久化
         settingDao.fontSize = settingsUI.getFontSizeVal();
         settingDao.loadState(settingDao);

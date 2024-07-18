@@ -37,15 +37,18 @@ public class ReadingProgressPersistent implements PersistentStateComponent<Readi
 
     public String importPath;
 
+    public String bookType;
+
     public ReadingProgressPersistent() {
     }
 
-    public ReadingProgressPersistent(String searchType, int nowChapterIndex, List<Chapter> chapters, String textContent, String importPath) {
+    public ReadingProgressPersistent(String searchType, int nowChapterIndex, List<Chapter> chapters, String textContent, String importPath, String bookType) {
         this.searchType = searchType;
         this.nowChapterIndex = nowChapterIndex;
         this.chapters = chapters;
         this.textContent = textContent;
         this.importPath = importPath;
+        this.bookType = bookType;
     }
 
     @Override

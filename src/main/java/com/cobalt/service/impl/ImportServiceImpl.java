@@ -6,6 +6,7 @@ import com.cobalt.common.model.ImportBookData;
 import com.cobalt.common.parse.EpubContentParser;
 import com.cobalt.common.parse.TxtContentParser;
 import com.cobalt.common.utils.StringUtils;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.service.ImportService;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,9 @@ import java.util.Map;
  * @since 2023-04-18
  */
 public class ImportServiceImpl implements ImportService {
+
+    // 阅读状态
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     /**
      * 导入书籍
@@ -51,15 +55,15 @@ public class ImportServiceImpl implements ImportService {
         // 执行书籍解析
 
         // 存储书籍
-        ImportBookData instance = ImportBookData.getInstance();
+        ImportBookData bookData = ImportBookData.getInstance();
         try {
             if (extension.equals(Constants.TXT_STR_LOWERCASE) || extension.equals(Constants.TXT_STR_UPPERCASE)) {
-                bookMap = TxtContentParser.parseTxt(filePath, chapterList, instance);
-                instance.setBookType(Constants.TXT_STR_LOWERCASE);
+                bookMap = TxtContentParser.parseTxt(filePath, chapterList, bookData);
+                instance.bookType = Constants.TXT_STR_LOWERCASE;
             } else if (extension.equals(Constants.EPUB_STR_LOWERCASE) || extension.equals(Constants.EPUB_STR_UPPERCASE)) {
                 // epub
-                bookMap = EpubContentParser.parseEpubByEpubLib(filePath, chapterList, instance);
-                instance.setBookType(Constants.EPUB_STR_LOWERCASE);
+                bookMap = EpubContentParser.parseEpubByEpubLib(filePath, chapterList, bookData);
+                instance.bookType = Constants.EPUB_STR_LOWERCASE;
             }
         } catch (Exception e) {
             return false;

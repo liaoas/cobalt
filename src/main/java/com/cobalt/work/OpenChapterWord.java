@@ -82,13 +82,7 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
     protected void process(List<Chapter> chapters) {
         Chapter chapter = chapters.get(0);
 
-        // 存储窗口组件
-        ImportBookData bookData = ImportBookData.getInstance();
-
-        if (!instance.searchType.equals(ModuleConstants.IMPORT) &&
-                (!bookData.getBookType().equals(Constants.EPUB_STR_UPPERCASE) ||
-                        !bookData.getBookType().equals(Constants.EPUB_STR_LOWERCASE))) {
-            // 章节内容赋值
+        if (instance.searchType.equals(ModuleConstants.IMPORT) && !instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {            // 章节内容赋值
             String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
             textContent.setText(htmlContent);
             // 回到顶部

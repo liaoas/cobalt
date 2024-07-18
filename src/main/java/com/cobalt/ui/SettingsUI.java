@@ -28,72 +28,58 @@ public class SettingsUI {
      * 组件窗口
      */
     private JPanel settingWin;
-
     /**
      * 阅读标题分割线
      */
     private JProgressBar readProgressBar;
-
     /**
      * 字体大小下拉框
      */
     private JComboBox<Integer> fontSize;
-
     /**
      * 阅读滚动间距下拉框
      */
     private JComboBox<Integer> readRoll;
-
     /**
      * 导入标题分割线
      */
     private JProgressBar importProgressBar;
-
     /**
      * 书籍导入组件
      */
     private TextFieldWithBrowseButton selectFile;
-
     /**
      * 章节正则
      */
     private JTextField chapterRegular;
-
     /**
      * 章节正则override
      */
     private JCheckBox overrideCheckBox;
-
     /**
      * 爬虫规则拉取按钮
      */
     private JButton reptilePullBut;
-
     /**
      * 爬虫规则输入框
      */
     private ExpandableTextField reptileConfigInput;
-
     /**
      * 页面是否修改
      */
     public boolean isModified = false;
-
     /**
      * 是否导入书籍
      */
     public boolean isSelBook = false;
-
     /**
      * 字体大小值
      */
     private int fontSizeVal = Constants.DEFAULT_FONT_SIZE;
-
     /**
      * 滚轮速度大小值
      */
     private int readRollVal = Constants.DEFAULT_READ_ROLL_SIZE;
-
     /**
      * 导入书籍的路径
      */
@@ -101,14 +87,11 @@ public class SettingsUI {
 
     // 页面设置持久化
     private static SettingsPersistent settingDao = SettingsPersistent.getInstance();
-
     private static ReadingProgressPersistent progressDao = ReadingProgressPersistent.getInstance();
-
     private static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     public SettingsUI() {
         init();
-
     }
 
     public JPanel getSettingWin() {
@@ -173,10 +156,8 @@ public class SettingsUI {
             fontSize.addItem(size);
             readRoll.addItem(size);
         }
-
         // 默认字体大小
         fontSize.setSelectedItem(16);
-
         // 默认正则值
         chapterRegular.setText("下次版本更新，目前只可导入书籍");
     }
@@ -193,14 +174,12 @@ public class SettingsUI {
                 if (files.length == 0) {
                     return;
                 }
-
                 VirtualFile file = files[0];
 
                 importBookPath = file.getPath();
 
                 isSelBook = true;
             }
-
         });
 
         // 正则 Override 复选框单击事件

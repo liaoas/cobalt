@@ -26,20 +26,16 @@ public class EpubContentParser {
         Map<String, String> result = new LinkedHashMap<>();
         try (FileInputStream in = new FileInputStream(file)) {
             EpubReader reader = new EpubReader();
-
             Book book = reader.readEpub(in);
             instance.setEpubBookBook(book);
+
             TableOfContents tableOfContents = book.getTableOfContents();
-
             List<TOCReference> tocReferences = tableOfContents.getTocReferences();
-
             for (int i = 0, size = tocReferences.size(); i < size; i++) {
-
                 TOCReference reference = tableOfContents.getTocReferences().get(i);
                 result.put(reference.getTitle(), String.valueOf(i));
                 chapterList.add(new Chapter(reference.getTitle(), reference.getTitle()));
             }
-
         } catch (Exception ignored) {
         }
 

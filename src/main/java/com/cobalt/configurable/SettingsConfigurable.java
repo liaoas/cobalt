@@ -29,17 +29,12 @@ public class SettingsConfigurable implements Configurable {
 
     @Override
     public @Nullable JComponent createComponent() {
-
         settingsUI = new SettingsUI();
-
         // 状态改为未修改
         settingsUI.setModified(false);
-
         // 加载持久化状态
         settingsUI.loadPersistentState();
-
         BeanFactory.setBean("SettingsUI", settingsUI);
-
         return settingsUI.getSettingWin();
     }
 
@@ -50,14 +45,11 @@ public class SettingsConfigurable implements Configurable {
 
     @Override
     public void apply() {
-
         settingsUI.apply();
-
         MainUI mainUI = (MainUI) BeanFactory.getBean("MainUI");
         mainUI.apply();
-
         FullScreenUI fullScreenUI = (FullScreenUI) BeanFactory.getBean("FullScreenUI");
         fullScreenUI.apply();
-
     }
+
 }

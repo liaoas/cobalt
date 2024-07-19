@@ -51,9 +51,9 @@ public class BeanFactory {
     }
 
     static {
-        beanMap.put("BookParserFacade", "com.cobalt.book.BookParserFacade");
-        beanMap.put("ChapterParserFacade", "com.cobalt.chapter.ChapterParserFacade");
-        beanMap.put("ContentParserFacade", "com.cobalt.content.ContentParserFacade");
+        beanMap.put("BookParserFacade", "com.cobalt.parser.book.BookParserFacade");
+        beanMap.put("ChapterParserFacade", "com.cobalt.parser.chapter.ChapterParserFacade");
+        beanMap.put("ContentParserFacade", "com.cobalt.parser.content.ContentParserFacade");
         try {
             for (String baneName : beanMap.keySet()) {
                 String beanValue = beanMap.get(baneName);

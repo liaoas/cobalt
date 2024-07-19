@@ -62,8 +62,7 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
     private void loadOverallComponentStyle() {
         List<Component> components = getComponents();
         for (Component component : components) {
-            if (component instanceof JButton) {
-                JButton button = (JButton) component;
+            if (component instanceof JButton button) {
                 button.addMouseListener(new MouseAdapter() {
                     public void mouseEntered(MouseEvent e) {
                         // 鼠标进入组件时设置背景色

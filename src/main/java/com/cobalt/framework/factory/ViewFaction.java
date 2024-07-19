@@ -1,6 +1,5 @@
 package com.cobalt.framework.factory;
 
-import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.config.ProjectConfig;
 import com.cobalt.content.FullScreenUIContent;
 import com.cobalt.content.MainUIContent;
@@ -125,7 +124,7 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
 
 
     /**
-     * 加载爬虫喷子h
+     * 加载爬虫配置
      */
     public static void initSpiderConfig() {
         spiderActionDao.spiderActionStr = loadGitHubConfig();

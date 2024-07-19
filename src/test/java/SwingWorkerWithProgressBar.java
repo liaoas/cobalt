@@ -16,10 +16,8 @@ import java.util.List;
  */
 public class SwingWorkerWithProgressBar extends JFrame {
 
-    private JPanel contentPane;
-
     // 进度条组件
-    private JProgressBar progressBar;
+    private final JProgressBar progressBar;
 
     /**
      * Launch the application.
@@ -43,7 +41,7 @@ public class SwingWorkerWithProgressBar extends JFrame {
     public SwingWorkerWithProgressBar() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(JBUI.Borders.empty(5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);

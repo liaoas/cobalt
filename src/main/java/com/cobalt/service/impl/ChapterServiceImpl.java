@@ -38,20 +38,20 @@ public class ChapterServiceImpl implements ChapterService {
     public void getBookChapterByType(String link) {
         if (instance.searchType.equals(ModuleConstants.IMPORT)) {
             importChapterData();
-        } else {
-            rabbitFootChapterData(link);
+            return;
         }
+        rabbitFootChapterData(link);
     }
 
+    /**
+     * 远程爬取书籍处理
+     * @param link 链接
+     */
     @Override
     public void rabbitFootChapterData(String link) {
-
         instance.chapters.clear();
-
         ResolverFactory<Chapter> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, ReptileType.CHAPTER, link);
-
         List<Chapter> capture = search.capture();
-
         instance.chapters.addAll(capture);
     }
 
@@ -61,7 +61,6 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public void importChapterData() {
         instance.chapters.clear();
-
         ImportBookData importBookData = ImportBookData.getInstance();
         List<Chapter> chapterList = importBookData.getChapterList();
         instance.chapters.addAll(chapterList);

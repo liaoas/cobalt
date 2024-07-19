@@ -11,9 +11,14 @@ import com.cobalt.common.domain.BookData;
  * @since 2021/1/14
  */
 public class Convert {
+    /**
+     * BookData转为数组
+     *
+     * @param noteData book
+     * @return array
+     */
     public static String[] bookData2Array(BookData noteData) {
         String[] raw = new String[5];
-
         raw[0] = noteData.getBookName();
         raw[1] = noteData.getChapter();
         raw[2] = noteData.getAuthor();

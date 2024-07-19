@@ -18,15 +18,17 @@ public interface ChapterService {
     void getBookChapterByType(String link);
 
     /**
-     * 本地导入书籍处理
-     */
-    void importChapterData();
-
-    /**
      * 远程爬取书籍处理
      *
      * @param link 链接
      */
     void rabbitFootChapterData(String link);
+
+    /**
+     * 本地导入书籍处理
+     */
+    void importChapterData();
+
+
 
 }

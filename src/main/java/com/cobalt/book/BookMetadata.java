@@ -1,5 +1,6 @@
-package com.cobalt.common.domain;
+package com.cobalt.book;
 
+import com.cobalt.chapter.Chapter;
 import com.cobalt.framework.viewer.HTMLDocumentFactory;
 import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
@@ -20,10 +21,10 @@ import java.util.Map;
  * @author LiAo
  * @since 2023-04-19
  */
-public class ImportBookData {
+public class BookMetadata {
 
     // 单例
-    private static final ImportBookData INSTANCE = new ImportBookData();
+    private static final BookMetadata INSTANCE = new BookMetadata();
 
     // 存储书籍信息
     private Map<String, String> bookMap = new HashMap<>(16);
@@ -42,7 +43,7 @@ public class ImportBookData {
 
     private Navigator navigator = null;
 
-    private ImportBookData() {
+    private BookMetadata() {
     }
 
     public static void initDocument(int index) {
@@ -61,7 +62,7 @@ public class ImportBookData {
         return htmlDocumentFactory.getDocument(resource);
     }
 
-    public static ImportBookData getInstance() {
+    public static BookMetadata getInstance() {
         return INSTANCE;
     }
 

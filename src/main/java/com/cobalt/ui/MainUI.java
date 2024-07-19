@@ -1,9 +1,10 @@
 package com.cobalt.ui;
 
+import com.cobalt.book.BookParser;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.domain.Chapter;
-import com.cobalt.common.domain.ImportBookData;
+import com.cobalt.chapter.Chapter;
+import com.cobalt.book.BookMetadata;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
@@ -14,10 +15,9 @@ import com.cobalt.framework.persistence.ReadSubscriptPersistent;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
-import com.cobalt.service.impl.ImportServiceImpl;
-import com.cobalt.framework.work.OpenBoosWork;
-import com.cobalt.framework.work.OpenChapterWord;
-import com.cobalt.framework.work.SearchBooksWork;
+import com.cobalt.content.ContentWork;
+import com.cobalt.chapter.ChapterWord;
+import com.cobalt.book.BooksWork;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
@@ -100,7 +100,7 @@ public class MainUI {
     // 爬虫资源配置项
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
     // 书籍导入处理类
-    static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
+    static BookParser bookParser = (BookParser) BeanFactory.getBean("BookParser");
 
 
     // 初始化数据
@@ -119,13 +119,13 @@ public class MainUI {
         // 加载持久化的设置
         ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
         // 存储窗口组件
-        ImportBookData bookData = ImportBookData.getInstance();
+        BookMetadata bookData = BookMetadata.getInstance();
         bookData.setTextContent(textContent);
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
         // 页面回显
         if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
-            new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
+            new ChapterWord(project, textContent, chapterList, mainPanel).execute();
         }
     }
 
@@ -173,7 +173,7 @@ public class MainUI {
             // 获取书籍链接
             valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
             // 执行开始阅读
-            new OpenBoosWork(valueAt, chapterList, project, textContent, mainPanel).execute();
+            new ContentWork(valueAt, chapterList, project, textContent, mainPanel).execute();
             // 阅读进度持久化
             instance.loadState(instance);
         });
@@ -190,7 +190,7 @@ public class MainUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
-            new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
+            new ChapterWord(project, textContent, chapterList, mainPanel).execute();
             // 阅读进度持久化
             instance.loadState(instance);
         });
@@ -209,7 +209,7 @@ public class MainUI {
             // 章节下标加一
             instance.nowChapterIndex = instance.nowChapterIndex + 1;
             // 加载阅读信息
-            new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
+            new ChapterWord(project, textContent, chapterList, mainPanel).execute();
             // 阅读进度持久化
             instance.loadState(instance);
         });
@@ -228,7 +228,7 @@ public class MainUI {
                 return;
             }
             // 加载阅读信息
-            new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
+            new ChapterWord(project, textContent, chapterList, mainPanel).execute();
 
             // 阅读进度持久化
             instance.loadState(instance);
@@ -268,7 +268,7 @@ public class MainUI {
                         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
                         // 页面回显
                         if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
-                            ImportBookData bookData = ImportBookData.getInstance();
+                            BookMetadata bookData = BookMetadata.getInstance();
                             bookData.setTextContent(textContent);
                             textContent.setDocument(bookData.getBookHTMLDocument());
                         } else {
@@ -327,7 +327,7 @@ public class MainUI {
         // 获取数据源类型
         instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
         instance.bookType = ModuleConstants.NETWORK;
-        new SearchBooksWork(bookSearchName, project, mainPanel).execute();
+        new BooksWork(bookSearchName, project, mainPanel).execute();
     }
 
 
@@ -358,13 +358,13 @@ public class MainUI {
                 ToastUtils.showToastMassage(project, "文件不存在", ToastType.ERROR);
                 return;
             }
-            if (!importService.importBook(file)) {
+            if (!bookParser.importBook(file)) {
                 ToastUtils.showToastMassage(project, "书籍导入失败", ToastType.ERROR);
                 return;
             }
             instance.searchType = ModuleConstants.IMPORT;
             // 执行开始阅读
-            new OpenBoosWork(valueAt, chapterList, project, textContent, mainPanel).execute();
+            new ContentWork(valueAt, chapterList, project, textContent, mainPanel).execute();
             // 阅读进度持久化
             instance.loadState(instance);
         }

@@ -1,8 +1,8 @@
 package com.cobalt.common.parse;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.domain.Chapter;
-import com.cobalt.common.domain.ImportBookData;
+import com.cobalt.chapter.Chapter;
+import com.cobalt.book.BookMetadata;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import nl.siegmann.epublib.domain.*;
 import nl.siegmann.epublib.epub.EpubReader;
@@ -36,7 +36,7 @@ public class EpubContentParser {
         try (FileInputStream in = new FileInputStream(file)) {
             EpubReader reader = new EpubReader();
             Book book = reader.readEpub(in);
-            ImportBookData.getInstance().setEpubBookBook(book);
+            BookMetadata.getInstance().setEpubBookBook(book);
 
             TableOfContents tableOfContents = book.getTableOfContents();
             List<TOCReference> tocReferences = tableOfContents.getTocReferences();
@@ -48,8 +48,8 @@ public class EpubContentParser {
         } catch (Exception e) {
             log.error("书籍解析失败，filePath：{}", file, e);
         }
-        ImportBookData.getInstance().setChapterList(chapterList);
-        ImportBookData.getInstance().setBookMap(result);
+        BookMetadata.getInstance().setChapterList(chapterList);
+        BookMetadata.getInstance().setBookMap(result);
         instance.bookType = Constants.EPUB_STR_LOWERCASE;
 
         return result;

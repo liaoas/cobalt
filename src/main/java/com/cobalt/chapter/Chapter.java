@@ -1,4 +1,4 @@
-package com.cobalt.common.domain;
+package com.cobalt.chapter;
 
 /**
  * <p>

@@ -1,11 +1,10 @@
-package com.cobalt.service.impl;
+package com.cobalt.content;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.domain.ImportBookData;
+import com.cobalt.book.BookMetadata;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
-import com.cobalt.service.ContentService;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
 import org.slf4j.Logger;
@@ -22,9 +21,9 @@ import java.util.Map;
  * @author LiAo
  * @since 2021/1/14
  */
-public class ContentServiceImpl implements ContentService {
+public class ContentParser {
 
-    private final static Logger log = LoggerFactory.getLogger(ContentServiceImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(ContentParser.class);
 
     // 阅读进度持久化
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
@@ -36,7 +35,6 @@ public class ContentServiceImpl implements ContentService {
      *
      * @param url 链接
      */
-    @Override
     public void searchBookChapterData(String url) {
         try {
             switch (instance.searchType) {
@@ -64,11 +62,11 @@ public class ContentServiceImpl implements ContentService {
      * @param url 链接/map key
      */
     public void getImportBook(String url) {
-        ImportBookData bookData = ImportBookData.getInstance();
+        BookMetadata bookData = BookMetadata.getInstance();
         Map<String, String> bookMap = bookData.getBookMap();
         if (instance.bookType.equals(Constants.EPUB_STR_LOWERCASE) && !bookMap.isEmpty()) {
             int index = Integer.parseInt(bookMap.get(url));
-            ImportBookData.initDocument(index);
+            BookMetadata.initDocument(index);
         }
         instance.textContent = bookMap.get(url);
     }

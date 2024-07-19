@@ -3,15 +3,15 @@ package com.cobalt.ui;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.enums.ToastType;
-import com.cobalt.common.domain.Chapter;
-import com.cobalt.common.domain.ImportBookData;
+import com.cobalt.chapter.Chapter;
+import com.cobalt.book.BookMetadata;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
 import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
-import com.cobalt.framework.work.OpenChapterWord;
+import com.cobalt.chapter.ChapterWord;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -95,7 +95,7 @@ public class FullScreenUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
-            new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
+            new ChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 下一章跳转
@@ -108,7 +108,7 @@ public class FullScreenUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex + 1;
             // 加载阅读信息
-            new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
+            new ChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 章节跳转
@@ -122,7 +122,7 @@ public class FullScreenUI {
             // 根据下标跳转
             instance.nowChapterIndex = chapterList.getSelectedIndex();
             // 加载阅读信息
-            new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
+            new ChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 窗口加载结束
@@ -163,7 +163,7 @@ public class FullScreenUI {
                             }
                         }
                         if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
-                            ImportBookData bookData = ImportBookData.getInstance();
+                            BookMetadata bookData = BookMetadata.getInstance();
                             bookData.setTextContent(textContent);
                             textContent.setDocument(bookData.getBookHTMLDocument());
                         }
@@ -184,7 +184,7 @@ public class FullScreenUI {
             chapterList.addItem(chapter1.getName());
         }
         // 加载阅读信息
-        new OpenChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
+        new ChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
     }
 
     /**

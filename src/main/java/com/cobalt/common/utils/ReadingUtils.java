@@ -1,12 +1,12 @@
 package com.cobalt.common.utils;
 
+import com.cobalt.book.BookParser;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.domain.Chapter;
+import com.cobalt.chapter.Chapter;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
-import com.cobalt.service.impl.ImportServiceImpl;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 
@@ -28,7 +28,7 @@ public class ReadingUtils {
     // 页面设置持久化
     static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
-    static ImportServiceImpl importService = (ImportServiceImpl) BeanFactory.getBean("ImportServiceImpl");
+    static BookParser bookParser = (BookParser) BeanFactory.getBean("BookParser");
 
     /**
      * 加载阅读进度
@@ -56,7 +56,7 @@ public class ReadingUtils {
             if (file == null) {
                 return;
             }
-            importService.importBook(file);
+            bookParser.importBook(file);
         }
         // 页面回显
         if (!instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {

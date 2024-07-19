@@ -1,14 +1,11 @@
-package com.cobalt.framework.work;
+package com.cobalt.book;
 
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.core.Convert;
 import com.cobalt.common.enums.ToastType;
-import com.cobalt.common.domain.BookData;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.framework.factory.BeanFactory;
-import com.cobalt.service.SearchService;
-import com.cobalt.service.impl.SearchServiceImpl;
 import com.intellij.openapi.project.Project;
 
 import javax.swing.*;
@@ -23,9 +20,9 @@ import java.util.List;
  * @author LiAo
  * @since 2024-03-27
  */
-public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
+public final class BooksWork extends SwingWorker<Void, List<Book>> {
 
-    static SearchService searchService = (SearchServiceImpl) BeanFactory.getBean("SearchServiceImpl");
+    static BookParser bookParser = (BookParser) BeanFactory.getBean("BookParser");
     // 搜索书籍名称
     private final String bookSearchName;
     // 全局模块对象
@@ -33,7 +30,7 @@ public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
     // 窗口
     private final JPanel mainPanel;
 
-    public SearchBooksWork(String bookSearchName, Project project, JPanel mainPanel) {
+    public BooksWork(String bookSearchName, Project project, JPanel mainPanel) {
         this.bookSearchName = bookSearchName;
         this.project = project;
         this.mainPanel = mainPanel;
@@ -41,7 +38,7 @@ public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
 
     @Override
     protected Void doInBackground() {
-        List<BookData> bookData = searchService.getBookNameData(bookSearchName);
+        List<Book> bookData = bookParser.getBookNameData(bookSearchName);
 
         if (bookData == null || bookData.isEmpty()) {
             ToastUtils.showToastMassage(project, "没有找到关于 “" + bookSearchName + "” 的书，换个搜索词试试吧。", ToastType.ERROR);
@@ -53,9 +50,9 @@ public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
     }
 
     @Override
-    protected void process(List<List<BookData>> chunks) {
-        List<BookData> bookData = chunks.get(0);
-        for (BookData bookDatum : bookData) {
+    protected void process(List<List<Book>> chunks) {
+        List<Book> bookData = chunks.get(0);
+        for (Book bookDatum : bookData) {
             ModuleConstants.tableModel.addRow(Convert.bookData2Array(bookDatum));
         }
     }

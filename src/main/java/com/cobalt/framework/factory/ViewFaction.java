@@ -1,9 +1,9 @@
 package com.cobalt.framework.factory;
 
 import com.cobalt.config.ProjectConfig;
-import com.cobalt.content.FullScreenUIContent;
-import com.cobalt.content.MainUIContent;
-import com.cobalt.content.ReadingHistoryUIContent;
+import com.cobalt.container.FullScreenUIContent;
+import com.cobalt.container.MainUIContent;
+import com.cobalt.container.ReadingHistoryUIContent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.ui.FullScreenUI;
 import com.cobalt.ui.MainUI;

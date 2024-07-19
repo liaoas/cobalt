@@ -1,8 +1,8 @@
 package com.cobalt.common.parse;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.domain.Chapter;
-import com.cobalt.common.domain.ImportBookData;
+import com.cobalt.chapter.Chapter;
+import com.cobalt.book.BookMetadata;
 import com.cobalt.common.utils.LocalCharsetUtil;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import org.slf4j.Logger;
@@ -80,8 +80,8 @@ public class TxtContentParser {
             log.error("书籍解析失败，filePath：{}", filePath, e);
         }
 
-        ImportBookData.getInstance().setChapterList(chapterList);
-        ImportBookData.getInstance().setBookMap(chapterMap);
+        BookMetadata.getInstance().setChapterList(chapterList);
+        BookMetadata.getInstance().setBookMap(chapterMap);
         instance.bookType = Constants.TXT_STR_LOWERCASE;
 
         return chapterMap;

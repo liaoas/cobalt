@@ -1,12 +1,12 @@
-package com.cobalt.framework.work;
+package com.cobalt.content;
 
+import com.cobalt.chapter.ChapterParser;
+import com.cobalt.chapter.ChapterWord;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.domain.Chapter;
+import com.cobalt.chapter.Chapter;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.service.ChapterService;
-import com.cobalt.service.impl.ChapterServiceImpl;
 import com.cobalt.ui.MainUI;
 import com.intellij.openapi.project.Project;
 
@@ -21,7 +21,7 @@ import java.awt.*;
  * @author LiAo
  * @since 2024-03-27
  */
-public final class OpenBoosWork extends SwingWorker<Void, Void> {
+public final class ContentWork extends SwingWorker<Void, Void> {
 
     // 书籍链接
     private final String valueAt;
@@ -36,10 +36,10 @@ public final class OpenBoosWork extends SwingWorker<Void, Void> {
     // 阅读进度持久化
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
     // 章节爬虫
-    static ChapterService chapterService = (ChapterServiceImpl) BeanFactory.getBean("ChapterServiceImpl");
+    static ChapterParser chapterParser = (ChapterParser) BeanFactory.getBean("ChapterParser");
 
 
-    public OpenBoosWork(String valueAt, JComboBox<String> chapterList, Project project, JEditorPane textContent, JPanel mainPanel) {
+    public ContentWork(String valueAt, JComboBox<String> chapterList, Project project, JEditorPane textContent, JPanel mainPanel) {
         this.valueAt = valueAt;
         this.chapterList = chapterList;
         this.project = project;
@@ -49,7 +49,7 @@ public final class OpenBoosWork extends SwingWorker<Void, Void> {
 
     @Override
     protected Void doInBackground() {
-        chapterService.getBookChapterByType(valueAt);
+        chapterParser.getBookChapterByType(valueAt);
         return null;
     }
 
@@ -64,7 +64,7 @@ public final class OpenBoosWork extends SwingWorker<Void, Void> {
             chapterList.addItem(chapter.getName());
         }
         // 解析当前章节内容
-        new OpenChapterWord(project, textContent, chapterList, mainPanel).execute();
+        new ChapterWord(project, textContent, chapterList, mainPanel).execute();
         // 书本已切换
         MainUI.isReadClick = true;
 

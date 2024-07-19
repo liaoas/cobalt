@@ -1,15 +1,13 @@
-package com.cobalt.framework.work;
+package com.cobalt.chapter;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.enums.ToastType;
-import com.cobalt.common.domain.Chapter;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ToastUtils;
+import com.cobalt.content.ContentParser;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
-import com.cobalt.service.ContentService;
-import com.cobalt.service.impl.ContentServiceImpl;
 import com.intellij.openapi.project.Project;
 
 import javax.swing.*;
@@ -24,7 +22,7 @@ import java.util.List;
  * @author LiAo
  * @since 2024-03-27
  */
-public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
+public final class ChapterWord extends SwingWorker<Void, Chapter> {
 
     // 全局模块对象
     public final Project project;
@@ -40,9 +38,9 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
     // 页面设置持久化
     static SettingsPersistent settingDao = SettingsPersistent.getInstance();
     // 内容爬虫
-    static ContentService textService = (ContentServiceImpl) BeanFactory.getBean("ContentServiceImpl");
+    static ContentParser contentParser = (ContentParser) BeanFactory.getBean("ContentParser");
 
-    public OpenChapterWord(Project project, JEditorPane textContent, JComboBox<String> chapterList, JPanel mainPanel) {
+    public ChapterWord(Project project, JEditorPane textContent, JComboBox<String> chapterList, JPanel mainPanel) {
         this.project = project;
         this.textContent = textContent;
         this.chapterList = chapterList;
@@ -54,7 +52,7 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
         // 清空书本表格
         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
         // 内容
-        textService.searchBookChapterData(chapter.getLink());
+        contentParser.searchBookChapterData(chapter.getLink());
         if (instance.textContent == null) {
             ToastUtils.showToastMassage(project, "章节获取失败", ToastType.ERROR);
             return null;

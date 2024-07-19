@@ -1,11 +1,9 @@
-package com.cobalt.service.impl;
+package com.cobalt.chapter;
 
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.domain.Chapter;
-import com.cobalt.common.domain.ImportBookData;
+import com.cobalt.book.BookMetadata;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
-import com.cobalt.service.ChapterService;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
 
@@ -19,7 +17,7 @@ import java.util.List;
  * @author LiAo
  * @since 2021/1/14
  */
-public class ChapterServiceImpl implements ChapterService {
+public class ChapterParser {
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
@@ -29,7 +27,6 @@ public class ChapterServiceImpl implements ChapterService {
      *
      * @param link 链接
      */
-    @Override
     public void getBookChapterByType(String link) {
         if (instance.searchType.equals(ModuleConstants.IMPORT)) {
             importChapterData();
@@ -42,7 +39,6 @@ public class ChapterServiceImpl implements ChapterService {
      * 远程爬取书籍处理
      * @param link 链接
      */
-    @Override
     public void rabbitFootChapterData(String link) {
         instance.chapters.clear();
         ResolverFactory<Chapter> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, ReptileType.CHAPTER, link);
@@ -53,10 +49,9 @@ public class ChapterServiceImpl implements ChapterService {
     /**
      * 加载手动导入的章节信息
      */
-    @Override
     public void importChapterData() {
         instance.chapters.clear();
-        ImportBookData importBookData = ImportBookData.getInstance();
+        BookMetadata importBookData = BookMetadata.getInstance();
         List<Chapter> chapterList = importBookData.getChapterList();
         instance.chapters.addAll(chapterList);
     }

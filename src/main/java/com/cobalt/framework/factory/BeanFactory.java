@@ -51,10 +51,9 @@ public class BeanFactory {
     }
 
     static {
-        beanMap.put("ChapterServiceImpl", "com.cobalt.service.impl.ChapterServiceImpl");
-        beanMap.put("SearchServiceImpl", "com.cobalt.service.impl.SearchServiceImpl");
-        beanMap.put("ContentServiceImpl", "com.cobalt.service.impl.ContentServiceImpl");
-        beanMap.put("ImportServiceImpl", "com.cobalt.service.impl.ImportServiceImpl");
+        beanMap.put("ChapterParser", "com.cobalt.chapter.ChapterParser");
+        beanMap.put("BookParser", "com.cobalt.book.BookParser");
+        beanMap.put("ContentParser", "com.cobalt.content.ContentParser");
         try {
             for (String baneName : beanMap.keySet()) {
                 String beanValue = beanMap.get(baneName);

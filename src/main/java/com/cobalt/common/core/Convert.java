@@ -1,6 +1,6 @@
 package com.cobalt.common.core;
 
-import com.cobalt.common.domain.BookData;
+import com.cobalt.book.Book;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ public class Convert {
      * @param noteData book
      * @return array
      */
-    public static String[] bookData2Array(BookData noteData) {
+    public static String[] bookData2Array(Book noteData) {
         String[] raw = new String[5];
         raw[0] = noteData.getBookName();
         raw[1] = noteData.getChapter();

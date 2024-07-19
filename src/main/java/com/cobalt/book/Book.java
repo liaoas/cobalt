@@ -1,4 +1,4 @@
-package com.cobalt.common.domain;
+package com.cobalt.book;
 
 /**
  * <p>
@@ -8,7 +8,7 @@ package com.cobalt.common.domain;
  * @author LiAo
  * @since 2021/1/13
  */
-public class BookData {
+public class Book {
 
     // 名称
     private String bookName;
@@ -25,7 +25,7 @@ public class BookData {
     // 链接
     private String bookLink;
 
-    public BookData() {
+    public Book() {
     }
 
     public String getBookName() {

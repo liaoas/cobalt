@@ -174,8 +174,6 @@ public class MainUI {
             instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
             // 获取书籍链接
             valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
-            // 重置重试次数
-            ChapterServiceImpl.index = 2;
             // 执行开始阅读
             new OpenBoosWork(valueAt, chapterList, project, textContent, mainPanel).execute();
             // 阅读进度持久化
@@ -331,8 +329,6 @@ public class MainUI {
         // 获取数据源类型
         instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
         instance.bookType = ModuleConstants.NETWORK;
-        // 重置 重试次数
-        SearchServiceImpl.index = 2;
         new SearchBooksWork(bookSearchName, project, mainPanel).execute();
     }
 

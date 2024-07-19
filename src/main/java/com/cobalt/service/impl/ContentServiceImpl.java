@@ -3,6 +3,7 @@ package com.cobalt.service.impl;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.domain.ImportBookData;
+import com.cobalt.common.parse.EpubContentParser;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ContentService;
@@ -11,6 +12,8 @@ import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.text.html.HTMLDocument;
 import java.util.List;
@@ -26,8 +29,8 @@ import java.util.Map;
  */
 public class ContentServiceImpl implements ContentService {
 
-    // 重试次数
-    public static int index = 2;
+    private final static Logger log = LoggerFactory.getLogger(ContentServiceImpl.class);
+
     // 阅读进度持久化
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
@@ -54,11 +57,7 @@ public class ContentServiceImpl implements ContentService {
                     break;
             }
         } catch (Exception e) {
-            if (index == 0) {
-                return;
-            }
-            index--;
-            searchBookChapterData(url);
+            log.error("章节内容加载失败 url：{}", url);
         }
     }
 
@@ -73,7 +72,7 @@ public class ContentServiceImpl implements ContentService {
         Map<String, String> bookMap = bookData.getBookMap();
         if (instance.bookType.equals(Constants.EPUB_STR_LOWERCASE) && !bookMap.isEmpty()) {
             int index = Integer.parseInt(bookMap.get(url));
-            bookData.initDocument(index);
+            ImportBookData.initDocument(index);
         }
         instance.textContent = bookMap.get(url);
     }

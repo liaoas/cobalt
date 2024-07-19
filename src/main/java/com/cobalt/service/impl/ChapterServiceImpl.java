@@ -20,11 +20,6 @@ import java.util.List;
  * @since 2021/1/14
  */
 public class ChapterServiceImpl implements ChapterService {
-
-    // 重试次数
-    public static int index = 2;
-
-    // 阅读进度持久化
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
 
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();

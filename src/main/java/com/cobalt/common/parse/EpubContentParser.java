@@ -1,7 +1,9 @@
 package com.cobalt.common.parse;
 
+import com.cobalt.common.constant.Constants;
 import com.cobalt.common.domain.Chapter;
 import com.cobalt.common.domain.ImportBookData;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import nl.siegmann.epublib.domain.*;
 import nl.siegmann.epublib.epub.EpubReader;
 import org.slf4j.Logger;
@@ -24,14 +26,17 @@ public class EpubContentParser {
 
     private final static Logger log = LoggerFactory.getLogger(EpubContentParser.class);
 
-    public static Map<String, String> parseEpubByEpubLib(String file, List<Chapter> chapterList, ImportBookData instance) {
+    // 阅读状态
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
+
+    public static Map<String, String> parseEpubByEpubLib(String file, List<Chapter> chapterList) {
 
         // 存储小说
         Map<String, String> result = new LinkedHashMap<>();
         try (FileInputStream in = new FileInputStream(file)) {
             EpubReader reader = new EpubReader();
             Book book = reader.readEpub(in);
-            instance.setEpubBookBook(book);
+            ImportBookData.getInstance().setEpubBookBook(book);
 
             TableOfContents tableOfContents = book.getTableOfContents();
             List<TOCReference> tocReferences = tableOfContents.getTocReferences();
@@ -41,10 +46,11 @@ public class EpubContentParser {
                 chapterList.add(new Chapter(reference.getTitle(), reference.getTitle()));
             }
         } catch (Exception e) {
-            log.error("epub 书籍解析失败，filePath：{}", file, e);
+            log.error("书籍解析失败，filePath：{}", file, e);
         }
-        instance.setChapterList(chapterList);
-        instance.setBookMap(result);
+        ImportBookData.getInstance().setChapterList(chapterList);
+        ImportBookData.getInstance().setBookMap(result);
+        instance.bookType = Constants.EPUB_STR_LOWERCASE;
 
         return result;
     }

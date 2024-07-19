@@ -19,10 +19,7 @@ import java.util.List;
  * @since 2021/1/13
  */
 public class SearchServiceImpl implements SearchService {
-
-    // 重试次数
-    public static int index = 2;
-
+    
     // 爬虫资源
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
     // 阅读进度持久化

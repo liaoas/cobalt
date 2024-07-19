@@ -10,6 +10,8 @@ import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.service.ImportService;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,9 +28,6 @@ import java.util.Map;
  */
 public class ImportServiceImpl implements ImportService {
 
-    // 阅读状态
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
-
     /**
      * 导入书籍
      *
@@ -42,34 +41,31 @@ public class ImportServiceImpl implements ImportService {
 
         if (StringUtils.isEmpty(extension)) return false;
 
-        // 获取文件路径
         String filePath = file.getPath();
 
         if (StringUtils.isEmpty(filePath)) return false;
-
         // 存储书籍信息
         Map<String, String> bookMap = new HashMap<>(16);
-
         // 存储目录信息
         List<Chapter> chapterList = new ArrayList<>(16);
-        // 执行书籍解析
-
-        // 存储书籍
-        ImportBookData bookData = ImportBookData.getInstance();
         try {
-            if (extension.equals(Constants.TXT_STR_LOWERCASE) || extension.equals(Constants.TXT_STR_UPPERCASE)) {
-                bookMap = TxtContentParser.parseTxt(filePath, chapterList, bookData);
-                instance.bookType = Constants.TXT_STR_LOWERCASE;
-            } else if (extension.equals(Constants.EPUB_STR_LOWERCASE) || extension.equals(Constants.EPUB_STR_UPPERCASE)) {
-                // epub
-                bookMap = EpubContentParser.parseEpubByEpubLib(filePath, chapterList, bookData);
-                instance.bookType = Constants.EPUB_STR_LOWERCASE;
+            if (isText(extension)) {
+                bookMap = TxtContentParser.parseTxt(filePath, chapterList);
+            } else if (isEpub(extension)) {
+                bookMap = EpubContentParser.parseEpubByEpubLib(filePath, chapterList);
             }
         } catch (Exception e) {
             return false;
         }
-
         return !bookMap.isEmpty() && !chapterList.isEmpty();
     }
 
+    public boolean isText(String extension){
+        return extension.equals(Constants.TXT_STR_LOWERCASE) || extension.equals(Constants.TXT_STR_UPPERCASE);
+    }
+
+
+    public boolean isEpub(String extension){
+        return extension.equals(Constants.EPUB_STR_LOWERCASE) || extension.equals(Constants.EPUB_STR_UPPERCASE);
+    }
 }

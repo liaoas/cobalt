@@ -45,7 +45,7 @@ public class ImportBookData {
     private ImportBookData() {
     }
 
-    public void initDocument(int index) {
+    public static void initDocument(int index) {
         Resource resource = INSTANCE.getBookResource(index);
         HTMLDocument document = INSTANCE.getHTMLDocument(resource);
         INSTANCE.getTextContent().setDocument(document);

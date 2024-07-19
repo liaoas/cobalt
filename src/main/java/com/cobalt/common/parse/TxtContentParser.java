@@ -4,6 +4,7 @@ import com.cobalt.common.constant.Constants;
 import com.cobalt.common.domain.Chapter;
 import com.cobalt.common.domain.ImportBookData;
 import com.cobalt.common.utils.LocalCharsetUtil;
+import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,13 +33,16 @@ public class TxtContentParser {
     // Default Pattern
     private static final Pattern CHAPTER_PATTERN = Pattern.compile(Constants.DEFAULT_CHAPTER_REGULAR);
 
+    // 阅读状态
+    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
+
     /**
      * 解析本地 txt 文件为 Map 格式，K 为章节名称，Value 为章节内容
      *
      * @param filePath txt 文件路径
      * @return <章节，章节内容>
      */
-    public static Map<String, String> parseTxt(String filePath, List<Chapter> chapterList, ImportBookData instance) {
+    public static Map<String, String> parseTxt(String filePath, List<Chapter> chapterList) {
 
         Map<String, String> chapterMap = new LinkedHashMap<>();
 
@@ -73,11 +77,12 @@ public class TxtContentParser {
                 chapterList.add(new Chapter(title, title));
             }
         } catch (IOException e) {
-            log.error("epub 书籍解析失败，filePath：{}", filePath, e);
+            log.error("书籍解析失败，filePath：{}", filePath, e);
         }
 
-        instance.setChapterList(chapterList);
-        instance.setBookMap(chapterMap);
+        ImportBookData.getInstance().setChapterList(chapterList);
+        ImportBookData.getInstance().setBookMap(chapterMap);
+        instance.bookType = Constants.TXT_STR_LOWERCASE;
 
         return chapterMap;
     }

@@ -1,10 +1,10 @@
 package com.cobalt.ui;
 
-import com.cobalt.book.BookParserFacade;
+import com.cobalt.parser.book.BookParserFacade;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.chapter.Chapter;
-import com.cobalt.book.BookMetadata;
+import com.cobalt.parser.chapter.Chapter;
+import com.cobalt.parser.book.BookMetadata;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
@@ -15,9 +15,9 @@ import com.cobalt.framework.persistence.ReadSubscriptPersistent;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
-import com.cobalt.content.ContentWorker;
-import com.cobalt.chapter.ChapterWorker;
-import com.cobalt.book.BooksWorker;
+import com.cobalt.parser.content.ContentWorker;
+import com.cobalt.parser.chapter.ChapterWorker;
+import com.cobalt.parser.book.BooksWorker;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;

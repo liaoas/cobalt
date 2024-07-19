@@ -1,8 +1,7 @@
-package com.cobalt.chapter;
+package com.cobalt.parser.chapter;
 
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
-import kotlinx.html.S;
 
 import java.util.List;
 

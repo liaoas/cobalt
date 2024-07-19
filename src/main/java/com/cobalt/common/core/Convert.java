@@ -1,6 +1,6 @@
 package com.cobalt.common.core;
 
-import com.cobalt.book.Book;
+import com.cobalt.parser.book.Book;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package com.cobalt.content;
+package com.cobalt.parser.content;
 
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;

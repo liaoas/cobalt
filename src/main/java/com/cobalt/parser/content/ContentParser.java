@@ -1,15 +1,18 @@
-package com.cobalt.content;
+package com.cobalt.parser.content;
 
-import com.cobalt.book.BookMetadata;
+import com.cobalt.parser.Parser;
+import com.cobalt.parser.book.BookMetadata;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 
 import javax.swing.*;
 
 /**
+ * Content 解析抽象类
+ *
  * @author LiAo
  * @since 2024/7/19
  */
-public interface ContentParser {
+public interface ContentParser extends Parser {
 
 
     /**

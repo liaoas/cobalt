@@ -1,12 +1,15 @@
-package com.cobalt.book;
+package com.cobalt.parser.book;
+
+import com.cobalt.parser.Parser;
 
 /**
  * Book 解析抽象类
  *
+ *
  * @author LiAo
  * @since 2024/7/19
  */
-public interface BookParser {
+public interface BookParser extends Parser {
 
     /**
      * 解析方法

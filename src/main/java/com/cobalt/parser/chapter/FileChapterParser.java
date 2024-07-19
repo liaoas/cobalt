@@ -1,6 +1,6 @@
-package com.cobalt.chapter;
+package com.cobalt.parser.chapter;
 
-import com.cobalt.book.BookMetadata;
+import com.cobalt.parser.book.BookMetadata;
 
 import java.util.List;
 

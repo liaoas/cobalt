@@ -1,4 +1,4 @@
-package com.cobalt.book;
+package com.cobalt.parser.book;
 
 import com.cobalt.common.constant.ModuleConstants;
 import com.rabbit.foot.common.enums.ReptileType;

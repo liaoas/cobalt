@@ -1,9 +1,8 @@
-package com.cobalt.content;
+package com.cobalt.parser.content;
 
-import com.cobalt.book.NetworkBookParser;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.book.BookMetadata;
+import com.cobalt.parser.book.BookMetadata;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.rabbit.foot.common.enums.ReptileType;

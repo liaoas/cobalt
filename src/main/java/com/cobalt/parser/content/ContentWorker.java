@@ -1,9 +1,9 @@
-package com.cobalt.content;
+package com.cobalt.parser.content;
 
-import com.cobalt.chapter.ChapterParserFacade;
-import com.cobalt.chapter.ChapterWorker;
+import com.cobalt.parser.chapter.ChapterParserFacade;
+import com.cobalt.parser.chapter.ChapterWorker;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.chapter.Chapter;
+import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ToastUtils;

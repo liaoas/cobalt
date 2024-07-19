@@ -1,9 +1,9 @@
 package com.cobalt.common.utils;
 
-import com.cobalt.book.BookParserFacade;
+import com.cobalt.parser.book.BookParserFacade;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.chapter.Chapter;
+import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;

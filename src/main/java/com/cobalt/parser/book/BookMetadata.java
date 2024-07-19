@@ -1,6 +1,6 @@
-package com.cobalt.book;
+package com.cobalt.parser.book;
 
-import com.cobalt.chapter.Chapter;
+import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.framework.viewer.HTMLDocumentFactory;
 import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
@@ -36,7 +36,7 @@ public class BookMetadata {
     private Book epubBook = null;
 
     // books
-    private List<com.cobalt.book.Book> books = null;
+    private List<com.cobalt.parser.book.Book> books = null;
 
     // HTMLDocument
     private HTMLDocument bookHTMLDocument = null;
@@ -115,11 +115,11 @@ public class BookMetadata {
         INSTANCE.navigator = navigator;
     }
 
-    public List<com.cobalt.book.Book> getBooks() {
+    public List<com.cobalt.parser.book.Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<com.cobalt.book.Book> books) {
+    public void setBooks(List<com.cobalt.parser.book.Book> books) {
         this.books = books;
     }
 }

@@ -1,4 +1,4 @@
-package com.cobalt.book;
+package com.cobalt.parser.book;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;

@@ -1,21 +1,20 @@
-package com.cobalt.content;
+package com.cobalt.parser.content;
 
-import com.cobalt.book.BookMetadata;
-import com.cobalt.common.constant.Constants;
+import com.cobalt.parser.book.BookMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 /**
- * 本地 Epub 类型书籍单个章节内容解析
+ * Text文件类型的单个章节内容解析
  *
  * @author LiAo
  * @since 2024/7/19
  */
-public class EpubFileContentParser extends FileContentParser {
+public class TextFileContentParser extends FileContentParser {
 
-    private final static Logger log = LoggerFactory.getLogger(EpubFileContentParser.class);
+    private final static Logger log = LoggerFactory.getLogger(TextFileContentParser.class);
 
     @Override
     public boolean parser(Object object) {
@@ -27,8 +26,6 @@ public class EpubFileContentParser extends FileContentParser {
             log.error("Epub 书籍内容为空！");
             return false;
         }
-        int index = Integer.parseInt(bookMap.get(url));
-        BookMetadata.initDocument(index);
         instance.textContent = bookMap.get(url);
         return true;
     }

@@ -1,6 +1,7 @@
-package com.cobalt.chapter;
+package com.cobalt.parser.chapter;
 
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.parser.Parser;
 
 /**
  * Chapter 解析抽象类
@@ -8,7 +9,7 @@ import com.cobalt.framework.persistence.ReadingProgressPersistent;
  * @author LiAo
  * @since 2024/7/19
  */
-public interface ChapterParser {
+public interface ChapterParser extends Parser {
 
     /**
      * 解析方法

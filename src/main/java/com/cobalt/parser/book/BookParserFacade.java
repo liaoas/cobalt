@@ -1,4 +1,4 @@
-package com.cobalt.book;
+package com.cobalt.parser.book;
 
 import com.intellij.openapi.vfs.VirtualFile;
 

@@ -1,7 +1,7 @@
 package com.cobalt.framework.persistence;
 
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.chapter.Chapter;
+import com.cobalt.parser.chapter.Chapter;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;

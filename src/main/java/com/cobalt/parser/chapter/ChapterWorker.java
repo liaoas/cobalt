@@ -1,10 +1,10 @@
-package com.cobalt.chapter;
+package com.cobalt.parser.chapter;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ToastUtils;
-import com.cobalt.content.ContentParserFacade;
+import com.cobalt.parser.content.ContentParserFacade;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;

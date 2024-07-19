@@ -1,4 +1,4 @@
-package com.cobalt.content;
+package com.cobalt.parser.content;
 
 import com.cobalt.common.constant.Constants;
 

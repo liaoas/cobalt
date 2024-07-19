@@ -1,4 +1,4 @@
-package com.cobalt.chapter;
+package com.cobalt.parser.chapter;
 
 /**
  * <p>

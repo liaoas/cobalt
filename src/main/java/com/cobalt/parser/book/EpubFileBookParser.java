@@ -1,6 +1,6 @@
-package com.cobalt.book;
+package com.cobalt.parser.book;
 
-import com.cobalt.chapter.Chapter;
+import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.common.constant.Constants;
 import com.intellij.openapi.vfs.VirtualFile;
 import nl.siegmann.epublib.domain.Book;

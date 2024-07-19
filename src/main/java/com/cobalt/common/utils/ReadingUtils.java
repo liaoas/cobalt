@@ -2,7 +2,7 @@ package com.cobalt.common.utils;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.entity.Chapter;
+import com.cobalt.common.domain.Chapter;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;

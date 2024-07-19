@@ -2,7 +2,7 @@ package com.cobalt.service.impl;
 
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.entity.ImportBookData;
+import com.cobalt.common.domain.ImportBookData;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ContentService;
@@ -12,14 +12,8 @@ import com.rabbit.foot.core.factory.ResolverFactory;
 import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.nodes.TextNode;
 
 import javax.swing.text.html.HTMLDocument;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 

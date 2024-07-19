@@ -1,9 +1,8 @@
 package com.cobalt.work;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.enums.ToastType;
-import com.cobalt.entity.Chapter;
+import com.cobalt.common.domain.Chapter;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.framework.factory.BeanFactory;

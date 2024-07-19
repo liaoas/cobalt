@@ -1,7 +1,7 @@
 package com.cobalt.common.parse;
 
-import com.cobalt.entity.Chapter;
-import com.cobalt.entity.ImportBookData;
+import com.cobalt.common.domain.Chapter;
+import com.cobalt.common.domain.ImportBookData;
 import nl.siegmann.epublib.domain.*;
 import nl.siegmann.epublib.epub.EpubReader;
 

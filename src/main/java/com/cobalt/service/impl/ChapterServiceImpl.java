@@ -1,18 +1,13 @@
 package com.cobalt.service.impl;
 
-import cn.hutool.http.HttpUtil;
 import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.entity.Chapter;
-import com.cobalt.entity.ImportBookData;
+import com.cobalt.common.domain.Chapter;
+import com.cobalt.common.domain.ImportBookData;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ChapterService;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.util.List;
 

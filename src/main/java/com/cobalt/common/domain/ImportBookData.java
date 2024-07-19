@@ -1,4 +1,4 @@
-package com.cobalt.entity;
+package com.cobalt.common.domain;
 
 import nl.siegmann.epublib.domain.Book;
 

@@ -61,51 +61,6 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     /**
-     * 香书小说
-     *
-     * @param link 链接
-     */
-    @Override
-    public void searchBookChapterData(String link) {
-        instance.chapters.clear();
-        String result1 = HttpUtil.get(link);
-        try {
-            getHTMLDocument(result1);
-        } catch (Exception e) {
-            // 判断次数
-            if (index == 0) {
-                return;
-            }
-            index--;
-            searchBookChapterData(link);
-        }
-    }
-
-
-    /**
-     * 笔趣阁
-     *
-     * @param link 链接
-     */
-    @Override
-    public void searchBookChapterDataBQG(String link) {
-
-        instance.chapters.clear();
-
-        String html = HttpUtil.get(link);
-        try {
-            getHTMLDocument(html);
-        } catch (Exception e) {
-            if (index == 0) {
-                return;
-            }
-
-            index--;
-            searchBookChapterDataBQG(link);
-        }
-    }
-
-    /**
      * 加载手动导入的章节信息
      */
     @Override
@@ -115,30 +70,5 @@ public class ChapterServiceImpl implements ChapterService {
         ImportBookData importBookData = ImportBookData.getInstance();
         List<Chapter> chapterList = importBookData.getChapterList();
         instance.chapters.addAll(chapterList);
-    }
-
-
-    /**
-     * 解析页面书籍章节内容
-     *
-     * @param htmlStr 链接
-     */
-    private void getHTMLDocument(String htmlStr) {
-        Document parse = Jsoup.parse(htmlStr);
-        Elements grid = parse.getElementsByTag("dd");
-
-        for (Element element : grid) {
-            Chapter chapter = new Chapter();
-            // 链接
-            String attr = element.getElementsByTag("a").eq(0).attr("href");
-            // 名称
-            String name = element.getElementsByTag("a").eq(0).text();
-
-            chapter.setName(name);
-
-            chapter.setLink(attr);
-
-            instance.chapters.add(chapter);
-        }
     }
 }

@@ -32,6 +32,8 @@ import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
 import com.rabbit.foot.core.Resources;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,6 +50,8 @@ import java.util.Objects;
  * @since 2021/1/14
  */
 public class MainUI {
+
+    private final static Logger log = LoggerFactory.getLogger(MainUI.class);
 
     // 搜索按钮
     private JButton btnSearch;
@@ -289,10 +293,12 @@ public class MainUI {
 
 
         // 设置单击事件
-        settingBtn.addActionListener(e -> {
+        settingBtn.addActionListener(i -> {
             try {
                 ShowSettingsUtil.getInstance().showSettingsDialog(project, "Cobalt_Settings");
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                ToastUtils.showToastMassage(project, "Settings Page Error", ToastType.ERROR);
+                log.error("Settings Error {}", e.getMessage());
             }
         });
 
@@ -377,6 +383,10 @@ public class MainUI {
         sourceDropdown.removeAllItems();
         // 加载数据源下拉框
         ViewFaction.initSpiderConfig();
+        if (spiderActionDao.spiderActionStr == null) {
+            sourceDropdown.addItem(ModuleConstants.DEFAULT_DATA_SOURCE_NAME);
+            return;
+        }
         Resources.getObjectNode(spiderActionDao.spiderActionStr);
         for (String dataSourceName : Resources.getResourceNames()) {
             sourceDropdown.addItem(dataSourceName);

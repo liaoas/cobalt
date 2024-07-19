@@ -22,22 +22,4 @@ public interface SearchService {
      */
     List<BookData> getBookNameData(String searchBookName);
 
-
-    /**
-     * 香书小说
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    List<BookData> searchBookNameData(String searchBookName);
-
-    /**
-     * 笔趣阁
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    List<BookData> searchBookNameData_bqg2(String searchBookName);
-
-
 }

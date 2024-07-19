@@ -19,10 +19,8 @@ public class ModuleConstants {
 
     /*****************数据源类型*****************/
 
-    // 笔趣阁
-    public static final String BI_QU_GE = "笔趣阁$";
-    // 笔趣阁
-    public static final String XIANG_SHU = "香书小说";
+    // 空数据源
+    public static final String DEFAULT_DATA_SOURCE_NAME = "--";
     // 本地导入
     public static final String IMPORT = "导入";
     // 网络

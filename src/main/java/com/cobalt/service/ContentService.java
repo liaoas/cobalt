@@ -20,15 +20,6 @@ public interface ContentService {
      */
     void searchBookChapterData(String url);
 
-
-    /**
-     * 书籍内容格式化
-     *
-     * @param element 当前章节信息
-     * @return 结果
-     */
-    String textFormat(Element element);
-
     /**
      * 获取手动导入的章节内容
      *

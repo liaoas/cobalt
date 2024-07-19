@@ -44,7 +44,7 @@ public final class SearchBooksWork extends SwingWorker<Void, List<BookData>> {
         List<BookData> bookData = searchService.getBookNameData(bookSearchName);
 
         if (bookData == null || bookData.isEmpty()) {
-            ToastUtils.showToastMassage(project, "没有找到啊", ToastType.ERROR);
+            ToastUtils.showToastMassage(project, "没有找到关于 “" + bookSearchName + "” 的书，换个搜索词试试吧。", ToastType.ERROR);
             return null;
         }
         //将当前进度信息加入chunks中

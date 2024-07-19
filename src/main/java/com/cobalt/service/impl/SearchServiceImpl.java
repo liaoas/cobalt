@@ -30,11 +30,8 @@ public class SearchServiceImpl implements SearchService {
     // 重试次数
     public static int index = 2;
 
-    // 存储数据
-    public static List<BookData> bookDataList = new ArrayList<>();
-
+    // 爬虫资源
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
-
     // 阅读进度持久化
     static ReadingProgressPersistent readingProgressDao = ReadingProgressPersistent.getInstance();
 
@@ -46,117 +43,9 @@ public class SearchServiceImpl implements SearchService {
      */
     @Override
     public List<BookData> getBookNameData(String searchBookName) {
-
-        switch (readingProgressDao.searchType) {
-            case ModuleConstants.XIANG_SHU:
-                // 笔趣阁
-                return searchBookNameData(searchBookName);
-            case ModuleConstants.BI_QU_GE:
-                // 笔趣阁2
-                return searchBookNameData_bqg2(searchBookName);
-            default:
-                ResolverFactory<BookData> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, readingProgressDao.searchType, ReptileType.SEARCH, searchBookName);
-                List<BookData> capture = search.capture();
-                return capture;
-        }
+        if (readingProgressDao.searchType.equals(ModuleConstants.DEFAULT_DATA_SOURCE_NAME)) return null;
+        ResolverFactory<BookData> search = new ResolverFactory<>(spiderActionDao.spiderActionStr,
+                readingProgressDao.searchType, ReptileType.SEARCH, searchBookName);
+        return search.capture();
     }
-
-
-    /**
-     * 香书小说
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    @Override
-    public List<BookData> searchBookNameData(String searchBookName) {
-        bookDataList.clear();
-        try {
-            Connection connect = Jsoup.connect("https://www.ibiquges.com/modules/article/waps.php");
-            // 设置请求头
-            connect.data("searchkey", searchBookName);
-
-            Document document = connect.post();
-
-            // Document parse = Jsoup.parse(result1);
-            Elements grid = document.getElementsByTag("tr");
-            for (Element element : grid) {
-                BookData bookData = new BookData();
-                // 文章名称
-                String bookName = element.getElementsByTag("a").eq(0).text();
-                bookData.setBookName(bookName);
-                // 链接
-                String bookLink = element.getElementsByTag("a").eq(0).attr("href");
-                bookData.setBookLink(bookLink);
-                // 章节信息
-                String chapter = element.getElementsByTag("a").eq(1).text();
-                bookData.setChapter(chapter);
-                // 作者
-                String author = element.getElementsByTag("td").eq(2).text();
-                bookData.setAuthor(author);
-                // 更新时间
-                String updateDate = element.getElementsByTag("td").eq(3).text();
-                bookData.setUpdateDate(updateDate);
-
-                if (!bookName.isEmpty()) {
-                    bookDataList.add(bookData);
-                }
-            }
-        } catch (Exception e) {
-            if (index == 0) {
-                return null;
-            }
-
-            index--;
-            searchBookNameData(searchBookName);
-        }
-
-        return bookDataList;
-    }
-
-
-    /**
-     * 笔趣阁
-     *
-     * @param searchBookName 书籍名称
-     * @return 搜索列表
-     */
-    public List<BookData> searchBookNameData_bqg2(String searchBookName) {
-        bookDataList.clear();
-        String url = "https://www.biquge5200.com/modules/article/search.php?searchkey=" + searchBookName;
-
-        String result1 = HttpUtil.get(url);
-
-        try {
-            Document parse = Jsoup.parse(result1);
-
-            // Document parse = Jsoup.parse(result1);
-            Elements grid = parse.getElementsByTag("tr");
-            for (Element element : grid) {
-                BookData bookData = new BookData();
-                // 文章名称
-                String bookName = element.getElementsByTag("a").eq(0).text();
-                bookData.setBookName(bookName);
-                // 链接
-                String bookLink = element.getElementsByTag("a").eq(0).attr("href");
-                bookData.setBookLink("https://www.biquge5200.com/" + bookLink);
-                // 章节信息
-                String chapter = element.getElementsByTag("a").eq(1).text();
-                bookData.setChapter(chapter);
-                // 作者
-                String author = element.getElementsByTag("td").eq(2).text();
-                bookData.setAuthor(author);
-                // 更新时间
-                String updateDate = element.getElementsByTag("td").eq(4).text();
-                bookData.setUpdateDate(updateDate);
-
-                if (!bookName.isEmpty()) {
-                    bookDataList.add(bookData);
-                }
-            }
-        } catch (Exception ignored) {
-        }
-        return bookDataList;
-    }
-
 }

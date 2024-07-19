@@ -18,27 +18,15 @@ public interface ChapterService {
     void getBookChapterByType(String link);
 
     /**
-     * 香书小说
-     *
-     * @param link 链接
-     */
-    void searchBookChapterData(String link);
-
-
-    /**
-     * 笔趣阁
-     *
-     * @param link 链接
-     */
-    void searchBookChapterDataBQG(String link);
-
-
-    /**
-     * 加载手动导入的章节信息
+     * 本地导入书籍处理
      */
     void importChapterData();
 
-
+    /**
+     * 远程爬取书籍处理
+     *
+     * @param link 链接
+     */
     void rabbitFootChapterData(String link);
 
 }

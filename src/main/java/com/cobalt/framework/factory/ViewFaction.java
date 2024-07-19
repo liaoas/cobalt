@@ -1,5 +1,6 @@
 package com.cobalt.framework.factory;
 
+import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.config.ProjectConfig;
 import com.cobalt.content.FullScreenUIContent;
 import com.cobalt.content.MainUIContent;
@@ -36,7 +37,6 @@ import java.util.List;
 public class ViewFaction implements ToolWindowFactory, DumbAware {
 
     private final static Logger log = LoggerFactory.getLogger(ViewFaction.class);
-
     // 页面设置持久化
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
@@ -48,16 +48,11 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
      */
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-
         new MainUIContent().createContent(project, toolWindow);
-
         new FullScreenUIContent().createContent(project, toolWindow);
-
         new ReadingHistoryUIContent().createContent(project, toolWindow);
-
         // 加载全局Button组件鼠标悬浮样式
         loadOverallComponentStyle();
-
         // 加载爬虫配置文件，回填组件
         initSpiderConfig();
     }
@@ -75,6 +70,7 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
                         // 鼠标进入组件时设置背景色
                         button.setContentAreaFilled(true);
                     }
+
                     public void mouseExited(MouseEvent e) {
                         // 鼠标离开组件时恢复背景色
                         button.setContentAreaFilled(false);
@@ -119,11 +115,8 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
      * @param l2 页面所有的 Component
      */
     private void recursionComponent(List<Component> l1, List<Component> l2) {
-
         for (Component component : l1) {
-            if (component instanceof JPanel) {
-
-                JPanel panel = (JPanel) component;
+            if (component instanceof JPanel panel) {
                 recursionComponent(Arrays.asList(panel.getComponents()), l2);
             }
             l2.add(component);
@@ -135,14 +128,8 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
      * 加载爬虫喷子h
      */
     public static void initSpiderConfig() {
-
-        log.info("读取 persistence 为空......");
-
-        if (!spiderActionDao.spiderActionStr.equals("{}")) return;
-
-        // 加载远程配置中心配置
         spiderActionDao.spiderActionStr = loadGitHubConfig();
-
+        if (spiderActionDao.spiderActionStr == null) return;
         spiderActionDao.loadState(spiderActionDao);
     }
 
@@ -152,25 +139,18 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
     public static String loadGitHubConfig() {
 
         String configValue = null;
-
         String owner = ProjectConfig.getConfigValue("spider_config_owner");
         String repo = ProjectConfig.getConfigValue("spider_config_repo");
         String path = ProjectConfig.getConfigValue("spider_config_path");
-
         try {
-
             configValue = GitHubFileReader.getFileContent(owner, repo, path);
-
             log.info("爬虫资源获取成功->{}...", configValue.substring(0, 200));
         } catch (Exception exception) {
             log.error("从目标网站加载配置文件失败...... url->{};owner->{};repo->{};path->{}", GitHubFileReader.GITHUB_API_URL, owner, repo, path);
         }
-
         if (configValue == null || configValue.isEmpty()) {
-            log.error("爬虫资源获取为空");
-            throw new RuntimeException("爬虫资源获取为空");
+            log.error("爬虫资源加载失败");
         }
-
         return configValue;
     }
 }

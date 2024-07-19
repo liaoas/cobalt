@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/liaoas/cobalt">
     <id>com.liao.hello_book.plugin.id</id>
     <name>Cobalt</name>
-    <version>4.0.3 222-243</version>
+    <version>4.0.4 222-243</version>
     <vendor email="liao991224@gmail.com" url="https://github.com/liaoas/cobalt">LiAo</vendor>
 
     <idea-version since-build="222.*" until-build="243.*"/>
@@ -154,6 +154,11 @@
         <ul>
             <li>Resolve the problem of epub format book parsing failure</li>
             <li>Use epublib as the parsing engine</li>
+        </ul>
+        <i>2024.07.18-4.0.4</i>
+        <ul>
+            <li>Add offline mode</li>
+            <li>Adjust the code design pattern</li>
         </ul>
                  ]]>
     </change-notes>

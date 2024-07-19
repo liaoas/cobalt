@@ -40,7 +40,7 @@ dependencies {
 }
 
 group 'com.cobalt'
-version '4.0.3 222-243'
+version '4.0.4 222-243'
 
 intellij {
     /*ideaIC 211.1 - 222.1 JDK 11*/

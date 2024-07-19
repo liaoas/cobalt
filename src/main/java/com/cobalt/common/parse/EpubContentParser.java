@@ -4,6 +4,8 @@ import com.cobalt.common.domain.Chapter;
 import com.cobalt.common.domain.ImportBookData;
 import nl.siegmann.epublib.domain.*;
 import nl.siegmann.epublib.epub.EpubReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.LinkedHashMap;
@@ -19,6 +21,8 @@ import java.util.Map;
  * @since 2023-04-13
  */
 public class EpubContentParser {
+
+    private final static Logger log = LoggerFactory.getLogger(EpubContentParser.class);
 
     public static Map<String, String> parseEpubByEpubLib(String file, List<Chapter> chapterList, ImportBookData instance) {
 
@@ -36,9 +40,9 @@ public class EpubContentParser {
                 result.put(reference.getTitle(), String.valueOf(i));
                 chapterList.add(new Chapter(reference.getTitle(), reference.getTitle()));
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            log.error("epub 书籍解析失败，filePath：{}", file, e);
         }
-
         instance.setChapterList(chapterList);
         instance.setBookMap(result);
 

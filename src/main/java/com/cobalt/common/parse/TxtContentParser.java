@@ -4,6 +4,8 @@ import com.cobalt.common.constant.Constants;
 import com.cobalt.common.domain.Chapter;
 import com.cobalt.common.domain.ImportBookData;
 import com.cobalt.common.utils.LocalCharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -24,6 +26,8 @@ import java.util.regex.Pattern;
  * @since 2023-04-13
  */
 public class TxtContentParser {
+
+    private final static Logger log = LoggerFactory.getLogger(EpubContentParser.class);
 
     // Default Pattern
     private static final Pattern CHAPTER_PATTERN = Pattern.compile(Constants.DEFAULT_CHAPTER_REGULAR);
@@ -64,13 +68,12 @@ public class TxtContentParser {
                     contentBuilder.append(System.lineSeparator());
                 }
             }
-
             if (title != null) {
                 chapterMap.put(title, contentBuilder.toString());
                 chapterList.add(new Chapter(title, title));
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error("epub 书籍解析失败，filePath：{}", filePath, e);
         }
 
         instance.setChapterList(chapterList);

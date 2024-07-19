@@ -19,11 +19,4 @@ public interface ContentService {
      * @param url 链接
      */
     void searchBookChapterData(String url);
-
-    /**
-     * 获取手动导入的章节内容
-     *
-     * @param url 链接/map key
-     */
-    void getImportBook(String url);
 }

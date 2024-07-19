@@ -9,7 +9,6 @@ import com.cobalt.service.ContentService;
 import com.cobalt.viewer.HTMLDocumentFactory;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
-import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 
@@ -69,24 +68,13 @@ public class ContentServiceImpl implements ContentService {
      *
      * @param url 链接/map key
      */
-    @Override
     public void getImportBook(String url) {
         ImportBookData bookData = ImportBookData.getInstance();
-
         Map<String, String> bookMap = bookData.getBookMap();
-
         if (instance.bookType.equals(Constants.EPUB_STR_LOWERCASE) && !bookMap.isEmpty()) {
             int index = Integer.parseInt(bookMap.get(url));
-            Book book = bookData.getEpubBookBook();
-            Resource resource = book.getTableOfContents().getTocReferences().get(index).getResource();
-            Navigator navigator = new Navigator(book);
-            HTMLDocumentFactory htmlDocumentFactory = new HTMLDocumentFactory(navigator, bookData.getTextContent().getEditorKit());
-            htmlDocumentFactory.init(book);
-            HTMLDocument document = htmlDocumentFactory.getDocument(resource);
-            bookData.getTextContent().setDocument(document);
-            bookData.setBookHTMLDocument(document);
+            bookData.initDocument(index);
         }
-
         instance.textContent = bookMap.get(url);
     }
 }

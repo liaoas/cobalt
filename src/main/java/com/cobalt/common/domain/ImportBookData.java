@@ -1,6 +1,9 @@
 package com.cobalt.common.domain;
 
+import com.cobalt.viewer.HTMLDocumentFactory;
+import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
+import nl.siegmann.epublib.domain.Resource;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLDocument;
@@ -11,7 +14,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 导入的书籍数据存放
+ * 本地导入的书籍相关操作，单例
  * </p>
  *
  * @author LiAo
@@ -28,9 +31,6 @@ public class ImportBookData {
     // 存储章节列表
     private List<Chapter> chapterList = new ArrayList<>(16);
 
-    // 书籍类型
-    private String bookType = "";
-
     // Epub Book
     private Book epubBook = null;
 
@@ -40,7 +40,25 @@ public class ImportBookData {
     // 章节内容
     private JEditorPane textContent = null;
 
+    private Navigator navigator = null;
+
     private ImportBookData() {
+    }
+
+    public void initDocument(int index) {
+        Resource resource = INSTANCE.getBookResource(index);
+        HTMLDocument document = INSTANCE.getHTMLDocument(resource);
+        INSTANCE.getTextContent().setDocument(document);
+        INSTANCE.setBookHTMLDocument(document);
+    }
+
+    public Resource getBookResource(int index) {
+        return INSTANCE.epubBook.getTableOfContents().getTocReferences().get(index).getResource();
+    }
+
+    public HTMLDocument getHTMLDocument(Resource resource) {
+        HTMLDocumentFactory htmlDocumentFactory = new HTMLDocumentFactory(INSTANCE.getNavigator(), INSTANCE.getTextContent().getEditorKit());
+        return htmlDocumentFactory.getDocument(resource);
     }
 
     public static ImportBookData getInstance() {
@@ -63,14 +81,6 @@ public class ImportBookData {
         INSTANCE.chapterList = chapterList;
     }
 
-    public String getBookType() {
-        return INSTANCE.bookType;
-    }
-
-    public void setBookType(String bookType) {
-        INSTANCE.bookType = bookType;
-    }
-
     public JEditorPane getTextContent() {
         return INSTANCE.textContent;
     }
@@ -79,11 +89,9 @@ public class ImportBookData {
         INSTANCE.textContent = textContent;
     }
 
-    public Book getEpubBookBook() {
-        return INSTANCE.epubBook;
-    }
-
     public void setEpubBookBook(Book ePubBook) {
+        Navigator navigator = new Navigator(ePubBook);
+        setNavigator(navigator);
         INSTANCE.epubBook = ePubBook;
     }
 
@@ -94,4 +102,14 @@ public class ImportBookData {
     public void setBookHTMLDocument(HTMLDocument bookHTMLDocument) {
         INSTANCE.bookHTMLDocument = bookHTMLDocument;
     }
+
+    public Navigator getNavigator() {
+        return INSTANCE.navigator;
+    }
+
+    public void setNavigator(Navigator navigator) {
+        INSTANCE.navigator = navigator;
+    }
+
+
 }

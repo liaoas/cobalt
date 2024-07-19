@@ -22,7 +22,7 @@ import java.util.List;
  */
 public final class BooksWork extends SwingWorker<Void, List<Book>> {
 
-    static BookParser bookParser = (BookParser) BeanFactory.getBean("BookParser");
+    static BookParserFacade bookParser = (BookParserFacade) BeanFactory.getBean("BookParserFacade");
     // 搜索书籍名称
     private final String bookSearchName;
     // 全局模块对象
@@ -38,14 +38,13 @@ public final class BooksWork extends SwingWorker<Void, List<Book>> {
 
     @Override
     protected Void doInBackground() {
-        List<Book> bookData = bookParser.getBookNameData(bookSearchName);
 
-        if (bookData == null || bookData.isEmpty()) {
+        if (!bookParser.initBook(bookSearchName)) {
             ToastUtils.showToastMassage(project, "没有找到关于 “" + bookSearchName + "” 的书，换个搜索词试试吧。", ToastType.ERROR);
             return null;
         }
         //将当前进度信息加入chunks中
-        publish(bookData);
+        publish(BookMetadata.getInstance().getBooks());
         return null;
     }
 

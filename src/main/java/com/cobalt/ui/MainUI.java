@@ -1,6 +1,6 @@
 package com.cobalt.ui;
 
-import com.cobalt.book.BookParser;
+import com.cobalt.book.BookParserFacade;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.chapter.Chapter;
@@ -100,7 +100,7 @@ public class MainUI {
     // 爬虫资源配置项
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
     // 书籍导入处理类
-    static BookParser bookParser = (BookParser) BeanFactory.getBean("BookParser");
+    static BookParserFacade bookParserFacade = (BookParserFacade) BeanFactory.getBean("BookParserFacade");
 
 
     // 初始化数据
@@ -358,7 +358,7 @@ public class MainUI {
                 ToastUtils.showToastMassage(project, "文件不存在", ToastType.ERROR);
                 return;
             }
-            if (!bookParser.importBook(file)) {
+            if (!bookParserFacade.initBook(file)) {
                 ToastUtils.showToastMassage(project, "书籍导入失败", ToastType.ERROR);
                 return;
             }

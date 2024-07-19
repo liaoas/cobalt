@@ -1,6 +1,6 @@
 package com.cobalt.common.utils;
 
-import com.cobalt.book.BookParser;
+import com.cobalt.book.BookParserFacade;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.chapter.Chapter;
@@ -28,7 +28,7 @@ public class ReadingUtils {
     // 页面设置持久化
     static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
-    static BookParser bookParser = (BookParser) BeanFactory.getBean("BookParser");
+    static BookParserFacade bookParser = (BookParserFacade) BeanFactory.getBean("BookParser");
 
     /**
      * 加载阅读进度
@@ -56,7 +56,7 @@ public class ReadingUtils {
             if (file == null) {
                 return;
             }
-            bookParser.importBook(file);
+            bookParser.initBook(file);
         }
         // 页面回显
         if (!instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {

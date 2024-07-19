@@ -35,6 +35,9 @@ public class BookMetadata {
     // Epub Book
     private Book epubBook = null;
 
+    // books
+    private List<com.cobalt.book.Book> books = null;
+
     // HTMLDocument
     private HTMLDocument bookHTMLDocument = null;
 
@@ -112,5 +115,11 @@ public class BookMetadata {
         INSTANCE.navigator = navigator;
     }
 
+    public List<com.cobalt.book.Book> getBooks() {
+        return books;
+    }
 
+    public void setBooks(List<com.cobalt.book.Book> books) {
+        this.books = books;
+    }
 }

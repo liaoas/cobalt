@@ -1,10 +1,12 @@
 package com.cobalt.content;
 
-import com.cobalt.chapter.ChapterParser;
+import com.cobalt.chapter.ChapterParserFacade;
 import com.cobalt.chapter.ChapterWorker;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.chapter.Chapter;
+import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
+import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.ui.MainUI;
@@ -36,7 +38,7 @@ public final class ContentWorker extends SwingWorker<Void, Void> {
     // 阅读进度持久化
     static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
     // 章节爬虫
-    static ChapterParser chapterParser = (ChapterParser) BeanFactory.getBean("ChapterParser");
+    static ChapterParserFacade chapterParser = (ChapterParserFacade) BeanFactory.getBean("ChapterParserFacade");
 
 
     public ContentWorker(String valueAt, JComboBox<String> chapterList, Project project, JEditorPane textContent, JPanel mainPanel) {
@@ -49,7 +51,12 @@ public final class ContentWorker extends SwingWorker<Void, Void> {
 
     @Override
     protected Void doInBackground() {
-        chapterParser.getBookChapterByType(valueAt);
+        chapterParser.initChapter(valueAt);
+
+        if (!chapterParser.initChapter(valueAt)) {
+            ToastUtils.showToastMassage(project, "章节内容解析失败", ToastType.ERROR);
+            return null;
+        }
         return null;
     }
 

@@ -15,7 +15,7 @@ public class BookParserFacade {
     public boolean initBook(Object book) {
         if (book == null) return false;
 
-        if (book instanceof String) new NetworkBookParser().parser(book);
+        if (book instanceof String) return new NetworkBookParser().parser(book);
 
         if (book instanceof VirtualFile) return new FileBookParser().parser(book);
 

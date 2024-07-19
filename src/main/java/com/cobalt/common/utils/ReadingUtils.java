@@ -28,7 +28,7 @@ public class ReadingUtils {
     // 页面设置持久化
     static SettingsPersistent settingDao = SettingsPersistent.getInstance();
 
-    static BookParserFacade bookParser = (BookParserFacade) BeanFactory.getBean("BookParser");
+    static BookParserFacade bookParser = (BookParserFacade) BeanFactory.getBean("BookParserFacade");
 
     /**
      * 加载阅读进度

@@ -52,7 +52,7 @@ public class BeanFactory {
 
     static {
         beanMap.put("BookParserFacade", "com.cobalt.book.BookParserFacade");
-        beanMap.put("ChapterParser", "com.cobalt.chapter.ChapterParser");
+        beanMap.put("ChapterParserFacade", "com.cobalt.chapter.ChapterParserFacade");
         beanMap.put("ContentParser", "com.cobalt.content.ContentParser");
         try {
             for (String baneName : beanMap.keySet()) {

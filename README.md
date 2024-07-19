@@ -2,9 +2,9 @@
 
 可以在 IDE 中看电子书的摸鱼插件、你甚至可以用 IDE 写代码。
 
-![](src/main/resources/img/main.png)
+![main](src/main/resources/img/main.png)
 
-![](src/main/resources/img/full-screen.png)
+![full-screen](src/main/resources/img/full-screen.png)
 
 
 ## 🔎 搜索 
@@ -40,7 +40,7 @@
 
 爬虫规则用于动态控制插件数据源解析规则，详情请见拙作 [rabbit-foot](https://github.com/liaoas/rabbit-foot)
 
-![Setting.png](src/main/resources/img/Setting.png)
+![setting.png](src/main/resources/img/setting.png)
 
 ## 📥书籍导入
 

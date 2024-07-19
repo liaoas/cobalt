@@ -1,6 +1,6 @@
 package com.cobalt.common.domain;
 
-import com.cobalt.viewer.HTMLDocumentFactory;
+import com.cobalt.framework.viewer.HTMLDocumentFactory;
 import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;

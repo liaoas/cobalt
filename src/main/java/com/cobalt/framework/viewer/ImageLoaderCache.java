@@ -1,4 +1,4 @@
-package com.cobalt.viewer;
+package com.cobalt.framework.viewer;
 
 import com.cobalt.common.utils.StringUtils;
 import nl.siegmann.epublib.browsersupport.Navigator;

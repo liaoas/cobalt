@@ -1,4 +1,4 @@
-package com.cobalt.viewer;
+package com.cobalt.framework.viewer;
 
 import nl.siegmann.epublib.browsersupport.NavigationEvent;
 import nl.siegmann.epublib.browsersupport.NavigationEventListener;

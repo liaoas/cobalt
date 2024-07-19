@@ -1,4 +1,4 @@
-package com.cobalt.viewer;
+package com.cobalt.framework.viewer;
 
 import javax.accessibility.AccessibleContext;
 import javax.swing.*;

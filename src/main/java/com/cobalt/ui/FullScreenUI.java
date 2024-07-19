@@ -11,7 +11,7 @@ import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
-import com.cobalt.work.OpenChapterWord;
+import com.cobalt.framework.work.OpenChapterWord;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;

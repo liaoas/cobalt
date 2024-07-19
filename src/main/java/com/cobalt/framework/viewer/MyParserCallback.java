@@ -1,4 +1,4 @@
-package com.cobalt.viewer;
+package com.cobalt.framework.viewer;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.MutableAttributeSet;

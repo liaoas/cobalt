@@ -3,19 +3,14 @@ package com.cobalt.service.impl;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.domain.ImportBookData;
-import com.cobalt.common.parse.EpubContentParser;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
 import com.cobalt.service.ContentService;
-import com.cobalt.viewer.HTMLDocumentFactory;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +46,8 @@ public class ContentServiceImpl implements ContentService {
                     getImportBook(url);
                     break;
                 default:
-                    ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, ReptileType.CONTENT, url);
+                    ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr,
+                            instance.searchType, ReptileType.CONTENT, url);
                     List<String> capture = search.capture();
                     instance.textContent = capture.get(0);
                     break;

@@ -1,4 +1,4 @@
-package com.cobalt.work;
+package com.cobalt.framework.work;
 
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.common.core.Convert;

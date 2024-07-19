@@ -17,9 +17,9 @@ import java.util.regex.Matcher;
  * @author LiAo
  * @since 2024/7/19
  */
-public class TextBookParser extends FileBookParser {
+public class TextFileBookParser extends FileBookParser {
 
-    private final static Logger log = LoggerFactory.getLogger(TextBookParser.class);
+    private final static Logger log = LoggerFactory.getLogger(TextFileBookParser.class);
 
     @Override
     public boolean parser(Object object) {

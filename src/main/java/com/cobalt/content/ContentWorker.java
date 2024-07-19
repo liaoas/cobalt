@@ -51,8 +51,6 @@ public final class ContentWorker extends SwingWorker<Void, Void> {
 
     @Override
     protected Void doInBackground() {
-        chapterParser.initChapter(valueAt);
-
         if (!chapterParser.initChapter(valueAt)) {
             ToastUtils.showToastMassage(project, "章节内容解析失败", ToastType.ERROR);
             return null;

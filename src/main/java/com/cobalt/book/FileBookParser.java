@@ -29,9 +29,9 @@ public class FileBookParser extends AbstractBookParser {
 
         if (StringUtils.isEmpty(extension)) return false;
 
-        if (isText(extension)) return new TextBookParser().parser(object);
+        if (isText(extension)) return new TextFileBookParser().parser(object);
 
-        if (isEpub(extension)) return new EpubBookParser().parser(object);
+        if (isEpub(extension)) return new EpubFileBookParser().parser(object);
 
         return false;
     }

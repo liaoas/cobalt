@@ -19,9 +19,9 @@ import java.util.*;
  * @author LiAo
  * @since 2024/7/19
  */
-public class EpubBookParser extends FileBookParser {
+public class EpubFileBookParser extends FileBookParser {
 
-    private final static Logger log = LoggerFactory.getLogger(EpubBookParser.class);
+    private final static Logger log = LoggerFactory.getLogger(EpubFileBookParser.class);
 
     @Override
     public boolean parser(Object object) {

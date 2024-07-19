@@ -1,73 +1,28 @@
 package com.cobalt.content;
 
-import com.cobalt.common.constant.Constants;
-import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.book.BookMetadata;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SpiderActionPersistent;
-import com.rabbit.foot.common.enums.ReptileType;
-import com.rabbit.foot.core.factory.ResolverFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Map;
+import javax.swing.*;
 
 /**
- * <p>
- * 爬取当前章节信息
- * </p>
- *
  * @author LiAo
- * @since 2021/1/14
+ * @since 2024/7/19
  */
-public class ContentParser {
-
-    private final static Logger log = LoggerFactory.getLogger(ContentParser.class);
-
-    // 阅读进度持久化
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
-
-    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
-
-    /**
-     * 获取章节内容
-     *
-     * @param url 链接
-     */
-    public void searchBookChapterData(String url) {
-        try {
-            switch (instance.searchType) {
-                case ModuleConstants.DEFAULT_DATA_SOURCE_NAME:
-                    break;
-                case ModuleConstants.IMPORT:
-                    getImportBook(url);
-                    break;
-                default:
-                    ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr,
-                            instance.searchType, ReptileType.CONTENT, url);
-                    List<String> capture = search.capture();
-                    instance.textContent = capture.get(0);
-                    break;
-            }
-        } catch (Exception e) {
-            log.error("章节内容加载失败 url：{}", url);
-        }
-    }
+public interface ContentParser {
 
 
     /**
-     * 获取手动导入的章节内容
+     * 解析方法
+     * 解析单个章节内容
+     * 若当前书籍为网络爬取，则解析结果为 String,并将结果存入{@link ReadingProgressPersistent} textContent.
+     * 若资源为本地导入，则进行判断书本类型，若类型为 text，则解析结果为 String,并将结果存入
+     * {@link ReadingProgressPersistent} textContent.
+     * 若类型为 epub，则解析结果为 String,并将结果存入
+     * {@link BookMetadata} bookHTMLDocument, 并且渲染进当前活动页面的 {@link JEditorPane}.
      *
-     * @param url 链接/map key
+     * @param resource 资源
+     * @return 是否成功
      */
-    public void getImportBook(String url) {
-        BookMetadata bookData = BookMetadata.getInstance();
-        Map<String, String> bookMap = bookData.getBookMap();
-        if (instance.bookType.equals(Constants.EPUB_STR_LOWERCASE) && !bookMap.isEmpty()) {
-            int index = Integer.parseInt(bookMap.get(url));
-            BookMetadata.initDocument(index);
-        }
-        instance.textContent = bookMap.get(url);
-    }
+    boolean parser(Object resource);
 }

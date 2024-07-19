@@ -1,6 +1,5 @@
 package com.cobalt.chapter;
 
-import com.cobalt.book.BookMetadata;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 
 /**

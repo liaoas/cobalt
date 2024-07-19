@@ -4,7 +4,7 @@ import com.cobalt.common.constant.Constants;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ToastUtils;
-import com.cobalt.content.ContentParser;
+import com.cobalt.content.ContentParserFacade;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
@@ -38,7 +38,7 @@ public final class ChapterWorker extends SwingWorker<Void, Chapter> {
     // 页面设置持久化
     static SettingsPersistent settingDao = SettingsPersistent.getInstance();
     // 内容爬虫
-    static ContentParser contentParser = (ContentParser) BeanFactory.getBean("ContentParser");
+    static ContentParserFacade contentParser = (ContentParserFacade) BeanFactory.getBean("ContentParserFacade");
 
     public ChapterWorker(Project project, JEditorPane textContent, JComboBox<String> chapterList, JPanel mainPanel) {
         this.project = project;
@@ -51,9 +51,7 @@ public final class ChapterWorker extends SwingWorker<Void, Chapter> {
     protected Void doInBackground() {
         // 清空书本表格
         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
-        // 内容
-        contentParser.searchBookChapterData(chapter.getLink());
-        if (instance.textContent == null) {
+        if (!contentParser.initContent(chapter.getLink())) {
             ToastUtils.showToastMassage(project, "章节获取失败", ToastType.ERROR);
             return null;
         }

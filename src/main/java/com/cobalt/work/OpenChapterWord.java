@@ -53,8 +53,6 @@ public final class OpenChapterWord extends SwingWorker<Void, Chapter> {
     protected Void doInBackground() {
         // 清空书本表格
         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
-        // 重置重试次数
-        ContentServiceImpl.index = 2;
         // 内容
         textService.searchBookChapterData(chapter.getLink());
         if (instance.textContent == null) {

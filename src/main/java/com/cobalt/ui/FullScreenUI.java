@@ -11,7 +11,7 @@ import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
-import com.cobalt.chapter.ChapterWord;
+import com.cobalt.chapter.ChapterWorker;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -95,7 +95,7 @@ public class FullScreenUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
-            new ChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
+            new ChapterWorker(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 下一章跳转
@@ -108,7 +108,7 @@ public class FullScreenUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex + 1;
             // 加载阅读信息
-            new ChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
+            new ChapterWorker(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 章节跳转
@@ -122,7 +122,7 @@ public class FullScreenUI {
             // 根据下标跳转
             instance.nowChapterIndex = chapterList.getSelectedIndex();
             // 加载阅读信息
-            new ChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
+            new ChapterWorker(project, textContent, chapterList, fullScreenPanel).execute();
         });
 
         // 窗口加载结束
@@ -184,7 +184,7 @@ public class FullScreenUI {
             chapterList.addItem(chapter1.getName());
         }
         // 加载阅读信息
-        new ChapterWord(project, textContent, chapterList, fullScreenPanel).execute();
+        new ChapterWorker(project, textContent, chapterList, fullScreenPanel).execute();
     }
 
     /**

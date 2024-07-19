@@ -20,7 +20,7 @@ import java.util.List;
  * @author LiAo
  * @since 2024-03-27
  */
-public final class BooksWork extends SwingWorker<Void, List<Book>> {
+public final class BooksWorker extends SwingWorker<Void, List<Book>> {
 
     static BookParserFacade bookParser = (BookParserFacade) BeanFactory.getBean("BookParserFacade");
     // 搜索书籍名称
@@ -30,7 +30,7 @@ public final class BooksWork extends SwingWorker<Void, List<Book>> {
     // 窗口
     private final JPanel mainPanel;
 
-    public BooksWork(String bookSearchName, Project project, JPanel mainPanel) {
+    public BooksWorker(String bookSearchName, Project project, JPanel mainPanel) {
         this.bookSearchName = bookSearchName;
         this.project = project;
         this.mainPanel = mainPanel;

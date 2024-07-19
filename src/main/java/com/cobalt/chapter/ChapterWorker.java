@@ -22,7 +22,7 @@ import java.util.List;
  * @author LiAo
  * @since 2024-03-27
  */
-public final class ChapterWord extends SwingWorker<Void, Chapter> {
+public final class ChapterWorker extends SwingWorker<Void, Chapter> {
 
     // 全局模块对象
     public final Project project;
@@ -40,7 +40,7 @@ public final class ChapterWord extends SwingWorker<Void, Chapter> {
     // 内容爬虫
     static ContentParser contentParser = (ContentParser) BeanFactory.getBean("ContentParser");
 
-    public ChapterWord(Project project, JEditorPane textContent, JComboBox<String> chapterList, JPanel mainPanel) {
+    public ChapterWorker(Project project, JEditorPane textContent, JComboBox<String> chapterList, JPanel mainPanel) {
         this.project = project;
         this.textContent = textContent;
         this.chapterList = chapterList;

@@ -1,15 +1,10 @@
 package com.cobalt.book;
 
-import com.cobalt.chapter.Chapter;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
-import com.intellij.openapi.vfs.VirtualFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 /**

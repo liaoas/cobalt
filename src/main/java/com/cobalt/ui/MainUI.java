@@ -15,9 +15,9 @@ import com.cobalt.framework.persistence.ReadSubscriptPersistent;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
 import com.cobalt.framework.persistence.SpiderActionPersistent;
-import com.cobalt.content.ContentWork;
-import com.cobalt.chapter.ChapterWord;
-import com.cobalt.book.BooksWork;
+import com.cobalt.content.ContentWorker;
+import com.cobalt.chapter.ChapterWorker;
+import com.cobalt.book.BooksWorker;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
@@ -125,7 +125,7 @@ public class MainUI {
         ReadingUtils.loadReadingProgress(chapterList, textContent);
         // 页面回显
         if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
-            new ChapterWord(project, textContent, chapterList, mainPanel).execute();
+            new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
         }
     }
 
@@ -173,7 +173,7 @@ public class MainUI {
             // 获取书籍链接
             valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
             // 执行开始阅读
-            new ContentWork(valueAt, chapterList, project, textContent, mainPanel).execute();
+            new ContentWorker(valueAt, chapterList, project, textContent, mainPanel).execute();
             // 阅读进度持久化
             instance.loadState(instance);
         });
@@ -190,7 +190,7 @@ public class MainUI {
             }
             instance.nowChapterIndex = instance.nowChapterIndex - 1;
             // 加载阅读信息
-            new ChapterWord(project, textContent, chapterList, mainPanel).execute();
+            new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
             // 阅读进度持久化
             instance.loadState(instance);
         });
@@ -209,7 +209,7 @@ public class MainUI {
             // 章节下标加一
             instance.nowChapterIndex = instance.nowChapterIndex + 1;
             // 加载阅读信息
-            new ChapterWord(project, textContent, chapterList, mainPanel).execute();
+            new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
             // 阅读进度持久化
             instance.loadState(instance);
         });
@@ -228,7 +228,7 @@ public class MainUI {
                 return;
             }
             // 加载阅读信息
-            new ChapterWord(project, textContent, chapterList, mainPanel).execute();
+            new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
 
             // 阅读进度持久化
             instance.loadState(instance);
@@ -327,7 +327,7 @@ public class MainUI {
         // 获取数据源类型
         instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
         instance.bookType = ModuleConstants.NETWORK;
-        new BooksWork(bookSearchName, project, mainPanel).execute();
+        new BooksWorker(bookSearchName, project, mainPanel).execute();
     }
 
 
@@ -364,7 +364,7 @@ public class MainUI {
             }
             instance.searchType = ModuleConstants.IMPORT;
             // 执行开始阅读
-            new ContentWork(valueAt, chapterList, project, textContent, mainPanel).execute();
+            new ContentWorker(valueAt, chapterList, project, textContent, mainPanel).execute();
             // 阅读进度持久化
             instance.loadState(instance);
         }

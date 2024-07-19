@@ -1,7 +1,7 @@
 package com.cobalt.content;
 
 import com.cobalt.chapter.ChapterParser;
-import com.cobalt.chapter.ChapterWord;
+import com.cobalt.chapter.ChapterWorker;
 import com.cobalt.common.constant.ModuleConstants;
 import com.cobalt.chapter.Chapter;
 import com.cobalt.common.utils.ModuleUtils;
@@ -21,7 +21,7 @@ import java.awt.*;
  * @author LiAo
  * @since 2024-03-27
  */
-public final class ContentWork extends SwingWorker<Void, Void> {
+public final class ContentWorker extends SwingWorker<Void, Void> {
 
     // 书籍链接
     private final String valueAt;
@@ -39,7 +39,7 @@ public final class ContentWork extends SwingWorker<Void, Void> {
     static ChapterParser chapterParser = (ChapterParser) BeanFactory.getBean("ChapterParser");
 
 
-    public ContentWork(String valueAt, JComboBox<String> chapterList, Project project, JEditorPane textContent, JPanel mainPanel) {
+    public ContentWorker(String valueAt, JComboBox<String> chapterList, Project project, JEditorPane textContent, JPanel mainPanel) {
         this.valueAt = valueAt;
         this.chapterList = chapterList;
         this.project = project;
@@ -64,7 +64,7 @@ public final class ContentWork extends SwingWorker<Void, Void> {
             chapterList.addItem(chapter.getName());
         }
         // 解析当前章节内容
-        new ChapterWord(project, textContent, chapterList, mainPanel).execute();
+        new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
         // 书本已切换
         MainUI.isReadClick = true;
 

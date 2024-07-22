@@ -6,8 +6,6 @@
 <h1 align="center">Cobalt</h1>
 <p align="center">适用于基于 IntelliJ 的 IDE/Android Studio/HUAWEI DevEco Studio</p>
 
-可以在 IDE 中看电子书的摸鱼插件、你甚至可以用 IDE 写代码。
-
 ## 兼容性
 
 IntelliJ IDEA(Ultimate/Community/Educational), PhpStorm, WebStorm, PyCharm(Professional/Community/Educational), RubyMine, AppCode, CLion, CLion(Nova), Gogland, DataGrip, Rider, MPS, Android Studio, HUAWEI DevEco Studio, DataSpell, Code With Me(Host), RustRover, Aqua

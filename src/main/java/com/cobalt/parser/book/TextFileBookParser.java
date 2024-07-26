@@ -58,6 +58,7 @@ public class TextFileBookParser extends FileBookParser {
                     contentBuilder.append(System.lineSeparator());
                 }
             }
+
             if (title != null) {
                 bookMap.put(title, contentBuilder.toString());
                 chapterList.add(new Chapter(title, title));

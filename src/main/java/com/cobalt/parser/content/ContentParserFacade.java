@@ -31,7 +31,6 @@ public class ContentParserFacade {
     static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     public boolean initContent(Object object) {
-
         boolean result;
 
         if (instance.searchType.equals(ModuleConstants.IMPORT)) {
@@ -39,9 +38,11 @@ public class ContentParserFacade {
         } else {
             result = new NetworkContentParser().parser(object);
         }
+
         if (instance.textContent == null) {
             return false;
         }
+
         return result;
 
     }

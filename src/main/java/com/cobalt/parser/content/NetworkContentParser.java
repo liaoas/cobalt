@@ -24,15 +24,18 @@ public class NetworkContentParser extends AbstractContentParser {
         ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr,
                 instance.searchType, ReptileType.CONTENT, url);
         List<String> capture = null;
+
         try {
             capture = search.capture();
         } catch (Exception e) {
             log.error("爬取章节内容失败：{}", url);
         }
+
         if (capture == null || capture.isEmpty()) {
             log.error("爬取章节内容失败：{}", url);
             return false;
         }
+
         instance.textContent = capture.get(0);
         return true;
     }

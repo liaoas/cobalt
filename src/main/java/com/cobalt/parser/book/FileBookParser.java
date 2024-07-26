@@ -23,15 +23,17 @@ public class FileBookParser extends AbstractBookParser {
     @Override
     public boolean parser(Object object) {
         VirtualFile file = (VirtualFile) object;
-
         // 获取扩展名
         String extension = file.getExtension();
 
-        if (StringUtils.isEmpty(extension)) return false;
+        if (StringUtils.isEmpty(extension))
+            return false;
 
-        if (isText(extension)) return new TextFileBookParser().parser(object);
+        if (isText(extension))
+            return new TextFileBookParser().parser(object);
 
-        if (isEpub(extension)) return new EpubFileBookParser().parser(object);
+        if (isEpub(extension))
+            return new EpubFileBookParser().parser(object);
 
         return false;
     }

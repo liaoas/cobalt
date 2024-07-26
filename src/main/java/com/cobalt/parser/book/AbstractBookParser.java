@@ -56,6 +56,7 @@ public abstract class AbstractBookParser implements BookParser {
             BookMetadata.getInstance().setBooks(null);
             return false;
         }
+
         BookMetadata.getInstance().setBooks(books);
         return true;
     }

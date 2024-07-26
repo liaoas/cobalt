@@ -19,7 +19,10 @@ public class ChapterParserFacade {
         if (instance.searchType.equals(ModuleConstants.IMPORT)) {
             return new FileChapterParser().parser(chapter);
         }
-        if (chapter == null) return false;
+
+        if (chapter == null)
+            return false;
+
         return new NetworkChapterParser().parser(chapter);
     }
 }

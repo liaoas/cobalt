@@ -17,7 +17,11 @@ public class NetworkChapterParser extends AbstractChapterParser {
     public boolean parser(Object bookName) {
         chaptersClear();
         String link = String.valueOf(bookName);
-        ResolverFactory<Chapter> search = new ResolverFactory<>(spiderActionDao.spiderActionStr, instance.searchType, ReptileType.CHAPTER, link);
+        ResolverFactory<Chapter> search;
+        search = new ResolverFactory<>(
+                spiderActionDao.spiderActionStr,
+                instance.searchType,
+                ReptileType.CHAPTER, link);
         List<Chapter> capture = search.capture();
         chaptersAdd(capture);
         return !capture.isEmpty();

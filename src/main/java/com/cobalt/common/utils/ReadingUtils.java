@@ -2,7 +2,7 @@ package com.cobalt.common.utils;
 
 import com.cobalt.parser.book.BookParserFacade;
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
@@ -50,7 +50,7 @@ public class ReadingUtils {
         chapterList.setSelectedItem(chapter.getName());
 
         // 加载持久化书籍
-        if (instance.searchType.equals(ModuleConstants.IMPORT) && StringUtils.isNotEmpty(instance.importPath)) {
+        if (instance.searchType.equals(UIConstants.IMPORT) && StringUtils.isNotEmpty(instance.importPath)) {
             // 通过本地文件系统获取文件对象
             VirtualFile file = LocalFileSystem.getInstance().findFileByPath(instance.importPath);
             if (file == null) {

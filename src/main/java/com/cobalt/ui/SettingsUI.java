@@ -1,7 +1,7 @@
 package com.cobalt.ui;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.framework.factory.ViewFaction;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
 import com.cobalt.framework.persistence.SettingsPersistent;
@@ -152,7 +152,7 @@ public class SettingsUI {
      */
     private void bindingComponentData() {
         // 加载字体大小，滚轮间距下拉框
-        for (int size : ModuleConstants.SIZE_ARRAY) {
+        for (int size : UIConstants.SIZE_ARRAY) {
             fontSize.addItem(size);
             readRoll.addItem(size);
         }

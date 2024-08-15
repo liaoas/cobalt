@@ -1,7 +1,7 @@
 package com.cobalt.ui;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.parser.book.BookMetadata;
@@ -141,7 +141,7 @@ public class FullScreenUI {
                     ModuleUtils.loadSetting(paneTextContent, textContent, null);
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
-                    if (selectedContent.getDisplayName().equals(ModuleConstants.TAB_CONTROL_TITLE_UNFOLD)) {
+                    if (selectedContent.getDisplayName().equals(UIConstants.TAB_CONTROL_TITLE_UNFOLD)) {
                         // 等待鼠标样式
                             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
                         // 切换了书本
@@ -150,7 +150,7 @@ public class FullScreenUI {
                             startReading();
                         } else {
                             // 页面回显
-                            if (!instance.searchType.equals(ModuleConstants.IMPORT) && !instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                            if (!instance.searchType.equals(UIConstants.IMPORT) && !instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
                                 // 获取新的章节位置
                                 Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
                                 // 章节内容赋值
@@ -162,7 +162,7 @@ public class FullScreenUI {
                                 textContent.setCaretPosition(1);
                             }
                         }
-                        if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                        if (instance.searchType.equals(UIConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
                             BookMetadata bookData = BookMetadata.getInstance();
                             bookData.setTextContent(textContent);
                             textContent.setDocument(bookData.getBookHTMLDocument());

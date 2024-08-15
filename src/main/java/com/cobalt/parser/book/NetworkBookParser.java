@@ -1,6 +1,6 @@
 package com.cobalt.parser.book;
 
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.rabbit.foot.common.enums.ReptileType;
 import com.rabbit.foot.core.factory.ResolverFactory;
 
@@ -16,7 +16,7 @@ public class NetworkBookParser extends AbstractBookParser {
 
     @Override
     public boolean parser(Object bookName) {
-        if (readingProgressDao.searchType.equals(ModuleConstants.DEFAULT_DATA_SOURCE_NAME)) return false;
+        if (readingProgressDao.searchType.equals(UIConstants.DEFAULT_DATA_SOURCE_NAME)) return false;
 
         String searchBookName = String.valueOf(bookName);
         ResolverFactory<Book> search = new ResolverFactory<>(spiderActionDao.spiderActionStr,

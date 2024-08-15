@@ -2,7 +2,7 @@ package com.cobalt.parser.content;
 
 import com.cobalt.parser.chapter.ChapterParserFacade;
 import com.cobalt.parser.chapter.ChapterWorker;
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
@@ -73,7 +73,7 @@ public final class ContentWorker extends SwingWorker<Void, Void> {
         // 书本已切换
         MainUI.isReadClick = true;
 
-        if (!instance.searchType.equals(ModuleConstants.IMPORT)) {
+        if (!instance.searchType.equals(UIConstants.IMPORT)) {
             // 本地导入书籍清空
             instance.importPath = null;
         }

@@ -1,7 +1,6 @@
 package com.cobalt.parser.book;
 
-import com.cobalt.common.constant.ModuleConstants;
-import com.cobalt.common.core.Convert;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ToastUtils;
@@ -52,7 +51,7 @@ public final class BooksWorker extends SwingWorker<Void, List<Book>> {
     protected void process(List<List<Book>> chunks) {
         List<Book> bookData = chunks.get(0);
         for (Book bookDatum : bookData) {
-            ModuleConstants.tableModel.addRow(Convert.bookData2Array(bookDatum));
+            UIConstants.tableModel.addRow(bookDatum.bookData2Array());
         }
     }
 

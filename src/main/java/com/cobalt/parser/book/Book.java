@@ -10,6 +10,12 @@ package com.cobalt.parser.book;
  */
 public class Book {
 
+    private static final int BOOK_NAME_INDEX = 0;
+    private static final int CHAPTER_INDEX = 1;
+    private static final int AUTHOR_INDEX = 2;
+    private static final int UPDATE_DATE_INDEX = 3;
+    private static final int BOOK_LINK_INDEX = 4;
+
     // 名称
     private String bookName;
 
@@ -66,5 +72,20 @@ public class Book {
 
     public void setBookLink(String bookLink) {
         this.bookLink = bookLink;
+    }
+
+    /**
+     * BookData转为Swing JTable Model需要的数组
+     *
+     * @return array
+     */
+    public String[] bookData2Array() {
+        String[] raw = new String[5];
+        raw[BOOK_NAME_INDEX] = this.getBookName();
+        raw[CHAPTER_INDEX] = this.getChapter();
+        raw[AUTHOR_INDEX] = this.getAuthor();
+        raw[UPDATE_DATE_INDEX] = this.getUpdateDate();
+        raw[BOOK_LINK_INDEX] = this.getBookLink();
+        return raw;
     }
 }

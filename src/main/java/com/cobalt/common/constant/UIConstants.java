@@ -4,13 +4,13 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * <p>
- * 组件信息常量
+ * Swing 组件信息常量
  * </p>
  *
  * @author LiAo
  * @since 2021/1/13
  */
-public class ModuleConstants {
+public class UIConstants {
 
     // 表头内容
     public static String[] head = {"文章名称", "最新章节", "作者", "更新", "链接"};

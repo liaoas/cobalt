@@ -1,6 +1,6 @@
 package com.cobalt.container;
 
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.ui.FullScreenUI;
 import com.intellij.openapi.project.Project;
@@ -39,7 +39,7 @@ public class FullScreenUIContent {
         // ideaIC 222.1 - 223.2 JDK 17
         ContentFactory contentFactory = ContentFactory.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(fullScreenUI.getFullScreenPanel(), ModuleConstants.TAB_CONTROL_TITLE_UNFOLD, true);
+        Content content = contentFactory.createContent(fullScreenUI.getFullScreenPanel(), UIConstants.TAB_CONTROL_TITLE_UNFOLD, true);
         Icon icon = IconLoader.getIcon("/img/full-screen.svg", FullScreenUIContent.class);
         content.setIcon(icon);
         content.putUserData(ToolWindow.SHOW_CONTENT_ICON, Boolean.TRUE);

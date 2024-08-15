@@ -1,7 +1,7 @@
 package com.cobalt.common.utils;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.persistence.ReadSubscriptPersistent;
 import com.cobalt.framework.persistence.ReadingProgressPersistent;
@@ -87,23 +87,23 @@ public class ModuleUtils {
     public static void loadComponentTooltip(JButton btnSearch, JButton openBook, JButton settingBtn, JButton btnOn, JButton underOn, JButton jumpButton) {
         // 搜索按钮
         if (btnSearch != null) {
-            btnSearch.setToolTipText(ModuleConstants.SEARCH_BTN);
+            btnSearch.setToolTipText(UIConstants.SEARCH_BTN);
         }
         // 阅读按钮
         if (openBook != null) {
-            openBook.setToolTipText(ModuleConstants.START_READ);
+            openBook.setToolTipText(UIConstants.START_READ);
         }
 
         // 设置按钮
         if (settingBtn != null) {
-            settingBtn.setToolTipText(ModuleConstants.SETTINGS);
+            settingBtn.setToolTipText(UIConstants.SETTINGS);
         }
         // 上一章
-        btnOn.setToolTipText(ModuleConstants.BTN_ON);
+        btnOn.setToolTipText(UIConstants.BTN_ON);
         // 下一章
-        underOn.setToolTipText(ModuleConstants.UNDER_ON);
+        underOn.setToolTipText(UIConstants.UNDER_ON);
         // 跳转
-        jumpButton.setToolTipText(ModuleConstants.JUMP_BUTTON);
+        jumpButton.setToolTipText(UIConstants.JUMP_BUTTON);
     }
 
 

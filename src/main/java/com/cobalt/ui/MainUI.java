@@ -2,7 +2,7 @@ package com.cobalt.ui;
 
 import com.cobalt.parser.book.BookParserFacade;
 import com.cobalt.common.constant.Constants;
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.parser.book.BookMetadata;
 import com.cobalt.common.enums.ToastType;
@@ -106,7 +106,7 @@ public class MainUI {
     // 初始化数据
     private void init() {
         // 初始化表格
-        searchBookTable.setModel(ModuleConstants.tableModel);
+        searchBookTable.setModel(UIConstants.tableModel);
         searchBookTable.setEnabled(true);
         // 加载数据源下拉框
         loadDataOrigin();
@@ -123,7 +123,7 @@ public class MainUI {
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
         // 页面回显
-        if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+        if (instance.searchType.equals(UIConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
             new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
         }
     }
@@ -262,11 +262,11 @@ public class MainUI {
                     ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
-                    if (selectedContent.getDisplayName().equals(ModuleConstants.TAB_CONTROL_TITLE_HOME)) {
+                    if (selectedContent.getDisplayName().equals(UIConstants.TAB_CONTROL_TITLE_HOME)) {
                         // 获取新的章节位置
                         Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
                         // 页面回显
-                        if (instance.searchType.equals(ModuleConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                        if (instance.searchType.equals(UIConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
                             BookMetadata bookData = BookMetadata.getInstance();
                             bookData.setTextContent(textContent);
                             textContent.setDocument(bookData.getBookHTMLDocument());
@@ -312,7 +312,7 @@ public class MainUI {
         // 等待鼠标样式
         ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
         // 清空表格数据
-        ModuleConstants.tableModel.setRowCount(0);
+        UIConstants.tableModel.setRowCount(0);
         // 获取搜索输入文本
         // 搜索书籍名称
         String bookSearchName = textSearchBar.getText();
@@ -325,7 +325,7 @@ public class MainUI {
         }
         // 获取数据源类型
         instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
-        instance.bookType = ModuleConstants.NETWORK;
+        instance.bookType = UIConstants.NETWORK;
         new BooksWorker(bookSearchName, project, mainPanel).execute();
     }
 
@@ -361,7 +361,7 @@ public class MainUI {
                 ToastUtils.showToastMassage(project, "书籍导入失败", ToastType.ERROR);
                 return;
             }
-            instance.searchType = ModuleConstants.IMPORT;
+            instance.searchType = UIConstants.IMPORT;
             // 执行开始阅读
             new ContentWorker(valueAt, chapterList, project, textContent, mainPanel).execute();
             // 阅读进度持久化
@@ -377,7 +377,7 @@ public class MainUI {
         // 加载数据源下拉框
         ViewFaction.initSpiderConfig();
         if (spiderActionDao.spiderActionStr == null) {
-            sourceDropdown.addItem(ModuleConstants.DEFAULT_DATA_SOURCE_NAME);
+            sourceDropdown.addItem(UIConstants.DEFAULT_DATA_SOURCE_NAME);
             return;
         }
         Resources.getObjectNode(spiderActionDao.spiderActionStr);

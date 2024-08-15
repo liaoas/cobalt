@@ -1,6 +1,6 @@
 package com.cobalt.container;
 
-import com.cobalt.common.constant.ModuleConstants;
+import com.cobalt.common.constant.UIConstants;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.ui.MainUI;
 import com.intellij.openapi.project.Project;
@@ -40,7 +40,7 @@ public class MainUIContent {
         // ideaIC 222.1 - 223.2 JDK 17
         ContentFactory contentFactory = ContentFactory.getInstance();
         // 获取用于toolWindows显示的内容
-        Content content = contentFactory.createContent(mainUI.getMainPanel(), ModuleConstants.TAB_CONTROL_TITLE_HOME, false);
+        Content content = contentFactory.createContent(mainUI.getMainPanel(), UIConstants.TAB_CONTROL_TITLE_HOME, false);
         Icon icon = IconLoader.getIcon("/img/home.svg", MainUIContent.class);
         content.setIcon(icon);
         content.putUserData(ToolWindow.SHOW_CONTENT_ICON, Boolean.TRUE);

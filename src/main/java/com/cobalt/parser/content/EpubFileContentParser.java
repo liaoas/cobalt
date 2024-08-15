@@ -19,8 +19,7 @@ public class EpubFileContentParser extends FileContentParser {
     @Override
     public boolean parser(Object object) {
         String url = String.valueOf(object);
-        BookMetadata bookData = BookMetadata.getInstance();
-        Map<String, String> bookMap = bookData.getBookMap();
+        Map<String, String> bookMap = BookMetadata.getInstance().getBookMap();
 
         if (bookMap.isEmpty()) {
             log.error("Epub 书籍内容为空！");

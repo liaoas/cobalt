@@ -15,8 +15,7 @@ public class FileChapterParser extends AbstractChapterParser {
     @Override
     public boolean parser(Object bookName) {
         chaptersClear();
-        BookMetadata importBookData = BookMetadata.getInstance();
-        List<Chapter> capture = importBookData.getChapterList();
+        List<Chapter> capture = BookMetadata.getInstance().getChapterList();
         chaptersAdd(capture);
         return !capture.isEmpty();
     }

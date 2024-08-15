@@ -119,8 +119,7 @@ public class MainUI {
         // 加载持久化的设置
         ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
         // 存储窗口组件
-        BookMetadata bookData = BookMetadata.getInstance();
-        bookData.setTextContent(textContent);
+        BookMetadata.getInstance().setTextContent(textContent);
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
         // 页面回显

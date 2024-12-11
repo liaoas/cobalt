@@ -1,26 +1,60 @@
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.models.ProductRelease
+
 plugins {
     id 'java'
-    /*ideaIC 211.1 - 222.1 JDK 11*/
-    /*id 'org.jetbrains.intellij' version '0.7.3'*/
-    /*ideaIC 222.2 - 223.3 JDK 17*/
-    id 'org.jetbrains.intellij' version '1.17.0'
+    id("org.jetbrains.intellij.platform") version "2.2.0"
 }
 
+group 'com.cobalt'
+version '4.0.4 222-243'
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8"
+patchPluginXml {
+    sinceBuild = '222.*'
+    untilBuild = '243.*'
 }
-
 
 repositories {
-
     mavenLocal()
-
+    gradlePluginPortal()
+    maven { url = uri("file:///E://Maven/repository/") }
     maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
-
     maven { url 'https://maven.aliyun.com/repository/public' }
-
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
+}
+
+dependencies {
+    intellijPlatform {
+        intellijIdeaCommunity("2024.3")
+
+        bundledPlugin("com.intellij.java")
+
+        pluginVerifier()
+        zipSigner()
+        instrumentationTools()
+    }
+
+    implementation group: 'com.rabbit.foot', name: 'rabbit-foot', version: '1.0.12'
+    implementation group: 'nl.siegmann.epublib', name: 'epublib-core', version: '4.0'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.13'
+}
+
+intellijPlatform {
+    version = '4.0.4'
+    buildSearchableOptions = false
+    pluginVerification {
+        ides {
+            select {
+                it.types = [IntelliJPlatformType.IntellijIdeaCommunity]
+                it.channels = [ProductRelease.Channel.RELEASE]
+                it.sinceBuild = '222'
+            }
+        }
+    }
 }
 
 sourceSets {
@@ -28,44 +62,12 @@ sourceSets {
         resources {
             srcDirs = ['src/main/resources']
         }
+        java {
+            srcDirs = ['src/main/java'] // 定义源代码目录
+        }
     }
 }
 
-dependencies {
-    implementation group: 'com.rabbit.foot', name: 'rabbit-foot', version: '1.0.11'
-
-    implementation group: 'nl.siegmann.epublib', name: 'epublib-core', version: '4.0'
-
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.13'
-}
-
-group 'com.cobalt'
-version '4.0.4 222-243'
-
-intellij {
-    /*ideaIC 211.1 - 222.1 JDK 11*/
-    /*version '2021.2.4'*/
-    /*version '2022.1.1'*/
-    /*pluginName 'Cobalt'
-    updateSinceUntilBuild false
-    sameSinceUntilBuild false
-    plugins 'java'*/
-
-    /*ideaIC 222.2 - 223.3 JDK 17*/
-    /*version.set('2022.2.1')*/
-    /*version.set('2023.1.1')*/
-    /*version.set('2023.2.1')*/
-    /*version.set("2023.3.2")*/
-    version.set("2024.1")
-    type.set("IC")
-    pluginName = 'Cobalt'
-    updateSinceUntilBuild = false
-    sameSinceUntilBuild = false
-
-
-}
-
-patchPluginXml {
-    sinceBuild = '222.*'
-    untilBuild = '243.*'
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
 }

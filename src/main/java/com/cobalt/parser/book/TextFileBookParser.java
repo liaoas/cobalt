@@ -21,6 +21,8 @@ public class TextFileBookParser extends FileBookParser {
 
     private final static Logger log = LoggerFactory.getLogger(TextFileBookParser.class);
 
+    private final static String LINE_FEED = "<br>";
+
     @Override
     public boolean parser(Object object) {
         VirtualFile file = (VirtualFile) object;
@@ -55,7 +57,7 @@ public class TextFileBookParser extends FileBookParser {
                     title = line;
                 } else {
                     contentBuilder.append(line);
-                    contentBuilder.append(System.lineSeparator());
+                    contentBuilder.append(LINE_FEED);
                 }
             }
 

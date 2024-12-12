@@ -1,23 +1,23 @@
 package com.cobalt.ui;
 
-import com.cobalt.parser.book.BookParserFacade;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.UIConstants;
-import com.cobalt.parser.chapter.Chapter;
-import com.cobalt.parser.book.BookMetadata;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
 import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.framework.factory.BeanFactory;
 import com.cobalt.framework.factory.ViewFaction;
-import com.cobalt.framework.persistence.ReadSubscriptPersistent;
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SettingsPersistent;
-import com.cobalt.framework.persistence.SpiderActionPersistent;
-import com.cobalt.parser.content.ContentWorker;
-import com.cobalt.parser.chapter.ChapterWorker;
+import com.cobalt.framework.persistence.proxy.ReadSubscriptProxy;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
+import com.cobalt.framework.persistence.proxy.SettingsParameterProxy;
+import com.cobalt.framework.persistence.proxy.SpiderActionProxy;
+import com.cobalt.parser.book.BookMetadata;
+import com.cobalt.parser.book.BookParserFacade;
 import com.cobalt.parser.book.BooksWorker;
+import com.cobalt.parser.chapter.Chapter;
+import com.cobalt.parser.chapter.ChapterWorker;
+import com.cobalt.parser.content.ContentWorker;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
@@ -28,7 +28,8 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.ContentManagerListener;
-import com.rabbit.foot.core.Resources;
+import com.rabbit.foot.loader.Resources;
+import com.rabbit.foot.utils.ObjUtil;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,13 +93,15 @@ public class MainUI {
     public static boolean isReadClick = false;
 
     // 阅读进度持久化
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
+    private final ReadingProgressProxy readingProgress;
+
     // 阅读窗口滚动位置持久化
-    static ReadSubscriptPersistent readSubscriptDao = ReadSubscriptPersistent.getInstance();
+    private final ReadSubscriptProxy readSubscript;
+
     // 页面设置持久化
-    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
+    private final SettingsParameterProxy settingsParameter;
     // 爬虫资源配置项
-    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
+    private final SpiderActionProxy spiderAction;
     // 书籍导入处理类
     static BookParserFacade bookParserFacade = (BookParserFacade) BeanFactory.getBean("BookParserFacade");
 
@@ -123,7 +126,8 @@ public class MainUI {
         // 加载阅读进度
         ReadingUtils.loadReadingProgress(chapterList, textContent);
         // 页面回显
-        if (instance.searchType.equals(UIConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+        if (readingProgress.getSearchType().equals(UIConstants.IMPORT) &&
+                readingProgress.getBookType().equals(Constants.EPUB_STR_LOWERCASE)) {
             new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
         }
     }
@@ -131,6 +135,10 @@ public class MainUI {
     // 页面初始化加载
     public MainUI(Project project, ToolWindow toolWindow) {
         this.project = project;
+        this.readingProgress = new ReadingProgressProxy();
+        this.readSubscript = new ReadSubscriptProxy();
+        this.settingsParameter = new SettingsParameterProxy();
+        this.spiderAction = new SpiderActionProxy();
         // 执行初始化表格
         init();
         // 搜索
@@ -168,30 +176,30 @@ public class MainUI {
                 return;
             }
             // 获取数据源类型
-            instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
+            readingProgress.setSearchType(Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString());
             // 获取书籍链接
             valueAt = searchBookTable.getValueAt(selectedRow, 4).toString();
             // 执行开始阅读
             new ContentWorker(valueAt, chapterList, project, textContent, mainPanel).execute();
             // 阅读进度持久化
-            instance.loadState(instance);
+            /*ReadingProgress.getInstance().loadState();*/
         });
 
 
         // 上一章节跳转
         btnOn.addActionListener(e -> {
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.isEmpty() || instance.nowChapterIndex == 0) {
+            if (readingProgress.getChapters().isEmpty() || readingProgress.getNowChapterIndex() == 0) {
                 ToastUtils.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
-            instance.nowChapterIndex = instance.nowChapterIndex - 1;
+            readingProgress.setNowChapterIndex(readingProgress.getNowChapterIndex() - 1);
             // 加载阅读信息
             new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
             // 阅读进度持久化
-            instance.loadState(instance);
+            /*ReadingProgress.getInstance().loadState();*/
         });
 
 
@@ -199,18 +207,19 @@ public class MainUI {
         underOn.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.isEmpty() || instance.nowChapterIndex == instance.chapters.size() - 1) {
+            if (readingProgress.getChapters().isEmpty() ||
+                    readingProgress.getNowChapterIndex() == readingProgress.getChapters().size() - 1) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
             // 章节下标加一
-            instance.nowChapterIndex = instance.nowChapterIndex + 1;
+            readingProgress.setNowChapterIndex(readingProgress.getNowChapterIndex() + 1);
             // 加载阅读信息
             new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
             // 阅读进度持久化
-            instance.loadState(instance);
+            /*ReadingProgress.getInstance().loadState();*/
         });
 
 
@@ -219,8 +228,9 @@ public class MainUI {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
             // 根据下标跳转
-            instance.nowChapterIndex = chapterList.getSelectedIndex();
-            if (instance.chapters.isEmpty() || instance.nowChapterIndex < 0) {
+            readingProgress.setNowChapterIndex(chapterList.getSelectedIndex());
+            if (readingProgress.getChapters().isEmpty() ||
+                    readingProgress.getNowChapterIndex() < 0) {
                 ToastUtils.showToastMassage(project, "未知章节", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.DEFAULT_CURSOR);
@@ -230,7 +240,7 @@ public class MainUI {
             new ChapterWorker(project, textContent, chapterList, mainPanel).execute();
 
             // 阅读进度持久化
-            instance.loadState(instance);
+            /*ReadingProgress.getInstance().loadState();*/
         });
 
 
@@ -238,16 +248,14 @@ public class MainUI {
         paneTextContent.getVerticalScrollBar().addAdjustmentListener(e -> {
             int textWinIndex = paneTextContent.getVerticalScrollBar().getValue();
             if (!(textWinIndex <= 0)) {
-                readSubscriptDao.homeTextWinIndex = textWinIndex;
-                // 阅读进度持久化
-                readSubscriptDao.loadState(readSubscriptDao);
+                readSubscript.setHomeTextWinIndex(textWinIndex);
             }
         });
 
 
         // 窗口加载结束
         ApplicationManager.getApplication().invokeLater(() -> {
-            paneTextContent.getVerticalScrollBar().setValue(readSubscriptDao.homeTextWinIndex);
+            paneTextContent.getVerticalScrollBar().setValue(readSubscript.getHomeTextWinIndex());
             // 窗口未初始化
             if (project.isDisposed() || toolWindow == null) return;
             final ContentManager contentManager = toolWindow.getContentManager();
@@ -256,7 +264,8 @@ public class MainUI {
                 @Override
                 public void selectionChanged(@NotNull ContentManagerEvent event) {
                     Content selectedContent = event.getContent();
-                    if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
+                    if (readingProgress.getChapters().isEmpty() ||
+                            selectedContent == lastSelectedContent) return;
                     // 同步字体等设置
                     ModuleUtils.loadSetting(paneTextContent, textContent, bookTabContentSplit);
                     ModuleUtils.loadTheMouseStyle(mainPanel, Cursor.WAIT_CURSOR);
@@ -264,15 +273,16 @@ public class MainUI {
                     lastSelectedContent = selectedContent;
                     if (selectedContent.getDisplayName().equals(UIConstants.TAB_CONTROL_TITLE_HOME)) {
                         // 获取新的章节位置
-                        Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+                        Chapter chapter = readingProgress.getChapters().get(readingProgress.getNowChapterIndex());
                         // 页面回显
-                        if (instance.searchType.equals(UIConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                        if (readingProgress.getSearchType().equals(UIConstants.IMPORT) &&
+                                readingProgress.getBookType().equals(Constants.EPUB_STR_LOWERCASE)) {
                             BookMetadata bookData = BookMetadata.getInstance();
                             bookData.setTextContent(textContent);
                             textContent.setDocument(bookData.getBookHTMLDocument());
                         } else {
                             // 章节内容赋值
-                            String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+                            String htmlContent = ModuleUtils.fontSizeFromHtml(settingsParameter.getFontSize(), readingProgress.getTextContent());
                             textContent.setText(htmlContent);
                         }
                         // 设置下拉框的值
@@ -299,8 +309,7 @@ public class MainUI {
 
         // 分割面板变动
         bookTabContentSplit.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, evt -> {
-            settingDao.splitPosition = (int) evt.getNewValue();
-            settingDao.loadState(settingDao);
+            settingsParameter.setSplitPosition((int) evt.getNewValue());
         });
     }
 
@@ -324,8 +333,8 @@ public class MainUI {
             return;
         }
         // 获取数据源类型
-        instance.searchType = Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString();
-        instance.bookType = UIConstants.NETWORK;
+        readingProgress.setSearchType(Objects.requireNonNull(sourceDropdown.getSelectedItem()).toString());
+        readingProgress.setBookType(UIConstants.NETWORK);
         new BooksWorker(bookSearchName, project, mainPanel).execute();
     }
 
@@ -339,8 +348,7 @@ public class MainUI {
         // 还原滚动位置
         // textContent.setCaretPosition(readSubscriptDao.homeTextWinIndex);
         // 持久化
-        settingDao.scrollSpacingScale = settingsUI.getReadRollVal();
-        settingDao.loadState(settingDao);
+        settingsParameter.setScrollSpacingScale(settingsUI.getReadRollVal());
     }
 
 
@@ -349,10 +357,10 @@ public class MainUI {
      */
     private void applyImportBook() {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
-        instance.loadState(instance);
+        /*ReadingProgress.getInstance().loadState();*/
         if (settingsUI.isSelBook) {
-            instance.importPath = settingsUI.getImportBookPath();
-            VirtualFile file = LocalFileSystem.getInstance().findFileByPath(instance.importPath);
+            readingProgress.setImportPath(settingsUI.getImportBookPath());
+            VirtualFile file = LocalFileSystem.getInstance().findFileByPath(readingProgress.getImportPath());
             if (file == null) {
                 ToastUtils.showToastMassage(project, "文件不存在", ToastType.ERROR);
                 return;
@@ -361,11 +369,11 @@ public class MainUI {
                 ToastUtils.showToastMassage(project, "书籍导入失败", ToastType.ERROR);
                 return;
             }
-            instance.searchType = UIConstants.IMPORT;
+            readingProgress.setSearchType(UIConstants.IMPORT);
             // 执行开始阅读
             new ContentWorker(valueAt, chapterList, project, textContent, mainPanel).execute();
             // 阅读进度持久化
-            instance.loadState(instance);
+            /*ReadingProgress.getInstance().loadState();*/
         }
     }
 
@@ -376,11 +384,11 @@ public class MainUI {
         sourceDropdown.removeAllItems();
         // 加载数据源下拉框
         ViewFaction.initSpiderConfig();
-        if (spiderActionDao.spiderActionStr == null) {
+        if (ObjUtil.isEmpty(spiderAction.getSpiderActionStr())) {
             sourceDropdown.addItem(UIConstants.DEFAULT_DATA_SOURCE_NAME);
             return;
         }
-        Resources.getObjectNode(spiderActionDao.spiderActionStr);
+        Resources.getObjectNode(spiderAction.getSpiderActionStr());
         for (String dataSourceName : Resources.getResourceNames()) {
             sourceDropdown.addItem(dataSourceName);
         }

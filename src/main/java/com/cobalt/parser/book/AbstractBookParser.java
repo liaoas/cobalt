@@ -1,8 +1,10 @@
 package com.cobalt.parser.book;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SpiderActionPersistent;
+import com.cobalt.framework.persistence.ReadingProgress;
+import com.cobalt.framework.persistence.SpiderAction;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
+import com.cobalt.framework.persistence.proxy.SpiderActionProxy;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -14,15 +16,17 @@ import java.util.regex.Pattern;
  * @since 2024/7/19
  */
 public abstract class AbstractBookParser implements BookParser {
-
-    // 爬虫资源
-    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
-    // 阅读进度持久化
-    static ReadingProgressPersistent readingProgressDao = ReadingProgressPersistent.getInstance();
-    // 阅读状态
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
     // Default Pattern
     static final Pattern CHAPTER_PATTERN = Pattern.compile(Constants.DEFAULT_CHAPTER_REGULAR);
+    // 爬虫资源
+    public final SpiderActionProxy spiderAction;
+
+    public final ReadingProgressProxy readingProgress;
+
+    public AbstractBookParser() {
+        readingProgress = new ReadingProgressProxy();
+        spiderAction = new SpiderActionProxy();
+    }
 
 
     /**

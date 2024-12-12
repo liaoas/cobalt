@@ -3,9 +3,9 @@ package com.cobalt.ui;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.UIConstants;
 import com.cobalt.framework.factory.ViewFaction;
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SettingsPersistent;
-import com.cobalt.framework.persistence.SpiderActionPersistent;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
+import com.cobalt.framework.persistence.proxy.SettingsParameterProxy;
+import com.cobalt.framework.persistence.proxy.SpiderActionProxy;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -86,11 +86,14 @@ public class SettingsUI {
     private String importBookPath = null;
 
     // 页面设置持久化
-    private static SettingsPersistent settingDao = SettingsPersistent.getInstance();
-    private static ReadingProgressPersistent progressDao = ReadingProgressPersistent.getInstance();
-    private static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
+    private final SettingsParameterProxy settingsParameter;
+    private final ReadingProgressProxy readingProgress;
+    private final SpiderActionProxy spiderAction;
 
     public SettingsUI() {
+        this.readingProgress = new ReadingProgressProxy();
+        this.settingsParameter = new SettingsParameterProxy();
+        this.spiderAction = new SpiderActionProxy();
         init();
     }
 
@@ -298,10 +301,10 @@ public class SettingsUI {
      * 加载持久化状态
      */
     public void loadPersistentState() {
-        fontSize.setSelectedItem(settingDao.fontSize);
-        readRoll.setSelectedItem(settingDao.scrollSpacingScale);
-        selectFile.setText(progressDao.importPath);
-        reptileConfigInput.setText(spiderActionDao.spiderActionStr);
+        fontSize.setSelectedItem(settingsParameter.getFontSize());
+        readRoll.setSelectedItem(settingsParameter.getScrollSpacingScale());
+        selectFile.setText(readingProgress.getImportPath());
+        reptileConfigInput.setText(spiderAction.getSpiderActionStr());
     }
 
     public void apply() {
@@ -309,8 +312,7 @@ public class SettingsUI {
         String reptileConfig = reptileConfigInput.getText();
 
         if (reptileConfig != null && !reptileConfig.isEmpty()) {
-            spiderActionDao.spiderActionStr = reptileConfig;
-            spiderActionDao.loadState(spiderActionDao);
+            spiderAction.setSpiderActionStr(reptileConfig);
         }
     }
 

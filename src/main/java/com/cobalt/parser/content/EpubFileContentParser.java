@@ -1,5 +1,6 @@
 package com.cobalt.parser.content;
 
+import com.cobalt.framework.persistence.ReadingProgress;
 import com.cobalt.parser.book.BookMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class EpubFileContentParser extends FileContentParser {
         }
         int index = Integer.parseInt(bookMap.get(url));
         BookMetadata.initDocument(index);
-        instance.textContent = bookMap.get(url);
+        readingProgress.setTextContent(bookMap.get(url));
         return true;
     }
 }

@@ -1,7 +1,8 @@
 package com.cobalt.parser.chapter;
 
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SpiderActionPersistent;
+import com.cobalt.framework.persistence.SpiderAction;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
+import com.cobalt.framework.persistence.proxy.SpiderActionProxy;
 
 import java.util.List;
 
@@ -13,16 +14,21 @@ import java.util.List;
  */
 public abstract class AbstractChapterParser implements ChapterParser {
 
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
+    public final ReadingProgressProxy readingProgress;
 
-    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
+    public final SpiderActionProxy spiderAction;
+
+    public AbstractChapterParser() {
+        readingProgress = new ReadingProgressProxy();
+        spiderAction = new SpiderActionProxy();
+    }
 
     public void chaptersClear() {
-        instance.chapters.clear();
+        readingProgress.chaptersClear();
     }
 
     public void chaptersAdd(List<Chapter> capture) {
-        instance.chapters.addAll(capture);
+        readingProgress.setChapters(capture);
     }
 
 }

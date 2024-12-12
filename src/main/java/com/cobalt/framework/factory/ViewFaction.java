@@ -4,7 +4,7 @@ import com.cobalt.config.ProjectConfig;
 import com.cobalt.container.FullScreenUIContent;
 import com.cobalt.container.MainUIContent;
 import com.cobalt.container.ReadingHistoryUIContent;
-import com.cobalt.framework.persistence.SpiderActionPersistent;
+import com.cobalt.framework.persistence.proxy.SpiderActionProxy;
 import com.cobalt.ui.FullScreenUI;
 import com.cobalt.ui.MainUI;
 import com.cobalt.ui.ReadingHistoryUI;
@@ -12,7 +12,8 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
-import com.rabbit.foot.core.github.GitHubFileReader;
+import com.rabbit.foot.github.GitHubFileReader;
+import com.rabbit.foot.utils.ObjUtil;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +37,6 @@ import java.util.List;
 public class ViewFaction implements ToolWindowFactory, DumbAware {
 
     private final static Logger log = LoggerFactory.getLogger(ViewFaction.class);
-    // 页面设置持久化
-    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
 
     /**
      * 创建窗口容器
@@ -126,9 +125,11 @@ public class ViewFaction implements ToolWindowFactory, DumbAware {
      * 加载爬虫配置
      */
     public static void initSpiderConfig() {
-        spiderActionDao.spiderActionStr = loadGitHubConfig();
-        if (spiderActionDao.spiderActionStr == null) return;
-        spiderActionDao.loadState(spiderActionDao);
+        SpiderActionProxy spiderAction = new SpiderActionProxy();
+        if (ObjUtil.isEmpty(spiderAction.getSpiderActionStr())) {
+            return;
+        }
+        spiderAction.setSpiderActionStr(loadGitHubConfig());
     }
 
     /**

@@ -3,14 +3,14 @@ package com.cobalt.ui;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.UIConstants;
 import com.cobalt.common.enums.ToastType;
-import com.cobalt.parser.chapter.Chapter;
-import com.cobalt.parser.book.BookMetadata;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ReadingUtils;
 import com.cobalt.common.utils.ToastUtils;
 import com.cobalt.framework.factory.BeanFactory;
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SettingsPersistent;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
+import com.cobalt.framework.persistence.proxy.SettingsParameterProxy;
+import com.cobalt.parser.book.BookMetadata;
+import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.parser.chapter.ChapterWorker;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
@@ -56,9 +56,10 @@ public class FullScreenUI {
     private Content lastSelectedContent = null;
 
     // 阅读进度持久化
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
+    private final ReadingProgressProxy readingProgress;
     // 页面设置持久化
-    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
+    private final SettingsParameterProxy settingsParameter;
+
     // 窗口信息
     public JPanel getFullScreenPanel() {
         return fullScreenPanel;
@@ -81,19 +82,21 @@ public class FullScreenUI {
     // 页面打开方法
     public FullScreenUI(Project project, ToolWindow toolWindow) {
         this.project = project;
+        this.readingProgress = new ReadingProgressProxy();
+        this.settingsParameter = new SettingsParameterProxy();
         // 初始化信息
         init();
         // 上一章节跳转
         btnOn.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.isEmpty() || instance.nowChapterIndex == 0) {
+            if (readingProgress.getChapters().isEmpty() || readingProgress.getNowChapterIndex() == 0) {
                 ToastUtils.showToastMassage(project, "已经是第一章了", ToastType.ERROR);
                 // 恢复默认鼠标样式
                 ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.DEFAULT_CURSOR);
                 return;
             }
-            instance.nowChapterIndex = instance.nowChapterIndex - 1;
+            readingProgress.setNowChapterIndex(readingProgress.getNowChapterIndex() - 1);
             // 加载阅读信息
             new ChapterWorker(project, textContent, chapterList, fullScreenPanel).execute();
         });
@@ -102,11 +105,11 @@ public class FullScreenUI {
         underOn.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.isEmpty() || instance.nowChapterIndex == instance.chapters.size() - 1) {
+            if (readingProgress.getChapters().isEmpty() || readingProgress.getNowChapterIndex() == readingProgress.getChapters().size() - 1) {
                 ToastUtils.showToastMassage(project, "已经是最后一章了", ToastType.ERROR);
                 return;
             }
-            instance.nowChapterIndex = instance.nowChapterIndex + 1;
+            readingProgress.setNowChapterIndex(readingProgress.getNowChapterIndex() + 1);
             // 加载阅读信息
             new ChapterWorker(project, textContent, chapterList, fullScreenPanel).execute();
         });
@@ -115,12 +118,12 @@ public class FullScreenUI {
         jumpButton.addActionListener(e -> {
             // 等待鼠标样式
             ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
-            if (instance.chapters.isEmpty() || instance.nowChapterIndex < 0) {
+            if (readingProgress.getChapters().isEmpty() || readingProgress.getNowChapterIndex() < 0) {
                 ToastUtils.showToastMassage(project, "未知章节", ToastType.ERROR);
                 return;
             }
             // 根据下标跳转
-            instance.nowChapterIndex = chapterList.getSelectedIndex();
+            readingProgress.setNowChapterIndex(chapterList.getSelectedIndex());
             // 加载阅读信息
             new ChapterWorker(project, textContent, chapterList, fullScreenPanel).execute();
         });
@@ -136,25 +139,26 @@ public class FullScreenUI {
                 public void selectionChanged(@NotNull ContentManagerEvent event) {
                     Content selectedContent = event.getContent();
 
-                    if (instance.chapters.isEmpty() || selectedContent == lastSelectedContent) return;
+                    if (readingProgress.getChapters().isEmpty() || selectedContent == lastSelectedContent)
+                        return;
                     // 加载持久化的设置
                     ModuleUtils.loadSetting(paneTextContent, textContent, null);
                     // 只有选择的内容面板发生变化时才进行相关操作
                     lastSelectedContent = selectedContent;
                     if (selectedContent.getDisplayName().equals(UIConstants.TAB_CONTROL_TITLE_UNFOLD)) {
                         // 等待鼠标样式
-                            ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
+                        ModuleUtils.loadTheMouseStyle(fullScreenPanel, Cursor.WAIT_CURSOR);
                         // 切换了书本
                         if (MainUI.isReadClick) {
                             MainUI.isReadClick = false;
                             startReading();
                         } else {
                             // 页面回显
-                            if (!instance.searchType.equals(UIConstants.IMPORT) && !instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                            if (!readingProgress.getSearchType().equals(UIConstants.IMPORT) && !readingProgress.getBookType().equals(Constants.EPUB_STR_LOWERCASE)) {
                                 // 获取新的章节位置
-                                Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+                                Chapter chapter = readingProgress.getChapters().get(readingProgress.getNowChapterIndex());
                                 // 章节内容赋值
-                                String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+                                String htmlContent = ModuleUtils.fontSizeFromHtml(settingsParameter.getFontSize(), readingProgress.getTextContent());
                                 textContent.setText(htmlContent);
                                 // 设置下拉框的值
                                 chapterList.setSelectedItem(chapter.getName());
@@ -162,7 +166,7 @@ public class FullScreenUI {
                                 textContent.setCaretPosition(1);
                             }
                         }
-                        if (instance.searchType.equals(UIConstants.IMPORT) && instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+                        if (readingProgress.getSearchType().equals(UIConstants.IMPORT) && readingProgress.getBookType().equals(Constants.EPUB_STR_LOWERCASE)) {
                             BookMetadata bookData = BookMetadata.getInstance();
                             bookData.setTextContent(textContent);
                             textContent.setDocument(bookData.getBookHTMLDocument());
@@ -180,7 +184,7 @@ public class FullScreenUI {
         // 清空下拉列表
         chapterList.removeAllItems();
         // 加载下拉列表
-        for (Chapter chapter1 : instance.chapters) {
+        for (Chapter chapter1 : readingProgress.getChapters()) {
             chapterList.addItem(chapter1.getName());
         }
         // 加载阅读信息
@@ -194,8 +198,7 @@ public class FullScreenUI {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
         paneTextContent.getVerticalScrollBar().setUnitIncrement(settingsUI.getReadRollVal());
         // 持久化
-        settingDao.scrollSpacingScale = settingsUI.getReadRollVal();
-        settingDao.loadState(settingDao);
+        settingsParameter.setScrollSpacingScale(settingsUI.getReadRollVal());
     }
 
     /**

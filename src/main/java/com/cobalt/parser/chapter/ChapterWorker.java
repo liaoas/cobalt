@@ -4,10 +4,10 @@ import com.cobalt.common.constant.Constants;
 import com.cobalt.common.enums.ToastType;
 import com.cobalt.common.utils.ModuleUtils;
 import com.cobalt.common.utils.ToastUtils;
-import com.cobalt.parser.content.ContentParserFacade;
 import com.cobalt.framework.factory.BeanFactory;
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SettingsPersistent;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
+import com.cobalt.framework.persistence.proxy.SettingsParameterProxy;
+import com.cobalt.parser.content.ContentParserFacade;
 import com.intellij.openapi.project.Project;
 
 import javax.swing.*;
@@ -34,9 +34,9 @@ public final class ChapterWorker extends SwingWorker<Void, Chapter> {
     private final JPanel mainPanel;
 
     // 阅读进度持久化
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
+    private final ReadingProgressProxy readingProgress;
     // 页面设置持久化
-    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
+    private final SettingsParameterProxy settingsParameter;
     // 内容爬虫
     static ContentParserFacade contentParser = (ContentParserFacade) BeanFactory.getBean("ContentParserFacade");
 
@@ -45,12 +45,14 @@ public final class ChapterWorker extends SwingWorker<Void, Chapter> {
         this.textContent = textContent;
         this.chapterList = chapterList;
         this.mainPanel = mainPanel;
+        this.readingProgress = new ReadingProgressProxy();
+        this.settingsParameter = new SettingsParameterProxy();
     }
 
     @Override
     protected Void doInBackground() {
         // 清空书本表格
-        Chapter chapter = instance.chapters.get(instance.nowChapterIndex);
+        Chapter chapter = readingProgress.getChapters().get(readingProgress.getNowChapterIndex());
         if (!contentParser.initContent(chapter.getLink())) {
             ToastUtils.showToastMassage(project, "章节获取失败", ToastType.ERROR);
             return null;
@@ -63,8 +65,9 @@ public final class ChapterWorker extends SwingWorker<Void, Chapter> {
     @Override
     protected void process(List<Chapter> chapters) {
         Chapter chapter = chapters.get(0);
-        if (!instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
-            String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+        if (!readingProgress.getBookType().equals(Constants.EPUB_STR_LOWERCASE)) {
+            String htmlContent = ModuleUtils.fontSizeFromHtml(settingsParameter.getFontSize(),
+                    readingProgress.getTextContent());
             textContent.setText(htmlContent);
             // 回到顶部
             textContent.setCaretPosition(1);

@@ -32,8 +32,6 @@ public class SettingsConfigurable implements Configurable {
         settingsUI = new SettingsUI();
         // 状态改为未修改
         settingsUI.setModified(false);
-        // 加载持久化状态
-        settingsUI.loadPersistentState();
         BeanFactory.setBean("SettingsUI", settingsUI);
         return settingsUI.getSettingWin();
     }

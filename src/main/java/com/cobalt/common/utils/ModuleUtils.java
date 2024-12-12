@@ -3,9 +3,8 @@ package com.cobalt.common.utils;
 import com.cobalt.common.constant.Constants;
 import com.cobalt.common.constant.UIConstants;
 import com.cobalt.framework.factory.BeanFactory;
-import com.cobalt.framework.persistence.ReadSubscriptPersistent;
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SettingsPersistent;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
+import com.cobalt.framework.persistence.proxy.SettingsParameterProxy;
 import com.cobalt.ui.SettingsUI;
 
 import javax.swing.*;
@@ -20,15 +19,6 @@ import java.awt.*;
  * @since 2023-03-01
  */
 public class ModuleUtils {
-
-    // 页面设置持久化
-    static SettingsPersistent settingDao = SettingsPersistent.getInstance();
-
-    // 阅读进度持久化
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
-
-    // 阅读窗口滚动位置持久化
-    static ReadSubscriptPersistent readSubscriptDao = ReadSubscriptPersistent.getInstance();
 
     /**
      * 加载页面鼠标样式
@@ -48,14 +38,16 @@ public class ModuleUtils {
      * @param textContent     章节内容
      */
     public static void loadSetting(JScrollPane paneTextContent, JEditorPane textContent, JSplitPane bookTabContentSplit) {
+
+        SettingsParameterProxy settingsParameter = new SettingsParameterProxy();
         // 同步滚动步长
-        paneTextContent.getVerticalScrollBar().setUnitIncrement(settingDao.scrollSpacingScale);
+        paneTextContent.getVerticalScrollBar().setUnitIncrement(settingsParameter.getScrollSpacingScale());
         // 字体大小
-        textContent.setFont(new Font("", Font.BOLD, settingDao.fontSize));
+        textContent.setFont(new Font("", Font.BOLD, settingsParameter.getFontSize()));
         if (bookTabContentSplit == null) {
             return;
         }
-        bookTabContentSplit.setDividerLocation(settingDao.splitPosition);
+        bookTabContentSplit.setDividerLocation(settingsParameter.getSplitPosition());
     }
 
     /**
@@ -84,7 +76,8 @@ public class ModuleUtils {
      * @param underOn    下一章
      * @param jumpButton 跳转
      */
-    public static void loadComponentTooltip(JButton btnSearch, JButton openBook, JButton settingBtn, JButton btnOn, JButton underOn, JButton jumpButton) {
+    public static void loadComponentTooltip(JButton btnSearch, JButton openBook, JButton settingBtn,
+                                            JButton btnOn, JButton underOn, JButton jumpButton) {
         // 搜索按钮
         if (btnSearch != null) {
             btnSearch.setToolTipText(UIConstants.SEARCH_BTN);
@@ -125,16 +118,19 @@ public class ModuleUtils {
     public static void applyFontSize(JEditorPane textContent) {
         SettingsUI settingsUI = (SettingsUI) BeanFactory.getBean("SettingsUI");
 
-        if (!instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+        SettingsParameterProxy settingsParameter = new SettingsParameterProxy();
+
+        ReadingProgressProxy readingProgress = new ReadingProgressProxy();
+
+        if (!readingProgress.getBookType().equals(Constants.EPUB_STR_LOWERCASE)) {
             // 章节内容赋值
-            String htmlContent = ModuleUtils.fontSizeFromHtml(settingDao.fontSize, instance.textContent);
+            String htmlContent = ModuleUtils.fontSizeFromHtml(settingsParameter.getFontSize(), readingProgress.getTextContent());
             textContent.setText(htmlContent);
         }
 
         // 还原滚动位置
         // textContent.setCaretPosition(readSubscriptDao.homeTextWinIndex);
         // 持久化
-        settingDao.fontSize = settingsUI.getFontSizeVal();
-        settingDao.loadState(settingDao);
+        settingsParameter.setFontSize(settingsUI.getFontSizeVal());
     }
 }

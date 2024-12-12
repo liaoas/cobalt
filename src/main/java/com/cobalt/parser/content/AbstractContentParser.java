@@ -1,7 +1,9 @@
 package com.cobalt.parser.content;
 
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
-import com.cobalt.framework.persistence.SpiderActionPersistent;
+import com.cobalt.framework.persistence.ReadingProgress;
+import com.cobalt.framework.persistence.SpiderAction;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
+import com.cobalt.framework.persistence.proxy.SpiderActionProxy;
 
 /**
  * {@link ContentParser}实现的抽象基类
@@ -11,8 +13,14 @@ import com.cobalt.framework.persistence.SpiderActionPersistent;
  */
 public abstract class AbstractContentParser implements ContentParser {
 
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
+    public final ReadingProgressProxy readingProgress;
 
-    static SpiderActionPersistent spiderActionDao = SpiderActionPersistent.getInstance();
+    public final SpiderActionProxy spiderAction;
+
+    public AbstractContentParser() {
+        readingProgress = new ReadingProgressProxy();
+        spiderAction = new SpiderActionProxy();
+    }
+
 
 }

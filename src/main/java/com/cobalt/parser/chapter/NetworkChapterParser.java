@@ -1,7 +1,7 @@
 package com.cobalt.parser.chapter;
 
-import com.rabbit.foot.common.enums.ReptileType;
-import com.rabbit.foot.core.factory.ResolverFactory;
+import com.rabbit.foot.enums.ReptileType;
+import com.rabbit.foot.factory.ResolverFactory;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ public class NetworkChapterParser extends AbstractChapterParser {
         String link = String.valueOf(bookName);
         ResolverFactory<Chapter> search;
         search = new ResolverFactory<>(
-                spiderActionDao.spiderActionStr,
-                instance.searchType,
+                spiderAction.getSpiderActionStr(),
+                readingProgress.getSearchType(),
                 ReptileType.CHAPTER, link);
         List<Chapter> capture = search.capture();
         chaptersAdd(capture);

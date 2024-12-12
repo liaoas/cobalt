@@ -1,7 +1,7 @@
 package com.cobalt.parser.chapter;
 
 import com.cobalt.common.constant.UIConstants;
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
 
 /**
  * <p>
@@ -13,10 +13,9 @@ import com.cobalt.framework.persistence.ReadingProgressPersistent;
  */
 public class ChapterParserFacade {
 
-    static ReadingProgressPersistent instance = ReadingProgressPersistent.getInstance();
-
     public boolean initChapter(Object chapter) {
-        if (instance.searchType.equals(UIConstants.IMPORT)) {
+        ReadingProgressProxy readingProgress = new ReadingProgressProxy();
+        if (readingProgress.getSearchType().equals(UIConstants.IMPORT)) {
             return new FileChapterParser().parser(chapter);
         }
 

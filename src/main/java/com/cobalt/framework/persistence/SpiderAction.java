@@ -10,36 +10,44 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * <p>
- * 持久化爬虫动作描述资源
+ * 爬虫行为描述资源持久化
  * </p>
  *
  * @author LiAo
  * @since 2024-01-15
  */
 @State(name = "SpiderActionDao", storages = {@Storage(value = "cobalt.persistent.xml")})
-public class SpiderActionPersistent implements PersistentStateComponent<SpiderActionPersistent> {
+public class SpiderAction implements PersistentStateComponent<SpiderAction> {
 
     public String spiderActionStr = "{}";
 
-    public SpiderActionPersistent() {
+    private static SpiderAction instance = null;
+
+    public SpiderAction() {
     }
 
-    public SpiderActionPersistent(String spiderActionStr) {
+    public SpiderAction(String spiderActionStr) {
         this.spiderActionStr = spiderActionStr;
     }
 
+    public void loadState() {
+        loadState(getInstance());
+    }
 
     @Override
-    public @Nullable SpiderActionPersistent getState() {
+    public @Nullable SpiderAction getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull SpiderActionPersistent spiderActionDao) {
+    public void loadState(@NotNull SpiderAction spiderActionDao) {
         XmlSerializerUtil.copyBean(spiderActionDao, this);
     }
 
-    public static SpiderActionPersistent getInstance() {
-        return ApplicationManager.getApplication().getService(SpiderActionPersistent.class);
+    public static SpiderAction getInstance() {
+        if (instance == null) {
+            instance = ApplicationManager.getApplication().getService(SpiderAction.class);
+        }
+        return instance;
     }
 }

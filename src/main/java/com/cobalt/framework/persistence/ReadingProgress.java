@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2023-02-24
  */
 @State(name = "ReadingProgressDao", storages = {@Storage(value = "cobalt.settings.persistent.xml")})
-public class ReadingProgressPersistent implements PersistentStateComponent<ReadingProgressPersistent> {
+public class ReadingProgress implements PersistentStateComponent<ReadingProgress> {
 
     // 全局搜索类型
     public String searchType = UIConstants.NETWORK;
@@ -40,10 +40,13 @@ public class ReadingProgressPersistent implements PersistentStateComponent<Readi
 
     public String bookType = UIConstants.NETWORK;
 
-    public ReadingProgressPersistent() {
+    private static ReadingProgress instance = null;
+
+    public ReadingProgress() {
     }
 
-    public ReadingProgressPersistent(String searchType, int nowChapterIndex, List<Chapter> chapters, String textContent, String importPath, String bookType) {
+    public ReadingProgress(String searchType, int nowChapterIndex, List<Chapter> chapters,
+                           String textContent, String importPath, String bookType) {
         this.searchType = searchType;
         this.nowChapterIndex = nowChapterIndex;
         this.chapters = chapters;
@@ -54,18 +57,24 @@ public class ReadingProgressPersistent implements PersistentStateComponent<Readi
 
     @Override
     @Nullable
-    public ReadingProgressPersistent getState() {
+    public ReadingProgress getState() {
         return this;
     }
 
+    public void loadState() {
+        loadState(getInstance());
+    }
+
     @Override
-    public void loadState(@NotNull ReadingProgressPersistent s) {
+    public void loadState(@NotNull ReadingProgress s) {
         XmlSerializerUtil.copyBean(s, this);
     }
 
-    public static ReadingProgressPersistent getInstance() {
-        ApplicationManager.getApplication().getService(ReadingProgressPersistent.class);
-        return ApplicationManager.getApplication().getService(ReadingProgressPersistent.class);
+    public static ReadingProgress getInstance() {
+        if (instance == null) {
+            instance = ApplicationManager.getApplication().getService(ReadingProgress.class);
+        }
+        return instance;
     }
 }
 

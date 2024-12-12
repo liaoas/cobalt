@@ -1,7 +1,7 @@
 package com.cobalt.parser.book;
 
-import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.common.constant.Constants;
+import com.cobalt.parser.chapter.Chapter;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class TextFileBookParser extends FileBookParser {
 
         parse(file, bookMap, chapterList);
 
-        instance.bookType = Constants.TXT_STR_LOWERCASE;
+        readingProgress.setBookType(Constants.TXT_STR_LOWERCASE);
 
         return !bookMap.isEmpty() && !chapterList.isEmpty();
     }

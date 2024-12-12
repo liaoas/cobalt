@@ -1,5 +1,6 @@
 package com.cobalt.parser.book;
 
+import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
 import com.cobalt.parser.chapter.Chapter;
 import com.cobalt.common.constant.Constants;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -23,6 +24,12 @@ public class EpubFileBookParser extends FileBookParser {
 
     private final static Logger log = LoggerFactory.getLogger(EpubFileBookParser.class);
 
+    private final ReadingProgressProxy readingProgress;
+
+    public EpubFileBookParser() {
+        readingProgress = new ReadingProgressProxy();
+    }
+
     @Override
     public boolean parser(Object object) {
 
@@ -30,7 +37,7 @@ public class EpubFileBookParser extends FileBookParser {
 
         parse(file, bookMap, chapterList);
 
-        instance.bookType = Constants.EPUB_STR_LOWERCASE;
+        readingProgress.setBookType(Constants.EPUB_STR_LOWERCASE);
 
         return !bookMap.isEmpty() && !chapterList.isEmpty();
     }

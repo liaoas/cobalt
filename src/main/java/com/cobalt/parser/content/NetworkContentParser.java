@@ -1,7 +1,7 @@
 package com.cobalt.parser.content;
 
-import com.rabbit.foot.common.enums.ReptileType;
-import com.rabbit.foot.core.factory.ResolverFactory;
+import com.rabbit.foot.enums.ReptileType;
+import com.rabbit.foot.factory.ResolverFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +21,8 @@ public class NetworkContentParser extends AbstractContentParser {
     @Override
     public boolean parser(Object object) {
         String url = String.valueOf(object);
-        ResolverFactory<String> search = new ResolverFactory<>(spiderActionDao.spiderActionStr,
-                instance.searchType, ReptileType.CONTENT, url);
+        ResolverFactory<String> search = new ResolverFactory<>(spiderAction.getSpiderActionStr(),
+                readingProgress.getSearchType(), ReptileType.CONTENT, url);
         List<String> capture = null;
 
         try {
@@ -36,7 +36,7 @@ public class NetworkContentParser extends AbstractContentParser {
             return false;
         }
 
-        instance.textContent = capture.get(0);
+        readingProgress.setTextContent(capture.get(0));
         return true;
     }
 }

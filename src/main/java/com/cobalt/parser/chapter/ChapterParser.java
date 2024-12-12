@@ -1,6 +1,6 @@
 package com.cobalt.parser.chapter;
 
-import com.cobalt.framework.persistence.ReadingProgressPersistent;
+import com.cobalt.framework.persistence.ReadingProgress;
 import com.cobalt.parser.Parser;
 
 /**
@@ -13,7 +13,7 @@ public interface ChapterParser extends Parser {
 
     /**
      * 解析方法
-     * 解析章节信息为 List<Chapter>,并将结果存入{@link ReadingProgressPersistent} chapters
+     * 解析章节信息为 List<Chapter>,并将结果存入{@link ReadingProgress} chapters
      * 以供后续相关函数使用.
      *
      * @param resource 资源

@@ -1,6 +1,7 @@
 package com.cobalt.parser.content;
 
 import com.cobalt.common.constant.Constants;
+import com.cobalt.framework.persistence.ReadingProgress;
 
 /**
  * 文件类型的单个章节内容解析
@@ -12,7 +13,7 @@ public class FileContentParser extends AbstractContentParser {
 
     @Override
     public boolean parser(Object bookName) {
-        if (instance.bookType.equals(Constants.EPUB_STR_LOWERCASE)) {
+        if (readingProgress.getBookType().equals(Constants.EPUB_STR_LOWERCASE)) {
             return new EpubFileContentParser().parser(bookName);
         }
         return new TextFileContentParser().parser(bookName);

@@ -172,25 +172,25 @@
 
         <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
 
-        <applicationService id="ReadingProgressPersistent" serviceInterface="com.cobalt.framework.persistence.ReadingProgressPersistent"
-                            serviceImplementation="com.cobalt.framework.persistence.ReadingProgressPersistent"
-                            testServiceImplementation="com.cobalt.framework.persistence.ReadingProgressPersistent"
-                            headlessImplementation="com.cobalt.framework.persistence.ReadingProgressPersistent"/>
+        <applicationService id="ReadingProgressPersistent" serviceInterface="com.cobalt.framework.persistence.ReadingProgress"
+                            serviceImplementation="com.cobalt.framework.persistence.ReadingProgress"
+                            testServiceImplementation="com.cobalt.framework.persistence.ReadingProgress"
+                            headlessImplementation="com.cobalt.framework.persistence.ReadingProgress"/>
 
-        <applicationService id="ReadSubscriptPersistent" serviceInterface="com.cobalt.framework.persistence.ReadSubscriptPersistent"
-                            serviceImplementation="com.cobalt.framework.persistence.ReadSubscriptPersistent"
-                            testServiceImplementation="com.cobalt.framework.persistence.ReadSubscriptPersistent"
-                            headlessImplementation="com.cobalt.framework.persistence.ReadSubscriptPersistent"/>
+        <applicationService id="ReadSubscriptPersistent" serviceInterface="com.cobalt.framework.persistence.ReadSubscript"
+                            serviceImplementation="com.cobalt.framework.persistence.ReadSubscript"
+                            testServiceImplementation="com.cobalt.framework.persistence.ReadSubscript"
+                            headlessImplementation="com.cobalt.framework.persistence.ReadSubscript"/>
 
-        <applicationService id="SettingsPersistent" serviceInterface="com.cobalt.framework.persistence.SettingsPersistent"
-                            serviceImplementation="com.cobalt.framework.persistence.SettingsPersistent"
-                            testServiceImplementation="com.cobalt.framework.persistence.SettingsPersistent"
-                            headlessImplementation="com.cobalt.framework.persistence.SettingsPersistent"/>
+        <applicationService id="SettingsPersistent" serviceInterface="com.cobalt.framework.persistence.SettingsParameter"
+                            serviceImplementation="com.cobalt.framework.persistence.SettingsParameter"
+                            testServiceImplementation="com.cobalt.framework.persistence.SettingsParameter"
+                            headlessImplementation="com.cobalt.framework.persistence.SettingsParameter"/>
 
-        <applicationService id="SpiderActionPersistent" serviceInterface="com.cobalt.framework.persistence.SpiderActionPersistent"
-                            serviceImplementation="com.cobalt.framework.persistence.SpiderActionPersistent"
-                            testServiceImplementation="com.cobalt.framework.persistence.SpiderActionPersistent"
-                            headlessImplementation="com.cobalt.framework.persistence.SpiderActionPersistent"/>
+        <applicationService id="SpiderActionPersistent" serviceInterface="com.cobalt.framework.persistence.SpiderAction"
+                            serviceImplementation="com.cobalt.framework.persistence.SpiderAction"
+                            testServiceImplementation="com.cobalt.framework.persistence.SpiderAction"
+                            headlessImplementation="com.cobalt.framework.persistence.SpiderAction"/>
 
         <projectConfigurable
                 parentId="other"
@@ -202,19 +202,19 @@
 
     <project-components>
         <component>
-            <implementation-class>com.cobalt.framework.persistence.ReadingProgressPersistent</implementation-class>
+            <implementation-class>com.cobalt.framework.persistence.ReadingProgress</implementation-class>
         </component>
 
         <component>
-            <implementation-class>com.cobalt.framework.persistence.ReadSubscriptPersistent</implementation-class>
+            <implementation-class>com.cobalt.framework.persistence.ReadSubscript</implementation-class>
         </component>
 
         <component>
-            <implementation-class>com.cobalt.framework.persistence.SettingsPersistent</implementation-class>
+            <implementation-class>com.cobalt.framework.persistence.SettingsParameter</implementation-class>
         </component>
 
         <component>
-            <implementation-class>com.cobalt.framework.persistence.SpiderActionPersistent</implementation-class>
+            <implementation-class>com.cobalt.framework.persistence.SpiderAction</implementation-class>
         </component>
     </project-components>
 

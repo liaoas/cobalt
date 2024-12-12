@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2023-03-01
  */
 @State(name = "SettingsDao", storages = {@Storage(value = "cobalt.persistent.xml")})
-public class SettingsPersistent implements PersistentStateComponent<SettingsPersistent> {
+public class SettingsParameter implements PersistentStateComponent<SettingsParameter> {
 
     public int fontSize = Constants.DEFAULT_FONT_SIZE;
 
@@ -26,26 +26,35 @@ public class SettingsPersistent implements PersistentStateComponent<SettingsPers
 
     public int splitPosition = Constants.DEFAULT_MAIN_SPLIT_POSITION;
 
-    public SettingsPersistent() {
+    private static SettingsParameter instance = null;
+
+    public SettingsParameter() {
     }
 
-    public SettingsPersistent(int fontSize, int scrollSpacingSize, int splitPosition) {
+    public SettingsParameter(int fontSize, int scrollSpacingSize, int splitPosition) {
         this.fontSize = fontSize;
         this.scrollSpacingScale = scrollSpacingSize;
         this.splitPosition = splitPosition;
     }
 
+    public void loadState() {
+        loadState(getInstance());
+    }
+
     @Override
-    public @Nullable SettingsPersistent getState() {
+    public @Nullable SettingsParameter getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull SettingsPersistent windowsSettingDao) {
+    public void loadState(@NotNull SettingsParameter windowsSettingDao) {
         XmlSerializerUtil.copyBean(windowsSettingDao, this);
     }
 
-    public static SettingsPersistent getInstance() {
-        return ApplicationManager.getApplication().getService(SettingsPersistent.class);
+    public static SettingsParameter getInstance() {
+        if (instance == null) {
+            instance = ApplicationManager.getApplication().getService(SettingsParameter.class);
+        }
+        return instance;
     }
 }

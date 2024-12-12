@@ -17,29 +17,38 @@ import org.jetbrains.annotations.Nullable;
  * @since 2023-02-28
  */
 @State(name = "ReadSubscriptDao", storages = {@Storage(value = "cobalt.persistent.xml")})
-public class ReadSubscriptPersistent implements PersistentStateComponent<ReadSubscriptPersistent> {
+public class ReadSubscript implements PersistentStateComponent<ReadSubscript> {
 
     public int homeTextWinIndex;
 
-    public ReadSubscriptPersistent() {
+    private static ReadSubscript instance = null;
+
+    public ReadSubscript() {
     }
 
-    public ReadSubscriptPersistent(int homeTextWinIndex) {
+    public ReadSubscript(int homeTextWinIndex) {
         this.homeTextWinIndex = homeTextWinIndex;
+    }
+
+    public void loadState() {
+        loadState(getInstance());
     }
 
     @Override
     public @Nullable
-    ReadSubscriptPersistent getState() {
+    ReadSubscript getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull ReadSubscriptPersistent readSubscriptDao) {
+    public void loadState(@NotNull ReadSubscript readSubscriptDao) {
         XmlSerializerUtil.copyBean(readSubscriptDao, this);
     }
 
-    public static ReadSubscriptPersistent getInstance() {
-        return ApplicationManager.getApplication().getService(ReadSubscriptPersistent.class);
+    public static ReadSubscript getInstance() {
+        if (instance == null) {
+            instance = ApplicationManager.getApplication().getService(ReadSubscript.class);
+        }
+        return instance;
     }
 }

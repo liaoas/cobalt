@@ -1,6 +1,5 @@
 package com.cobalt.parser.content;
 
-import com.cobalt.framework.persistence.ReadingProgress;
 import com.cobalt.parser.book.BookMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

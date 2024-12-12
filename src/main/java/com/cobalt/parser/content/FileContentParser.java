@@ -1,7 +1,6 @@
 package com.cobalt.parser.content;
 
 import com.cobalt.common.constant.Constants;
-import com.cobalt.framework.persistence.ReadingProgress;
 
 /**
  * 文件类型的单个章节内容解析

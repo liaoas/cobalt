@@ -1,7 +1,5 @@
 package com.cobalt.parser.content;
 
-import com.cobalt.framework.persistence.ReadingProgress;
-import com.cobalt.framework.persistence.SpiderAction;
 import com.cobalt.framework.persistence.proxy.ReadingProgressProxy;
 import com.cobalt.framework.persistence.proxy.SpiderActionProxy;
 
